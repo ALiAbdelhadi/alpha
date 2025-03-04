@@ -54,7 +54,7 @@ const Landing = () => {
                             <div className="space-y-8">
                                 <h1 ref={headingRef} className="font-semibold text-4xl md:text-5xl lg:text-6xl text-primary-foreground">
                                     Turning your ideas into
-                                    <span className="gradient-text bg-gradient-to-r from-primary/90 via-primary to-secondary bg-[length:100%_100%] bg-clip-text px-2 text-transparent">
+                                    <span className="gradient-text bg-gradient-to-r from-[#2563eb] via-[#3b82f6] to-[#60a5fa] bg-[length:100%_100%] bg-clip-text px-2 text-transparent">
                                         digital solutions
                                     </span>
                                     that work.

@@ -119,7 +119,7 @@ const TechCard = ({
                             width={50}
                             height={50}
                             quality={100}
-                            className={cn("md:w-20 md:h-20 w-16 h-16 object-contain", className)}
+                            className={cn("md:w-20 md:h-20 w-16 h-16 object-contain dark:block hidden", className)}
                         />
                     )
                 }
@@ -185,7 +185,7 @@ const BigTechCard = ({
                             width={50}
                             height={50}
                             quality={100}
-                            className={cn("md:w-20 md:h-20 w-16 h-16 object-contain ", className)}
+                            className={cn("md:w-20 md:h-20 w-16 h-16 object-contain dark:block hidden ", className)}
                         />
                     )}
                     <h3 className="text-lg md:text-xl font-medium mt-4 text-foreground">
@@ -208,7 +208,7 @@ const BigTechCard = ({
                             width={50}
                             height={50}
                             quality={100}
-                            className={cn("md:w-20 md:h-20 w-16 h-16 object-contain ", className)}
+                            className={cn("md:w-20 md:h-20 w-16 h-16 object-contain dark:block hidden", className)}
                         />
                     )}
                     <h3 className="text-lg md:text-xl font-medium mt-4 text-foreground">

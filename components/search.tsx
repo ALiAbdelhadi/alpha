@@ -62,14 +62,13 @@ export default function Search() {
         <DialogTrigger asChild>
           <div>
             <span className="lg:hidden flex items-center cursor-pointer">
-              <SearchIcon className="h-5 w-5 text-gray-950" />
+              <SearchIcon className="h-5 w-5 text-gray-950 dark:text-gray-100" />
             </span>
-            <button className="group hidden lg:flex w-full items-center gap-2 rounded-md bg-stone-100 px-3 py-2 text-left text-sm shadow-sm transition-colors">
-              <SearchIcon className="h-5 w-5 text-gray-950 hidden lg:flex" />
-              {/* <span className="w-full whitespace-normal overflow-hidden text-ellipsis flex-1">Search docs...</span> */}
-              <span className="flex-1 hidden xl:flex text-gray-500">Search documentation...</span>
-              <span className="flex-1 hidden lg:flex xl:hidden text-gray-500">Search docs...</span>
-              <kbd className="hidden rounded bg-gray-200 p-1 text-xs text-gray-500 dark:bg-neutral-800 sm:inline-block font-semibold">
+            <button className="group hidden lg:flex w-full items-center gap-2 rounded-md hover:bg-gray-200 dark:hover:bg-neutral-950 bg-[rgba(250,250,252,0.3)] dark:bg-background/60 backdrop-blur-lg backdrop-filter backdrop-saturate-[200%] px-3 py-2 text-left text-sm transition-colors">
+              <SearchIcon className="h-5 w-5 text-gray-950 dark:text-gray-100 hidden lg:flex" />
+              <span className="flex-1 hidden xl:flex text-gray-600 dark:text-gray-300">Search documentation...</span>
+              <span className="flex-1 hidden lg:flex xl:hidden text-gray-600 dark:text-gray-300">Search docs...</span>
+              <kbd className="hidden rounded bg-gray-200 p-1 text-xs text-gray-500 dark:text-gray-300 dark:bg-neutral-950 sm:inline-block font-semibold">
                 {platform === "mac" ? "⌘ K" : "Ctrl K"}
               </kbd>
             </button>

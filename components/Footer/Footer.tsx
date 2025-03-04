@@ -13,13 +13,12 @@ const Footer: React.FC = () => {
                     <div className="flex items-center mb-6">
                         <Logo className="text-2xl" showIcon={false} showLogoText={true} />
                     </div>
-                    <p className="max-w-xs text-sm opacity-80 mb-6">
+                    <p className="max-w-xs text-sm text-muted-foreground mb-6">
                         Transforming ideas into digital realities. Your vision, our
                         expertise.
                     </p>
                     <Button
-                        variant="outline"
-                        className="border-none bg-[#02F4EE] text-white hover:bg-[#00D5CD] transition-colors"
+                        variant="default"
                     >
                         Contact Us
                     </Button>
@@ -52,7 +51,7 @@ const Footer: React.FC = () => {
                 </div>
             </Container>
             <Container>
-                <div className="mt-16 pt-8 border-t border-[#02F4EE]/30 text-sm text-[#555] flex justify-between items-center">
+                <div className="mt-16 pt-8 border-t border-primary/30 text-sm text-[#555] flex justify-between items-center">
                     <p>
                         &copy; {new Date().getFullYear()} Your Company. All rights reserved.
                     </p>
