@@ -1,0 +1,110 @@
+{
+    "nav": {
+        "home": "Home",
+        "work": "Work",
+        "services": "Services",
+        "about": "About",
+        "contact": "Contact",
+        "getStarted": "Get Started"
+    },
+    "hero": {
+        "badge": "Web Development Excellence",
+        "title": "Building the future",
+        "title2": "of web experiences",
+        "description": "Alpha specializes in creating cutting-edge web applications with innovative interactions, stunning visuals, and exceptional user experiences that set your brand apart.",
+        "ctaPrimary": "Start Your Project",
+        "ctaSecondary": "View Our Work",
+        "scrollHint": "Scroll to explore"
+    },
+    "work": {
+        "title": "Featured",
+        "subtitle": "Recent explorations",
+        "projects": {
+            "project1": {
+                "title": "E-Commerce Platform",
+                "category": "Full Stack Development",
+                "year": "2024"
+            },
+            "project2": {
+                "title": "SaaS Dashboard",
+                "category": "React & TypeScript",
+                "year": "2024"
+            },
+            "project3": {
+                "title": "Mobile Web App",
+                "category": "Progressive Web App",
+                "year": "2023"
+            }
+        }
+    },
+    "services": {
+        "title": "Capabilities",
+        "subtitle": "What we bring to the table",
+        "service1": {
+            "title": "Creative Development",
+            "description": "Pushing the boundaries of what's possible on the web"
+        },
+        "service2": {
+            "title": "Visual Design",
+            "description": "Crafting memorable experiences through thoughtful aesthetics"
+        },
+        "service3": {
+            "title": "Motion & Animation",
+            "description": "Bringing interfaces to life with purposeful movement"
+        },
+        "service4": {
+            "title": "Technical Strategy",
+            "description": "Building scalable solutions that perform beautifully"
+        }
+    },
+    "about": {
+        "title": "Building the",
+        "title2": "future of",
+        "title3": "digital",
+        "description1": "Alpha is a web development company dedicated to creating exceptional digital experiences. We combine cutting-edge technology with innovative design to build websites and applications that stand out.",
+        "description2": "Every project is an opportunity to push the boundaries of what's possible on the web, delivering solutions that are both beautiful and functional.",
+        "stat1": {
+            "value": "150+",
+            "label": "Projects",
+            "sublabel": "Delivered worldwide"
+        },
+        "stat2": {
+            "value": "8",
+            "label": "Years",
+            "sublabel": "Of innovation"
+        },
+        "stat3": {
+            "value": "12",
+            "label": "Awards",
+            "sublabel": "Industry recognition"
+        },
+        "ctaPrimary": "Start a Project",
+        "ctaSecondary": "View Our Work"
+    },
+    "contact": {
+        "title": "Let's",
+        "title2": "talk",
+        "subtitle": "Get in touch",
+        "email": "Email",
+        "emailValue": "hello@alpha.com",
+        "location": "Location",
+        "locationValue": "Global",
+        "form": {
+            "name": "Name",
+            "namePlaceholder": "Your name",
+            "email": "Email",
+            "emailPlaceholder": "your@email.com",
+            "message": "Message",
+            "messagePlaceholder": "Tell us about your project...",
+            "submit": "Send Message",
+            "submitting": "Sending...",
+            "success": "Message sent successfully!"
+        },
+        "social": {
+            "twitter": "Twitter",
+            "instagram": "Instagram",
+            "linkedin": "LinkedIn",
+            "dribbble": "Dribbble"
+        }
+    }
+}

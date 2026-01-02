@@ -1,0 +1,110 @@
+{
+    "nav": {
+        "home": "الرئيسية",
+        "work": "أعمالنا",
+        "services": "الخدمات",
+        "about": "من نحن",
+        "contact": "اتصل بنا",
+        "getStarted": "ابدأ الآن"
+    },
+    "hero": {
+        "badge": "التميز في تطوير الويب",
+        "title": "بناء مستقبل",
+        "title2": "تجارب الويب",
+        "description": "تتخصص Alpha في إنشاء تطبيقات ويب متطورة مع تفاعلات مبتكرة، وتصاميم مذهلة، وتجارب مستخدم استثنائية تميز علامتك التجارية.",
+        "ctaPrimary": "ابدأ مشروعك",
+        "ctaSecondary": "شاهد أعمالنا",
+        "scrollHint": "انتقل للاستكشاف"
+    },
+    "work": {
+        "title": "المميز",
+        "subtitle": "استكشافات حديثة",
+        "projects": {
+            "project1": {
+                "title": "منصة تجارة إلكترونية",
+                "category": "تطوير Full Stack",
+                "year": "2024"
+            },
+            "project2": {
+                "title": "لوحة تحكم SaaS",
+                "category": "React & TypeScript",
+                "year": "2024"
+            },
+            "project3": {
+                "title": "تطبيق ويب للجوال",
+                "category": "Progressive Web App",
+                "year": "2023"
+            }
+        }
+    },
+    "services": {
+        "title": "القدرات",
+        "subtitle": "ما نقدمه",
+        "service1": {
+            "title": "التطوير الإبداعي",
+            "description": "دفع حدود ما هو ممكن على الويب"
+        },
+        "service2": {
+            "title": "التصميم البصري",
+            "description": "صياغة تجارب لا تُنسى من خلال الجماليات المدروسة"
+        },
+        "service3": {
+            "title": "الحركة والرسوم المتحركة",
+            "description": "إحياء الواجهات بحركة هادفة"
+        },
+        "service4": {
+            "title": "الاستراتيجية التقنية",
+            "description": "بناء حلول قابلة للتوسع تعمل بشكل جميل"
+        }
+    },
+    "about": {
+        "title": "بناء مستقبل",
+        "title2": "الرقمية",
+        "title3": "",
+        "description1": "Alpha هي شركة تطوير ويب مكرسة لإنشاء تجارب رقمية استثنائية. نجمع بين التكنولوجيا المتطورة والتصميم المبتكر لبناء مواقع وتطبيقات مميزة.",
+        "description2": "كل مشروع هو فرصة لدفع حدود ما هو ممكن على الويب، وتقديم حلول جميلة وعملية في نفس الوقت.",
+        "stat1": {
+            "value": "150+",
+            "label": "مشروع",
+            "sublabel": "تم تسليمها عالمياً"
+        },
+        "stat2": {
+            "value": "8",
+            "label": "سنوات",
+            "sublabel": "من الابتكار"
+        },
+        "stat3": {
+            "value": "12",
+            "label": "جائزة",
+            "sublabel": "اعتراف صناعي"
+        },
+        "ctaPrimary": "ابدأ مشروع",
+        "ctaSecondary": "شاهد أعمالنا"
+    },
+    "contact": {
+        "title": "دعنا",
+        "title2": "نتحدث",
+        "subtitle": "تواصل معنا",
+        "email": "البريد الإلكتروني",
+        "emailValue": "hello@alpha.com",
+        "location": "الموقع",
+        "locationValue": "عالمي",
+        "form": {
+            "name": "الاسم",
+            "namePlaceholder": "اسمك",
+            "email": "البريد الإلكتروني",
+            "emailPlaceholder": "بريدك@الإلكتروني.com",
+            "message": "الرسالة",
+            "messagePlaceholder": "أخبرنا عن مشروعك...",
+            "submit": "إرسال الرسالة",
+            "submitting": "جاري الإرسال...",
+            "success": "تم إرسال الرسالة بنجاح!"
+        },
+        "social": {
+            "twitter": "تويتر",
+            "instagram": "إنستغرام",
+            "linkedin": "لينكد إن",
+            "dribbble": "دريببل"
+        }
+    }
+}
