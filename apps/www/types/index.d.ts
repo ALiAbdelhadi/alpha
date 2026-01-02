@@ -1,5 +1,5 @@
 // Supported Locales Type
-export type SupportedLocales = 'en' | 'ar' | string;
+export type SupportedLocales = 'en' | 'ar';
 
 // Layout Children Type 
 export type layoutChildren = {

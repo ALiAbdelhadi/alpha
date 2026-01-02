@@ -1,13 +1,30 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
+/**
+ * FloatingParticles - Optimized with performance considerations
+ * - Pauses when tab is hidden
+ * - Respects prefers-reduced-motion
+ * - Disables on mobile/low-power devices
+ */
 export function FloatingParticles() {
     const canvasRef = useRef<HTMLCanvasElement>(null)
+    const [shouldAnimate, setShouldAnimate] = useState(true)
 
     useEffect(() => {
         const canvas = canvasRef.current
         if (!canvas) return
+
+        // Check if animations should run
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        const isLowPower = window.matchMedia('(prefers-reduced-motion: reduce)').matches || 
+                          (navigator as any).hardwareConcurrency < 4
+
+        if (prefersReducedMotion || isLowPower) {
+            setShouldAnimate(false)
+            return
+        }
 
         const ctx = canvas.getContext("2d")
         if (!ctx) return
@@ -40,7 +57,15 @@ export function FloatingParticles() {
             })
         }
 
+        let animationFrameId: number
+        let isPaused = false
+
         const animate = () => {
+            if (isPaused || !shouldAnimate) {
+                animationFrameId = requestAnimationFrame(animate)
+                return
+            }
+
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
             particles.forEach((particle) => {
@@ -74,21 +99,34 @@ export function FloatingParticles() {
                 })
             })
 
-            requestAnimationFrame(animate)
+            animationFrameId = requestAnimationFrame(animate)
         }
 
+        // Pause when tab is hidden
+        const handleVisibilityChange = () => {
+            isPaused = document.hidden
+        }
+
+        document.addEventListener('visibilitychange', handleVisibilityChange)
         animate()
 
         return () => {
             window.removeEventListener("resize", resize)
+            document.removeEventListener('visibilitychange', handleVisibilityChange)
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId)
+            }
         }
-    }, [])
+    }, [shouldAnimate])
+
+    if (!shouldAnimate) return null
 
     return (
         <canvas
             ref={canvasRef}
             className="pointer-events-none fixed inset-0 z-0 opacity-30"
             style={{ mixBlendMode: "screen" }}
+            aria-hidden="true"
         />
     )
 }

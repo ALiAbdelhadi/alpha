@@ -5,7 +5,12 @@
         "services": "Services",
         "about": "About",
         "contact": "Contact",
-        "getStarted": "Get Started"
+        "getStarted": "Get Started",
+        "openMenu": "Open menu",
+        "closeMenu": "Close menu",
+        "mobileNavigation": "Mobile navigation",
+        "skipToContent": "Skip to main content",
+        "mainNavigation": "Main navigation"
     },
     "hero": {
         "badge": "Web Development Excellence",

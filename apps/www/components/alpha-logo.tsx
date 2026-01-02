@@ -29,7 +29,7 @@ export function AlphaLogo({ className, size = "md", variant = "full" }: AlphaLog
                     iconSizeClasses[size]
                 )}
             >
-                <span className="font-sans text-xl font-bold bg-gradient-to-r from-teal-700 via-teal-500 via-cyan-400 to-cyan-300 bg-clip-text text-transparent">
+                <span className="font-sans text-xl font-bold bg-linear-to-r from-teal-700 via-teal-500 via-cyan-400 to-cyan-300 bg-clip-text text-transparent">
                     A
                 </span>
             </div>
@@ -38,19 +38,9 @@ export function AlphaLogo({ className, size = "md", variant = "full" }: AlphaLog
 
     return (
         <div className={cn("flex items-center gap-2", className)}>
-            <div
-                className={cn(
-                    "flex items-center justify-center rounded-lg bg-foreground/15 backdrop-blur-md transition-all duration-300 hover:scale-110 hover:bg-foreground/25",
-                    iconSizeClasses[size]
-                )}
-            >
-                <span className="font-sans text-xl font-bold bg-gradient-to-r from-teal-700 via-teal-500 via-cyan-400 to-cyan-300 bg-clip-text text-transparent">
-                    A
-                </span>
-            </div>
             <span
                 className={cn(
-                    "font-sans font-semibold tracking-tight bg-gradient-to-r from-teal-700 via-teal-500 via-cyan-400 to-cyan-300 bg-clip-text text-transparent",
+                    "font-sans font-semibold tracking-tight bg-linear-to-r from-teal-700 via-teal-500 via-cyan-400 to-cyan-300 bg-clip-text text-transparent",
                     sizeClasses[size]
                 )}
             >

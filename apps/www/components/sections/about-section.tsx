@@ -4,14 +4,9 @@ import { MagneticButton } from "@/components/magnetic-button"
 import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger)
-}
-
-export function AboutSection({ scrollToSection }: { scrollToSection?: (index: number) => void }) {
+export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId: string) => void }) {
   const t = useTranslations()
   const sectionRef = useRef<HTMLElement>(null)
   const titleRef = useGSAPReveal({ direction: "up", delay: 0, duration: 0.8 })
@@ -55,8 +50,9 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (index: nu
 
   return (
     <section
+      id="about"
       ref={sectionRef}
-      className="flex h-screen w-screen shrink-0 snap-start items-center px-4 pt-20 md:px-12 md:pt-0 lg:px-16"
+      className="flex min-h-screen w-full items-center px-4 pt-20 md:px-12 md:pt-24 lg:px-16"
     >
       <div className="mx-auto w-full max-w-7xl">
         <div className="grid gap-8 md:grid-cols-2 md:gap-16 lg:gap-24">
@@ -107,10 +103,10 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (index: nu
         </div>
 
         <div ref={buttonsRef} className="mt-8 flex flex-wrap gap-3 md:mt-16 md:gap-4">
-          <MagneticButton size="lg" variant="primary" onClick={() => scrollToSection?.(4)}>
+          <MagneticButton size="lg" variant="primary" onClick={() => scrollToSection?.("contact")}>
             {t("about.ctaPrimary")}
           </MagneticButton>
-          <MagneticButton size="lg" variant="secondary" onClick={() => scrollToSection?.(1)}>
+          <MagneticButton size="lg" variant="secondary" onClick={() => scrollToSection?.("work")}>
             {t("about.ctaSecondary")}
           </MagneticButton>
         </div>

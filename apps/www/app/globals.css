@@ -123,16 +123,14 @@
     @apply border-border outline-ring/50;
     cursor: none;
   }
-  body {
-    @apply bg-background text-foreground;
+
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
   }
 
-  [data-scroll-container] {
+  body {
+    @apply bg-background text-foreground;
     scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
   }
 
   section {
@@ -144,5 +142,41 @@
   button {
     transform: translateZ(0);
     backface-visibility: hidden;
+  }
+
+  /* Skip link styles */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .sr-only:focus {
+    position: fixed;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }

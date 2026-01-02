@@ -3,12 +3,7 @@
 import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger)
-}
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 
 export function ServicesSection() {
   const t = useTranslations()
@@ -59,8 +54,9 @@ export function ServicesSection() {
 
   return (
     <section
+      id="services"
       ref={sectionRef}
-      className="flex h-screen w-screen shrink-0 snap-start items-center px-6 pt-20 md:px-12 md:pt-0 lg:px-16"
+      className="flex min-h-screen w-full items-center px-6 pt-20 md:px-12 md:pt-24 lg:px-16"
     >
       <div className="mx-auto w-full max-w-7xl">
         <div ref={titleRef} className="mb-12 md:mb-16">

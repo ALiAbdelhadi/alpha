@@ -1,9 +1,11 @@
 import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeScript } from "@/components/theme-script";
 import { routing } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import type { Props } from "@/types";
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import "../globals.css";
 
 
@@ -21,20 +23,22 @@ export default async function RootLayout({
         suppressHydrationWarning
         className={cn("min-h-screen flex flex-col antialiased")}
       >
-        <script
-          suppressHydrationWarning
+        <ThemeScript />
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-              try {
-                const theme = localStorage.getItem('theme-preference');
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                const shouldBeDark = theme === 'dark' || (!theme && prefersDark);
-                if (shouldBeDark) {
-                  document.documentElement.classList.add('dark');
-                } else {
-                  document.documentElement.classList.remove('dark');
-                }
-              } catch (e) {}
+              (function() {
+                try {
+                  const theme = localStorage.getItem('theme-preference');
+                  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  const shouldBeDark = theme === 'dark' || (!theme && prefersDark);
+                  if (shouldBeDark) {
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch (e) {}
+              })();
             `,
           }}
         />

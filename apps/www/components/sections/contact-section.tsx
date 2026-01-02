@@ -5,12 +5,7 @@ import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
 import { useState, type FormEvent, useEffect, useRef } from "react"
 import { MagneticButton } from "@/components/magnetic-button"
 import { useTranslations } from "next-intl"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger)
-}
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 
 export function ContactSection() {
   const t = useTranslations()
@@ -21,10 +16,11 @@ export function ContactSection() {
   const [submitSuccess, setSubmitSuccess] = useState(false)
 
   useEffect(() => {
-    if (!sectionRef.current) return
+    const section = sectionRef.current
+    if (!section) return
 
-    const leftElements = sectionRef.current.querySelectorAll("[data-contact-left]")
-    const rightElements = sectionRef.current.querySelectorAll("[data-contact-right]")
+    const leftElements = section.querySelectorAll("[data-contact-left]")
+    const rightElements = section.querySelectorAll("[data-contact-right]")
 
     leftElements.forEach((el, i) => {
       gsap.set(el, { opacity: 0, x: -60 })
@@ -62,7 +58,7 @@ export function ContactSection() {
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => {
-        if (sectionRef.current?.contains(trigger.vars.trigger as Element)) {
+        if (section.contains(trigger.vars.trigger as Element)) {
           trigger.kill()
         }
       })
@@ -78,19 +74,38 @@ export function ContactSection() {
 
     setIsSubmitting(true)
 
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
 
-    setIsSubmitting(false)
-    setSubmitSuccess(true)
-    setFormData({ name: "", email: "", message: "" })
+      const data = await response.json()
 
-    setTimeout(() => setSubmitSuccess(false), 5000)
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message')
+      }
+
+      setSubmitSuccess(true)
+      setFormData({ name: "", email: "", message: "" })
+      setTimeout(() => setSubmitSuccess(false), 5000)
+    } catch (error) {
+      console.error('Form submission error:', error)
+      // Show error message to user
+      alert(error instanceof Error ? error.message : 'Failed to send message. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
     <section
+      id="contact"
       ref={sectionRef}
-      className="flex h-screen w-screen shrink-0 snap-start items-center px-4 pt-20 md:px-12 md:pt-0 lg:px-16"
+      className="flex min-h-screen w-full items-center px-4 pt-20 md:px-12 md:pt-24 lg:px-16"
     >
       <div className="mx-auto w-full max-w-7xl">
         <div className="grid gap-8 md:grid-cols-[1.2fr_1fr] md:gap-16 lg:gap-24">
@@ -148,53 +163,91 @@ export function ContactSection() {
 
           <div className="flex flex-col justify-center">
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-              <div data-contact-right>
-                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">{t("contact.form.name")}</label>
+              {/* Honeypot field for spam protection */}
+              <div data-contact-right className="hidden">
+                <label htmlFor="website" className="sr-only">Website</label>
                 <input
                   type="text"
+                  id="website"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                />
+              </div>
+
+              <div data-contact-right>
+                <label htmlFor="name" className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">
+                  {t("contact.form.name")}
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
-                  className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
+                  autoComplete="name"
+                  className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/50 md:py-2 md:text-base"
                   placeholder={t("contact.form.namePlaceholder")}
+                  aria-required="true"
                 />
               </div>
 
               <div data-contact-right>
-                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">{t("contact.form.email")}</label>
+                <label htmlFor="email" className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">
+                  {t("contact.form.email")}
+                </label>
                 <input
                   type="email"
+                  id="email"
+                  name="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   required
-                  className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
+                  autoComplete="email"
+                  className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/50 md:py-2 md:text-base"
                   placeholder={t("contact.form.emailPlaceholder")}
+                  aria-required="true"
                 />
               </div>
 
               <div data-contact-right>
-                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">{t("contact.form.message")}</label>
+                <label htmlFor="message" className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">
+                  {t("contact.form.message")}
+                </label>
                 <textarea
+                  id="message"
+                  name="message"
                   rows={3}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   required
-                  className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
+                  className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/50 md:py-2 md:text-base"
                   placeholder={t("contact.form.messagePlaceholder")}
+                  aria-required="true"
                 />
               </div>
 
               <div data-contact-right>
                 <MagneticButton
+                  type="submit"
                   variant="primary"
                   size="lg"
-                  className="w-full disabled:opacity-50"
-                  onClick={isSubmitting ? undefined : undefined}
+                  className="w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={isSubmitting}
+                  aria-busy={isSubmitting}
                 >
                   {isSubmitting ? t("contact.form.submitting") : t("contact.form.submit")}
                 </MagneticButton>
                 {submitSuccess && (
-                  <p className="mt-3 text-center font-mono text-sm text-foreground/80">{t("contact.form.success")}</p>
+                  <p 
+                    className="mt-3 text-center font-mono text-sm text-foreground/80"
+                    role="status"
+                    aria-live="polite"
+                  >
+                    {t("contact.form.success")}
+                  </p>
                 )}
               </div>
             </form>

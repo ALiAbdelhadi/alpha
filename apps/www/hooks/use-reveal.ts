@@ -1,12 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { gsap } from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger)
-}
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 
 export function useReveal(_threshold = 0.3) {
   const ref = useRef<HTMLElement>(null)

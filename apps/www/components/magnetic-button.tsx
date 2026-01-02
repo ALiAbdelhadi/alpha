@@ -1,10 +1,10 @@
 "use client"
 
 import type React from "react"
-import { useRef, useEffect } from "react"
-import { gsap } from "gsap"
+import { useRef, useEffect, useState } from "react"
+import { gsap } from "@/lib/gsap"
 
-interface MagneticButtonProps {
+interface MagneticButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
   className?: string
   variant?: "primary" | "secondary" | "ghost"
@@ -18,10 +18,11 @@ export function MagneticButton({
   variant = "primary",
   size = "default",
   onClick,
+  ...props
 }: MagneticButtonProps) {
   const ref = useRef<HTMLButtonElement>(null)
-  const xTo = useRef<gsap.QuickTo | null>(null)
-  const yTo = useRef<gsap.QuickTo | null>(null)
+  const xTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null)
+  const yTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null)
 
   useEffect(() => {
     if (!ref.current) return
@@ -66,15 +67,33 @@ export function MagneticButton({
     lg: "px-8 py-3.5 text-base",
   }
 
+  // Check for reduced motion preference
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  })
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches)
+    }
+
+    mediaQuery.addEventListener('change', handleChange)
+    return () => mediaQuery.removeEventListener('change', handleChange)
+  }, [])
+
   return (
     <button
       ref={ref}
       onClick={onClick}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseMove={prefersReducedMotion ? undefined : handleMouseMove}
+      onMouseLeave={prefersReducedMotion ? undefined : handleMouseLeave}
       className={`
         relative overflow-hidden rounded-full font-medium
         transition-colors duration-300 ease-out will-change-transform
+        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground/50
         ${variants[variant]}
         ${sizes[size]}
         ${className}
@@ -83,6 +102,7 @@ export function MagneticButton({
         transform: "translate3d(0px, 0px, 0)",
         contain: "layout style paint",
       }}
+      {...props}
     >
       <span className="relative z-10">{children}</span>
     </button>
