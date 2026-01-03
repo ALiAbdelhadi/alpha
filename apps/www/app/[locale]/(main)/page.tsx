@@ -19,6 +19,7 @@ import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 import { ChromaFlow, Shader, Swirl } from "shaders/react"
 import { Link } from "@/i18n/navigation"
+import { Container } from "@/components/container"
 
 export default function Home() {
     const t = useTranslations()
@@ -122,61 +123,52 @@ export default function Home() {
     }
 
     return (
-        <>
-            {/* Skip to content link for accessibility */}
-            <Link
-                href="#home"
-                className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-foreground focus:px-4 focus:py-2 focus:text-background focus:outline-none focus:ring-2 focus:ring-foreground/50"
+        <main className="relative min-h-screen w-full bg-background">
+            <CustomCursor />
+            <GrainOverlay />
+            <FloatingParticles />
+            <AnimatedGradient className="z-0" />
+            <div
+                ref={shaderContainerRef}
+                className={`fixed inset-0 z-0 transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
+                style={{ contain: "strict" }}
+                aria-hidden="true"
             >
-                {t("nav.skipToContent")}
-            </Link>
-
-            <main className="relative min-h-screen w-full bg-background">
-                <CustomCursor />
-                <GrainOverlay />
-                <FloatingParticles />
-                <AnimatedGradient className="z-0" />
-                <div
-                    ref={shaderContainerRef}
-                    className={`fixed inset-0 z-0 transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
-                    style={{ contain: "strict" }}
-                    aria-hidden="true"
-                >
-                    <Shader className="h-full w-full">
-                        <Swirl
-                            colorA={BRAND_COLORS.teal}
-                            colorB={BRAND_COLORS.cyan}
-                            speed={0.8}
-                            detail={0.8}
-                            blend={50}
-                            coarseX={40}
-                            coarseY={40}
-                            mediumX={40}
-                            mediumY={40}
-                            fineX={40}
-                            fineY={40}
-                        />
-                        <ChromaFlow
-                            baseColor={BRAND_COLORS.tealLight}
-                            upColor={BRAND_COLORS.cyan}
-                            downColor={BRAND_COLORS.teal}
-                            leftColor={BRAND_COLORS.cyanDark}
-                            rightColor={BRAND_COLORS.cyanLight}
-                            intensity={0.9}
-                            radius={1.8}
-                            momentum={25}
-                            maskType="alpha"
-                            opacity={0.97}
-                        />
-                    </Shader>
-                    <div className="absolute inset-0 bg-black/20" />
-                </div>
-
-                <nav
-                    className={`fixed left-0 right-0 top-0 z-50 flex items-center justify-between bg-background/80 backdrop-blur-md border-b border-foreground/10 px-6 py-4 transition-opacity duration-700 md:px-12 ${isLoaded ? "opacity-100" : "opacity-0"}`}
-                    role="navigation"
-                    aria-label={t("nav.mainNavigation")}
-                >
+                <Shader className="h-full w-full">
+                    <Swirl
+                        colorA={BRAND_COLORS.teal}
+                        colorB={BRAND_COLORS.cyan}
+                        speed={0.8}
+                        detail={0.8}
+                        blend={50}
+                        coarseX={40}
+                        coarseY={40}
+                        mediumX={40}
+                        mediumY={40}
+                        fineX={40}
+                        fineY={40}
+                    />
+                    <ChromaFlow
+                        baseColor={BRAND_COLORS.tealLight}
+                        upColor={BRAND_COLORS.cyan}
+                        downColor={BRAND_COLORS.teal}
+                        leftColor={BRAND_COLORS.cyanDark}
+                        rightColor={BRAND_COLORS.cyanLight}
+                        intensity={1.2}
+                        radius={1.8}
+                        momentum={35}
+                        maskType="alpha"
+                        opacity={0.97}
+                    />
+                </Shader>
+                <div className="absolute inset-0 bg-black/20" />
+            </div>
+            <nav
+                className={`fixed left-0 right-0 h-16 top-0 z-50 flex items-center justify-between transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
+                role="navigation"
+                aria-label={t("nav.mainNavigation")}
+            >
+                <Container className="flex justify-between items-center">
                     <button
                         onClick={() => scrollToSection("home")}
                         className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-foreground/50 focus:ring-offset-2 rounded-lg"
@@ -189,9 +181,9 @@ export default function Home() {
                             <button
                                 key={item.key}
                                 onClick={() => scrollToSection(item.sectionId)}
-                                className={`group relative font-sans text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-foreground/50 focus:ring-offset-2 rounded px-2 py-1 ${currentSection === item.sectionId
-                                        ? "text-foreground"
-                                        : "text-foreground/80 hover:text-foreground"
+                                className={`group relative font-sans text-sm font-medium transition-colors rounded px-2 py-1 ${currentSection === item.sectionId
+                                    ? "text-foreground"
+                                    : "text-foreground/80 hover:text-foreground"
                                     }`}
                                 aria-current={currentSection === item.sectionId ? "page" : undefined}
                             >
@@ -203,7 +195,6 @@ export default function Home() {
                             </button>
                         ))}
                     </div>
-
                     <div className="flex items-center gap-3">
                         <LanguageSwitcher />
                         <div className="hidden md:block">
@@ -217,26 +208,25 @@ export default function Home() {
                             scrollToSection={scrollToSection}
                         />
                     </div>
-                </nav>
-
-                <div className="relative z-10">
-                    <ErrorBoundary>
-                        <HeroSection scrollToSection={scrollToSection} />
-                    </ErrorBoundary>
-                    <ErrorBoundary>
-                        <WorkSection />
-                    </ErrorBoundary>
-                    <ErrorBoundary>
-                        <ServicesSection />
-                    </ErrorBoundary>
-                    <ErrorBoundary>
-                        <AboutSection scrollToSection={scrollToSection} />
-                    </ErrorBoundary>
-                    <ErrorBoundary>
-                        <ContactSection />
-                    </ErrorBoundary>
-                </div>
-            </main>
-        </>
+                </Container>
+            </nav>
+            <div className="relative z-10">
+                <ErrorBoundary>
+                    <HeroSection scrollToSection={scrollToSection} />
+                </ErrorBoundary>
+                <ErrorBoundary>
+                    <WorkSection />
+                </ErrorBoundary>
+                <ErrorBoundary>
+                    <ServicesSection />
+                </ErrorBoundary>
+                <ErrorBoundary>
+                    <AboutSection scrollToSection={scrollToSection} />
+                </ErrorBoundary>
+                <ErrorBoundary>
+                    <ContactSection />
+                </ErrorBoundary>
+            </div>
+        </main >
     )
 }

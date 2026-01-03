@@ -1,9 +1,10 @@
 "use client"
 
 import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
-import { gsap, ScrollTrigger } from "@/lib/gsap"
+import { Container } from "../container"
 
 export function ServicesSection() {
   const t = useTranslations()
@@ -18,8 +19,8 @@ export function ServicesSection() {
     cards.forEach((card, index) => {
       const directions = ["up", "right", "left", "down"]
       const direction = directions[index % 4]
-      
-      let initialState: gsap.TweenVars = { opacity: 0 }
+
+      const initialState: gsap.TweenVars = { opacity: 0 }
       if (direction === "up") initialState.y = 40
       if (direction === "down") initialState.y = -40
       if (direction === "left") initialState.x = 40
@@ -56,9 +57,9 @@ export function ServicesSection() {
     <section
       id="services"
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center px-6 pt-20 md:px-12 md:pt-24 lg:px-16"
+      className="flex min-h-screen w-full items-center pt-20 md:pt-24"
     >
-      <div className="mx-auto w-full max-w-7xl">
+      <Container>
         <div ref={titleRef} className="mb-12 md:mb-16">
           <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
             {t("services.title")}
@@ -88,7 +89,7 @@ export function ServicesSection() {
             <ServiceCard key={i} service={service} index={i} />
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

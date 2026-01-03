@@ -3,10 +3,6 @@
 import { useEffect, useRef, useState } from "react"
 import { gsap } from "@/lib/gsap"
 
-/**
- * CustomCursor - Optional enhancement that respects accessibility preferences
- * Only shows on desktop with mouse, respects prefers-reduced-motion
- */
 export function CustomCursor() {
   const outerRef = useRef<HTMLDivElement>(null)
   const innerRef = useRef<HTMLDivElement>(null)
@@ -14,23 +10,19 @@ export function CustomCursor() {
   const [shouldShow, setShouldShow] = useState(false)
 
   useEffect(() => {
-    // Check if custom cursor should be enabled
     const checkShouldShow = () => {
-      // Don't show on mobile/touch devices
       if (window.matchMedia('(pointer: coarse)').matches) {
         return false
       }
-      // Don't show if user prefers reduced motion
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         return false
       }
-      // Only show on devices with fine pointer (mouse)
       return window.matchMedia('(pointer: fine)').matches
     }
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShouldShow(checkShouldShow())
 
-    // Listen for changes
     const mediaQueries = [
       window.matchMedia('(pointer: fine)'),
       window.matchMedia('(prefers-reduced-motion: reduce)'),
@@ -109,20 +101,19 @@ export function CustomCursor() {
     }
   }, [shouldShow])
 
-  // Don't render if should not show
   if (!shouldShow) return null
 
   return (
     <>
       <div
         ref={outerRef}
-        className="pointer-events-none fixed left-0 top-0 z-[9999] h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-foreground/30 bg-foreground/10 backdrop-blur-sm mix-blend-difference transition-transform duration-300 ease-out"
+        className="pointer-events-none fixed left-0 top-0 z-9999 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-foreground/30 bg-white/10 backdrop-blur-xs mix-blend-difference transition-transform duration-300 ease-out"
         style={{ willChange: "transform" }}
         aria-hidden="true"
       />
       <div
         ref={innerRef}
-        className="pointer-events-none fixed left-0 top-0 z-[9999] h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground mix-blend-difference transition-transform duration-300 ease-out"
+        className="pointer-events-none fixed left-0 top-0 z-9999 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground mix-blend-difference transition-transform duration-300 ease-out"
         style={{ willChange: "transform" }}
         aria-hidden="true"
       />

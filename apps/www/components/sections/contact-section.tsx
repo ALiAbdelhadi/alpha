@@ -1,11 +1,12 @@
 "use client"
 
-import { Mail, MapPin } from "lucide-react"
-import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
-import { useState, type FormEvent, useEffect, useRef } from "react"
 import { MagneticButton } from "@/components/magnetic-button"
-import { useTranslations } from "next-intl"
+import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
+import { Mail, MapPin } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useEffect, useRef, useState, type FormEvent } from "react"
+import { Container } from "../container"
 
 export function ContactSection() {
   const t = useTranslations()
@@ -105,9 +106,9 @@ export function ContactSection() {
     <section
       id="contact"
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center px-4 pt-20 md:px-12 md:pt-24 lg:px-16"
+      className="flex min-h-screen w-full items-center pt-20 md:pt-24"
     >
-      <div className="mx-auto w-full max-w-7xl">
+      <Container>
         <div className="grid gap-8 md:grid-cols-[1.2fr_1fr] md:gap-16 lg:gap-24">
           <div className="flex flex-col justify-center">
             <div ref={titleRef} className="mb-6 md:mb-12">
@@ -118,7 +119,6 @@ export function ContactSection() {
               </h2>
               <p className="font-mono text-xs text-foreground/60 md:text-base">/ {t("contact.subtitle")}</p>
             </div>
-
             <div className="space-y-4 md:space-y-8">
               <a
                 data-contact-left
@@ -163,7 +163,6 @@ export function ContactSection() {
 
           <div className="flex flex-col justify-center">
             <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
-              {/* Honeypot field for spam protection */}
               <div data-contact-right className="hidden">
                 <label htmlFor="website" className="sr-only">Website</label>
                 <input
@@ -175,7 +174,6 @@ export function ContactSection() {
                   aria-hidden="true"
                 />
               </div>
-
               <div data-contact-right>
                 <label htmlFor="name" className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">
                   {t("contact.form.name")}
@@ -253,7 +251,7 @@ export function ContactSection() {
             </form>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

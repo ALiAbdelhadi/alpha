@@ -4,6 +4,7 @@ import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
+import { Container } from "../container"
 
 export function WorkSection() {
   const t = useTranslations()
@@ -49,9 +50,9 @@ export function WorkSection() {
     <section
       id="work"
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center px-6 pt-20 md:px-12 md:pt-24 lg:px-16"
+      className="flex min-h-screen w-full items-center pt-20 md:pt-24"
     >
-      <div className="mx-auto w-full max-w-7xl">
+      <Container>
         <div ref={titleRef} className="mb-12 md:mb-16">
           <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
             {t("work.title")}
@@ -83,7 +84,7 @@ export function WorkSection() {
             <ProjectCard key={i} project={project} index={i} />
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

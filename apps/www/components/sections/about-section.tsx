@@ -5,6 +5,7 @@ import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
+import { Container } from "../container"
 
 export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId: string) => void }) {
   const t = useTranslations()
@@ -52,9 +53,9 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
     <section
       id="about"
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center px-4 pt-20 md:px-12 md:pt-24 lg:px-16"
+      className="flex min-h-screen w-full items-center pt-20  md:pt-24"
     >
-      <div className="mx-auto w-full max-w-7xl">
+      <Container>
         <div className="grid gap-8 md:grid-cols-2 md:gap-16 lg:gap-24">
           <div>
             <div ref={titleRef} className="mb-6 md:mb-12">
@@ -101,7 +102,6 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
             ))}
           </div>
         </div>
-
         <div ref={buttonsRef} className="mt-8 flex flex-wrap gap-3 md:mt-16 md:gap-4">
           <MagneticButton size="lg" variant="primary" onClick={() => scrollToSection?.("contact")}>
             {t("about.ctaPrimary")}
@@ -110,7 +110,7 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
             {t("about.ctaSecondary")}
           </MagneticButton>
         </div>
-      </div>
+      </Container>
     </section>
   )
 }
