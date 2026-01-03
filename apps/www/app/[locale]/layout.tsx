@@ -1,6 +1,7 @@
 import { Providers } from "@/components/providers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeScript } from "@/components/theme-script";
+import { InitialLoader } from "@/components/initial-loader";
 import { routing } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
@@ -32,6 +33,7 @@ export default async function RootLayout({
         suppressHydrationWarning
         className={cn("min-h-screen flex flex-col antialiased")}
       >
+        <InitialLoader />
         <Providers>
           <ThemeScript />
           <ThemeProvider
