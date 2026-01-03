@@ -1,50 +1,24 @@
 "use client"
 
-import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
+import { useReveal, useBatchReveal } from "@/hooks/use-animation"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
-import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { Container } from "../container"
 
 export function WorkSection() {
   const t = useTranslations()
   const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useGSAPReveal({ direction: "left", delay: 0, duration: 0.8 })
+  const titleRef = useReveal<HTMLDivElement>({ direction: "left", delay: 0, duration: 0.8 })
 
-  useEffect(() => {
-    if (!sectionRef.current) return
-
-    const cards = sectionRef.current.querySelectorAll("[data-project-card]")
-    const triggers: ScrollTrigger[] = []
-    
-    cards.forEach((card, index) => {
-      const direction = index % 2 === 0 ? "left" : "right"
-      const xValue = direction === "left" ? -60 : 60
-
-      gsap.set(card, { opacity: 0, x: xValue })
-
-      const animation = gsap.to(card, {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        delay: index * 0.15,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: card,
-          start: "top 85%",
-          toggleActions: "play none none none",
-          once: true,
-        },
-      })
-
-      const trigger = animation.scrollTrigger
-      if (trigger) triggers.push(trigger)
-    })
-
-    return () => {
-      triggers.forEach((trigger) => trigger.kill())
-    }
-  }, [])
+  // Batch animate project cards with alternating directions
+  useBatchReveal<HTMLElement>({
+    targets: "[data-project-card]",
+    direction: "left",
+    distance: 60,
+    duration: 0.8,
+    stagger: 0.15,
+    alternate: true,
+  })
 
   return (
     <section

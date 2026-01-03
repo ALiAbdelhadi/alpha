@@ -45,7 +45,7 @@ export function FloatingParticles() {
             opacity: number
         }> = []
 
-        const particleCount = 30
+        const particleCount = 30 // From PERFORMANCE.particleCount
         for (let i = 0; i < particleCount; i++) {
             particles.push({
                 x: Math.random() * canvas.width,

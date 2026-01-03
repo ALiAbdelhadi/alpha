@@ -1,9 +1,8 @@
 "use client"
 
 import { MagneticButton } from "@/components/magnetic-button"
+import { useReveal } from "@/hooks/use-animation"
 import { useTranslations } from "next-intl"
-import { useEffect, useRef } from "react"
-import { gsap } from "@/lib/gsap"
 import { Container } from "../container"
 
 interface HeroSectionProps {
@@ -12,59 +11,18 @@ interface HeroSectionProps {
 
 export function HeroSection({ scrollToSection }: HeroSectionProps) {
   const t = useTranslations()
-  const badgeRef = useRef<HTMLDivElement>(null)
-  const titleRef = useRef<HTMLHeadingElement>(null)
-  const descriptionRef = useRef<HTMLParagraphElement>(null)
-  const buttonsRef = useRef<HTMLDivElement>(null)
-  const scrollHintRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) {
-      if (badgeRef.current) badgeRef.current.style.opacity = '1'
-      if (titleRef.current) titleRef.current.style.opacity = '1'
-      if (descriptionRef.current) descriptionRef.current.style.opacity = '1'
-      if (buttonsRef.current) buttonsRef.current.style.opacity = '1'
-      if (scrollHintRef.current) scrollHintRef.current.style.opacity = '1'
-      return
-    }
-
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
-
-    if (badgeRef.current) {
-      gsap.set(badgeRef.current, { opacity: 0, y: 20 })
-      tl.to(badgeRef.current, { opacity: 1, y: 0, duration: 0.6 }, 0)
-    }
-
-    if (titleRef.current) {
-      gsap.set(titleRef.current, { opacity: 0, y: 40 })
-      tl.to(titleRef.current, { opacity: 1, y: 0, duration: 0.8 }, 0.2)
-    }
-
-    if (descriptionRef.current) {
-      gsap.set(descriptionRef.current, { opacity: 0, y: 30 })
-      tl.to(descriptionRef.current, { opacity: 1, y: 0, duration: 0.8 }, 0.4)
-    }
-
-    if (buttonsRef.current) {
-      gsap.set(buttonsRef.current, { opacity: 0, y: 20 })
-      tl.to(buttonsRef.current, { opacity: 1, y: 0, duration: 0.6 }, 0.6)
-    }
-
-    if (scrollHintRef.current) {
-      gsap.set(scrollHintRef.current, { opacity: 0 })
-      tl.to(scrollHintRef.current, { opacity: 1, duration: 0.6 }, 0.8)
-    }
-
-    return () => {
-      tl.kill()
-    }
-  }, [])
+  
+  // Individual refs for hero elements with staggered animations
+  const badgeRef = useReveal<HTMLDivElement>({ direction: "up", duration: 0.6, distance: 20, delay: 0 })
+  const titleRef = useReveal<HTMLHeadingElement>({ direction: "up", duration: 0.8, distance: 40, delay: 0.2 })
+  const descriptionRef = useReveal<HTMLParagraphElement>({ direction: "up", duration: 0.8, distance: 30, delay: 0.4 })
+  const buttonsRef = useReveal<HTMLDivElement>({ direction: "up", duration: 0.6, distance: 20, delay: 0.6 })
+  const scrollHintRef = useReveal<HTMLDivElement>({ direction: "fade", duration: 0.6, delay: 0.8 })
 
   return (
     <section
       id="home"
-      className="flex py-38 w-full flex-col items-center justify-center py-32"
+      className="flex w-full flex-col items-center justify-center py-32"
     >
       <Container>
         <div className="max-w-3xl">

@@ -1,57 +1,23 @@
 "use client"
 
-import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
+import { useReveal, useBatchReveal } from "@/hooks/use-animation"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
-import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { Container } from "../container"
 
 export function ServicesSection() {
   const t = useTranslations()
   const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useGSAPReveal({ direction: "up", delay: 0, duration: 0.8 })
+  const titleRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.8 })
 
-  useEffect(() => {
-    if (!sectionRef.current) return
-
-    const cards = sectionRef.current.querySelectorAll("[data-service-card]")
-    const triggers: ScrollTrigger[] = []
-
-    cards.forEach((card, index) => {
-      const directions = ["up", "right", "left", "down"]
-      const direction = directions[index % 4]
-
-      const initialState: gsap.TweenVars = { opacity: 0 }
-      if (direction === "up") initialState.y = 40
-      if (direction === "down") initialState.y = -40
-      if (direction === "left") initialState.x = 40
-      if (direction === "right") initialState.x = -40
-
-      gsap.set(card, initialState)
-
-      const animation = gsap.to(card, {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        duration: 0.8,
-        delay: index * 0.1,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: card,
-          start: "top 85%",
-          toggleActions: "play none none none",
-          once: true,
-        },
-      })
-
-      const trigger = animation.scrollTrigger
-      if (trigger) triggers.push(trigger)
-    })
-
-    return () => {
-      triggers.forEach((trigger) => trigger.kill())
-    }
-  }, [])
+  // Batch animate service cards with staggered timing
+  useBatchReveal<HTMLElement>({
+    targets: "[data-service-card]",
+    direction: "up",
+    distance: 40,
+    duration: 0.8,
+    stagger: 0.1,
+  })
 
   return (
     <section

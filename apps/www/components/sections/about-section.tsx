@@ -1,53 +1,28 @@
 "use client"
 
 import { MagneticButton } from "@/components/magnetic-button"
-import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
+import { useReveal, useBatchReveal } from "@/hooks/use-animation"
 import { useTranslations } from "next-intl"
-import { useEffect, useRef } from "react"
-import { gsap, ScrollTrigger } from "@/lib/gsap"
+import { useRef } from "react"
 import { Container } from "../container"
 
 export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId: string) => void }) {
   const t = useTranslations()
   const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useGSAPReveal({ direction: "up", delay: 0, duration: 0.8 })
-  const descriptionRef = useGSAPReveal({ direction: "up", delay: 0.2, duration: 0.8 })
-  const buttonsRef = useGSAPReveal({ direction: "up", delay: 0.75, duration: 0.8 })
+  const titleRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.8 })
+  const descriptionRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.2, duration: 0.8 })
+  const buttonsRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.75, duration: 0.8 })
 
-  useEffect(() => {
-    if (!sectionRef.current) return
-
-    const stats = sectionRef.current.querySelectorAll("[data-stat]")
-    const triggers: ScrollTrigger[] = []
-
-    stats.forEach((stat, i) => {
-      const direction = i % 2 === 0 ? "right" : "left"
-      const xValue = direction === "left" ? -60 : 60
-
-      gsap.set(stat, { opacity: 0, x: xValue })
-
-      const animation = gsap.to(stat, {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        delay: 0.3 + i * 0.15,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: stat,
-          start: "top 85%",
-          toggleActions: "play none none none",
-          once: true,
-        },
-      })
-
-      const trigger = animation.scrollTrigger
-      if (trigger) triggers.push(trigger)
-    })
-
-    return () => {
-      triggers.forEach((trigger) => trigger.kill())
-    }
-  }, [])
+  // Batch animate stats with alternating directions
+  useBatchReveal<HTMLElement>({
+    targets: "[data-stat]",
+    direction: "right",
+    distance: 60,
+    duration: 0.8,
+    delay: 0.3,
+    stagger: 0.15,
+    alternate: true,
+  })
 
   return (
     <section

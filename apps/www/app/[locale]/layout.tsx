@@ -1,7 +1,6 @@
 import { Providers } from "@/components/providers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeScript } from "@/components/theme-script";
-import { Analytics } from "@/components/analytics";
 import { routing } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
@@ -45,7 +44,6 @@ export default async function RootLayout({
               {children}
             </NextIntlClientProvider>
           </ThemeProvider>
-          <Analytics />
         </Providers>
       </body>
     </html>

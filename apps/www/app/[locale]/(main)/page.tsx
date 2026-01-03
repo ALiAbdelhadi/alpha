@@ -11,7 +11,7 @@ import { ContactSection } from "@/components/sections/contact-section"
 import { HeroSection } from "@/components/sections/hero-section"
 import { ServicesSection } from "@/components/sections/services-section"
 import { WorkSection } from "@/components/sections/work-section"
-import { BRAND_COLORS } from "@/lib/constants"
+import { BRAND_COLORS, SHADER_CONFIG, NAV_ITEMS } from "@/lib/constants"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { ChromaFlow, Shader, Swirl } from "shaders/react"
 
@@ -20,13 +20,7 @@ export default function Home() {
     const [isLoaded, setIsLoaded] = useState(false)
     const shaderContainerRef = useRef<HTMLDivElement>(null)
 
-    const navItems = useMemo(() => [
-        { key: "home", sectionId: "home" },
-        { key: "work", sectionId: "work" },
-        { key: "services", sectionId: "services" },
-        { key: "about", sectionId: "about" },
-        { key: "contact", sectionId: "contact" },
-    ], [])
+    const navItems = useMemo(() => NAV_ITEMS, [])
 
     // Check shader readiness
     useEffect(() => {
@@ -131,15 +125,15 @@ export default function Home() {
                     <Swirl
                         colorA={BRAND_COLORS.teal}
                         colorB={BRAND_COLORS.cyan}
-                        speed={0.8}
-                        detail={0.8}
-                        blend={50}
-                        coarseX={40}
-                        coarseY={40}
-                        mediumX={40}
-                        mediumY={40}
-                        fineX={40}
-                        fineY={40}
+                        speed={SHADER_CONFIG.swirl.speed}
+                        detail={SHADER_CONFIG.swirl.detail}
+                        blend={SHADER_CONFIG.swirl.blend}
+                        coarseX={SHADER_CONFIG.swirl.coarseX}
+                        coarseY={SHADER_CONFIG.swirl.coarseY}
+                        mediumX={SHADER_CONFIG.swirl.mediumX}
+                        mediumY={SHADER_CONFIG.swirl.mediumY}
+                        fineX={SHADER_CONFIG.swirl.fineX}
+                        fineY={SHADER_CONFIG.swirl.fineY}
                     />
                     <ChromaFlow
                         baseColor={BRAND_COLORS.tealLight}
@@ -147,11 +141,11 @@ export default function Home() {
                         downColor={BRAND_COLORS.teal}
                         leftColor={BRAND_COLORS.cyanDark}
                         rightColor={BRAND_COLORS.cyanLight}
-                        intensity={1.2}
-                        radius={1.8}
-                        momentum={35}
-                        maskType="alpha"
-                        opacity={0.97}
+                        intensity={SHADER_CONFIG.chromaFlow.intensity}
+                        radius={SHADER_CONFIG.chromaFlow.radius}
+                        momentum={SHADER_CONFIG.chromaFlow.momentum}
+                        maskType={SHADER_CONFIG.chromaFlow.maskType}
+                        opacity={SHADER_CONFIG.chromaFlow.opacity}
                     />
                 </Shader>
                 <div className="absolute inset-0 bg-black/20" />
