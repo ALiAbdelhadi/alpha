@@ -1,11 +1,11 @@
 import { Providers } from "@/components/providers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeScript } from "@/components/theme-script";
+import { Analytics } from "@/components/analytics";
 import { routing } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from "next/navigation";
-import Script from "next/script";
 import "../globals.css";
 
 type Props = {
@@ -35,24 +35,6 @@ export default async function RootLayout({
       >
         <Providers>
           <ThemeScript />
-          <Script
-            id="theme-init"
-            strategy="beforeInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
-              (function() {
-                try {
-                  const theme = localStorage.getItem('theme-preference');
-                  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                  const shouldBeDark = theme === 'dark' || (!theme && prefersDark);
-                  if (shouldBeDark) {
-                    document.documentElement.classList.add('dark');
-                  }
-                } catch (e) {}
-              })();
-            `,
-            }}
-          />
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -63,6 +45,7 @@ export default async function RootLayout({
               {children}
             </NextIntlClientProvider>
           </ThemeProvider>
+          <Analytics />
         </Providers>
       </body>
     </html>

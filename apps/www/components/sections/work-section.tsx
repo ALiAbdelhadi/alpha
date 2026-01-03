@@ -15,6 +15,7 @@ export function WorkSection() {
     if (!sectionRef.current) return
 
     const cards = sectionRef.current.querySelectorAll("[data-project-card]")
+    const triggers: ScrollTrigger[] = []
     
     cards.forEach((card, index) => {
       const direction = index % 2 === 0 ? "left" : "right"
@@ -22,7 +23,7 @@ export function WorkSection() {
 
       gsap.set(card, { opacity: 0, x: xValue })
 
-      gsap.to(card, {
+      const animation = gsap.to(card, {
         opacity: 1,
         x: 0,
         duration: 0.8,
@@ -35,14 +36,13 @@ export function WorkSection() {
           once: true,
         },
       })
+
+      const trigger = animation.scrollTrigger
+      if (trigger) triggers.push(trigger)
     })
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (sectionRef.current?.contains(trigger.vars.trigger as Element)) {
-          trigger.kill()
-        }
-      })
+      triggers.forEach((trigger) => trigger.kill())
     }
   }, [])
 

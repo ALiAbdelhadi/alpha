@@ -49,9 +49,19 @@ export function CustomCursor() {
     let mouseY = 0
     let currentX = 0
     let currentY = 0
-    let animationFrameId: number
+    let animationFrameId: number | null = null
+    let lastMoveTime = Date.now()
+    const IDLE_TIMEOUT = 2000 // 2 seconds
+    let isAnimating = false
 
     const updateCursor = () => {
+      // Stop if cursor hasn't moved recently
+      if (Date.now() - lastMoveTime > IDLE_TIMEOUT) {
+        isAnimating = false
+        animationFrameId = null
+        return
+      }
+
       currentX += (mouseX - currentX) * 0.15
       currentY += (mouseY - currentY) * 0.15
 
@@ -76,10 +86,19 @@ export function CustomCursor() {
     const handleMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX
       mouseY = e.clientY
+      lastMoveTime = Date.now()
 
+      // Start animation if not already running
+      if (!isAnimating) {
+        isAnimating = true
+        updateCursor()
+      }
+
+      // Cache pointer state using data attributes
       const target = e.target as HTMLElement
       const isPointer =
-        window.getComputedStyle(target).cursor === "pointer" ||
+        target.hasAttribute('data-cursor-pointer') ||
+        target.closest('[data-cursor-pointer]') !== null ||
         target.tagName === "BUTTON" ||
         target.tagName === "A" ||
         target.closest("button") !== null ||
@@ -91,13 +110,14 @@ export function CustomCursor() {
     }
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true })
-    updateCursor()
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove)
-      if (animationFrameId) {
+      if (animationFrameId !== null) {
         cancelAnimationFrame(animationFrameId)
+        animationFrameId = null
       }
+      isAnimating = false
     }
   }, [shouldShow])
 

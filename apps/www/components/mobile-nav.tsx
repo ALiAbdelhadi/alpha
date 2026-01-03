@@ -1,7 +1,7 @@
 "use client"
 
 import { AlphaLogo } from "@/components/alpha-logo"
-import { LanguageSwitcher } from "@/components/language-switcher"
+import { LanguageChanger } from "@/components/language-switcher"
 import { MagneticButton } from "@/components/magnetic-button"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
@@ -122,7 +122,7 @@ export function MobileNav({ currentSection, navItems, scrollToSection, onClose }
           </div>
 
           <div className="mt-auto space-y-4 border-t border-foreground/10 pt-6">
-            <LanguageSwitcher />
+            <LanguageChanger />
             <MagneticButton
               variant="primary"
               className="w-full"

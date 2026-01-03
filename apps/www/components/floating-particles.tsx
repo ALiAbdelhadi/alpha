@@ -62,8 +62,7 @@ export function FloatingParticles() {
 
         const animate = () => {
             if (isPaused || !shouldAnimate) {
-                animationFrameId = requestAnimationFrame(animate)
-                return
+                return // Actually stop the animation
             }
 
             ctx.clearRect(0, 0, canvas.width, canvas.height)

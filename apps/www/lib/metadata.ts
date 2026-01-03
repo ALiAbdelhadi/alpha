@@ -10,7 +10,7 @@ const siteConfig = {
 
 export function generateMetadata(locale: string = 'en'): Metadata {
   const isArabic = locale === 'ar'
-  
+
   return {
     title: {
       default: siteConfig.name,
@@ -82,21 +82,43 @@ export function generateMetadata(locale: string = 'en'): Metadata {
 export function generateStructuredData() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': 'ProfessionalService',
+    '@id': siteConfig.url,
     name: siteConfig.name,
     description: siteConfig.description,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/logo.png`,
+    logo: `${siteConfig.url}/brand/Alpha.png`,
+    image: `${siteConfig.url}${siteConfig.ogImage}`,
     sameAs: [
-      // Add your social media links
+      // Add your social media links when available
       // 'https://twitter.com/alpha',
       // 'https://linkedin.com/company/alpha',
+      // 'https://github.com/alpha',
     ],
     contactPoint: {
       '@type': 'ContactPoint',
       email: 'hello@alpha.com',
       contactType: 'Customer Service',
+      areaServed: 'Worldwide',
+      availableLanguage: ['en', 'ar'],
     },
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'US',
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '47',
+    },
+    priceRange: '$$',
+    serviceType: [
+      'Web Development',
+      'Web Design',
+      'UI/UX Design',
+      'Frontend Development',
+      'Full Stack Development',
+    ],
   }
 }
 

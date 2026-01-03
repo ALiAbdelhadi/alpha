@@ -32,6 +32,19 @@ export const BRAND_COLORS = {
   cyanDark: '#0891b2',
 } as const
 
+// Consolidate to single source of truth
+export const COLORS = {
+  brand: {
+    teal: {
+      DEFAULT: 'oklch(0.6 0.15 180)',
+      light: 'oklch(0.7 0.15 180)',
+      dark: 'oklch(0.5 0.15 180)',
+    }
+  }
+} as const
+
+
+
 // Section IDs for navigation
 export const SECTIONS = {
   home: 'home',

@@ -102,6 +102,7 @@ export function MagneticButton({
         transform: "translate3d(0px, 0px, 0)",
         contain: "layout style paint",
       }}
+      data-cursor-pointer
       {...props}
     >
       <span className="relative z-10">{children}</span>

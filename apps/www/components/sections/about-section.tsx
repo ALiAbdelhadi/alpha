@@ -18,6 +18,7 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
     if (!sectionRef.current) return
 
     const stats = sectionRef.current.querySelectorAll("[data-stat]")
+    const triggers: ScrollTrigger[] = []
 
     stats.forEach((stat, i) => {
       const direction = i % 2 === 0 ? "right" : "left"
@@ -25,7 +26,7 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
 
       gsap.set(stat, { opacity: 0, x: xValue })
 
-      gsap.to(stat, {
+      const animation = gsap.to(stat, {
         opacity: 1,
         x: 0,
         duration: 0.8,
@@ -38,14 +39,13 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
           once: true,
         },
       })
+
+      const trigger = animation.scrollTrigger
+      if (trigger) triggers.push(trigger)
     })
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (sectionRef.current?.contains(trigger.vars.trigger as Element)) {
-          trigger.kill()
-        }
-      })
+      triggers.forEach((trigger) => trigger.kill())
     }
   }, [])
 

@@ -64,7 +64,7 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
   return (
     <section
       id="home"
-      className="flex h-full py-38 w-full flex-col justify-end"
+      className="flex py-38 w-full flex-col items-center justify-center py-32"
     >
       <Container>
         <div className="max-w-3xl">

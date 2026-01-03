@@ -1,39 +1,32 @@
 "use client"
 
-import { AlphaLogo } from "@/components/alpha-logo"
 import { AnimatedGradient } from "@/components/animated-gradient"
 import { CustomCursor } from "@/components/custom-cursor"
+import { ErrorBoundary } from "@/components/error-boundary"
 import { FloatingParticles } from "@/components/floating-particles"
 import { GrainOverlay } from "@/components/grain-overlay"
-import { LanguageSwitcher } from "@/components/language-switcher"
-import { MagneticButton } from "@/components/magnetic-button"
-import { MobileNav } from "@/components/mobile-nav"
-import { ErrorBoundary } from "@/components/error-boundary"
+import { Nav } from "@/components/nav"
 import { AboutSection } from "@/components/sections/about-section"
 import { ContactSection } from "@/components/sections/contact-section"
 import { HeroSection } from "@/components/sections/hero-section"
 import { ServicesSection } from "@/components/sections/services-section"
 import { WorkSection } from "@/components/sections/work-section"
 import { BRAND_COLORS } from "@/lib/constants"
-import { useTranslations } from "next-intl"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { ChromaFlow, Shader, Swirl } from "shaders/react"
-import { Link } from "@/i18n/navigation"
-import { Container } from "@/components/container"
 
 export default function Home() {
-    const t = useTranslations()
     const [currentSection, setCurrentSection] = useState("home")
     const [isLoaded, setIsLoaded] = useState(false)
     const shaderContainerRef = useRef<HTMLDivElement>(null)
 
-    const navItems = [
+    const navItems = useMemo(() => [
         { key: "home", sectionId: "home" },
         { key: "work", sectionId: "work" },
         { key: "services", sectionId: "services" },
         { key: "about", sectionId: "about" },
         { key: "contact", sectionId: "contact" },
-    ]
+    ], [])
 
     // Check shader readiness
     useEffect(() => {
@@ -105,7 +98,7 @@ export default function Home() {
         return () => {
             window.removeEventListener("scroll", onScroll)
         }
-    }, [])
+    }, [navItems])
 
     const scrollToSection = (sectionId: string) => {
         const element = document.getElementById(sectionId)
@@ -163,53 +156,7 @@ export default function Home() {
                 </Shader>
                 <div className="absolute inset-0 bg-black/20" />
             </div>
-            <nav
-                className={`fixed left-0 right-0 h-16 top-0 z-50 flex items-center justify-between transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
-                role="navigation"
-                aria-label={t("nav.mainNavigation")}
-            >
-                <Container className="flex justify-between items-center">
-                    <button
-                        onClick={() => scrollToSection("home")}
-                        className="transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-foreground/50 focus:ring-offset-2 rounded-lg"
-                        aria-label={t("nav.home")}
-                    >
-                        <AlphaLogo size="md" variant="full" />
-                    </button>
-                    <div className="hidden items-center gap-8 md:flex">
-                        {navItems.map((item) => (
-                            <button
-                                key={item.key}
-                                onClick={() => scrollToSection(item.sectionId)}
-                                className={`group relative font-sans text-sm font-medium transition-colors rounded px-2 py-1 ${currentSection === item.sectionId
-                                    ? "text-foreground"
-                                    : "text-foreground/80 hover:text-foreground"
-                                    }`}
-                                aria-current={currentSection === item.sectionId ? "page" : undefined}
-                            >
-                                {t(`nav.${item.key}`)}
-                                <span
-                                    className={`absolute -bottom-1 left-2 right-2 h-px bg-foreground transition-all duration-300 ${currentSection === item.sectionId ? "w-full" : "w-0 group-hover:w-full"
-                                        }`}
-                                />
-                            </button>
-                        ))}
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <LanguageSwitcher />
-                        <div className="hidden md:block">
-                            <MagneticButton variant="secondary" onClick={() => scrollToSection("contact")}>
-                                {t("nav.getStarted")}
-                            </MagneticButton>
-                        </div>
-                        <MobileNav
-                            currentSection={currentSection}
-                            navItems={navItems}
-                            scrollToSection={scrollToSection}
-                        />
-                    </div>
-                </Container>
-            </nav>
+            <Nav scrollToSection={scrollToSection} currentSection={currentSection} />
             <div className="relative z-10">
                 <ErrorBoundary>
                     <HeroSection scrollToSection={scrollToSection} />

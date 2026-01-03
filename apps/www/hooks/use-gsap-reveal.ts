@@ -65,13 +65,11 @@ export function useGSAPReveal(options: UseGSAPRevealOptions = {}) {
       },
     })
 
+    const trigger = animation.scrollTrigger
+
     return () => {
       animation.kill()
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (trigger.vars.trigger === element) {
-          trigger.kill()
-        }
-      })
+      if (trigger) trigger.kill()
     }
   }, [direction, delay, duration, start, once])
 

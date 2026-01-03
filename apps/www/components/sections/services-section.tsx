@@ -1,9 +1,9 @@
 "use client"
 
 import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
-import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { Container } from "../container"
 
 export function ServicesSection() {
@@ -15,6 +15,7 @@ export function ServicesSection() {
     if (!sectionRef.current) return
 
     const cards = sectionRef.current.querySelectorAll("[data-service-card]")
+    const triggers: ScrollTrigger[] = []
 
     cards.forEach((card, index) => {
       const directions = ["up", "right", "left", "down"]
@@ -28,7 +29,7 @@ export function ServicesSection() {
 
       gsap.set(card, initialState)
 
-      gsap.to(card, {
+      const animation = gsap.to(card, {
         opacity: 1,
         x: 0,
         y: 0,
@@ -42,14 +43,13 @@ export function ServicesSection() {
           once: true,
         },
       })
+
+      const trigger = animation.scrollTrigger
+      if (trigger) triggers.push(trigger)
     })
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (sectionRef.current?.contains(trigger.vars.trigger as Element)) {
-          trigger.kill()
-        }
-      })
+      triggers.forEach((trigger) => trigger.kill())
     }
   }, [])
 
@@ -139,7 +139,7 @@ function ServiceCard({
       <div className="mb-3 flex items-center gap-3">
         <div
           data-service-line
-          className="h-px w-8 bg-foreground/30 transition-colors group-hover:bg-foreground/50"
+          className="h-px w-8 bg-foreground/30 transition-all duration-300 group-hover:w-12 group-hover:bg-foreground/60"
         />
         <span className="font-mono text-xs text-foreground/60">0{index + 1}</span>
       </div>
