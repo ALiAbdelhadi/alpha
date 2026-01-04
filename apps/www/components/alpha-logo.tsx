@@ -1,6 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
 
 interface AlphaLogoProps {
     className?: string
@@ -9,6 +10,7 @@ interface AlphaLogoProps {
 }
 
 export function AlphaLogo({ className, size = "md", variant = "full" }: AlphaLogoProps) {
+    const t = useTranslations("logo")
     const sizeClasses = {
         sm: "text-2xl",
         md: "text-3xl",
@@ -40,11 +42,11 @@ export function AlphaLogo({ className, size = "md", variant = "full" }: AlphaLog
         <div className={cn("flex items-center gap-2", className)}>
             <span
                 className={cn(
-                    "font-sans font-semibold tracking-tight bg-linear-to-r from-teal-700 via-teal-500 via-cyan-400 to-cyan-300 bg-clip-text text-transparent",
+                    "font-sans uppercase font-semibold tracking-tight bg-linear-to-r from-teal-700 via-teal-500 via-cyan-400 to-cyan-300 bg-clip-text text-transparent",
                     sizeClasses[size]
                 )}
             >
-                ALPHA
+                {t("logo")}
             </span>
         </div>
     )

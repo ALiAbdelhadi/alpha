@@ -1,4 +1,7 @@
 {
+    "logo": {
+        "logo": "Alpha"
+    },
     "nav": {
         "home": "Home",
         "work": "Work",
@@ -10,7 +13,9 @@
         "closeMenu": "Close menu",
         "mobileNavigation": "Mobile navigation",
         "skipToContent": "Skip to main content",
-        "mainNavigation": "Main navigation"
+        "mainNavigation": "Main navigation",
+        "language": "Language",
+        "theme": "Theme"
     },
     "hero": {
         "badge": "Web Development Excellence",

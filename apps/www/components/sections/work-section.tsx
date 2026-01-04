@@ -1,9 +1,9 @@
 "use client"
 
-import { useReveal, useBatchReveal } from "@/hooks/use-animation"
-import { gsap } from "gsap"
+import { useReveal } from "@/hooks/use-animation"
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { useTranslations } from "next-intl"
-import { useEffect, useRef, useMemo } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { Container } from "../container"
 
 export function WorkSection() {
@@ -11,14 +11,65 @@ export function WorkSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const titleRef = useReveal<HTMLDivElement>({ direction: "left", delay: 0, duration: 0.8 })
 
-  useBatchReveal<HTMLElement>({
-    targets: "[data-project-card]",
-    direction: "left",
-    distance: 60,
-    duration: 0.6, 
-    stagger: 0.1,
-    alternate: true,
-  })
+  // Enhanced batch reveal with parallax effect
+  useEffect(() => {
+    if (!sectionRef.current) return
+
+    const cards = sectionRef.current.querySelectorAll("[data-project-card]")
+    
+    const sectionElement = sectionRef.current
+    const triggers: ScrollTrigger[] = []
+
+    cards.forEach((card, index) => {
+      const isEven = index % 2 === 0
+      const distance = isEven ? 80 : -80
+
+      // Set initial state
+      gsap.set(card, {
+        opacity: 0,
+        x: distance,
+        y: 20,
+        scale: 0.95,
+        rotation: isEven ? -2 : 2,
+        force3D: true,
+        willChange: "transform, opacity"
+      })
+
+      // Create reveal animation
+      gsap.to(card, {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        rotation: 0,
+        duration: 1,
+        delay: index * 0.15,
+        ease: "power3.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+          toggleActions: "play none none none",
+          once: true,
+        },
+        onComplete: () => {
+          gsap.set(card, { willChange: "auto" })
+        }
+      })
+
+    })
+
+    return () => {
+      triggers.forEach((trigger) => trigger.kill())
+      if (sectionElement) {
+        ScrollTrigger.getAll().forEach((trigger) => {
+          if (sectionElement.contains(trigger.vars.trigger as Element)) {
+            trigger.kill()
+          }
+        })
+      }
+    }
+  }, [])
 
   const projects = useMemo(() => [
     {
@@ -74,7 +125,10 @@ function ProjectCard({
 }) {
   const cardRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
-  const animationRef = useRef<gsap.core.Tween | null>(null)
+  const numberRef = useRef<HTMLSpanElement>(null)
+  const categoryRef = useRef<HTMLParagraphElement>(null)
+  const yearRef = useRef<HTMLSpanElement>(null)
+  const animationRef = useRef<gsap.core.Timeline | null>(null)
 
   const cardStyle = useMemo(() => ({
     marginLeft: index % 2 === 0 ? "0" : "auto",
@@ -84,6 +138,9 @@ function ProjectCard({
   useEffect(() => {
     const card = cardRef.current
     const title = titleRef.current
+    const number = numberRef.current
+    const category = categoryRef.current
+    const year = yearRef.current
     if (!card || !title) return
 
     const handleMouseEnter = () => {
@@ -91,12 +148,36 @@ function ProjectCard({
         animationRef.current.kill()
       }
 
-      animationRef.current = gsap.to(title, {
-        x: 8,
-        duration: 0.3,
-        ease: "power2.out",
-        overwrite: "auto",
-      })
+      animationRef.current = gsap.timeline()
+      
+      animationRef.current
+        .to(title, {
+          x: 12,
+          duration: 0.4,
+          ease: "power2.out",
+        }, 0)
+        .to(number, {
+          x: -4,
+          opacity: 0.7,
+          duration: 0.4,
+          ease: "power2.out",
+        }, 0)
+        .to(category, {
+          x: 8,
+          opacity: 0.8,
+          duration: 0.4,
+          ease: "power2.out",
+        }, 0)
+        .to(year, {
+          opacity: 0.6,
+          duration: 0.4,
+          ease: "power2.out",
+        }, 0)
+        .to(card, {
+          scale: 1.02,
+          duration: 0.4,
+          ease: "power2.out",
+        }, 0)
     }
 
     const handleMouseLeave = () => {
@@ -104,12 +185,36 @@ function ProjectCard({
         animationRef.current.kill()
       }
 
-      animationRef.current = gsap.to(title, {
-        x: 0,
-        duration: 0.3,
-        ease: "power2.out",
-        overwrite: "auto",
-      })
+      animationRef.current = gsap.timeline()
+      
+      animationRef.current
+        .to(title, {
+          x: 0,
+          duration: 0.4,
+          ease: "power2.out",
+        }, 0)
+        .to(number, {
+          x: 0,
+          opacity: 0.3,
+          duration: 0.4,
+          ease: "power2.out",
+        }, 0)
+        .to(category, {
+          x: 0,
+          opacity: 0.5,
+          duration: 0.4,
+          ease: "power2.out",
+        }, 0)
+        .to(year, {
+          opacity: 0.3,
+          duration: 0.4,
+          ease: "power2.out",
+        }, 0)
+        .to(card, {
+          scale: 1,
+          duration: 0.4,
+          ease: "power2.out",
+        }, 0)
     }
 
     card.addEventListener("mouseenter", handleMouseEnter, { passive: true })
@@ -128,11 +233,14 @@ function ProjectCard({
     <div
       ref={cardRef}
       data-project-card
-      className="group flex items-center justify-between border-b border-foreground/10 py-6 hover:border-foreground/20 md:py-8 will-change-transform"
+      className="group flex items-center justify-between border-b border-foreground/10 py-6 hover:border-foreground/20 md:py-8 will-change-transform cursor-pointer"
       style={cardStyle}
     >
       <div className="flex items-baseline gap-4 md:gap-8">
-        <span className="font-mono text-sm text-foreground/30 transition-colors group-hover:text-foreground/50 md:text-base">
+        <span 
+          ref={numberRef}
+          className="font-mono text-sm text-foreground/30 transition-colors group-hover:text-foreground/50 md:text-base will-change-transform"
+        >
           {project.number}
         </span>
         <div>
@@ -142,10 +250,20 @@ function ProjectCard({
           >
             {project.title}
           </h3>
-          <p className="font-mono text-xs text-foreground/50 md:text-sm">{project.category}</p>
+          <p 
+            ref={categoryRef}
+            className="font-mono text-xs text-foreground/50 md:text-sm will-change-transform"
+          >
+            {project.category}
+          </p>
         </div>
       </div>
-      <span className="font-mono text-xs text-foreground/30 md:text-sm">{project.year}</span>
+      <span 
+        ref={yearRef}
+        className="font-mono text-xs text-foreground/30 md:text-sm will-change-transform"
+      >
+        {project.year}
+      </span>
     </div>
   )
 }

@@ -1,391 +1,341 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
+import { useLocale } from "next-intl"
 import { useEffect, useRef, useState } from "react"
-import { BRAND_COLORS } from "@/lib/constants"
-import { ChromaFlow, Shader, Swirl } from "shaders/react"
-import { cn } from "@/lib/utils"
 
-/**
- * Initial Loader - Shows when user first opens the website
- * 
- * Features:
- * - Morphing geometric shapes that transform continuously
- * - 3D rotation effects
- * - Shader background with brand colors
- * - Particle trail effects
- * - Smooth fade-out transition
- */
-export function InitialLoader() {
-    const canvasRef = useRef<HTMLCanvasElement>(null)
-    const containerRef = useRef<HTMLDivElement>(null)
-    const [morphProgress, setMorphProgress] = useState(0)
-    const [rotation, setRotation] = useState({ x: 0, y: 0, z: 0 })
-    const [isVisible, setIsVisible] = useState(true)
-    const [shouldRender, setShouldRender] = useState(true)
+const BRAND_COLORS = {
+    tealDarkest: "#064e3b",
+    tealDark: "#0f766e",
+    teal: "#0d9488",
+    tealLight: "#14b8a6",
+    tealLighter: "#2dd4bf",
+    cyanDark: "#0891b2",
+    cyan: "#06b6d4",
+    cyanLight: "#22d3ee",
+    cyanLighter: "#67e8f9",
+    navyDeep: "#0a1929",
+    navy: "#0f172a",
+    navyMedium: "#1e293b",
+    accent: "#0ea5e9",
+    accentLight: "#38bdf8",
+} as const
+
+function cn(...classes: (string | undefined | null | false)[]) {
+    return classes.filter(Boolean).join(" ")
+}
+
+interface GSAPType {
+    timeline: (config?: any) => any
+    context: (func: () => void, scope?: any) => { revert: () => void }
+    set: (target: any, vars: any) => void
+    to: (target: any, vars: any) => void
+    from: (target: any, vars: any) => void
+    fromTo: (target: any, fromVars: any, toVars: any) => void
+}
+
+declare global {
+    interface Window {
+        gsap?: GSAPType
+    }
+}
+
+const useGSAP = () => {
+    const [gsapRef, setGsapRef] = useState<GSAPType | null>(null)
+    const loadingRef = useRef(false)
 
     useEffect(() => {
-        // Check if page is loaded
-        const checkPageLoaded = () => {
-            if (document.readyState === 'complete') {
-                // Wait a bit for shaders and content to load
-                setTimeout(() => {
-                    setIsVisible(false)
-                    // Remove from DOM after fade-out animation
-                    setTimeout(() => {
-                        setShouldRender(false)
-                    }, 500) // Match transition duration
-                }, 800) // Minimum display time
-                return true
+        if (loadingRef.current) return
+        loadingRef.current = true
+
+        if (typeof window !== "undefined" && window.gsap) {
+            setGsapRef(() => window.gsap!)
+            return
+        }
+
+        const script = document.createElement("script")
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+        script.async = true
+        script.onload = () => {
+            if (window.gsap) {
+                setGsapRef(() => window.gsap!)
             }
-            return false
         }
-
-        // Check immediately
-        if (checkPageLoaded()) return
-
-        // Listen for load event
-        const handleLoad = () => {
-            setTimeout(() => {
-                setIsVisible(false)
-                setTimeout(() => {
-                    setShouldRender(false)
-                }, 500)
-            }, 800)
+        script.onerror = () => {
+            console.error("Failed to load GSAP library")
+            loadingRef.current = false
         }
-
-        window.addEventListener('load', handleLoad)
-        
-        // Fallback: hide after max time
-        const maxTimer = setTimeout(() => {
-            setIsVisible(false)
-            setTimeout(() => {
-                setShouldRender(false)
-            }, 500)
-        }, 3000)
+        document.body.appendChild(script)
 
         return () => {
-            window.removeEventListener('load', handleLoad)
-            clearTimeout(maxTimer)
+            if (script.parentNode) {
+                script.parentNode.removeChild(script)
+            }
         }
     }, [])
 
+    return gsapRef
+}
+
+const SimulatedShaderBackground = () => {
+    return (
+        <div className="absolute inset-0 overflow-hidden bg-background">
+            <style jsx>{`
+                @keyframes float {
+                    0% { transform: translate(0px, 0px) scale(1); }
+                    33% { transform: translate(30px, -50px) scale(1.1); }
+                    66% { transform: translate(-20px, 20px) scale(0.9); }
+                    100% { transform: translate(0px, 0px) scale(1); }
+                }
+                @keyframes floatReverse {
+                    0% { transform: translate(0px, 0px) scale(1); }
+                    33% { transform: translate(-40px, 40px) scale(1.05); }
+                    66% { transform: translate(30px, -30px) scale(0.95); }
+                    100% { transform: translate(0px, 0px) scale(1); }
+                }
+                .orb {
+                    position: absolute;
+                    border-radius: 50%;
+                    filter: blur(100px);
+                    opacity: 0.6;
+                    animation: float 18s infinite ease-in-out;
+                    will-change: transform;
+                }
+                .orb-reverse {
+                    animation: floatReverse 20s infinite ease-in-out;
+                }
+            `}</style>
+            
+            <div
+                className="orb w-[65vw] h-[65vw] top-[-25%] left-[-15%]"
+                style={{ 
+                    background: `radial-gradient(circle, ${BRAND_COLORS.navyDeep} 0%, ${BRAND_COLORS.tealDarkest} 100%)`,
+                    animationDelay: "0s" 
+                }}
+            />
+            
+            <div
+                className="orb orb-reverse w-[55vw] h-[55vw] bottom-[-15%] right-[-15%]"
+                style={{ 
+                    background: `radial-gradient(circle, ${BRAND_COLORS.teal} 0%, ${BRAND_COLORS.cyan} 100%)`,
+                    animationDelay: "-6s",
+                    opacity: 0.7
+                }}
+            />
+            
+            <div
+                className="orb w-[45vw] h-[45vw] top-[35%] left-[35%]"
+                style={{ 
+                    background: `radial-gradient(circle, ${BRAND_COLORS.cyanLight} 0%, ${BRAND_COLORS.accent} 100%)`,
+                    animationDelay: "-10s",
+                    opacity: 0.4
+                }}
+            />
+            
+            <div
+                className="orb orb-reverse w-[40vw] h-[40vw] top-[10%] right-[5%]"
+                style={{ 
+                    background: `radial-gradient(circle, ${BRAND_COLORS.navyMedium} 0%, ${BRAND_COLORS.tealDark} 100%)`,
+                    animationDelay: "-14s",
+                    opacity: 0.5
+                }}
+            />
+            
+            <div
+                className="orb w-[35vw] h-[35vw] bottom-[5%] left-[10%]"
+                style={{ 
+                    background: `radial-gradient(circle, ${BRAND_COLORS.tealLight} 0%, ${BRAND_COLORS.cyanLighter} 100%)`,
+                    animationDelay: "-3s",
+                    opacity: 0.35
+                }}
+            />
+            
+            <div className="absolute inset-0 backdrop-blur-[90px]" />
+            <div 
+                className="absolute inset-0"
+                style={{
+                    background: `radial-gradient(circle at 30% 40%, ${BRAND_COLORS.teal}10 0%, transparent 50%)`
+                }}
+            />
+            <div className="absolute inset-0 bg-background/40" />
+        </div>
+    )
+}
+
+interface SplitTextProps {
+    text: string
+    isRTL: boolean
+}
+
+const SplitText = ({ text, isRTL }: SplitTextProps) => {
+    const isArabic = /[\u0600-\u06FF]/.test(text)
+
+    return (
+        <span>
+            {text.split("").map((char, i) => (
+                <span
+                    key={i}
+                    data-char={i}
+                    className={cn(
+                        "char opacity-0 blur-sm scale-110 translate-y-2",
+                        isArabic ? "inline" : "inline-block"
+                    )}
+                    style={{ willChange: "transform, opacity, filter" }}
+                >
+                    {char === " " ? "\u00A0" : char}
+                </span>
+            ))}
+        </span>
+    )
+}
+
+export function InitialLoader() {
+    const locale = useLocale()
+    const isRTL = locale === "ar"
+    const greeting = isRTL ? "ألفا" : "ALPHA"
+
+    const containerRef = useRef<HTMLDivElement>(null)
+    const textContainerRef = useRef<HTMLDivElement>(null)
+    const shaderRef = useRef<HTMLDivElement>(null)
+    const hasAnimatedRef = useRef(false)
+
+    const [shouldRender, setShouldRender] = useState(true)
+
+    const gsap = useGSAP()
+
     useEffect(() => {
-        if (!shouldRender) return
-
-        const canvas = canvasRef.current
-        if (!canvas) return
-
-        const ctx = canvas.getContext("2d")
-        if (!ctx) return
-
-        const resize = () => {
-            canvas.width = window.innerWidth
-            canvas.height = window.innerHeight
+        if (!shouldRender || !gsap || !containerRef.current || hasAnimatedRef.current) {
+            return
         }
-        resize()
-        window.addEventListener("resize", resize)
 
-        // Morphing shape parameters
-        let time = 0
-        const shapes = [
-            { type: "alpha", points: 8 },
-            { type: "hexagon", points: 6 },
-            { type: "star", points: 5 },
-            { type: "circle", points: 100 },
-        ]
-        let currentShapeIndex = 0
+        hasAnimatedRef.current = true
 
-        // Particles for trail effect
-        const particles: Array<{
-            x: number
-            y: number
-            vx: number
-            vy: number
-            life: number
-            maxLife: number
-        }> = []
-
-        const centerX = canvas.width / 2
-        const centerY = canvas.height / 2
-        const baseRadius = 80
-
-        const getShapePoints = (shapeType: string, points: number, radius: number, morph: number) => {
-            const shapePoints: Array<{ x: number; y: number }> = []
-            const angleStep = (Math.PI * 2) / points
-
-            for (let i = 0; i < points; i++) {
-                const angle = i * angleStep
-                let r = radius
-
-                if (shapeType === "alpha") {
-                    // Alpha symbol shape (A)
-                    if (i < points / 2) {
-                        r = radius * (1 + 0.3 * Math.sin(morph * Math.PI * 2))
-                    } else {
-                        r = radius * (0.7 + 0.3 * Math.sin(morph * Math.PI * 2 + Math.PI))
+        const ctx = gsap.context(() => {
+            const tl = gsap.timeline({
+                defaults: { ease: "expo.out" },
+                onComplete: () => {
+                    if (typeof window !== "undefined") {
+                        sessionStorage.setItem("alpha-loader", "true")
                     }
-                } else if (shapeType === "star") {
-                    // Star shape
-                    const outerRadius = radius
-                    const innerRadius = radius * 0.5
-                    r = i % 2 === 0 ? outerRadius : innerRadius
-                    r *= (1 + 0.2 * Math.sin(morph * Math.PI * 2))
-                } else if (shapeType === "hexagon") {
-                    // Hexagon with morphing
-                    r = radius * (1 + 0.15 * Math.sin(morph * Math.PI * 2 + angle))
-                } else {
-                    // Circle
-                    r = radius * (1 + 0.1 * Math.sin(morph * Math.PI * 2))
-                }
-
-                shapePoints.push({
-                    x: centerX + Math.cos(angle) * r,
-                    y: centerY + Math.sin(angle) * r,
-                })
-            }
-
-            return shapePoints
-        }
-
-        const animate = () => {
-            if (!shouldRender) return
-
-            time += 0.016 // ~60fps
-            const morph = (Math.sin(time * 0.5) + 1) / 2 // 0 to 1
-
-            // Update morph progress for React state
-            if (Math.floor(time * 0.1) % 4 !== currentShapeIndex) {
-                currentShapeIndex = Math.floor(time * 0.1) % 4
-            }
-
-            setMorphProgress(morph)
-
-            // Update rotation
-            setRotation({
-                x: Math.sin(time * 0.3) * 15,
-                y: Math.cos(time * 0.4) * 15,
-                z: time * 20,
+                    setTimeout(() => setShouldRender(false), 100)
+                },
             })
 
-            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            const chars = textContainerRef.current?.querySelectorAll(".char")
 
-            const currentShape = shapes[currentShapeIndex]
-            const shapePoints = getShapePoints(
-                currentShape.type,
-                currentShape.points,
-                baseRadius,
-                morph
-            )
+            gsap.set(containerRef.current, { opacity: 1 })
+            gsap.set(shaderRef.current, { opacity: 0, scale: 1.1 })
 
-            // Draw shape with gradient
-            const gradient = ctx.createLinearGradient(
-                centerX - baseRadius,
-                centerY - baseRadius,
-                centerX + baseRadius,
-                centerY + baseRadius
-            )
-            gradient.addColorStop(0, BRAND_COLORS.teal)
-            gradient.addColorStop(0.5, BRAND_COLORS.cyan)
-            gradient.addColorStop(1, BRAND_COLORS.tealLight)
-
-            // Draw main shape
-            ctx.save()
-            ctx.translate(centerX, centerY)
-            ctx.rotate((rotation.z * Math.PI) / 180)
-            ctx.translate(-centerX, -centerY)
-
-            ctx.beginPath()
-            shapePoints.forEach((point, i) => {
-                if (i === 0) {
-                    ctx.moveTo(point.x, point.y)
-                } else {
-                    ctx.lineTo(point.x, point.y)
-                }
+            tl.to(shaderRef.current, {
+                opacity: 1,
+                scale: 1,
+                duration: 2.8,
+                ease: "power2.out",
             })
-            ctx.closePath()
 
-            ctx.strokeStyle = gradient
-            ctx.lineWidth = 3
-            ctx.lineJoin = "round"
-            ctx.stroke()
-
-            // Fill with glow effect
-            ctx.shadowBlur = 20
-            ctx.shadowColor = BRAND_COLORS.cyan
-            ctx.fillStyle = `rgba(6, 182, 212, ${0.1 + morph * 0.1})`
-            ctx.fill()
-
-            ctx.restore()
-
-            // Add particles at shape vertices
-            if (time % 0.1 < 0.016) {
-                shapePoints.forEach((point) => {
-                    particles.push({
-                        x: point.x,
-                        y: point.y,
-                        vx: (Math.random() - 0.5) * 2,
-                        vy: (Math.random() - 0.5) * 2,
-                        life: 1,
-                        maxLife: 1,
-                    })
-                })
+            if (chars && chars.length > 0) {
+                tl.to(chars, {
+                    opacity: 1,
+                    filter: "blur(0px)",
+                    scale: 1,
+                    y: 0,
+                    x: 0,
+                    duration: 1.3,
+                    stagger: {
+                        each: 0.09,
+                        from: "start",
+                    },
+                }, "-=2.0")
             }
 
-            // Update and draw particles
-            for (let i = particles.length - 1; i >= 0; i--) {
-                const particle = particles[i]
-                particle.x += particle.vx
-                particle.y += particle.vy
-                particle.life -= 0.02
+            tl.to(textContainerRef.current, {
+                scale: 1.02,
+                letterSpacing: isRTL ? "0em" : "0.03em",
+                duration: 2.2,
+                ease: "power1.inOut",
+            }, "-=0.6")
 
-                if (particle.life <= 0) {
-                    particles.splice(i, 1)
-                    continue
-                }
+            tl.to(shaderRef.current, {
+                scale: 1.15,
+                opacity: 0,
+                duration: 1.3,
+                ease: "power3.in",
+            }, "-=1.6")
 
-                const alpha = particle.life / particle.maxLife
-                ctx.beginPath()
-                ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2)
-                ctx.fillStyle = `rgba(6, 182, 212, ${alpha * 0.6})`
-                ctx.fill()
-            }
+            tl.to(chars, {
+                y: -90,
+                opacity: 0,
+                filter: "blur(25px)",
+                stagger: {
+                    each: 0.04,
+                    from: "center",
+                },
+                duration: 0.9,
+                ease: "power3.in",
+            }, "<")
 
-            requestAnimationFrame(animate)
-        }
+            tl.to(containerRef.current, {
+                opacity: 0,
+                duration: 0.6,
+            }, "-=0.4")
 
-        animate()
+        }, containerRef)
 
         return () => {
-            window.removeEventListener("resize", resize)
+            ctx.revert()
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [shouldRender])
+    }, [gsap, shouldRender, isRTL])
 
     if (!shouldRender) return null
 
     return (
         <div
             ref={containerRef}
-            className={cn(
-                "fixed inset-0 z-[100] flex items-center justify-center bg-background",
-                "transition-opacity duration-500 ease-out",
-                isVisible ? "opacity-100" : "opacity-0 pointer-events-none"
-            )}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-background overflow-hidden font-sans text-foreground pointer-events-none"
+            dir={isRTL ? "rtl" : "ltr"}
         >
-            {/* Shader Background */}
-            <div className="absolute inset-0 z-0 opacity-30">
-                <Shader className="h-full w-full">
-                    <Swirl
-                        colorA={BRAND_COLORS.teal}
-                        colorB={BRAND_COLORS.cyan}
-                        speed={0.5}
-                        detail={0.6}
-                        blend={40}
-                        coarseX={30}
-                        coarseY={30}
-                        mediumX={30}
-                        mediumY={30}
-                        fineX={30}
-                        fineY={30}
-                    />
-                    <ChromaFlow
-                        baseColor={BRAND_COLORS.tealLight}
-                        upColor={BRAND_COLORS.cyan}
-                        downColor={BRAND_COLORS.teal}
-                        leftColor={BRAND_COLORS.cyanDark}
-                        rightColor={BRAND_COLORS.cyanLight}
-                        intensity={0.8}
-                        radius={1.5}
-                        momentum={25}
-                        maskType="alpha"
-                        opacity={0.6}
-                    />
-                </Shader>
-            </div>
-
-            {/* Animated Gradient Overlay */}
-            <div className="absolute inset-0 z-0">
-                <AnimatedGradient />
-            </div>
-
-            {/* Canvas for Morphing Shapes */}
-            <canvas
-                ref={canvasRef}
-                className="absolute inset-0 z-10"
-                style={{
-                    transform: `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
-                }}
-            />
-
-            {/* Loading Text with Glow */}
-            <div className="relative z-20 flex flex-col items-center gap-4">
-                <div
-                    className={cn(
-                        "relative text-2xl font-bold tracking-wider text-foreground",
-                        "transition-all duration-500"
-                    )}
-                    style={{
-                        textShadow: `0 0 20px ${BRAND_COLORS.cyan}, 0 0 40px ${BRAND_COLORS.cyan}`,
-                        opacity: 0.7 + morphProgress * 0.3,
-                    }}
-                >
-                    <span className="inline-block animate-pulse">α</span>
-                    <span className="ml-2">Loading</span>
-                </div>
-
-                {/* Progress Dots */}
-                <div className="flex gap-2">
-                    {[0, 1, 2].map((i) => (
-                        <div
-                            key={i}
-                            className={cn(
-                                "h-2 w-2 rounded-full transition-all duration-300",
-                                "bg-gradient-to-r from-teal-500 to-cyan-500"
-                            )}
-                            style={{
-                                animationDelay: `${i * 0.2}s`,
-                                animation: "pulse 1.5s ease-in-out infinite",
-                                boxShadow: `0 0 10px ${BRAND_COLORS.cyan}`,
-                            }}
-                        />
-                    ))}
-                </div>
-            </div>
-
-            {/* Grain Overlay */}
             <div
-                className="pointer-events-none absolute inset-0 z-30 opacity-[0.05]"
+                ref={shaderRef}
+                className="absolute inset-0 z-0 opacity-0 will-change-transform transform-gpu"
+            >
+                <SimulatedShaderBackground />
+            </div>
+
+            <div
+                className="absolute inset-0 z-10 opacity-[0.06] pointer-events-none mix-blend-overlay"
                 style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-                    mixBlendMode: "overlay",
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
                 }}
             />
+
+            <div
+                className="absolute inset-0 z-5 opacity-20 pointer-events-none"
+                style={{
+                    background: `radial-gradient(circle at 50% 50%, ${BRAND_COLORS.cyanLight}20 0%, transparent 60%)`
+                }}
+            />
+
+            <div className="relative z-20 flex flex-col items-center justify-center">
+                <div className="relative">
+                    <div
+                        ref={textContainerRef}
+                        className={cn(
+                            "relative font-light tracking-tight flex items-center select-none overflow-visible",
+                            "text-6xl md:text-8xl lg:text-9xl",
+                            isRTL ? "font-arabic" : "font-sans"
+                        )}
+                        style={{
+                            textShadow: `
+                                0 0 40px ${BRAND_COLORS.cyan}40,
+                                0 0 80px ${BRAND_COLORS.teal}30,
+                                0 0 120px ${BRAND_COLORS.accent}20
+                            `,
+                        }}
+                    >
+                        <SplitText text={greeting} isRTL={isRTL} />
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
-
-// Animated Gradient Component (inline)
-function AnimatedGradient() {
-    const ref = useRef<HTMLDivElement>(null)
-
-    useEffect(() => {
-        const element = ref.current
-        if (!element) return
-
-        let angle = 0
-        const animate = () => {
-            angle = (angle + 0.3) % 360
-            element.style.background = `linear-gradient(${angle}deg, rgba(13, 148, 136, 0.15), rgba(6, 182, 212, 0.15), rgba(13, 148, 136, 0.15))`
-            requestAnimationFrame(animate)
-        }
-        animate()
-    }, [])
-
-    return (
-        <div
-            ref={ref}
-            className="pointer-events-none absolute inset-0 opacity-50 blur-3xl"
-        />
-    )
-}
-

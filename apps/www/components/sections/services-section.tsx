@@ -13,7 +13,9 @@ export function ServicesSection() {
   useEffect(() => {
     if (!sectionRef.current) return
 
-    const cards = sectionRef.current.querySelectorAll("[data-service-card]")
+    const sectionElement = sectionRef.current
+    const cards = sectionElement.querySelectorAll("[data-service-card]")
+    const triggers: ScrollTrigger[] = []
 
     cards.forEach((card, index) => {
       const directions = ["up", "right", "left", "down"]
@@ -27,7 +29,7 @@ export function ServicesSection() {
 
       gsap.set(card, initialState)
 
-      gsap.to(card, {
+      const revealTween = gsap.to(card, {
         opacity: 1,
         x: 0,
         y: 0,
@@ -41,14 +43,21 @@ export function ServicesSection() {
           once: true,
         },
       })
+
+      if (revealTween.scrollTrigger) {
+        triggers.push(revealTween.scrollTrigger)
+      }
     })
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (sectionRef.current?.contains(trigger.vars.trigger as Element)) {
-          trigger.kill()
-        }
-      })
+      triggers.forEach((trigger) => trigger.kill())
+      if (sectionElement) {
+        ScrollTrigger.getAll().forEach((trigger) => {
+          if (sectionElement.contains(trigger.vars.trigger as Element)) {
+            trigger.kill()
+          }
+        })
+      }
     }
   }, [])
 

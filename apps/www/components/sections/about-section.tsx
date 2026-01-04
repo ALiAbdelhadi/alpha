@@ -1,9 +1,10 @@
 "use client"
 
 import { MagneticButton } from "@/components/magnetic-button"
-import { useReveal, useBatchReveal } from "@/hooks/use-animation"
+import { useReveal } from "@/hooks/use-animation"
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { useTranslations } from "next-intl"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { Container } from "../container"
 
 export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId: string) => void }) {
@@ -12,17 +13,118 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
   const titleRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.8 })
   const descriptionRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.2, duration: 0.8 })
   const buttonsRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.75, duration: 0.8 })
+  useEffect(() => {
+    if (!sectionRef.current) return
 
-  // Batch animate stats with alternating directions
-  useBatchReveal<HTMLElement>({
-    targets: "[data-stat]",
-    direction: "right",
-    distance: 60,
-    duration: 0.8,
-    delay: 0.3,
-    stagger: 0.15,
-    alternate: true,
-  })
+    const sectionElement = sectionRef.current
+    const stats = sectionElement.querySelectorAll("[data-stat]")
+    const triggers: ScrollTrigger[] = []
+    
+    stats.forEach((stat, index) => {
+      const isEven = index % 2 === 0
+      const distance = isEven ? 80 : -80
+      const valueElement = stat.querySelector("[data-stat-value]")
+      const borderElement = stat.querySelector("[data-stat-border]")
+
+      gsap.set(stat, {
+        opacity: 0,
+        x: distance,
+        y: 20,
+        scale: 0.95,
+        force3D: true,
+        willChange: "transform, opacity"
+      })
+
+      if (borderElement) {
+        gsap.set(borderElement, {
+          scaleX: 0,
+          transformOrigin: "left center"
+        })
+      }
+      const revealTween = gsap.to(stat, {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        duration: 1,
+        delay: 0.3 + (index * 0.2),
+        ease: "power3.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: stat,
+          start: "top 85%",
+          toggleActions: "play none none none",
+          once: true,
+        },
+        onComplete: () => {
+          gsap.set(stat, { willChange: "auto" })
+        }
+      })
+
+      if (revealTween.scrollTrigger) {
+        triggers.push(revealTween.scrollTrigger)
+      }
+      if (borderElement) {
+        const borderTween = gsap.to(borderElement, {
+          scaleX: 1,
+          duration: 0.8,
+          delay: 0.3 + (index * 0.2) + 0.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: stat,
+            start: "top 85%",
+            toggleActions: "play none none none",
+            once: true,
+          }
+        })
+
+        if (borderTween.scrollTrigger) {
+          triggers.push(borderTween.scrollTrigger)
+        }
+      }
+
+      if (valueElement) {
+        const finalValue = valueElement.textContent || ""
+        const numericValue = parseInt(finalValue.replace(/\D/g, ""))
+        
+        if (!isNaN(numericValue)) {
+          const counterObj = { value: 0 }
+          const counterTween = gsap.to(counterObj, {
+            value: numericValue,
+            duration: 1.5,
+            delay: 0.3 + (index * 0.2) + 0.3,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: stat,
+              start: "top 85%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+            onUpdate: function() {
+              const currentValue = Math.floor(counterObj.value)
+              valueElement.textContent = finalValue.replace(/\d+/, currentValue.toString())
+            }
+          })
+
+          if (counterTween.scrollTrigger) {
+            triggers.push(counterTween.scrollTrigger)
+          }
+        }
+      }
+
+    })
+
+    return () => {
+      triggers.forEach((trigger) => trigger.kill())
+      if (sectionElement) {
+        ScrollTrigger.getAll().forEach((trigger) => {
+          if (sectionElement.contains(trigger.vars.trigger as Element)) {
+            trigger.kill()
+          }
+        })
+      }
+    }
+  }, [])
 
   return (
     <section
@@ -62,13 +164,22 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
               <div
                 key={i}
                 data-stat
-                className="flex items-baseline gap-4 border-l border-foreground/30 pl-4 md:gap-8 md:pl-8"
+                className="flex items-baseline gap-4 pl-4 md:gap-8 md:pl-8 relative will-change-transform"
                 style={{
                   marginLeft: i % 2 === 0 ? "0" : "auto",
                   maxWidth: i % 2 === 0 ? "100%" : "85%",
                 }}
               >
-                <div className="text-3xl font-light text-foreground md:text-6xl lg:text-7xl">{stat.value}</div>
+                <div 
+                  data-stat-border
+                  className="absolute left-0 top-0 h-full w-px bg-foreground/30 origin-left"
+                />
+                <div 
+                  data-stat-value
+                  className="text-3xl font-light text-foreground md:text-6xl lg:text-7xl will-change-contents"
+                >
+                  {stat.value}
+                </div>
                 <div>
                   <div className="font-sans text-base font-light text-foreground md:text-xl">{stat.label}</div>
                   <div className="font-mono text-xs text-foreground/60">{stat.sublabel}</div>

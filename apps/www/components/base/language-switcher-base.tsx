@@ -1,18 +1,11 @@
 "use client"
 
-/**
- * Base Language Switcher Component
- * 
- * Unified base component for all language switcher variants.
- * Eliminates code duplication across LanguageChanger, LanguageChangerCompact, and LanguageChangerToggle.
- */
-
+import { gsap } from "@/lib/gsap"
 import { cn } from "@/lib/utils"
 import { Check, ChevronDown, Globe } from "lucide-react"
 import { useLocale } from "next-intl"
 import { usePathname, useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
-import { gsap } from "@/lib/gsap"
 
 export type LanguageSwitcherVariant = "default" | "compact" | "toggle"
 
@@ -50,7 +43,6 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
     setIsOpen(false)
   }
 
-  // Animate menu open/close
   useEffect(() => {
     if (!menuRef.current) return
 
@@ -84,7 +76,6 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
     }
   }, [isOpen])
 
-  // Close on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -106,7 +97,6 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
     }
   }, [isOpen])
 
-  // Close on escape
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isOpen) {
@@ -119,7 +109,6 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
     return () => document.removeEventListener("keydown", handleEscape)
   }, [isOpen])
 
-  // Toggle variant (inline buttons)
   if (variant === "toggle") {
     return (
       <div className={cn("flex items-center gap-1 rounded-lg border border-foreground/20 bg-foreground/10 p-1 backdrop-blur-md", className)}>
@@ -132,7 +121,7 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
               onClick={() => switchLocale(lang.code)}
               data-cursor-pointer
               className={cn(
-                "relative px-3 py-1.5 rounded-md font-mono text-xs uppercase transition-all duration-300",
+                "relative z-10 px-3 py-1.5 rounded-md font-mono text-xs uppercase transition-all duration-300",
                 "focus:outline-none focus:ring-2 focus:ring-foreground/50 focus:ring-offset-1",
                 isActive
                   ? "bg-foreground/90 text-background shadow-md"
@@ -142,7 +131,6 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
               aria-pressed={isActive}
             >
               {lang.code}
-
               {isActive && (
                 <div className="absolute inset-0 rounded-md bg-foreground/10 blur-md -z-10" />
               )}

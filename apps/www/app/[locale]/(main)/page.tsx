@@ -1,14 +1,14 @@
 "use client"
 
-import { AnimatedGradient } from "@/components/animated-gradient"
 import { ErrorBoundary } from "@/components/error-boundary"
 import { GrainOverlay } from "@/components/grain-overlay"
 import { Nav } from "@/components/nav"
-import { BRAND_COLORS, NAV_ITEMS } from "@/lib/constants"
+import { BRAND_COLORS, NAV_ITEMS, SHADER_CONFIG, GRADIENTS } from "@/lib/constants"
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { ChromaFlow, Shader, Swirl } from "shaders/react"
+
 const CustomCursor = lazy(() => import("@/components/custom-cursor").then(m => ({ default: m.CustomCursor })))
-const FloatingParticles = lazy(() => import("@/components/floating-particles").then(m => ({ default: m.FloatingParticles })))
 const HeroSection = lazy(() => import("@/components/sections/hero-section").then(m => ({ default: m.HeroSection })))
 const WorkSection = lazy(() => import("@/components/sections/work-section").then(m => ({ default: m.WorkSection })))
 const ServicesSection = lazy(() => import("@/components/sections/services-section").then(m => ({ default: m.ServicesSection })))
@@ -38,7 +38,7 @@ export default function Home() {
 
     const navItems = useMemo(() => NAV_ITEMS, [])
 
-    // Check shader readiness
+    // Shader loading detection
     useEffect(() => {
         const checkShaderReady = () => {
             const canvas = shaderContainerRef.current?.querySelector("canvas")
@@ -67,9 +67,9 @@ export default function Home() {
         }
     }, [])
 
+    // Scroll tracking
     useEffect(() => {
         const handleScroll = () => {
-
             if (scrollTimeoutRef.current) {
                 clearTimeout(scrollTimeoutRef.current)
             }
@@ -133,16 +133,54 @@ export default function Home() {
         }
     }, [])
 
+    // Section entrance animations
+    useEffect(() => {
+        const sections = ["work", "services", "about", "contact"]
+        const sectionConfigs = {
+            work: { x: -100, y: 0, rotation: -5 },
+            services: { x: 0, y: 100, rotation: 0 },
+            about: { x: 100, y: 0, rotation: 5 },
+            contact: { x: 0, y: -100, rotation: 0 },
+        }
+
+        sections.forEach((sectionId) => {
+            const section = document.getElementById(sectionId)
+            if (!section) return
+
+            const config = sectionConfigs[sectionId as keyof typeof sectionConfigs]
+            
+            gsap.set(section, {
+                opacity: 0,
+                x: config.x,
+                y: config.y,
+                rotation: config.rotation,
+                scale: 0.95,
+                force3D: true,
+                willChange: "transform, opacity"
+            })
+        })
+
+        return () => {
+            ScrollTrigger.getAll().forEach((trigger) => {
+                const triggerElement = trigger.vars.trigger as Element
+                if (triggerElement && sections.some(id => {
+                    const section = document.getElementById(id)
+                    return section?.contains(triggerElement)
+                })) {
+                    trigger.kill()
+                }
+            })
+        }
+    }, [])
+
     return (
         <main className="relative min-h-screen w-full bg-background">
             <Suspense fallback={null}>
                 <CustomCursor />
             </Suspense>
             <GrainOverlay />
-            <Suspense fallback={null}>
-                <FloatingParticles />
-            </Suspense>
-            <AnimatedGradient className="z-0" />
+
+            {/* Enhanced Teal + Navy Shader Background */}
             <div
                 ref={shaderContainerRef}
                 className={`fixed inset-0 z-0 transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
@@ -150,35 +188,58 @@ export default function Home() {
                 aria-hidden="true"
             >
                 <Shader className="h-full w-full">
+                    {/* Monochromatic Teal Swirl */}
                     <Swirl
-                        colorA={BRAND_COLORS.teal}
-                        colorB={BRAND_COLORS.cyan}
-                        speed={0.8}
-                        detail={0.8}
-                        blend={50}
-                        coarseX={40}
-                        coarseY={40}
-                        mediumX={40}
-                        mediumY={40}
-                        fineX={40}
-                        fineY={40}
+                        colorA={SHADER_CONFIG.swirl.colorA}
+                        colorB={SHADER_CONFIG.swirl.colorB}
+                        speed={SHADER_CONFIG.swirl.speed}
+                        detail={SHADER_CONFIG.swirl.detail}
+                        blend={SHADER_CONFIG.swirl.blend}
+                        coarseX={SHADER_CONFIG.swirl.coarseX}
+                        coarseY={SHADER_CONFIG.swirl.coarseY}
+                        mediumX={SHADER_CONFIG.swirl.mediumX}
+                        mediumY={SHADER_CONFIG.swirl.mediumY}
+                        fineX={SHADER_CONFIG.swirl.fineX}
+                        fineY={SHADER_CONFIG.swirl.fineY}
                     />
+                    
+                    {/* ChromaFlow with Navy Depth */}
                     <ChromaFlow
-                        baseColor={BRAND_COLORS.tealLight}
-                        upColor={BRAND_COLORS.cyan}
-                        downColor={BRAND_COLORS.teal}
-                        leftColor={BRAND_COLORS.cyanDark}
-                        rightColor={BRAND_COLORS.cyanLight}
-                        intensity={0.9}
-                        radius={1.8}
-                        momentum={25}
-                        maskType="alpha"
-                        opacity={0.97}
+                        baseColor={SHADER_CONFIG.chromaFlow.baseColor}
+                        upColor={SHADER_CONFIG.chromaFlow.upColor}
+                        downColor={SHADER_CONFIG.chromaFlow.downColor}
+                        leftColor={SHADER_CONFIG.chromaFlow.leftColor}
+                        rightColor={SHADER_CONFIG.chromaFlow.rightColor}
+                        intensity={SHADER_CONFIG.chromaFlow.intensity}
+                        radius={SHADER_CONFIG.chromaFlow.radius}
+                        momentum={SHADER_CONFIG.chromaFlow.momentum}
+                        maskType={SHADER_CONFIG.chromaFlow.maskType}
+                        opacity={SHADER_CONFIG.chromaFlow.opacity}
                     />
                 </Shader>
-                <div className="absolute inset-0 bg-black/20" />
+                
+                {/* Subtle Navy + Teal mesh overlay */}
+                <div 
+                    className="absolute inset-0 opacity-30 mix-blend-overlay"
+                    style={{
+                        background: `
+                            radial-gradient(circle at 20% 30%, ${BRAND_COLORS.teal}30 0%, transparent 40%),
+                            radial-gradient(circle at 80% 70%, ${BRAND_COLORS.navyDeep}50 0%, transparent 40%),
+                            radial-gradient(circle at 50% 50%, ${BRAND_COLORS.cyanDark}20 0%, transparent 50%)
+                        `
+                    }}
+                />
+                
+                {/* Dark base overlay for depth */}
+                <div 
+                    className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40"
+                />
             </div>
+
+            {/* Navigation */}
             <Nav scrollToSection={scrollToSection} currentSection={currentSection} />
+
+            {/* Main Content */}
             <div className="relative z-10">
                 <ErrorBoundary>
                     <Suspense fallback={<SectionSkeleton />}>

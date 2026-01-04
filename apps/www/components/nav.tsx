@@ -6,7 +6,7 @@ import { ThemeChanger } from "@/components/theme-changer"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Link } from "@/i18n/navigation"
 import { gsap } from "@/lib/gsap"
-import { MapPin, Menu, X } from "lucide-react"
+import { cn } from "@/lib/utils"
 import { useLocale, useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from "react"
 import { AlphaLogo } from "./alpha-logo"
@@ -127,7 +127,7 @@ export function Nav({ scrollToSection, currentSection: externalCurrentSection }:
         <>
             <header
                 ref={navRef}
-                className={`fixed top-0 z-50 w-full transition-all duration-500 ${isScrolled
+                className={`fixed top-0 z-40 w-full transition-all duration-500 ${isScrolled
                     ? "bg-[rgba(255,255,255,0.5)] dark:bg-[rgba(20,20,20,0.4)] backdrop-blur-xl shadow-sm"
                     : "bg-transparent"
                     }`}
@@ -178,15 +178,25 @@ export function Nav({ scrollToSection, currentSection: externalCurrentSection }:
                             </nav>
                             <button
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                className="z-50 lg:hidden group rounded-lg p-2.5 transition-all duration-300 hover:bg-muted/80 relative overflow-hidden"
-                                aria-label="Toggle mobile menu"
+                                className="lg:hidden relative z-50 w-[24px] h-[24px] flex items-center justify-center"
+                                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                             >
-                                <div className="absolute inset-0 bg-linear-to-r from-muted/0 via-muted/50 to-muted/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-                                {isMobileMenuOpen ? (
-                                    <X className="h-6 w-6 relative z-50 transition-transform duration-300 group-hover:rotate-90" />
-                                ) : (
-                                    <Menu className="h-6 w-6 relative z-50 transition-transform duration-300 group-hover:scale-110" />
-                                )}
+                                <span
+                                    className={cn(
+                                        "absolute h-[2.2px] w-full bg-foreground transition-all duration-300 ease-in-out",
+                                        isMobileMenuOpen
+                                            ? "rotate-45 translate-y-0"
+                                            : "-translate-y-[6px]"
+                                    )}
+                                />
+                                <span
+                                    className={cn(
+                                        "absolute h-[2.2px] w-full bg-foreground transition-all duration-300 ease-in-out",
+                                        isMobileMenuOpen
+                                            ? "-rotate-45 translate-y-0"
+                                            : "translate-y-[6px]"
+                                    )}
+                                />
                             </button>
                         </div>
                     </div>
@@ -214,19 +224,20 @@ export function Nav({ scrollToSection, currentSection: externalCurrentSection }:
                                             </MobileMenuItem>
                                         ))}
                                     </div>
-                                    <div className="h-px w-full bg-border/30" />
+                                    <div className="h-px w-full bg-border/70" />
                                     <div className="space-y-4">
                                         <MobileMenuItem>
                                             <div className="flex items-center justify-between py-2">
-                                                <span className="text-sm uppercase tracking-widest text-muted-foreground font-light">
+                                                <span className="text-sm uppercase tracking-widest text-foreground/90 font-light">
                                                     {t('language') || 'Language'}
                                                 </span>
                                                 <LanguageChanger />
                                             </div>
+
                                         </MobileMenuItem>
                                         <MobileMenuItem>
                                             <div className="flex items-center justify-between py-2">
-                                                <span className="text-sm uppercase tracking-widest text-muted-foreground font-light">
+                                                <span className="text-sm uppercase tracking-widest text-foreground/90 font-light">
                                                     {t('theme') || 'Theme'}
                                                 </span>
                                                 <ThemeChanger />
@@ -234,11 +245,6 @@ export function Nav({ scrollToSection, currentSection: externalCurrentSection }:
                                         </MobileMenuItem>
                                     </div>
                                     <div className="h-px w-full bg-border/30" />
-                                </div>
-                                <div className="mt-12 pt-8 border-t border-border/30">
-                                    <p className="text-xs uppercase tracking-widest text-muted-foreground font-light text-center">
-                                        {t('footerCta') || '© 2024'}
-                                    </p>
                                 </div>
                             </div>
                         </ScrollArea>

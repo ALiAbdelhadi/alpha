@@ -12,7 +12,6 @@ interface HeroSectionProps {
 export function HeroSection({ scrollToSection }: HeroSectionProps) {
   const t = useTranslations()
   
-  // Individual refs for hero elements with staggered animations
   const badgeRef = useReveal<HTMLDivElement>({ direction: "up", duration: 0.6, distance: 20, delay: 0 })
   const titleRef = useReveal<HTMLHeadingElement>({ direction: "up", duration: 0.8, distance: 40, delay: 0.2 })
   const descriptionRef = useReveal<HTMLParagraphElement>({ direction: "up", duration: 0.8, distance: 30, delay: 0.4 })
