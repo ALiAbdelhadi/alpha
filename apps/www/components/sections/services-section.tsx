@@ -1,31 +1,64 @@
 "use client"
 
-import { useReveal, useBatchReveal } from "@/hooks/use-animation"
+import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
-import { Container } from "../container"
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 
 export function ServicesSection() {
   const t = useTranslations()
   const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.8 })
+  const titleRef = useGSAPReveal({ direction: "up", delay: 0, duration: 0.8 })
 
-  // Batch animate service cards with staggered timing
-  useBatchReveal<HTMLElement>({
-    targets: "[data-service-card]",
-    direction: "up",
-    distance: 40,
-    duration: 0.8,
-    stagger: 0.1,
-  })
+  useEffect(() => {
+    if (!sectionRef.current) return
+
+    const cards = sectionRef.current.querySelectorAll("[data-service-card]")
+
+    cards.forEach((card, index) => {
+      const directions = ["up", "right", "left", "down"]
+      const direction = directions[index % 4]
+
+      const initialState: gsap.TweenVars = { opacity: 0 }
+      if (direction === "up") initialState.y = 40
+      if (direction === "down") initialState.y = -40
+      if (direction === "left") initialState.x = 40
+      if (direction === "right") initialState.x = -40
+
+      gsap.set(card, initialState)
+
+      gsap.to(card, {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        duration: 0.8,
+        delay: index * 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+          toggleActions: "play none none none",
+          once: true,
+        },
+      })
+    })
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => {
+        if (sectionRef.current?.contains(trigger.vars.trigger as Element)) {
+          trigger.kill()
+        }
+      })
+    }
+  }, [])
 
   return (
     <section
       id="services"
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center pt-20 md:pt-24"
+      className="flex min-h-screen w-full items-center px-6 pt-20 md:px-12 md:pt-24 lg:px-16"
     >
-      <Container>
+      <div className="mx-auto w-full max-w-7xl">
         <div ref={titleRef} className="mb-12 md:mb-16">
           <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
             {t("services.title")}
@@ -55,7 +88,7 @@ export function ServicesSection() {
             <ServiceCard key={i} service={service} index={i} />
           ))}
         </div>
-      </Container>
+      </div>
     </section>
   )
 }
@@ -105,7 +138,7 @@ function ServiceCard({
       <div className="mb-3 flex items-center gap-3">
         <div
           data-service-line
-          className="h-px w-8 bg-foreground/30 transition-all duration-300 group-hover:w-12 group-hover:bg-foreground/60"
+          className="h-px w-8 bg-foreground/30 transition-colors group-hover:bg-foreground/50"
         />
         <span className="font-mono text-xs text-foreground/60">0{index + 1}</span>
       </div>

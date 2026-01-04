@@ -16,12 +16,12 @@ export function FloatingParticles() {
         const canvas = canvasRef.current
         if (!canvas) return
 
+        // Check if animations should run
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
         const isLowPower = window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
             (navigator as any).hardwareConcurrency < 4
 
         if (prefersReducedMotion || isLowPower) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
             setShouldAnimate(false)
             return
         }
@@ -45,7 +45,7 @@ export function FloatingParticles() {
             opacity: number
         }> = []
 
-        const particleCount = 30 // From PERFORMANCE.particleCount
+        const particleCount = 30
         for (let i = 0; i < particleCount; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
@@ -62,7 +62,8 @@ export function FloatingParticles() {
 
         const animate = () => {
             if (isPaused || !shouldAnimate) {
-                return // Actually stop the animation
+                animationFrameId = requestAnimationFrame(animate)
+                return
             }
 
             ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -80,6 +81,7 @@ export function FloatingParticles() {
                 ctx.fill()
             })
 
+            // Draw connections
             particles.forEach((particle, i) => {
                 particles.slice(i + 1).forEach((otherParticle) => {
                     const dx = particle.x - otherParticle.x
@@ -100,6 +102,7 @@ export function FloatingParticles() {
             animationFrameId = requestAnimationFrame(animate)
         }
 
+        // Pause when tab is hidden
         const handleVisibilityChange = () => {
             isPaused = document.hidden
         }
@@ -127,4 +130,3 @@ export function FloatingParticles() {
         />
     )
 }
-

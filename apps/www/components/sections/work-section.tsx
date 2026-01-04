@@ -1,8 +1,9 @@
 "use client"
 
 import { useReveal, useBatchReveal } from "@/hooks/use-animation"
+import { gsap } from "gsap"
 import { useTranslations } from "next-intl"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useMemo } from "react"
 import { Container } from "../container"
 
 export function WorkSection() {
@@ -10,15 +11,35 @@ export function WorkSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const titleRef = useReveal<HTMLDivElement>({ direction: "left", delay: 0, duration: 0.8 })
 
-  // Batch animate project cards with alternating directions
   useBatchReveal<HTMLElement>({
     targets: "[data-project-card]",
     direction: "left",
     distance: 60,
-    duration: 0.8,
-    stagger: 0.15,
+    duration: 0.6, 
+    stagger: 0.1,
     alternate: true,
   })
+
+  const projects = useMemo(() => [
+    {
+      number: "01",
+      title: t("work.projects.project1.title"),
+      category: t("work.projects.project1.category"),
+      year: t("work.projects.project1.year"),
+    },
+    {
+      number: "02",
+      title: t("work.projects.project2.title"),
+      category: t("work.projects.project2.category"),
+      year: t("work.projects.project2.year"),
+    },
+    {
+      number: "03",
+      title: t("work.projects.project3.title"),
+      category: t("work.projects.project3.category"),
+      year: t("work.projects.project3.year"),
+    },
+  ], [t])
 
   return (
     <section
@@ -35,27 +56,8 @@ export function WorkSection() {
         </div>
 
         <div className="space-y-6 md:space-y-8">
-          {[
-            {
-              number: "01",
-              title: t("work.projects.project1.title"),
-              category: t("work.projects.project1.category"),
-              year: t("work.projects.project1.year"),
-            },
-            {
-              number: "02",
-              title: t("work.projects.project2.title"),
-              category: t("work.projects.project2.category"),
-              year: t("work.projects.project2.year"),
-            },
-            {
-              number: "03",
-              title: t("work.projects.project3.title"),
-              category: t("work.projects.project3.category"),
-              year: t("work.projects.project3.year"),
-            },
-          ].map((project, i) => (
-            <ProjectCard key={i} project={project} index={i} />
+          {projects.map((project, i) => (
+            <ProjectCard key={project.number} project={project} index={i} />
           ))}
         </div>
       </Container>
@@ -71,35 +73,54 @@ function ProjectCard({
   index: number
 }) {
   const cardRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const animationRef = useRef<gsap.core.Tween | null>(null)
+
+  const cardStyle = useMemo(() => ({
+    marginLeft: index % 2 === 0 ? "0" : "auto",
+    maxWidth: index % 2 === 0 ? "85%" : "90%",
+  }), [index])
 
   useEffect(() => {
-    if (!cardRef.current) return
-
     const card = cardRef.current
-    const title = card.querySelector("h3")
+    const title = titleRef.current
+    if (!card || !title) return
 
     const handleMouseEnter = () => {
-      gsap.to(title, {
+      if (animationRef.current) {
+        animationRef.current.kill()
+      }
+
+      animationRef.current = gsap.to(title, {
         x: 8,
         duration: 0.3,
         ease: "power2.out",
+        overwrite: "auto",
       })
     }
 
     const handleMouseLeave = () => {
-      gsap.to(title, {
+      if (animationRef.current) {
+        animationRef.current.kill()
+      }
+
+      animationRef.current = gsap.to(title, {
         x: 0,
         duration: 0.3,
         ease: "power2.out",
+        overwrite: "auto",
       })
     }
 
-    card.addEventListener("mouseenter", handleMouseEnter)
-    card.addEventListener("mouseleave", handleMouseLeave)
+    card.addEventListener("mouseenter", handleMouseEnter, { passive: true })
+    card.addEventListener("mouseleave", handleMouseLeave, { passive: true })
 
     return () => {
       card.removeEventListener("mouseenter", handleMouseEnter)
       card.removeEventListener("mouseleave", handleMouseLeave)
+      if (animationRef.current) {
+        animationRef.current.kill()
+      }
     }
   }, [])
 
@@ -107,18 +128,18 @@ function ProjectCard({
     <div
       ref={cardRef}
       data-project-card
-      className="group flex items-center justify-between border-b border-foreground/10 py-6 hover:border-foreground/20 md:py-8"
-      style={{
-        marginLeft: index % 2 === 0 ? "0" : "auto",
-        maxWidth: index % 2 === 0 ? "85%" : "90%",
-      }}
+      className="group flex items-center justify-between border-b border-foreground/10 py-6 hover:border-foreground/20 md:py-8 will-change-transform"
+      style={cardStyle}
     >
       <div className="flex items-baseline gap-4 md:gap-8">
         <span className="font-mono text-sm text-foreground/30 transition-colors group-hover:text-foreground/50 md:text-base">
           {project.number}
         </span>
         <div>
-          <h3 className="mb-1 font-sans text-2xl font-light text-foreground md:text-3xl lg:text-4xl">
+          <h3
+            ref={titleRef}
+            className="mb-1 font-sans text-2xl font-light text-foreground md:text-3xl lg:text-4xl will-change-transform"
+          >
             {project.title}
           </h3>
           <p className="font-mono text-xs text-foreground/50 md:text-sm">{project.category}</p>

@@ -161,7 +161,7 @@ export function Nav({ scrollToSection, currentSection: externalCurrentSection }:
                                         >
                                             {t(item.key)}
                                             <span
-                                                className={`absolute -bottom-1 left-2 right-2 h-px bg-foreground transition-all duration-300 ${currentSection === item.sectionId ? "w-full" : "w-0 group-hover:w-full"
+                                                className={`absolute -bottom-1 left-0 right-0 h-px bg-foreground transition-all duration-300 ${currentSection === item.sectionId ? "w-full" : "w-0 group-hover:w-full"
                                                     }`}
                                             />
                                         </button>

@@ -1,26 +1,53 @@
 "use client"
 
+/**
+ * ULTRA-OPTIMIZED CUSTOM CURSOR
+ * 
+ * Performance Improvements:
+ * 1. ✅ RAF only runs when cursor moves (idle detection)
+ * 2. ✅ GPU-accelerated transforms (will-change, transform3d)
+ * 3. ✅ Efficient pointer detection (event delegation)
+ * 4. ✅ Memory-efficient cleanup
+ * 5. ✅ Respects reduced motion
+ * 6. ✅ Proper device detection
+ * 7. ✅ Magnetic effect for interactive elements
+ */
+
 import { useEffect, useRef, useState } from "react"
 import { gsap } from "@/lib/gsap"
+
+// Constants
+const CURSOR_SIZE = { outer: 32, inner: 8 }
+const IDLE_TIMEOUT = 2000 // Stop animation after 2s of no movement
+const LERP_FACTOR = 0.15 // Smooth follow speed
+const MAGNETIC_STRENGTH = 0.3 // Magnetic pull strength
 
 export function CustomCursor() {
   const outerRef = useRef<HTMLDivElement>(null)
   const innerRef = useRef<HTMLDivElement>(null)
-  const isPointerRef = useRef(false)
   const [shouldShow, setShouldShow] = useState(false)
+  
+  // Animation state
+  const stateRef = useRef({
+    mouseX: 0,
+    mouseY: 0,
+    currentX: 0,
+    currentY: 0,
+    isPointer: false,
+    isAnimating: false,
+    lastMoveTime: Date.now(),
+    animationFrameId: null as number | null,
+    magneticTarget: null as { x: number; y: number; element: HTMLElement } | null,
+  })
 
   useEffect(() => {
     const checkShouldShow = () => {
-      if (window.matchMedia('(pointer: coarse)').matches) {
-        return false
-      }
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        return false
-      }
+      // Only show on desktop with fine pointer
+      if (window.matchMedia('(pointer: coarse)').matches) return false
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
       return window.matchMedia('(pointer: fine)').matches
     }
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShouldShow(checkShouldShow())
 
     const mediaQueries = [
@@ -28,10 +55,7 @@ export function CustomCursor() {
       window.matchMedia('(prefers-reduced-motion: reduce)'),
     ]
 
-    const handleChange = () => {
-      setShouldShow(checkShouldShow())
-    }
-
+    const handleChange = () => setShouldShow(checkShouldShow())
     mediaQueries.forEach((mq) => mq.addEventListener('change', handleChange))
 
     return () => {
@@ -44,58 +68,84 @@ export function CustomCursor() {
 
     const outer = outerRef.current
     const inner = innerRef.current
+    const state = stateRef.current
 
-    let mouseX = 0
-    let mouseY = 0
-    let currentX = 0
-    let currentY = 0
-    let animationFrameId: number | null = null
-    let lastMoveTime = Date.now()
-    const IDLE_TIMEOUT = 2000 // 2 seconds
-    let isAnimating = false
-
+    /**
+     * Update cursor position with lerp smoothing
+     */
     const updateCursor = () => {
-      // Stop if cursor hasn't moved recently
-      if (Date.now() - lastMoveTime > IDLE_TIMEOUT) {
-        isAnimating = false
-        animationFrameId = null
+      const now = Date.now()
+      
+      // Stop animating if idle for too long
+      if (now - state.lastMoveTime > IDLE_TIMEOUT) {
+        state.isAnimating = false
+        state.animationFrameId = null
         return
       }
 
-      currentX += (mouseX - currentX) * 0.15
-      currentY += (mouseY - currentY) * 0.15
+      // Calculate target position
+      let targetX = state.mouseX
+      let targetY = state.mouseY
 
-      const scale = isPointerRef.current ? 1.5 : 1
-      const innerScale = isPointerRef.current ? 0.5 : 1
+      // Apply magnetic effect if hovering interactive element
+      if (state.magneticTarget) {
+        const { x, y } = state.magneticTarget
+        const dx = x - state.mouseX
+        const dy = y - state.mouseY
+        targetX += dx * MAGNETIC_STRENGTH
+        targetY += dy * MAGNETIC_STRENGTH
+      }
 
+      // Lerp for smooth following
+      state.currentX += (targetX - state.currentX) * LERP_FACTOR
+      state.currentY += (targetY - state.currentY) * LERP_FACTOR
+
+      // GPU-accelerated transform
+      const scale = state.isPointer ? 1.5 : 1
+      const innerScale = state.isPointer ? 0.5 : 1
+
+      // Use transform3d for GPU acceleration
       gsap.set(outer, {
-        x: currentX,
-        y: currentY,
+        x: state.currentX,
+        y: state.currentY,
         scale,
+        force3D: true,
       })
 
       gsap.set(inner, {
-        x: currentX,
-        y: currentY,
+        x: state.currentX,
+        y: state.currentY,
         scale: innerScale,
+        force3D: true,
       })
 
-      animationFrameId = requestAnimationFrame(updateCursor)
+      state.animationFrameId = requestAnimationFrame(updateCursor)
     }
 
+    /**
+     * Handle mouse move with magnetic effect
+     */
     const handleMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX
-      mouseY = e.clientY
-      lastMoveTime = Date.now()
+      state.mouseX = e.clientX
+      state.mouseY = e.clientY
+      state.lastMoveTime = Date.now()
 
-      // Start animation if not already running
-      if (!isAnimating) {
-        isAnimating = true
-        updateCursor()
+      // Find magnetic target
+      const target = e.target as HTMLElement
+      const magneticElement = target.closest('[data-magnetic]') as HTMLElement
+      
+      if (magneticElement) {
+        const rect = magneticElement.getBoundingClientRect()
+        state.magneticTarget = {
+          x: rect.left + rect.width / 2,
+          y: rect.top + rect.height / 2,
+          element: magneticElement,
+        }
+      } else {
+        state.magneticTarget = null
       }
 
-      // Cache pointer state using data attributes
-      const target = e.target as HTMLElement
+      // Check if pointer
       const isPointer =
         target.hasAttribute('data-cursor-pointer') ||
         target.closest('[data-cursor-pointer]') !== null ||
@@ -104,20 +154,25 @@ export function CustomCursor() {
         target.closest("button") !== null ||
         target.closest("a") !== null
 
-      if (isPointer !== isPointerRef.current) {
-        isPointerRef.current = isPointer
+      if (isPointer !== state.isPointer) {
+        state.isPointer = isPointer
+      }
+
+      // Start animation if not already running
+      if (!state.isAnimating) {
+        state.isAnimating = true
+        updateCursor()
       }
     }
 
+    // Add event listener with passive flag
     window.addEventListener("mousemove", handleMouseMove, { passive: true })
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove)
-      if (animationFrameId !== null) {
-        cancelAnimationFrame(animationFrameId)
-        animationFrameId = null
+      if (state.animationFrameId !== null) {
+        cancelAnimationFrame(state.animationFrameId)
       }
-      isAnimating = false
     }
   }, [shouldShow])
 
@@ -125,18 +180,33 @@ export function CustomCursor() {
 
   return (
     <>
+      {/* Outer cursor ring */}
       <div
         ref={outerRef}
-        className="pointer-events-none fixed left-0 top-0 z-9999 h-8 w-8 -translate-x-1/2 -translate-y-1/2 rounded-full border border-foreground/30 bg-white/10 backdrop-blur-xs mix-blend-difference transition-transform duration-300 ease-out"
-        style={{ willChange: "transform" }}
+        className="pointer-events-none fixed left-0 top-0 z-[9999] -translate-x-1/2 -translate-y-1/2 rounded-full border border-foreground/30 bg-white/10 backdrop-blur-sm mix-blend-difference    transition-transform duration-300 ease-out"
+        style={{
+          width: CURSOR_SIZE.outer,
+          height: CURSOR_SIZE.outer,
+          willChange: "transform",
+          transform: "translate3d(0, 0, 0)",
+        }}
         aria-hidden="true"
       />
+      
+      {/* Inner cursor dot */}
       <div
         ref={innerRef}
-        className="pointer-events-none fixed left-0 top-0 z-9999 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground mix-blend-difference transition-transform duration-300 ease-out"
-        style={{ willChange: "transform" }}
+        className="pointer-events-none fixed left-0 top-0 z-[9999] -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground mix-blend-difference   transition-transform duration-300 ease-out"
+        style={{
+          width: CURSOR_SIZE.inner,
+          height: CURSOR_SIZE.inner,
+          willChange: "transform",
+          transform: "translate3d(0, 0, 0)",
+        }}
         aria-hidden="true"
       />
     </>
   )
 }
+
+export default CustomCursor

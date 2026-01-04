@@ -1,22 +1,38 @@
 "use client"
 
 import { AnimatedGradient } from "@/components/animated-gradient"
-import { CustomCursor } from "@/components/custom-cursor"
 import { ErrorBoundary } from "@/components/error-boundary"
-import { FloatingParticles } from "@/components/floating-particles"
 import { GrainOverlay } from "@/components/grain-overlay"
 import { Nav } from "@/components/nav"
-import { AboutSection } from "@/components/sections/about-section"
-import { ContactSection } from "@/components/sections/contact-section"
-import { HeroSection } from "@/components/sections/hero-section"
-import { ServicesSection } from "@/components/sections/services-section"
-import { WorkSection } from "@/components/sections/work-section"
-import { BRAND_COLORS, SHADER_CONFIG, NAV_ITEMS } from "@/lib/constants"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { BRAND_COLORS, NAV_ITEMS } from "@/lib/constants"
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { ChromaFlow, Shader, Swirl } from "shaders/react"
+const CustomCursor = lazy(() => import("@/components/custom-cursor").then(m => ({ default: m.CustomCursor })))
+const FloatingParticles = lazy(() => import("@/components/floating-particles").then(m => ({ default: m.FloatingParticles })))
+const HeroSection = lazy(() => import("@/components/sections/hero-section").then(m => ({ default: m.HeroSection })))
+const WorkSection = lazy(() => import("@/components/sections/work-section").then(m => ({ default: m.WorkSection })))
+const ServicesSection = lazy(() => import("@/components/sections/services-section").then(m => ({ default: m.ServicesSection })))
+const AboutSection = lazy(() => import("@/components/sections/about-section").then(m => ({ default: m.AboutSection })))
+const ContactSection = lazy(() => import("@/components/sections/contact-section").then(m => ({ default: m.ContactSection })))
+
+function SectionSkeleton() {
+    return (
+        <div className="min-h-screen w-full animate-pulse">
+            <div className="mx-auto max-w-7xl px-6 py-32">
+                <div className="mb-8 h-16 w-3/4 rounded-lg bg-foreground/5" />
+                <div className="space-y-4">
+                    <div className="h-4 w-full rounded bg-foreground/5" />
+                    <div className="h-4 w-5/6 rounded bg-foreground/5" />
+                    <div className="h-4 w-4/6 rounded bg-foreground/5" />
+                </div>
+            </div>
+        </div>
+    )
+}
 
 export default function Home() {
     const [currentSection, setCurrentSection] = useState("home")
+    const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
     const [isLoaded, setIsLoaded] = useState(false)
     const shaderContainerRef = useRef<HTMLDivElement>(null)
 
@@ -25,12 +41,10 @@ export default function Home() {
     // Check shader readiness
     useEffect(() => {
         const checkShaderReady = () => {
-            if (shaderContainerRef.current) {
-                const canvas = shaderContainerRef.current.querySelector("canvas")
-                if (canvas && canvas.width > 0 && canvas.height > 0) {
-                    setIsLoaded(true)
-                    return true
-                }
+            const canvas = shaderContainerRef.current?.querySelector("canvas")
+            if (canvas && canvas.width > 0 && canvas.height > 0) {
+                setIsLoaded(true)
+                return true
             }
             return false
         }
@@ -53,28 +67,35 @@ export default function Home() {
         }
     }, [])
 
-    // Track current section on scroll
     useEffect(() => {
         const handleScroll = () => {
-            const sections = navItems.map((item) => {
-                const element = document.getElementById(item.sectionId)
-                return { id: item.sectionId, element, top: element?.getBoundingClientRect().top ?? Infinity }
-            })
 
-            // Find the section currently in view
-            const viewportMiddle = window.innerHeight / 2
-            const current = sections.reduce((prev, curr) => {
-                const prevDistance = Math.abs(prev.top - viewportMiddle)
-                const currDistance = Math.abs(curr.top - viewportMiddle)
-                return currDistance < prevDistance ? curr : prev
-            })
-
-            if (current.element && current.top < window.innerHeight * 0.8) {
-                setCurrentSection(current.id)
+            if (scrollTimeoutRef.current) {
+                clearTimeout(scrollTimeoutRef.current)
             }
+
+            scrollTimeoutRef.current = setTimeout(() => {
+                const sections = navItems.map((item) => {
+                    const element = document.getElementById(item.sectionId)
+                    return {
+                        id: item.sectionId,
+                        top: element?.getBoundingClientRect().top ?? Infinity,
+                    }
+                })
+
+                const viewportMiddle = window.innerHeight / 2
+                const current = sections.reduce((prev, curr) => {
+                    const prevDistance = Math.abs(prev.top - viewportMiddle)
+                    const currDistance = Math.abs(curr.top - viewportMiddle)
+                    return currDistance < prevDistance ? curr : prev
+                })
+
+                if (current.top < window.innerHeight * 0.8) {
+                    setCurrentSection(current.id)
+                }
+            }, 100)
         }
 
-        // Throttle scroll events
         let ticking = false
         const onScroll = () => {
             if (!ticking) {
@@ -87,17 +108,20 @@ export default function Home() {
         }
 
         window.addEventListener("scroll", onScroll, { passive: true })
-        handleScroll() // Initial check
+        handleScroll()
 
         return () => {
             window.removeEventListener("scroll", onScroll)
+            if (scrollTimeoutRef.current) {
+                clearTimeout(scrollTimeoutRef.current)
+            }
         }
     }, [navItems])
 
-    const scrollToSection = (sectionId: string) => {
+    const scrollToSection = useCallback((sectionId: string) => {
         const element = document.getElementById(sectionId)
         if (element) {
-            const navHeight = 80 // Approximate nav height
+            const navHeight = 80
             const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
             const offsetPosition = elementPosition - navHeight
 
@@ -107,13 +131,17 @@ export default function Home() {
             })
             setCurrentSection(sectionId)
         }
-    }
+    }, [])
 
     return (
         <main className="relative min-h-screen w-full bg-background">
-            <CustomCursor />
+            <Suspense fallback={null}>
+                <CustomCursor />
+            </Suspense>
             <GrainOverlay />
-            <FloatingParticles />
+            <Suspense fallback={null}>
+                <FloatingParticles />
+            </Suspense>
             <AnimatedGradient className="z-0" />
             <div
                 ref={shaderContainerRef}
@@ -125,15 +153,15 @@ export default function Home() {
                     <Swirl
                         colorA={BRAND_COLORS.teal}
                         colorB={BRAND_COLORS.cyan}
-                        speed={SHADER_CONFIG.swirl.speed}
-                        detail={SHADER_CONFIG.swirl.detail}
-                        blend={SHADER_CONFIG.swirl.blend}
-                        coarseX={SHADER_CONFIG.swirl.coarseX}
-                        coarseY={SHADER_CONFIG.swirl.coarseY}
-                        mediumX={SHADER_CONFIG.swirl.mediumX}
-                        mediumY={SHADER_CONFIG.swirl.mediumY}
-                        fineX={SHADER_CONFIG.swirl.fineX}
-                        fineY={SHADER_CONFIG.swirl.fineY}
+                        speed={0.8}
+                        detail={0.8}
+                        blend={50}
+                        coarseX={40}
+                        coarseY={40}
+                        mediumX={40}
+                        mediumY={40}
+                        fineX={40}
+                        fineY={40}
                     />
                     <ChromaFlow
                         baseColor={BRAND_COLORS.tealLight}
@@ -141,11 +169,11 @@ export default function Home() {
                         downColor={BRAND_COLORS.teal}
                         leftColor={BRAND_COLORS.cyanDark}
                         rightColor={BRAND_COLORS.cyanLight}
-                        intensity={SHADER_CONFIG.chromaFlow.intensity}
-                        radius={SHADER_CONFIG.chromaFlow.radius}
-                        momentum={SHADER_CONFIG.chromaFlow.momentum}
-                        maskType={SHADER_CONFIG.chromaFlow.maskType}
-                        opacity={SHADER_CONFIG.chromaFlow.opacity}
+                        intensity={0.9}
+                        radius={1.8}
+                        momentum={25}
+                        maskType="alpha"
+                        opacity={0.97}
                     />
                 </Shader>
                 <div className="absolute inset-0 bg-black/20" />
@@ -153,21 +181,35 @@ export default function Home() {
             <Nav scrollToSection={scrollToSection} currentSection={currentSection} />
             <div className="relative z-10">
                 <ErrorBoundary>
-                    <HeroSection scrollToSection={scrollToSection} />
+                    <Suspense fallback={<SectionSkeleton />}>
+                        <HeroSection scrollToSection={scrollToSection} />
+                    </Suspense>
                 </ErrorBoundary>
+
                 <ErrorBoundary>
-                    <WorkSection />
+                    <Suspense fallback={<SectionSkeleton />}>
+                        <WorkSection />
+                    </Suspense>
                 </ErrorBoundary>
+
                 <ErrorBoundary>
-                    <ServicesSection />
+                    <Suspense fallback={<SectionSkeleton />}>
+                        <ServicesSection />
+                    </Suspense>
                 </ErrorBoundary>
+
                 <ErrorBoundary>
-                    <AboutSection scrollToSection={scrollToSection} />
+                    <Suspense fallback={<SectionSkeleton />}>
+                        <AboutSection scrollToSection={scrollToSection} />
+                    </Suspense>
                 </ErrorBoundary>
+
                 <ErrorBoundary>
-                    <ContactSection />
+                    <Suspense fallback={<SectionSkeleton />}>
+                        <ContactSection />
+                    </Suspense>
                 </ErrorBoundary>
             </div>
-        </main >
+        </main>
     )
 }
