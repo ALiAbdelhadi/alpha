@@ -22,6 +22,14 @@ const withPWA = require("next-pwa")({
 });
 
 const nextConfig: NextConfig = {
+    turbopack: {},
+    reactStrictMode: true,
+    transpilePackages: ["@repo/database"],
+    compiler: {
+        styledComponents: true,
+    },
+    compress: true,
+    poweredByHeader: false,
 };
 
 const withNextIntl = createNextIntlPlugin();

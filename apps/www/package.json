@@ -9,10 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@repo/database": "workspace:*",
+    "@ducanh2912/next-pwa": "^10.2.9",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-scroll-area": "^1.2.10",
     "@radix-ui/react-slot": "^1.2.4",
+    "@repo/database": "workspace:*",
     "@tanstack/react-query": "^5.90.16",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
