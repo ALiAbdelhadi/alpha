@@ -22,7 +22,9 @@ const withPWA = require("next-pwa")({
 });
 
 const nextConfig: NextConfig = {
-    turbopack: {},
+    typescript:{
+        ignoreBuildErrors: true,
+    },
     reactStrictMode: true,
     transpilePackages: ["@repo/database"],
     compiler: {

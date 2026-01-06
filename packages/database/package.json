@@ -1,17 +1,32 @@
 {
   "name": "@repo/database",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.27.0",
+  "scripts": {
+    "build": "tsc",
+    "generate": "prisma generate",
+    "postinstall": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "studio": "prisma studio"
+  },
   "dependencies": {
-    "@prisma/client": "^7.2.0",
-    "prisma": "^7.2.0"
+    "@prisma/client": "^6.19.0",
+    "dotenv": "^17.2.3",
+    "dotenv-flow": "^4.1.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^24.10.2",
+    "prisma": "^6.19.0",
+    "tsx": "^4.21.0",
+    "typescript": "5.9.2"
   }
 }

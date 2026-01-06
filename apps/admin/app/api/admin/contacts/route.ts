@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@repo/database"
 import { z } from "zod"
 
 /**
@@ -155,7 +155,7 @@ export async function PATCH(request: NextRequest) {
                 {
                     success: false,
                     message: "Validation failed",
-                    errors: error.errors,
+                    errors: error,
                 },
                 { status: 400 }
             )

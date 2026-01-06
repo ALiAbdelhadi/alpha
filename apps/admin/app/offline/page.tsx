@@ -1,8 +1,7 @@
-// apps/www/app/[locale]/offline/page.tsx
 "use client"
 
 import { Container } from "@/components/container"
-import { MagneticButton } from "@/components/magnetic-button"
+import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { WifiOff, RefreshCw } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -22,12 +21,11 @@ export default function OfflinePage() {
         <div className="relative min-h-screen w-full flex items-center justify-center bg-background">
             <Container>
                 <div className="flex flex-col items-center justify-center text-center">
-                    {/* Icon */}
                     <div className="mb-8 relative">
                         <div
                             className={cn(
                                 "w-32 h-32 rounded-full flex items-center justify-center",
-                                "bg-gradient-to-br from-muted to-muted/50",
+                                "bg-linear-to-br from-muted to-muted/50",
                                 "border border-border"
                             )}
                         >
@@ -40,40 +38,34 @@ export default function OfflinePage() {
                             }}
                         />
                     </div>
-
-                    {/* Title */}
                     <h1 className="mb-4 font-sans text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-foreground">
                         You&apos;re Offline
                     </h1>
 
-                    {/* Description */}
                     <p className="mb-8 max-w-md text-lg text-muted-foreground">
                         It looks like you&apos;ve lost your internet connection.
                         Check your network and try again.
                     </p>
-
-                    {/* Actions */}
                     <div className="flex flex-col sm:flex-row gap-4">
-                        <MagneticButton
+                        <Button
                             size="lg"
-                            variant="primary"
+                            variant="default"
                             onClick={handleRetry}
                             className="gap-2"
                         >
                             <RefreshCw className="w-4 h-4" />
                             Try Again
-                        </MagneticButton>
+                        </Button>
 
-                        <MagneticButton
+                        <Button
                             size="lg"
                             variant="secondary"
                             onClick={() => window.history.back()}
                         >
                             Go Back
-                        </MagneticButton>
+                        </Button>
                     </div>
 
-                    {/* Network Status */}
                     <div className="mt-12 flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50 border border-border">
                         <div className="w-2 h-2 rounded-full bg-destructive animate-pulse" />
                         <p className="text-sm text-muted-foreground font-mono">
