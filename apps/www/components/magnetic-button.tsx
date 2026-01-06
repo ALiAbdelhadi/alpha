@@ -4,12 +4,14 @@ import type React from "react"
 import { useRef, useEffect, useState } from "react"
 import { gsap } from "@/lib/gsap"
 
+type ButtonVariant = "primary" | "secondary" | "ghost"
+type ButtonSize = "default" | "lg"
+
 interface MagneticButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
   className?: string
-  variant?: "primary" | "secondary" | "ghost"
-  size?: "default" | "lg"
-  onClick?: () => void
+  variant?: ButtonVariant
+  size?: ButtonSize
 }
 
 export function MagneticButton({
@@ -23,9 +25,23 @@ export function MagneticButton({
   const ref = useRef<HTMLButtonElement>(null)
   const xTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null)
   const yTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null)
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
 
   useEffect(() => {
-    if (!ref.current) return
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setPrefersReducedMotion(mediaQuery.matches)
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches)
+    }
+
+    mediaQuery.addEventListener('change', handleChange)
+    return () => mediaQuery.removeEventListener('change', handleChange)
+  }, [])
+
+  useEffect(() => {
+    if (!ref.current || prefersReducedMotion) return
 
     xTo.current = gsap.quickTo(ref.current, "x", {
       duration: 0.6,
@@ -35,10 +51,10 @@ export function MagneticButton({
       duration: 0.6,
       ease: "power3.out",
     })
-  }, [])
+  }, [prefersReducedMotion])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!ref.current || !xTo.current || !yTo.current) return
+    if (!ref.current || !xTo.current || !yTo.current || prefersReducedMotion) return
 
     const rect = ref.current.getBoundingClientRect()
     const x = e.clientX - rect.left - rect.width / 2
@@ -49,12 +65,12 @@ export function MagneticButton({
   }
 
   const handleMouseLeave = () => {
-    if (!xTo.current || !yTo.current) return
+    if (!xTo.current || !yTo.current || prefersReducedMotion) return
     xTo.current(0)
     yTo.current(0)
   }
 
-  const variants = {
+  const variants: Record<ButtonVariant, string> = {
     primary:
       "bg-foreground/95 text-background hover:bg-foreground backdrop-blur-md",
     secondary:
@@ -62,27 +78,10 @@ export function MagneticButton({
     ghost: "bg-transparent text-foreground hover:bg-foreground/5 backdrop-blur-sm",
   }
 
-  const sizes = {
+  const sizes: Record<ButtonSize, string> = {
     default: "px-6 py-2.5 text-sm",
     lg: "px-8 py-3.5 text-base",
   }
-
-  // Check for reduced motion preference
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => {
-    if (typeof window === 'undefined') return false
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  })
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-
-    const handleChange = (e: MediaQueryListEvent) => {
-      setPrefersReducedMotion(e.matches)
-    }
-
-    mediaQuery.addEventListener('change', handleChange)
-    return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [])
 
   return (
     <button

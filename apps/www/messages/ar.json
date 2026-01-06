@@ -31,18 +31,27 @@
         "projects": {
             "project1": {
                 "title": "منصة تجارة إلكترونية",
+                "link": "https://eg-artlighting.vercel.app/",
                 "category": "تطوير Full Stack",
                 "year": "2024"
             },
             "project2": {
-                "title": "لوحة تحكم SaaS",
-                "category": "React & TypeScript",
-                "year": "2024"
+                "title": "مواقع مخصصة",
+                "category": "تطوير ويب",
+                "link": "https://casescobra.vercel.app/",
+                "year": "2023"
             },
             "project3": {
                 "title": "تطبيق ويب للجوال",
-                "category": "Progressive Web App",
-                "year": "2023"
+                "category": "Progressive Web App (PWA)",
+                "link": "https://www.newlight-eg.com/",
+                "year": "2025"
+            },
+            "project4": {
+                "title": "تطبيقات ويب متعددة اللغات",
+                "category": "Localization",
+                "link": "https://www.newlight-eg.com/",
+                "year": "2025"
             }
         }
     },

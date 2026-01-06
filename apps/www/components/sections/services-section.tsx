@@ -1,6 +1,6 @@
 "use client"
 
-import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
+import { useReveal } from "@/hooks/use-animation"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
@@ -8,7 +8,7 @@ import { gsap, ScrollTrigger } from "@/lib/gsap"
 export function ServicesSection() {
   const t = useTranslations()
   const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useGSAPReveal({ direction: "up", delay: 0, duration: 0.8 })
+  const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.8 })
 
   useEffect(() => {
     if (!sectionRef.current) return
@@ -63,6 +63,7 @@ export function ServicesSection() {
 
   return (
     <section
+      suppressHydrationWarning={true}
       id="services"
       ref={sectionRef}
       className="flex min-h-screen w-full items-center px-6 pt-20 md:px-12 md:pt-24 lg:px-16"

@@ -43,7 +43,9 @@ export default async function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              {children}
+              <div id="main-content">
+                {children}
+              </div>
             </ThemeProvider>
           </Providers>
         </NextIntlClientProvider>

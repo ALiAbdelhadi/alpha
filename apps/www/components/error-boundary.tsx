@@ -35,15 +35,15 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       return (
         <div className="flex min-h-screen items-center justify-center px-6">
           <div className="max-w-md text-center">
-            <h1 className="mb-4 font-sans text-2xl font-semibold text-foreground">
+            <h1 className="mb-4 font-sans text-2xl font-semibold text-primary">
               Something went wrong
             </h1>
-            <p className="mb-6 text-foreground/80">
+            <p className="mb-6 text-primary/80">
               We&apos;re sorry, but something unexpected happened. Please try refreshing the page.
             </p>
             <button
               onClick={() => window.location.reload()}
-              className="rounded-lg bg-foreground px-6 py-3 text-background transition-colors hover:bg-foreground/90 focus:outline-none focus:ring-2 focus:ring-foreground/50"
+              className="rounded-lg bg-primary px-6 py-3 text-background transition-colors hover:bg-foreground/90 focus:outline-none focus:ring-2 focus:ring-foreground/50"
             >
               Refresh Page
             </button>

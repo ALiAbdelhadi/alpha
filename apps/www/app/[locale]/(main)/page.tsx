@@ -3,7 +3,7 @@
 import { ErrorBoundary } from "@/components/error-boundary"
 import { GrainOverlay } from "@/components/grain-overlay"
 import { Nav } from "@/components/nav"
-import { BRAND_COLORS, NAV_ITEMS, SHADER_CONFIG, GRADIENTS } from "@/lib/constants"
+import { BRAND_COLORS, NAV_ITEMS, SHADER_CONFIG } from "@/lib/constants"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { ChromaFlow, Shader, Swirl } from "shaders/react"
@@ -178,9 +178,6 @@ export default function Home() {
             <Suspense fallback={null}>
                 <CustomCursor />
             </Suspense>
-            <GrainOverlay />
-
-            {/* Enhanced Teal + Navy Shader Background */}
             <div
                 ref={shaderContainerRef}
                 className={`fixed inset-0 z-0 transition-opacity duration-700 ${isLoaded ? "opacity-100" : "opacity-0"}`}
@@ -188,7 +185,6 @@ export default function Home() {
                 aria-hidden="true"
             >
                 <Shader className="h-full w-full">
-                    {/* Monochromatic Teal Swirl */}
                     <Swirl
                         colorA={SHADER_CONFIG.swirl.colorA}
                         colorB={SHADER_CONFIG.swirl.colorB}
@@ -202,8 +198,6 @@ export default function Home() {
                         fineX={SHADER_CONFIG.swirl.fineX}
                         fineY={SHADER_CONFIG.swirl.fineY}
                     />
-                    
-                    {/* ChromaFlow with Navy Depth */}
                     <ChromaFlow
                         baseColor={SHADER_CONFIG.chromaFlow.baseColor}
                         upColor={SHADER_CONFIG.chromaFlow.upColor}
@@ -217,8 +211,6 @@ export default function Home() {
                         opacity={SHADER_CONFIG.chromaFlow.opacity}
                     />
                 </Shader>
-                
-                {/* Subtle Navy + Teal mesh overlay */}
                 <div 
                     className="absolute inset-0 opacity-30 mix-blend-overlay"
                     style={{
@@ -229,17 +221,11 @@ export default function Home() {
                         `
                     }}
                 />
-                
-                {/* Dark base overlay for depth */}
                 <div 
-                    className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40"
+                    className="absolute inset-0 bg-linear-to-b from-black/30 via-transparent to-black/40"
                 />
             </div>
-
-            {/* Navigation */}
             <Nav scrollToSection={scrollToSection} currentSection={currentSection} />
-
-            {/* Main Content */}
             <div className="relative z-10">
                 <ErrorBoundary>
                     <Suspense fallback={<SectionSkeleton />}>

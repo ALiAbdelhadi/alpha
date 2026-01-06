@@ -128,6 +128,7 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
 
   return (
     <section
+    suppressHydrationWarning={true}
       id="about"
       ref={sectionRef}
       className="flex min-h-screen w-full items-center pt-20  md:pt-24"

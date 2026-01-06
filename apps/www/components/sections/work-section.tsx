@@ -5,18 +5,18 @@ import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { useTranslations } from "next-intl"
 import { useEffect, useMemo, useRef } from "react"
 import { Container } from "../container"
+import Link from "next/link"
 
 export function WorkSection() {
   const t = useTranslations()
   const sectionRef = useRef<HTMLElement>(null)
   const titleRef = useReveal<HTMLDivElement>({ direction: "left", delay: 0, duration: 0.8 })
 
-  // Enhanced batch reveal with parallax effect
   useEffect(() => {
     if (!sectionRef.current) return
 
     const cards = sectionRef.current.querySelectorAll("[data-project-card]")
-    
+
     const sectionElement = sectionRef.current
     const triggers: ScrollTrigger[] = []
 
@@ -24,7 +24,6 @@ export function WorkSection() {
       const isEven = index % 2 === 0
       const distance = isEven ? 80 : -80
 
-      // Set initial state
       gsap.set(card, {
         opacity: 0,
         x: distance,
@@ -35,7 +34,6 @@ export function WorkSection() {
         willChange: "transform, opacity"
       })
 
-      // Create reveal animation
       gsap.to(card, {
         opacity: 1,
         x: 0,
@@ -76,25 +74,37 @@ export function WorkSection() {
       number: "01",
       title: t("work.projects.project1.title"),
       category: t("work.projects.project1.category"),
+      link: t("work.projects.project1.link"),
       year: t("work.projects.project1.year"),
     },
     {
       number: "02",
       title: t("work.projects.project2.title"),
       category: t("work.projects.project2.category"),
+      link: t("work.projects.project2.link"),
       year: t("work.projects.project2.year"),
     },
     {
       number: "03",
       title: t("work.projects.project3.title"),
       category: t("work.projects.project3.category"),
+      link: t("work.projects.project3.link"),
       year: t("work.projects.project3.year"),
-    },
+    }
+    ,
+    {
+      number: "04",
+      title: t("work.projects.project4.title"),
+      category: t("work.projects.project4.category"),
+      link: t("work.projects.project4.link"),
+      year: t("work.projects.project4.year"),
+    }
   ], [t])
 
   return (
     <section
       id="work"
+      suppressHydrationWarning={true}
       ref={sectionRef}
       className="flex min-h-screen w-full items-center pt-20 md:pt-24"
     >
@@ -105,7 +115,6 @@ export function WorkSection() {
           </h2>
           <p className="font-mono text-sm text-foreground/60 md:text-base">/ {t("work.subtitle")}</p>
         </div>
-
         <div className="space-y-6 md:space-y-8">
           {projects.map((project, i) => (
             <ProjectCard key={project.number} project={project} index={i} />
@@ -120,7 +129,7 @@ function ProjectCard({
   project,
   index,
 }: {
-  project: { number: string; title: string; category: string; year: string }
+  project: { number: string; title: string; category: string; year: string, link: string }
   index: number
 }) {
   const cardRef = useRef<HTMLDivElement>(null)
@@ -149,7 +158,7 @@ function ProjectCard({
       }
 
       animationRef.current = gsap.timeline()
-      
+
       animationRef.current
         .to(title, {
           x: 12,
@@ -186,7 +195,7 @@ function ProjectCard({
       }
 
       animationRef.current = gsap.timeline()
-      
+
       animationRef.current
         .to(title, {
           x: 0,
@@ -230,40 +239,36 @@ function ProjectCard({
   }, [])
 
   return (
-    <div
-      ref={cardRef}
-      data-project-card
-      className="group flex items-center justify-between border-b border-foreground/10 py-6 hover:border-foreground/20 md:py-8 will-change-transform cursor-pointer"
-      style={cardStyle}
-    >
-      <div className="flex items-baseline gap-4 md:gap-8">
-        <span 
-          ref={numberRef}
-          className="font-mono text-sm text-foreground/30 transition-colors group-hover:text-foreground/50 md:text-base will-change-transform"
-        >
-          {project.number}
-        </span>
-        <div>
-          <h3
-            ref={titleRef}
-            className="mb-1 font-sans text-2xl font-light text-foreground md:text-3xl lg:text-4xl will-change-transform"
+    <Link href={project.link} target="_blank">
+      <div
+        ref={cardRef}
+        data-project-card
+        className="group flex items-center justify-between border-b border-foreground/10 py-6 hover:border-foreground/20 md:py-8 will-change-transform cursor-pointer"
+        style={cardStyle}
+      >
+        <div className="flex items-baseline gap-4 md:gap-8">
+          <span
+            ref={numberRef}
+            className="font-mono text-sm text-foreground/30 transition-colors group-hover:text-foreground/50 md:text-base will-change-transform"
           >
-            {project.title}
-          </h3>
-          <p 
-            ref={categoryRef}
-            className="font-mono text-xs text-foreground/50 md:text-sm will-change-transform"
-          >
-            {project.category}
-          </p>
+            {project.number}
+          </span>
+          <div>
+            <h3
+              ref={titleRef}
+              className="mb-1 font-sans text-2xl font-light text-foreground md:text-3xl lg:text-4xl will-change-transform"
+            >
+              {project.title}
+            </h3>
+            <p
+              ref={categoryRef}
+              className="font-mono text-xs text-foreground/50 md:text-sm will-change-transform"
+            >
+              {project.category}
+            </p>
+          </div>
         </div>
       </div>
-      <span 
-        ref={yearRef}
-        className="font-mono text-xs text-foreground/30 md:text-sm will-change-transform"
-      >
-        {project.year}
-      </span>
-    </div>
+    </Link>
   )
 }

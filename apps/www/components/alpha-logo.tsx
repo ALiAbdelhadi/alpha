@@ -1,5 +1,3 @@
-"use client"
-
 import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
 
@@ -51,4 +49,3 @@ export function AlphaLogo({ className, size = "md", variant = "full" }: AlphaLog
         </div>
     )
 }
-

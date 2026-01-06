@@ -105,53 +105,53 @@ const SimulatedShaderBackground = () => {
                     animation: floatReverse 20s infinite ease-in-out;
                 }
             `}</style>
-            
+
             <div
                 className="orb w-[65vw] h-[65vw] top-[-25%] left-[-15%]"
-                style={{ 
+                style={{
                     background: `radial-gradient(circle, ${BRAND_COLORS.navyDeep} 0%, ${BRAND_COLORS.tealDarkest} 100%)`,
-                    animationDelay: "0s" 
+                    animationDelay: "0s"
                 }}
             />
-            
+
             <div
                 className="orb orb-reverse w-[55vw] h-[55vw] bottom-[-15%] right-[-15%]"
-                style={{ 
+                style={{
                     background: `radial-gradient(circle, ${BRAND_COLORS.teal} 0%, ${BRAND_COLORS.cyan} 100%)`,
                     animationDelay: "-6s",
                     opacity: 0.7
                 }}
             />
-            
+
             <div
                 className="orb w-[45vw] h-[45vw] top-[35%] left-[35%]"
-                style={{ 
+                style={{
                     background: `radial-gradient(circle, ${BRAND_COLORS.cyanLight} 0%, ${BRAND_COLORS.accent} 100%)`,
                     animationDelay: "-10s",
                     opacity: 0.4
                 }}
             />
-            
+
             <div
                 className="orb orb-reverse w-[40vw] h-[40vw] top-[10%] right-[5%]"
-                style={{ 
+                style={{
                     background: `radial-gradient(circle, ${BRAND_COLORS.navyMedium} 0%, ${BRAND_COLORS.tealDark} 100%)`,
                     animationDelay: "-14s",
                     opacity: 0.5
                 }}
             />
-            
+
             <div
                 className="orb w-[35vw] h-[35vw] bottom-[5%] left-[10%]"
-                style={{ 
+                style={{
                     background: `radial-gradient(circle, ${BRAND_COLORS.tealLight} 0%, ${BRAND_COLORS.cyanLighter} 100%)`,
                     animationDelay: "-3s",
                     opacity: 0.35
                 }}
             />
-            
+
             <div className="absolute inset-0 backdrop-blur-[90px]" />
-            <div 
+            <div
                 className="absolute inset-0"
                 style={{
                     background: `radial-gradient(circle at 30% 40%, ${BRAND_COLORS.teal}10 0%, transparent 50%)`
@@ -159,33 +159,6 @@ const SimulatedShaderBackground = () => {
             />
             <div className="absolute inset-0 bg-background/40" />
         </div>
-    )
-}
-
-interface SplitTextProps {
-    text: string
-    isRTL: boolean
-}
-
-const SplitText = ({ text, isRTL }: SplitTextProps) => {
-    const isArabic = /[\u0600-\u06FF]/.test(text)
-
-    return (
-        <span>
-            {text.split("").map((char, i) => (
-                <span
-                    key={i}
-                    data-char={i}
-                    className={cn(
-                        "char opacity-0 blur-sm scale-110 translate-y-2",
-                        isArabic ? "inline" : "inline-block"
-                    )}
-                    style={{ willChange: "transform, opacity, filter" }}
-                >
-                    {char === " " ? "\u00A0" : char}
-                </span>
-            ))}
-        </span>
     )
 }
 
@@ -200,11 +173,16 @@ export function InitialLoader() {
     const hasAnimatedRef = useRef(false)
 
     const [shouldRender, setShouldRender] = useState(true)
+    const [mounted, setMounted] = useState(false)
 
     const gsap = useGSAP()
 
     useEffect(() => {
-        if (!shouldRender || !gsap || !containerRef.current || hasAnimatedRef.current) {
+        setMounted(true)
+    }, [])
+
+    useEffect(() => {
+        if (!mounted || !shouldRender || !gsap || !containerRef.current || hasAnimatedRef.current) {
             return
         }
 
@@ -214,9 +192,6 @@ export function InitialLoader() {
             const tl = gsap.timeline({
                 defaults: { ease: "expo.out" },
                 onComplete: () => {
-                    if (typeof window !== "undefined") {
-                        sessionStorage.setItem("alpha-loader", "true")
-                    }
                     setTimeout(() => setShouldRender(false), 100)
                 },
             })
@@ -284,14 +259,14 @@ export function InitialLoader() {
         return () => {
             ctx.revert()
         }
-    }, [gsap, shouldRender, isRTL])
+    }, [gsap, shouldRender, isRTL, mounted])
 
-    if (!shouldRender) return null
+    if (!mounted || !shouldRender) return null
 
     return (
         <div
             ref={containerRef}
-            className="fixed inset-0 z-[9999] flex items-center justify-center bg-background overflow-hidden font-sans text-foreground pointer-events-none"
+            className="fixed inset-0 z-9999 flex items-center justify-center bg-background overflow-hidden font-sans text-primary pointer-events-none"
             dir={isRTL ? "rtl" : "ltr"}
         >
             <div
@@ -332,7 +307,19 @@ export function InitialLoader() {
                             `,
                         }}
                     >
-                        <SplitText text={greeting} isRTL={isRTL} />
+                        {greeting.split("").map((char, i) => (
+                            <span
+                                key={i}
+                                data-char={i}
+                                className={cn(
+                                    "char opacity-0 blur-sm scale-110 translate-y-2",
+                                    isRTL ? "inline" : "inline-block"
+                                )}
+                                style={{ willChange: "transform, opacity, filter" }}
+                            >
+                                {char === " " ? "\u00A0" : char}
+                            </span>
+                        ))}
                     </div>
                 </div>
             </div>

@@ -15,12 +15,19 @@ export function AnimatedGradient({ className }: AnimatedGradientProps) {
         if (!element) return
 
         let angle = 0
+        let animationFrameId: number
+
         const animate = () => {
             angle = (angle + 0.5) % 360
             element.style.background = `linear-gradient(${angle}deg, rgba(13, 148, 136, 0.1), rgba(6, 182, 212, 0.1), rgba(13, 148, 136, 0.1))`
-            requestAnimationFrame(animate)
+            animationFrameId = requestAnimationFrame(animate)
         }
-        animate()
+
+        animationFrameId = requestAnimationFrame(animate)
+
+        return () => {
+            cancelAnimationFrame(animationFrameId)
+        }
     }, [])
 
     return (
@@ -30,7 +37,7 @@ export function AnimatedGradient({ className }: AnimatedGradientProps) {
                 "pointer-events-none absolute inset-0 opacity-50 blur-3xl",
                 className
             )}
+            aria-hidden="true"
         />
     )
 }
-

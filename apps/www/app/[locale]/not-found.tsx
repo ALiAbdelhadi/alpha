@@ -176,7 +176,7 @@ export default function NotFound() {
 
                 {/* Error Message */}
                 <div className="space-y-4 max-w-md">
-                    <h2 className="text-3xl font-semibold text-foreground">
+                    <h2 className="text-3xl font-semibold text-primary">
                         Page Not Found
                     </h2>
                     <p className="text-muted-foreground text-lg">

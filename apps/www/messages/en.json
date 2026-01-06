@@ -33,17 +33,26 @@
             "project1": {
                 "title": "E-Commerce Platform",
                 "category": "Full Stack Development",
+                "link": "https://eg-artlighting.vercel.app/",
                 "year": "2024"
             },
             "project2": {
-                "title": "SaaS Dashboard",
-                "category": "React & TypeScript",
+                "title": "Customized Website",
+                "category": "Web Development",
+                "link": "https://casescobra.vercel.app/",
                 "year": "2024"
             },
             "project3": {
                 "title": "Mobile Web App",
-                "category": "Progressive Web App",
-                "year": "2023"
+                "category": "Progressive Web App (PWA)",
+                "link": "https://www.newlight-eg.com/",
+                "year": "2025"
+            },
+            "project4": {
+                "title": "Multi-Language Web Applications",
+                "category": "Localization",
+                "link": "https://www.newlight-eg.com/",
+                "year": "2025"
             }
         }
     },

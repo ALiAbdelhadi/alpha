@@ -11,7 +11,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ scrollToSection }: HeroSectionProps) {
   const t = useTranslations()
-  
+
   const badgeRef = useReveal<HTMLDivElement>({ direction: "up", duration: 0.6, distance: 20, delay: 0 })
   const titleRef = useReveal<HTMLHeadingElement>({ direction: "up", duration: 0.8, distance: 40, delay: 0.2 })
   const descriptionRef = useReveal<HTMLParagraphElement>({ direction: "up", duration: 0.8, distance: 30, delay: 0.4 })
@@ -22,12 +22,15 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
     <section
       id="home"
       className="flex w-full flex-col items-center justify-center py-32"
+      aria-label="Hero section"
     >
       <Container>
         <div className="max-w-3xl">
           <div
             ref={badgeRef}
             className="mb-4 inline-block rounded-full border border-foreground/20 bg-foreground/15 px-4 py-1.5 backdrop-blur-md"
+            role="status"
+            aria-live="polite"
           >
             <p className="font-mono text-xs text-foreground/90">{t("hero.badge")}</p>
           </div>
@@ -48,15 +51,29 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
             <span className="text-pretty">{t("hero.description")}</span>
           </p>
           <div ref={buttonsRef} className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <MagneticButton size="lg" variant="primary" onClick={() => scrollToSection("contact")}>
+            <MagneticButton
+              size="lg"
+              variant="primary"
+              onClick={() => scrollToSection("contact")}
+              aria-label={t("hero.ctaPrimary")}
+            >
               {t("hero.ctaPrimary")}
             </MagneticButton>
-            <MagneticButton size="lg" variant="secondary" onClick={() => scrollToSection("work")}>
+            <MagneticButton
+              size="lg"
+              variant="secondary"
+              onClick={() => scrollToSection("work")}
+              aria-label={t("hero.ctaSecondary")}
+            >
               {t("hero.ctaSecondary")}
             </MagneticButton>
           </div>
         </div>
-        <div ref={scrollHintRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block">
+        <div
+          ref={scrollHintRef}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block"
+          aria-hidden="true"
+        >
           <div className="flex items-center gap-2">
             <p className="font-mono text-xs text-foreground/80">{t("hero.scrollHint")}</p>
             <div className="flex h-6 w-12 items-center justify-center rounded-full border border-foreground/20 bg-foreground/15 backdrop-blur-md">
@@ -68,4 +85,3 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
     </section>
   )
 }
-

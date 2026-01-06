@@ -1,7 +1,7 @@
 "use client"
 
 import { MagneticButton } from "@/components/magnetic-button"
-import { useGSAPReveal } from "@/hooks/use-gsap-reveal"
+import { useReveal } from "@/hooks/use-animation"
 import { Link } from "@/i18n/navigation"
 import { gsap } from "@/lib/gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -17,7 +17,7 @@ if (typeof window !== "undefined") {
 export function ContactSection() {
   const t = useTranslations()
   const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useGSAPReveal({ direction: "left", delay: 0, duration: 0.8 })
+  const titleRef = useReveal({ direction: "left", delay: 0, duration: 0.8 })
   const [formData, setFormData] = useState({ name: "", email: "", message: "" })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
@@ -34,7 +34,7 @@ export function ContactSection() {
       leftElements.forEach((element, index) => {
         gsap.set(element, {
           opacity: 0,
-          x: -80,
+          x: 0,
           y: 20,
           scale: 0.95,
           force3D: true,
@@ -149,6 +149,7 @@ export function ContactSection() {
   return (
     <section
       id="contact"
+      suppressHydrationWarning={true}
       ref={sectionRef}
       className="flex min-h-screen shrink-0 snap-start items-center py-16 sm:py-20 md:py-24 lg:py-0 overflow-x-hidden"
     >
