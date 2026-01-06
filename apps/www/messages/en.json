@@ -8,7 +8,7 @@
         "services": "Services",
         "about": "About",
         "contact": "Contact",
-        "getStarted": "Get Started",
+        "getStarted": "Let's Talk",
         "openMenu": "Open menu",
         "closeMenu": "Close menu",
         "mobileNavigation": "Mobile navigation",
@@ -18,106 +18,106 @@
         "theme": "Theme"
     },
     "hero": {
-        "badge": "Web Development Excellence",
-        "title": "Building the future",
-        "title2": "of web experiences",
-        "description": "Alpha specializes in creating cutting-edge web applications with innovative interactions, stunning visuals, and exceptional user experiences that set your brand apart.",
-        "ctaPrimary": "Start Your Project",
+        "badge": "Web Development Studio",
+        "title": "We build websites",
+        "title2": "that work",
+        "description": "Alpha crafts modern web applications with clean code, thoughtful design, and attention to detail. We work with businesses ready to establish or improve their digital presence.",
+        "ctaPrimary": "Start a Conversation",
         "ctaSecondary": "View Our Work",
         "scrollHint": "Scroll to explore"
     },
     "work": {
-        "title": "Featured",
-        "subtitle": "Recent explorations",
+        "title": "Recent Work",
+        "subtitle": "What we've built",
         "projects": {
             "project1": {
-                "title": "E-Commerce Platform",
-                "category": "Full Stack Development",
+                "title": "EG Art Lighting - E-Commerce Platform",
+                "category": "Full-stack Next.js application with Stripe integration",
                 "link": "https://eg-artlighting.vercel.app/",
                 "year": "2024"
             },
             "project2": {
-                "title": "Customized Website",
-                "category": "Web Development",
+                "title": "CasesCobra - Custom Product Store",
+                "category": "Product customization platform with real-time preview",
                 "link": "https://casescobra.vercel.app/",
                 "year": "2024"
             },
             "project3": {
-                "title": "Mobile Web App",
-                "category": "Progressive Web App (PWA)",
+                "title": "New Light Egypt - Corporate Website",
+                "category": "Multi-language business site with PWA capabilities",
                 "link": "https://www.newlight-eg.com/",
-                "year": "2025"
+                "year": "2024"
             },
             "project4": {
-                "title": "Multi-Language Web Applications",
-                "category": "Localization",
+                "title": "International Business Portal",
+                "category": "Bilingual (EN/AR) web application",
                 "link": "https://www.newlight-eg.com/",
-                "year": "2025"
+                "year": "2024"
             }
         }
     },
     "services": {
-        "title": "Capabilities",
-        "subtitle": "What we bring to the table",
+        "title": "What We Do",
+        "subtitle": "Our core services",
         "service1": {
-            "title": "Creative Development",
-            "description": "Pushing the boundaries of what's possible on the web"
+            "title": "Web Development",
+            "description": "Modern websites and applications built with React, Next.js, and TypeScript. We focus on performance, accessibility, and maintainable code."
         },
         "service2": {
-            "title": "Visual Design",
-            "description": "Crafting memorable experiences through thoughtful aesthetics"
+            "title": "E-Commerce Solutions",
+            "description": "Complete online stores with payment integration, inventory management, and responsive design. Built for growth and easy management."
         },
         "service3": {
-            "title": "Motion & Animation",
-            "description": "Bringing interfaces to life with purposeful movement"
+            "title": "Multi-Language Sites",
+            "description": "Websites that work seamlessly in Arabic and English, with proper RTL support and culturally adapted content."
         },
         "service4": {
-            "title": "Technical Strategy",
-            "description": "Building scalable solutions that perform beautifully"
+            "title": "UI/UX Implementation",
+            "description": "Translating designs into functional interfaces with smooth animations, intuitive interactions, and pixel-perfect execution."
         }
     },
     "about": {
-        "title": "Building the",
-        "title2": "future of",
-        "title3": "digital",
-        "description1": "Alpha is a web development company dedicated to creating exceptional digital experiences. We combine cutting-edge technology with innovative design to build websites and applications that stand out.",
-        "description2": "Every project is an opportunity to push the boundaries of what's possible on the web, delivering solutions that are both beautiful and functional.",
+        "title": "We're a small team",
+        "title2": "focused on",
+        "title3": "quality work",
+        "description1": "Alpha is a web development studio based in Cairo, Egypt. We specialize in building modern web applications for businesses that value quality and attention to detail.",
+        "description2": "Every project gets our full focus. We don't outsource, we don't use templates, and we don't overpromise. We write clean code, meet deadlines, and stay in touch throughout the process.",
         "stat1": {
-            "value": "150+",
+            "value": "20+",
             "label": "Projects",
-            "sublabel": "Delivered worldwide"
+            "sublabel": "Completed successfully"
         },
         "stat2": {
-            "value": "8",
+            "value": "3",
             "label": "Years",
-            "sublabel": "Of innovation"
+            "sublabel": "Building for the web"
         },
         "stat3": {
-            "value": "12",
-            "label": "Awards",
-            "sublabel": "Industry recognition"
+            "value": "100%",
+            "label": "Client",
+            "sublabel": "Satisfaction rate"
         },
-        "ctaPrimary": "Start a Project",
-        "ctaSecondary": "View Our Work"
+        "ctaPrimary": "Discuss Your Project",
+        "ctaSecondary": "See Our Work"
     },
     "contact": {
-        "title": "Let's",
-        "title2": "talk",
+        "title": "Let's work",
+        "title2": "together",
         "subtitle": "Get in touch",
         "email": "Email",
         "emailValue": "hello@alpha.com",
         "location": "Location",
-        "locationValue": "Global",
+        "locationValue": "Cairo, Egypt",
         "form": {
             "name": "Name",
             "namePlaceholder": "Your name",
             "email": "Email",
             "emailPlaceholder": "your@email.com",
             "message": "Message",
-            "messagePlaceholder": "Tell us about your project...",
+            "messagePlaceholder": "Tell us about your project - what you need, your timeline, and your budget range...",
             "submit": "Send Message",
             "submitting": "Sending...",
-            "success": "Message sent successfully!"
+            "success": "Thanks! We'll get back to you within 24 hours."
         },
         "social": {
             "twitter": "Twitter",
