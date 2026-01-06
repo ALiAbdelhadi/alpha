@@ -266,7 +266,7 @@ export function InitialLoader() {
     return (
         <div
             ref={containerRef}
-            className="fixed inset-0 z-9999 flex items-center justify-center bg-background overflow-hidden font-sans text-primary pointer-events-none"
+            className="fixed min-h-screen inset-0 z-9999 flex items-center justify-center bg-background overflow-hidden font-sans text-primary pointer-events-none"
             dir={isRTL ? "rtl" : "ltr"}
         >
             <div

@@ -1,0 +1,337 @@
+"use client"
+
+import {
+    Calendar,
+    Eye,
+    Mail,
+    Search
+} from "lucide-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+
+type SubmissionStatus =
+    | "NEW"
+    | "VIEWED"
+    | "CONTACTED"
+    | "QUALIFIED"
+    | "PROPOSAL_SENT"
+    | "WON"
+    | "LOST"
+    | "SPAM"
+
+type Priority = "LOW" | "MEDIUM" | "HIGH" | "URGENT"
+
+interface ContactSubmission {
+    id: string
+    name: string
+    email: string
+    message: string
+    status: SubmissionStatus
+    priority: Priority
+    serviceInterest?: string | null
+    projectTimeline?: string | null
+    submittedAt: string
+    assignedTo?: { name: string | null; email: string } | null
+    _count?: {
+        notes: number
+        meetings: number
+    }
+}
+
+export default function ContactsPage() {
+    const [contacts, setContacts] = useState<ContactSubmission[]>([])
+    const [loading, setLoading] = useState(true)
+    const [searchQuery, setSearchQuery] = useState("")
+    const [statusFilter, setStatusFilter] = useState<string>("all")
+    const [priorityFilter, setPriorityFilter] = useState<string>("all")
+    const [updating, setUpdating] = useState<string | null>(null)
+
+    useEffect(() => {
+        fetchContacts()
+    }, [statusFilter, priorityFilter])
+
+    const fetchContacts = async () => {
+        try {
+            setLoading(true)
+            const params = new URLSearchParams()
+            if (statusFilter !== "all") params.append("status", statusFilter)
+            if (priorityFilter !== "all") params.append("priority", priorityFilter)
+            if (searchQuery) params.append("search", searchQuery)
+
+            const response = await fetch(`/api/admin/contacts?${params.toString()}`)
+            const data = await response.json()
+            if (data.success) {
+                setContacts(data.submissions || [])
+            }
+        } catch (error) {
+            console.error("Error fetching contacts:", error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const updateContact = async (id: string, updates: { status?: SubmissionStatus; priority?: Priority }) => {
+        try {
+            setUpdating(id)
+            const response = await fetch("/api/admin/contacts", {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id, ...updates }),
+            })
+
+            const data = await response.json()
+            if (data.success) {
+                await fetchContacts()
+            }
+        } catch (error) {
+            console.error("Error updating contact:", error)
+        } finally {
+            setUpdating(null)
+        }
+    }
+
+    const filteredContacts = contacts.filter((contact) => {
+        if (searchQuery) {
+            const query = searchQuery.toLowerCase()
+            return (
+                contact.name.toLowerCase().includes(query) ||
+                contact.email.toLowerCase().includes(query) ||
+                contact.message.toLowerCase().includes(query)
+            )
+        }
+        return true
+    })
+
+    const getStatusColor = (status: SubmissionStatus) => {
+        const colors: Record<SubmissionStatus, string> = {
+            NEW: "bg-blue-500/20 text-blue-700 dark:text-blue-400 border-blue-500/30",
+            VIEWED: "bg-gray-500/20 text-gray-700 dark:text-gray-400 border-gray-500/30",
+            CONTACTED: "bg-purple-500/20 text-purple-700 dark:text-purple-400 border-purple-500/30",
+            QUALIFIED: "bg-green-500/20 text-green-700 dark:text-green-400 border-green-500/30",
+            PROPOSAL_SENT: "bg-yellow-500/20 text-yellow-700 dark:text-yellow-400 border-yellow-500/30",
+            WON: "bg-emerald-600/20 text-emerald-700 dark:text-emerald-400 border-emerald-600/30",
+            LOST: "bg-red-500/20 text-red-700 dark:text-red-400 border-red-500/30",
+            SPAM: "bg-gray-400/20 text-gray-600 dark:text-gray-500 border-gray-400/30",
+        }
+        return colors[status] || colors.NEW
+    }
+
+    const getPriorityColor = (priority: Priority) => {
+        const colors: Record<Priority, string> = {
+            LOW: "bg-gray-500/20 text-gray-700 dark:text-gray-400",
+            MEDIUM: "bg-blue-500/20 text-blue-700 dark:text-blue-400",
+            HIGH: "bg-orange-500/20 text-orange-700 dark:text-orange-400",
+            URGENT: "bg-red-600/20 text-red-700 dark:text-red-400",
+        }
+        return colors[priority] || colors.MEDIUM
+    }
+
+    const formatDate = (dateString: string) => {
+        return new Date(dateString).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        })
+    }
+
+    if (loading && contacts.length === 0) {
+        return (
+            <div className="flex items-center justify-center h-screen">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto" />
+                    <p className="mt-4 text-muted-foreground">Loading contacts...</p>
+                </div>
+            </div>
+        )
+    }
+
+    return (
+        <div className="p-6 space-y-6 max-w-7xl mx-auto">
+            {/* Header */}
+            <div className="flex items-center justify-between">
+                <div>
+                    <h1 className="text-3xl font-bold">Contact Submissions</h1>
+                    <p className="text-muted-foreground mt-1">
+                        Manage and track all contact form submissions
+                    </p>
+                </div>
+                <div className="text-sm text-muted-foreground">
+                    {filteredContacts.length} {filteredContacts.length === 1 ? "submission" : "submissions"}
+                </div>
+            </div>
+
+            {/* Filters */}
+            <div className="flex flex-col sm:flex-row gap-4">
+                <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <input
+                        type="text"
+                        placeholder="Search by name, email, or message..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full pl-10 pr-4 py-2 border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                </div>
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                    <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="All Statuses" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="all">All Statuses</SelectItem>
+                        <SelectItem value="NEW">New</SelectItem>
+                        <SelectItem value="VIEWED">Viewed</SelectItem>
+                        <SelectItem value="CONTACTED">Contacted</SelectItem>
+                        <SelectItem value="QUALIFIED">Qualified</SelectItem>
+                        <SelectItem value="PROPOSAL_SENT">Proposal Sent</SelectItem>
+                        <SelectItem value="WON">Won</SelectItem>
+                        <SelectItem value="LOST">Lost</SelectItem>
+                        <SelectItem value="SPAM">Spam</SelectItem>
+                    </SelectContent>
+                </Select>
+                <Select value={priorityFilter} onValueChange={setPriorityFilter}>
+                    <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="All Priorities" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="all">All Priorities</SelectItem>
+                        <SelectItem value="LOW">Low</SelectItem>
+                        <SelectItem value="MEDIUM">Medium</SelectItem>
+                        <SelectItem value="HIGH">High</SelectItem>
+                        <SelectItem value="URGENT">Urgent</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+
+            {/* Table */}
+            <div className="border rounded-lg overflow-hidden">
+                <div className="overflow-x-auto">
+                    <table className="w-full">
+                        <thead className="bg-muted/50">
+                            <tr>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                    Contact
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                    Message
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                    Status
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                    Priority
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                    Submitted
+                                </th>
+                                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y">
+                            {filteredContacts.length === 0 ? (
+                                <tr>
+                                    <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
+                                        No contacts found
+                                    </td>
+                                </tr>
+                            ) : (
+                                filteredContacts.map((contact) => (
+                                    <tr key={contact.id} className="hover:bg-muted/30 transition-colors">
+                                        <td className="px-4 py-4">
+                                            <div className="font-medium">{contact.name}</div>
+                                            <div className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
+                                                <Mail className="h-3 w-3" />
+                                                {contact.email}
+                                            </div>
+                                            {contact.serviceInterest && (
+                                                <div className="text-xs text-muted-foreground mt-1">
+                                                    Service: {contact.serviceInterest.replace(/_/g, " ")}
+                                                </div>
+                                            )}
+                                        </td>
+                                        <td className="px-4 py-4">
+                                            <div className="text-sm line-clamp-2 max-w-md">
+                                                {contact.message}
+                                            </div>
+                                        </td>
+                                        <td className="px-4 py-4">
+                                            <Select
+                                                value={contact.status}
+                                                onValueChange={(value) =>
+                                                    updateContact(contact.id, {
+                                                        status: value as SubmissionStatus,
+                                                    })
+                                                }
+                                                disabled={updating === contact.id}
+                                            >
+                                                <SelectTrigger className={`text-xs h-8 w-[140px] ${getStatusColor(contact.status)}`}>
+                                                    <SelectValue />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="NEW">New</SelectItem>
+                                                    <SelectItem value="VIEWED">Viewed</SelectItem>
+                                                    <SelectItem value="CONTACTED">Contacted</SelectItem>
+                                                    <SelectItem value="QUALIFIED">Qualified</SelectItem>
+                                                    <SelectItem value="PROPOSAL_SENT">Proposal Sent</SelectItem>
+                                                    <SelectItem value="WON">Won</SelectItem>
+                                                    <SelectItem value="LOST">Lost</SelectItem>
+                                                    <SelectItem value="SPAM">Spam</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </td>
+                                        <td className="px-4 py-4">
+                                            <Select
+                                                value={contact.priority}
+                                                onValueChange={(value) =>
+                                                    updateContact(contact.id, {
+                                                        priority: value as Priority,
+                                                    })
+                                                }
+                                                disabled={updating === contact.id}
+                                            >
+                                                <SelectTrigger className={`text-xs h-8 w-[120px] ${getPriorityColor(contact.priority)}`}>
+                                                    <SelectValue />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="LOW">Low</SelectItem>
+                                                    <SelectItem value="MEDIUM">Medium</SelectItem>
+                                                    <SelectItem value="HIGH">High</SelectItem>
+                                                    <SelectItem value="URGENT">Urgent</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        </td>
+                                        <td className="px-4 py-4">
+                                            <div className="text-sm text-muted-foreground flex items-center gap-1">
+                                                <Calendar className="h-3 w-3" />
+                                                {formatDate(contact.submittedAt)}
+                                            </div>
+                                        </td>
+                                        <td className="px-4 py-4">
+                                            <Link
+                                                href={`/contacts/${contact.id}`}
+                                                className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
+                                            >
+                                                <Eye className="h-4 w-4" />
+                                                View
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    )
+}

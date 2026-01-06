@@ -30,19 +30,19 @@
         "subtitle": "ما قمنا ببنائه",
         "projects": {
             "project1": {
-                "title": "EG Art Lighting - متجر إلكتروني",
+                "title": "متجر إلكتروني",
                 "category": "تطبيق Next.js متكامل مع Stripe للدفع الإلكتروني",
                 "link": "https://eg-artlighting.vercel.app/",
                 "year": "2024"
             },
             "project2": {
-                "title": "CasesCobra - متجر منتجات مخصصة",
+                "title": "متجر منتجات مخصصة",
                 "category": "منصة تخصيص منتجات مع معاينة فورية",
                 "link": "https://casescobra.vercel.app/",
                 "year": "2024"
             },
             "project3": {
-                "title": "New Light Egypt - موقع شركة",
+                "title": "موقع شركة",
                 "category": "موقع متعدد اللغات مع إمكانيات PWA",
                 "link": "https://www.newlight-eg.com/",
                 "year": "2024"

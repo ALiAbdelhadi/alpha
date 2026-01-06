@@ -1,3 +1,4 @@
+import { BackgroundShader } from "@/components/background-shader";
 import { generateMetadata as generatePageMetadata, generateStructuredData } from "@/lib/metadata";
 import { layoutChildren } from "@/types";
 import Script from "next/script";
@@ -20,6 +21,7 @@ export default function MainLayout({ children }: layoutChildren) {
                 }}
             />
             <main>
+                <BackgroundShader />
                 {children}
             </main>
         </>

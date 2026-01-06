@@ -1,0 +1,259 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+
+enum UserRole {
+    USER
+    ADMIN
+    SUPERADMIN
+}
+
+model User {
+    id           String   @id @default(uuid())
+    email        String   @unique
+    name         String?
+    passwordHash String
+    role         UserRole @default(USER)
+
+    emailVerified Boolean   @default(false)
+    verifiedAt    DateTime?
+
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+    lastLoginAt DateTime?
+
+    contactSubmissions ContactSubmission[]
+    assignedContacts   ContactSubmission[] @relation("AssignedTo")
+    meetings           Meeting[]
+    meetingRequests    Meeting[]           @relation("RequestedBy")
+    notes              ContactNote[]
+
+    @@index([email])
+    @@index([role])
+    @@map("users")
+}
+
+
+enum SubmissionStatus {
+    NEW // Just submitted
+    VIEWED // Admin viewed
+    CONTACTED // Initial outreach made
+    QUALIFIED // Real opportunity
+    PROPOSAL_SENT // Proposal sent
+    WON // Converted to client
+    LOST // Not a fit
+    SPAM // Filtered out
+}
+
+enum Priority {
+    LOW
+    MEDIUM
+    HIGH
+    URGENT
+}
+
+enum ServiceType {
+    WEB_DEVELOPMENT
+    ECOMMERCE
+    MULTILINGUAL
+    UI_UX
+    OTHER
+}
+
+enum ProjectTimeline {
+    IMMEDIATE // < 1 month
+    SOON // 1-3 months
+    PLANNING // 3-6 months
+    EXPLORING // 6+ months
+}
+
+model ContactSubmission {
+    id String @id @default(uuid())
+
+    // Form Data
+    name            String
+    email           String
+    message         String
+    serviceInterest ServiceType?
+    projectTimeline ProjectTimeline?
+
+    // Status & Priority
+    status   SubmissionStatus @default(NEW)
+    priority Priority         @default(MEDIUM)
+
+    // Assignment
+    assignedTo   User?   @relation("AssignedTo", fields: [assignedToId], references: [id])
+    assignedToId String?
+
+    // Metadata
+    locale      String  @default("en")
+    userAgent   String?
+    ipAddress   String?
+    referrer    String?
+    utmSource   String?
+    utmMedium   String?
+    utmCampaign String?
+
+    // Relations
+    user   User?   @relation(fields: [userId], references: [id])
+    userId String?
+
+    notes    ContactNote[]
+    tags     ContactTag[]
+    meetings Meeting[]
+
+    // Timestamps
+    submittedAt      DateTime  @default(now())
+    lastUpdatedAt    DateTime  @updatedAt
+    firstViewedAt    DateTime?
+    firstContactedAt DateTime?
+
+    @@index([email])
+    @@index([status])
+    @@index([priority])
+    @@index([submittedAt])
+    @@index([assignedToId])
+    @@map("contact_submissions")
+}
+
+model ContactNote {
+    id      String @id @default(uuid())
+    content String
+    type    String @default("internal") // "internal" | "client-visible"
+
+    submission   ContactSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+    submissionId String
+
+    createdBy   User   @relation(fields: [createdById], references: [id])
+    createdById String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([submissionId])
+    @@map("contact_notes")
+}
+
+model ContactTag {
+    id   String @id @default(uuid())
+    name String
+
+    submission   ContactSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+    submissionId String
+
+    createdAt DateTime @default(now())
+
+    @@unique([submissionId, name])
+    @@index([name])
+    @@map("contact_tags")
+}
+
+// ============================================================================
+// SCHEDULING SYSTEM
+// ============================================================================
+
+enum MeetingStatus {
+    PENDING
+    APPROVED
+    REJECTED
+    COMPLETED
+    CANCELLED
+    RESCHEDULED
+}
+
+enum MeetingType {
+    DISCOVERY
+    CONSULTATION
+    PROPOSAL
+    FOLLOWUP
+}
+
+model Meeting {
+    id String @id @default(uuid())
+
+    // Meeting Details
+    title       String
+    description String?
+    type        MeetingType   @default(DISCOVERY)
+    status      MeetingStatus @default(PENDING)
+
+    // Timing
+    scheduledDate   DateTime
+    scheduledTime   String // "morning" | "afternoon" | "evening"
+    durationMinutes Int      @default(30)
+
+    // Participants
+    requestedBy   User?   @relation("RequestedBy", fields: [requestedById], references: [id])
+    requestedById String?
+
+    assignedTo   User?   @relation(fields: [assignedToId], references: [id])
+    assignedToId String?
+
+    // Relations
+    contactSubmission ContactSubmission? @relation(fields: [submissionId], references: [id])
+    submissionId      String?
+
+    // Guest Details (if not logged in)
+    guestName  String?
+    guestEmail String?
+
+    // Meeting Link (Zoom/Google Meet)
+    meetingUrl String?
+
+    // Notes
+    notes      String?
+    adminNotes String?
+
+    // Timestamps
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+    approvedAt  DateTime?
+    completedAt DateTime?
+
+    @@index([scheduledDate])
+    @@index([status])
+    @@index([assignedToId])
+    @@index([submissionId])
+    @@map("meetings")
+}
+
+// ============================================================================
+// NOTIFICATIONS (PWA Support)
+// ============================================================================
+
+enum NotificationType {
+    NEW_CONTACT
+    NEW_MEETING
+    STATUS_CHANGE
+    ASSIGNMENT
+}
+
+model Notification {
+    id      String           @id @default(uuid())
+    type    NotificationType
+    title   String
+    message String
+
+    // Target
+    userId String
+
+    // Related Entity
+    entityType String // "contact" | "meeting"
+    entityId   String
+
+    // Status
+    read   Boolean   @default(false)
+    readAt DateTime?
+
+    createdAt DateTime @default(now())
+
+    @@index([userId, read])
+    @@index([createdAt])
+    @@map("notifications")
+}

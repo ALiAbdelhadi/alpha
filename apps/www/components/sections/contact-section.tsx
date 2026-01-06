@@ -1,69 +1,53 @@
 "use client"
 
 import { MagneticButton } from "@/components/magnetic-button"
+import { DatePicker } from "@/components/ui/date-picker"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { useReveal } from "@/hooks/use-animation"
-import { Link } from "@/i18n/navigation"
+import { Link, useRouter } from "@/i18n/navigation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
-import { Mail, MapPin, CheckCircle2, AlertCircle } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { contactFormSchema, type ContactFormData } from "@/lib/validations/contact"
+import { AlertCircle, Calendar, CheckCircle2, Clock, Mail, MapPin } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useEffect, useRef, useState, type FormEvent } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Container } from "../container"
+import { Label } from "../ui/label"
+import { Textarea } from "../ui/textarea"
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-interface FormState {
-  name: string
-  email: string
-  message: string
-  serviceInterest: string
-  projectTimeline: string
-}
-
-interface FormErrors {
-  name?: string
-  email?: string
-  message?: string
-}
-
 export function ContactSection() {
   const t = useTranslations()
+  const router = useRouter()
   const sectionRef = useRef<HTMLElement>(null)
   const titleRef = useReveal({ direction: "left", delay: 0, duration: 0.8 })
 
-  const [formData, setFormData] = useState<FormState>({
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({})
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     message: "",
-    serviceInterest: "",
-    projectTimeline: ""
+    serviceInterest: undefined,
+    projectTimeline: undefined,
+    requestMeeting: false,
+    preferredDate: undefined,
+    preferredTime: undefined,
+    website: "",
   })
-
-  const [errors, setErrors] = useState<FormErrors>({})
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitSuccess, setSubmitSuccess] = useState(false)
-  const [submitError, setSubmitError] = useState(false)
-
-  const validateForm = (): boolean => {
-    const newErrors: FormErrors = {}
-
-    if (formData.name.trim().length < 2) {
-      newErrors.name = "Name must be at least 2 characters"
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address"
-    }
-
-    if (formData.message.trim().length < 10) {
-      newErrors.message = "Message must be at least 10 characters"
-    }
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
 
   useEffect(() => {
     if (!sectionRef.current) return
@@ -174,44 +158,80 @@ export function ContactSection() {
     }
   }, [])
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setSubmitError(false)
-
-    if (!validateForm()) {
-      return
+  const handleInputChange = (field: keyof ContactFormData, value: string | boolean | undefined) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
+    if (formErrors[field]) {
+      setFormErrors((prev) => {
+        const newErrors = { ...prev }
+        delete newErrors[field]
+        return newErrors
+      })
     }
+  }
 
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     setIsSubmitting(true)
+    setSubmitError(null)
+    setSubmitSuccess(false)
+    setFormErrors({})
 
     try {
-      // This would call your API endpoint
-      // const response = await fetch('/api/contact', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     ...formData,
-      //     locale: router.locale,
-      //     submittedAt: new Date().toISOString(),
-      //     metadata: {
-      //       userAgent: navigator.userAgent,
-      //       referrer: document.referrer,
-      //       timestamp: Date.now()
-      //     }
-      //   })
-      // })
+      const validatedData = contactFormSchema.parse(formData)
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      const locale = window.location.pathname.split('/')[1] || document.documentElement.lang || 'en'
+      const apiPath = `/${locale}/api/contact`
 
-      setSubmitSuccess(true)
-      setFormData({ name: "", email: "", message: "", serviceInterest: "", projectTimeline: "" })
+      const response = await fetch(apiPath, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...validatedData,
+          locale,
+        })
+      })
 
-      // Reset success message after 7 seconds
-      setTimeout(() => setSubmitSuccess(false), 7000)
-    } catch (error) {
-      setSubmitError(true)
+      const result = await response.json()
+
+      if (response.ok && result.success) {
+        setSubmitSuccess(true)
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+          serviceInterest: undefined,
+          projectTimeline: undefined,
+          requestMeeting: false,
+          preferredDate: undefined,
+          preferredTime: undefined,
+          website: "",
+        })
+        setTimeout(() => setSubmitSuccess(false), 7000)
+      } else {
+        if (result.errors) {
+          setFormErrors(result.errors)
+          const errorMessages = Object.values(result.errors) as string[]
+          setSubmitError(errorMessages[0] || result.message || "Please check your form and try again.")
+        } else {
+          setSubmitError(result.message || "Something went wrong. Please try again.")
+        }
+      }
+    } catch (error: unknown) {
       console.error('Submission error:', error)
+      if (error && typeof error === 'object' && 'errors' in error) {
+        const zodErrors: Record<string, string> = {}
+        const zodError = error as { errors: Array<{ path: (string | number)[]; message: string }> }
+        zodError.errors.forEach((err) => {
+          if (err.path && err.path.length > 0) {
+            zodErrors[String(err.path[0])] = err.message
+          }
+        })
+        setFormErrors(zodErrors)
+        const errorMessages = Object.values(zodErrors) as string[]
+        setSubmitError(errorMessages[0] || "Please check your form and try again.")
+      } else {
+        setSubmitError("Network error. Please check your connection and try again.")
+      }
     } finally {
       setIsSubmitting(false)
     }
@@ -222,11 +242,10 @@ export function ContactSection() {
       id="contact"
       suppressHydrationWarning={true}
       ref={sectionRef}
-      className="flex min-h-screen shrink-0 snap-start items-center py-16 sm:py-20 md:py-24 lg:py-0 overflow-x-hidden"
+      className="flex min-h-screen shrink-0 snap-start items-center py-16 sm:py-20 md:py-24 lg:py-32o overflow-x-hidden"
     >
       <Container>
         <div className="grid gap-8 sm:gap-10 md:grid-cols-[1.2fr_1fr] md:gap-12 lg:gap-16 xl:gap-24">
-          {/* Left: Contact Info */}
           <div className="flex flex-col justify-center">
             <div ref={titleRef} className="mb-8 sm:mb-10 md:mb-12 lg:mb-14">
               <h2 className="mb-2 font-sans text-3xl font-light leading-[1.05] tracking-tight text-foreground sm:text-4xl sm:mb-3 md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl">
@@ -238,7 +257,6 @@ export function ContactSection() {
                 / {t("contact.subtitle")}
               </p>
             </div>
-
             <div className="space-y-6 sm:space-y-7 md:space-y-8">
               <Link
                 data-contact-left
@@ -255,7 +273,6 @@ export function ContactSection() {
                   {t("contact.emailValue")}
                 </p>
               </Link>
-
               <div data-contact-left className="transform-gpu">
                 <div className="mb-1 flex items-center gap-2 sm:mb-1.5">
                   <MapPin className="h-3 w-3 text-foreground/60 sm:h-3.5 sm:w-3.5" />
@@ -267,7 +284,6 @@ export function ContactSection() {
                   {t("contact.locationValue")}
                 </p>
               </div>
-
               <div data-contact-left className="flex flex-wrap gap-2 pt-2 sm:gap-3 md:pt-4 transform-gpu">
                 {[
                   t("contact.social.twitter"),
@@ -287,125 +303,288 @@ export function ContactSection() {
             </div>
           </div>
           <div className="flex flex-col justify-center">
-            <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6" noValidate>
+            <form onSubmit={onSubmit} className="space-y-5 sm:space-y-6" noValidate>
               <div data-contact-right className="transform-gpu">
-                <label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
+                <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
                   {t("contact.form.name")} <span className="text-red-500">*</span>
-                </label>
-                <input
+                </Label>
+                <Input
                   type="text"
                   value={formData.name}
-                  onChange={(e) => {
-                    setFormData({ ...formData, name: e.target.value })
-                    if (errors.name) setErrors({ ...errors, name: undefined })
-                  }}
-                  required
-                  className={`w-full border-b ${errors.name ? 'border-red-500' : 'border-foreground/30'} bg-transparent py-2 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none sm:text-base md:py-2.5 will-change-transform transition-all`}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  className={cn(
+                    "w-full border-b bg-transparent py-2 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none sm:text-base md:py-2.5 will-change-transform transition-all",
+                    formErrors.name
+                      ? "border-red-500 focus:border-red-500"
+                      : "border-foreground/30 focus:border-foreground/50"
+                  )}
                   placeholder={t("contact.form.namePlaceholder")}
-                  aria-invalid={!!errors.name}
-                  aria-describedby={errors.name ? "name-error" : undefined}
+                  aria-invalid={!!formErrors.name}
+                  aria-describedby={formErrors.name ? "name-error" : undefined}
+                  disabled={isSubmitting}
                 />
-                {errors.name && (
+                {formErrors.name && (
                   <p id="name-error" className="mt-1 text-xs text-red-500 flex items-center gap-1">
                     <AlertCircle className="h-3 w-3" />
-                    {errors.name}
+                    {formErrors.name}
                   </p>
                 )}
               </div>
-
               <div data-contact-right className="transform-gpu">
-                <label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
+                <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
                   {t("contact.form.email")} <span className="text-red-500">*</span>
-                </label>
-                <input
+                </Label>
+                <Input
                   type="email"
                   value={formData.email}
-                  onChange={(e) => {
-                    setFormData({ ...formData, email: e.target.value })
-                    if (errors.email) setErrors({ ...errors, email: undefined })
-                  }}
-                  required
-                  className={`w-full border-b ${errors.email ? 'border-red-500' : 'border-foreground/30'} bg-transparent py-2 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none sm:text-base md:py-2.5 will-change-transform transition-all`}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  className={cn(
+                    "w-full border-b bg-transparent py-2 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none sm:text-base md:py-2.5 will-change-transform transition-all",
+                    formErrors.email
+                      ? "border-red-500 focus:border-red-500"
+                      : "border-foreground/30 focus:border-foreground/50"
+                  )}
                   placeholder={t("contact.form.emailPlaceholder")}
-                  aria-invalid={!!errors.email}
-                  aria-describedby={errors.email ? "email-error" : undefined}
+                  aria-invalid={!!formErrors.email}
+                  aria-describedby={formErrors.email ? "email-error" : undefined}
+                  disabled={isSubmitting}
                 />
-                {errors.email && (
+                {formErrors.email && (
                   <p id="email-error" className="mt-1 text-xs text-red-500 flex items-center gap-1">
                     <AlertCircle className="h-3 w-3" />
-                    {errors.email}
+                    {formErrors.email}
                   </p>
                 )}
               </div>
-
               <div data-contact-right className="transform-gpu">
-                <label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
+                <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
                   Service Interest (Optional)
-                </label>
-                <select
-                  value={formData.serviceInterest}
-                  onChange={(e) => setFormData({ ...formData, serviceInterest: e.target.value })}
-                  className="w-full border-b border-foreground/30 bg-transparent py-2 text-sm text-foreground focus:border-foreground/50 focus:outline-none sm:text-base md:py-2.5 will-change-transform transition-all"
+                </Label>
+                <Select
+                  value={formData.serviceInterest || ""}
+                  onValueChange={(value) => handleInputChange("serviceInterest", value || undefined)}
+                  disabled={isSubmitting}
                 >
-                  <option value="">Select a service...</option>
-                  <option value="web-development">Web Development</option>
-                  <option value="ecommerce">E-Commerce</option>
-                  <option value="multilingual">Multi-Language Sites</option>
-                  <option value="ui-ux">UI/UX Implementation</option>
-                  <option value="other">Other</option>
-                </select>
+                  <SelectTrigger className="w-full border-b border-foreground/30 bg-transparent rounded-md p-2 text-sm text-foreground focus:border-foreground/50 focus:outline-none sm:text-base md:p-2.5 will-change-transform transition-all hover:bg-transparent">
+                    <SelectValue placeholder="Select a service..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="web-development">Web Development</SelectItem>
+                    <SelectItem value="ecommerce">E-Commerce</SelectItem>
+                    <SelectItem value="multilingual">Multi-Language Sites</SelectItem>
+                    <SelectItem value="ui-ux">UI/UX Implementation</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-
               <div data-contact-right className="transform-gpu">
-                <label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
+                <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
+                  Project Timeline (Optional)
+                </Label>
+                <Select
+                  value={formData.projectTimeline || ""}
+                  onValueChange={(value) => handleInputChange("projectTimeline", value || undefined)}
+                  disabled={isSubmitting}
+                >
+                  <SelectTrigger className="w-full border-b rounded-md bg-transparent p-2 text-sm text-foreground focus:outline-none sm:text-base md:p-2.5 will-change-transform transition-all hover:bg-transparent">
+                    <SelectValue placeholder="Select timeline..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="immediate">Immediate (within 1 month)</SelectItem>
+                    <SelectItem value="soon">Soon (1-3 months)</SelectItem>
+                    <SelectItem value="planning">Planning (3-6 months)</SelectItem>
+                    <SelectItem value="exploring">Exploring (6+ months)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div data-contact-right className="transform-gpu">
+                <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
                   {t("contact.form.message")} <span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  rows={4}
+                </Label>
+                <Textarea
                   value={formData.message}
-                  onChange={(e) => {
-                    setFormData({ ...formData, message: e.target.value })
-                    if (errors.message) setErrors({ ...errors, message: undefined })
-                  }}
-                  required
-                  className={`w-full border-b ${errors.message ? 'border-red-500' : 'border-foreground/30'} bg-transparent py-2 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none resize-none sm:text-base md:py-2.5 will-change-transform transition-all`}
+                  onChange={(e) => handleInputChange("message", e.target.value)}
+                  rows={4}
+                  className={cn(
+                    "w-full border-b bg-transparent py-2 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none resize-none sm:text-base md:py-2.5 will-change-transform transition-all",
+                    formErrors.message
+                      ? "border-red-500 focus:border-red-500"
+                      : "border-foreground/30 focus:border-foreground/50"
+                  )}
                   placeholder={t("contact.form.messagePlaceholder")}
-                  aria-invalid={!!errors.message}
-                  aria-describedby={errors.message ? "message-error" : undefined}
+                  aria-invalid={!!formErrors.message}
+                  aria-describedby={formErrors.message ? "message-error" : undefined}
+                  disabled={isSubmitting}
                 />
-                {errors.message && (
+                {formErrors.message && (
                   <p id="message-error" className="mt-1 text-xs text-red-500 flex items-center gap-1">
                     <AlertCircle className="h-3 w-3" />
-                    {errors.message}
+                    {formErrors.message}
                   </p>
                 )}
               </div>
+              <div data-contact-right className="transform-gpu">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const params = new URLSearchParams()
+                    if (formData.name) params.append("name", formData.name)
+                    if (formData.email) params.append("email", formData.email)
+                    if (formData.message) params.append("message", formData.message)
+                    router.push(`/schedule?${params.toString()}`)
+                  }}
+                  className="w-full text-left p-3 rounded-md border border-foreground/20 hover:border-foreground/40 bg-foreground/5 hover:bg-foreground/10 transition-all group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                      <Clock className="h-4.5 w-4.5 text-primary" />
+                    </div>
+                    <div>
+                      <div className="font-mono text-base font-medium text-foreground">
+                        Schedule a Meeting
+                      </div>
+                      <div className="text-sm text-foreground/70 mt-0.5">
+                        Choose exact date and time
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              </div>
 
+              {/* Quick Meeting Request Toggle */}
+              <div data-contact-right className="transform-gpu">
+                <Label className="flex items-center gap-3 cursor-pointer">
+                  <Input
+                    type="checkbox"
+                    checked={formData.requestMeeting}
+                    onChange={(e) => handleInputChange("requestMeeting", e.target.checked)}
+                    className="h-4 w-4 rounded border-foreground/30 text-foreground focus:ring-2 focus:ring-foreground/50"
+                    disabled={isSubmitting}
+                  />
+                  <span className="flex items-center gap-2 font-mono text-xs sm:text-sm text-foreground/80">
+                    <Calendar className="h-3.5 w-3.5" />
+                    Or use quick selection (time slots)
+                  </span>
+                </Label>
+              </div>
+              {formData.requestMeeting && (
+                <>
+                  <div data-contact-right className="transform-gpu">
+                    <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
+                      Preferred Date <span className="text-red-500">*</span>
+                    </Label>
+                    <DatePicker
+                      date={formData.preferredDate ? new Date(formData.preferredDate) : undefined}
+                      onDateChange={(date) => {
+                        if (date) {
+                          const dateStr = date.toISOString().split('T')[0]
+                          handleInputChange("preferredDate", dateStr)
+                        } else {
+                          handleInputChange("preferredDate", undefined)
+                        }
+                      }}
+                      disabled={isSubmitting}
+                      placeholder="Select a date"
+                      minDate={new Date()}
+                      maxDate={(() => {
+                        const maxDate = new Date()
+                        maxDate.setMonth(maxDate.getMonth() + 3)
+                        return maxDate
+                      })()}
+                      className={cn(
+                        formErrors.preferredDate
+                          ? "border-red-500 focus:border-red-500"
+                          : ""
+                      )}
+                    />
+                    {formErrors.preferredDate && (
+                      <p id="date-error" className="mt-1 text-xs text-red-500 flex items-center gap-1">
+                        <AlertCircle className="h-3 w-3" />
+                        {formErrors.preferredDate}
+                      </p>
+                    )}
+                  </div>
+                  <div data-contact-right className="transform-gpu">
+                    <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
+                      Preferred Time <span className="text-red-500">*</span>
+                    </Label>
+                    <Select
+                      value={formData.preferredTime || ""}
+                      onValueChange={(value) => handleInputChange("preferredTime", value || undefined)}
+                      disabled={isSubmitting}
+                    >
+                      <SelectTrigger className={cn(
+                        "w-full border-b rounded-md bg-transparent p-2 text-sm text-foreground focus:outline-none sm:text-base md:p-2.5 will-change-transform transition-all hover:bg-transparent",
+                        formErrors.preferredTime
+                          ? "border-red-500 focus:border-red-500"
+                          : "border-foreground/30 focus:border-foreground/50"
+                      )}>
+                        <SelectValue placeholder="Select time slot..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="morning">Morning (9am - 12pm)</SelectItem>
+                        <SelectItem value="afternoon">Afternoon (12pm - 3pm)</SelectItem>
+                        <SelectItem value="evening">Evening (3pm - 6pm)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {formErrors.preferredTime && (
+                      <p id="time-error" className="mt-1 text-xs text-red-500 flex items-center gap-1">
+                        <AlertCircle className="h-3 w-3" />
+                        {formErrors.preferredTime}
+                      </p>
+                    )}
+                    <div className="mt-3">
+                      <Button
+                        variant={"link"}
+                        type="button"
+                        onClick={() => {
+                          const params = new URLSearchParams()
+                          if (formData.name) params.append("name", formData.name)
+                          if (formData.email) params.append("email", formData.email)
+                          if (formData.message) params.append("message", formData.message)
+                          if (formData.preferredDate) params.append("date", formData.preferredDate)
+                          router.push(`/schedule?${params.toString()}`)
+                        }}
+                      >
+                        <Clock className="h-3 w-3" />
+                        Need precise time? Click here
+                      </Button>
+                    </div>
+                  </div>
+                </>
+              )}
+              <Input
+                type="text"
+                value={formData.website}
+                onChange={(e) => handleInputChange("website", e.target.value)}
+                className="hidden"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+              />
               <div data-contact-right className="pt-2 transform-gpu">
                 <MagneticButton
                   type="submit"
                   variant="primary"
                   size="lg"
-                  className="w-full disabled:opacity-50 text-sm sm:text-base py-3 sm:py-3.5"
+                  className="w-full text-sm sm:text-base py-3 sm:py-3.5"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? t("contact.form.submitting") : t("contact.form.submit")}
                 </MagneticButton>
-
                 {submitSuccess && (
-                  <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                  <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
                     <p className="text-center font-mono text-xs sm:text-sm text-foreground flex items-center justify-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-green-500" />
                       {t("contact.form.success")}
                     </p>
                   </div>
                 )}
-
                 {submitError && (
-                  <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                  <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
                     <p className="text-center font-mono text-xs sm:text-sm text-foreground flex items-center justify-center gap-2">
                       <AlertCircle className="h-4 w-4 text-red-500" />
-                      Something went wrong. Please try again or email us directly.
+                      {submitError}
                     </p>
                   </div>
                 )}

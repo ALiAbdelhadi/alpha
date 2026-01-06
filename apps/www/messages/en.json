@@ -31,19 +31,19 @@
         "subtitle": "What we've built",
         "projects": {
             "project1": {
-                "title": "EG Art Lighting - E-Commerce Platform",
+                "title": "E-Commerce Platform",
                 "category": "Full-stack Next.js application with Stripe integration",
                 "link": "https://eg-artlighting.vercel.app/",
                 "year": "2024"
             },
             "project2": {
-                "title": "CasesCobra - Custom Product Store",
+                "title": "Custom Product Store",
                 "category": "Product customization platform with real-time preview",
                 "link": "https://casescobra.vercel.app/",
                 "year": "2024"
             },
             "project3": {
-                "title": "New Light Egypt - Corporate Website",
+                "title": "Corporate Website",
                 "category": "Multi-language business site with PWA capabilities",
                 "link": "https://www.newlight-eg.com/",
                 "year": "2024"
