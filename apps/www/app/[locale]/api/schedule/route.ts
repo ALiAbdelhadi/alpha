@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
             })
 
             await Promise.all(
-                admins.map((admin) =>
+                admins.map((admin: { id: string }) =>
                     prisma.notification.create({
                         data: {
                             type: "NEW_MEETING",
@@ -166,7 +166,7 @@ export async function POST(request: NextRequest) {
             })
 
             await Promise.all(
-                admins.map((admin) =>
+                admins.map((admin: { id: string }) =>
                     prisma.notification.create({
                         data: {
                             type: "NEW_MEETING",
@@ -198,10 +198,11 @@ export async function POST(request: NextRequest) {
                 {
                     success: false,
                     message: "Validation failed",
-                    errors: error.errors.reduce((acc, err) => {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    errors: error.issues.reduce((acc: Record<string, string>, err: any) => {
                         acc[err.path[0]] = err.message
                         return acc
-                    }, {} as Record<string, string>),
+                    }, {}),
                 },
                 { status: 400 }
             )

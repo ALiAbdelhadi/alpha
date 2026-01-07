@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { NextRequest, NextResponse } from "next/server"
 import { contactFormSchema } from "@/lib/validations/contact"
-import { ZodError } from "zod"
 import { prisma } from "@repo/database"
+import { NextRequest, NextResponse } from "next/server"
+import { ZodError } from "zod"
 
 /**
  * POST /api/contact
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
         })
 
         await Promise.all(
-            admins.map((admin) =>
+            admins.map((admin: { id: string }) =>
                 prisma.notification.create({
                     data: {
                         type: "NEW_CONTACT",
@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
 
             // Create meeting notification
             await Promise.all(
-                admins.map((admin) =>
+                admins.map((admin: { id: string }) =>
                     prisma.notification.create({
                         data: {
                             type: "NEW_MEETING",
@@ -134,10 +134,11 @@ export async function POST(request: NextRequest) {
                 {
                     success: false,
                     message: "Validation failed",
-                    errors: error.errors.reduce((acc, err) => {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    errors: error.issues.reduce((acc: Record<string, string>, err: any) => {
                         acc[err.path[0]] = err.message
                         return acc
-                    }, {} as Record<string, string>),
+                    }, {}),
                 },
                 { status: 400 }
             )
@@ -154,11 +155,13 @@ export async function POST(request: NextRequest) {
 }
 
 /**
- * Rate limiting middleware (optional but recommended)
+ * Rate limiting implementation (currently not active)
+ * To enable: Add middleware check at the start of POST handler
+ * Example: if (!checkRateLimit(ipAddress)) return NextResponse.json({...}, {status: 429})
  */
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
 
-function checkRateLimit(ip: string): boolean {
+export function checkRateLimit(ip: string): boolean {
     const now = Date.now()
     const limit = rateLimitMap.get(ip)
 

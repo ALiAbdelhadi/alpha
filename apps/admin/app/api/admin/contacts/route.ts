@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
-
+import { prisma } from "@repo/database"
 /**
  * GET /api/admin/contacts
  * Fetch all contact submissions with filters
