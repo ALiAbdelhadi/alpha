@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
     return {
-        "name": "Alpha",
+        "name": "Alpha App",
         "short_name": "Alpha",
         "description": "Alpha - Web Development Company specializing in innovative web experiences and cutting-edge applications",
         "orientation": "any",
