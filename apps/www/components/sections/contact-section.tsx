@@ -1,7 +1,6 @@
 "use client"
 
 import { MagneticButton } from "@/components/magnetic-button"
-import { DatePicker } from "@/components/ui/date-picker"
 import {
   Select,
   SelectContent,
@@ -10,18 +9,17 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useReveal } from "@/hooks/use-animation"
-import { Link, useRouter } from "@/i18n/navigation"
+import { Link } from "@/i18n/navigation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { cn } from "@/lib/utils"
 import { contactFormSchema, type ContactFormData } from "@/lib/validations/contact"
-import { AlertCircle, Calendar, CheckCircle2, Clock, Mail, MapPin } from "lucide-react"
+import { AlertCircle, CheckCircle2, Mail, MapPin } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 import { Container } from "../container"
+import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Textarea } from "../ui/textarea"
-import { Input } from "../ui/input"
-import { Button } from "../ui/button"
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
@@ -29,9 +27,8 @@ if (typeof window !== "undefined") {
 
 export function ContactSection() {
   const t = useTranslations()
-  const router = useRouter()
   const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useReveal({ direction: "left", delay: 0, duration: 0.8 })
+  const titleRef = useReveal({ direction: "left", delay: 0, duration: 0.5 })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
@@ -57,36 +54,32 @@ export function ContactSection() {
     const rightElements = sectionElement.querySelectorAll("[data-contact-right]")
     const formInputs = sectionElement.querySelectorAll("input, textarea, select")
 
+    const allTriggers: ScrollTrigger[] = []
+
     if (leftElements.length > 0) {
       leftElements.forEach((element, index) => {
         gsap.set(element, {
           opacity: 0,
-          x: 0,
-          y: 20,
-          scale: 0.95,
-          force3D: true,
-          willChange: "transform, opacity"
+          y: 15,
         })
 
-        gsap.to(element, {
+        const revealTween = gsap.to(element, {
           opacity: 1,
-          x: 0,
           y: 0,
-          scale: 1,
-          duration: 1,
-          delay: index * 0.2,
-          ease: "power3.out",
-          force3D: true,
+          duration: 0.4,
+          delay: index * 0.1,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: element,
-            start: "top 85%",
+            start: "top 90%",
             toggleActions: "play none none none",
             once: true,
           },
-          onComplete: () => {
-            gsap.set(element, { willChange: "auto" })
-          }
         })
+
+        if (revealTween.scrollTrigger) {
+          allTriggers.push(revealTween.scrollTrigger)
+        }
       })
     }
 
@@ -94,40 +87,36 @@ export function ContactSection() {
       rightElements.forEach((element, index) => {
         gsap.set(element, {
           opacity: 0,
-          x: 80,
-          y: 20,
-          scale: 0.95,
-          force3D: true,
-          willChange: "transform, opacity"
+          x: 20,
         })
 
-        gsap.to(element, {
+        const revealTween = gsap.to(element, {
           opacity: 1,
           x: 0,
-          y: 0,
-          scale: 1,
-          duration: 1,
-          delay: index * 0.2,
-          ease: "power3.out",
-          force3D: true,
+          duration: 0.4,
+          delay: index * 0.08,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: element,
-            start: "top 85%",
+            start: "top 90%",
             toggleActions: "play none none none",
             once: true,
           },
-          onComplete: () => {
-            gsap.set(element, { willChange: "auto" })
-          }
         })
+
+        if (revealTween.scrollTrigger) {
+          allTriggers.push(revealTween.scrollTrigger)
+        }
       })
     }
+
+    const inputHandlers: Array<{ input: Element; focus: () => void; blur: () => void }> = []
 
     formInputs.forEach((input) => {
       const handleFocus = () => {
         gsap.to(input, {
-          scale: 1.01,
-          duration: 0.3,
+          scale: 1.005,
+          duration: 0.15,
           ease: "power2.out",
         })
       }
@@ -135,25 +124,21 @@ export function ContactSection() {
       const handleBlur = () => {
         gsap.to(input, {
           scale: 1,
-          duration: 0.3,
+          duration: 0.15,
           ease: "power2.out",
         })
       }
 
       input.addEventListener("focus", handleFocus, { passive: true })
       input.addEventListener("blur", handleBlur, { passive: true })
-
-      return () => {
-        input.removeEventListener("focus", handleFocus)
-        input.removeEventListener("blur", handleBlur)
-      }
+      inputHandlers.push({ input, focus: handleFocus, blur: handleBlur })
     })
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => {
-        if (sectionElement?.contains(trigger.vars.trigger as Element)) {
-          trigger.kill()
-        }
+      allTriggers.forEach((trigger) => trigger.kill())
+      inputHandlers.forEach(({ input, focus, blur }) => {
+        input.removeEventListener("focus", focus)
+        input.removeEventListener("blur", blur)
       })
     }
   }, [])
@@ -242,49 +227,49 @@ export function ContactSection() {
       id="contact"
       suppressHydrationWarning={true}
       ref={sectionRef}
-      className="flex min-h-screen shrink-0 snap-start items-center py-16 sm:py-20 md:py-24 lg:py-32o overflow-x-hidden"
+      className="flex min-h-screen shrink-0 snap-start items-center py-20 sm:py-24 md:py-32 overflow-x-hidden"
     >
       <Container>
-        <div className="grid gap-8 sm:gap-10 md:grid-cols-[1.2fr_1fr] md:gap-12 lg:gap-16 xl:gap-24">
+        <div className="grid gap-12 sm:gap-14 md:grid-cols-[1.2fr_1fr] md:gap-16 lg:gap-24 xl:gap-32">
           <div className="flex flex-col justify-center">
-            <div ref={titleRef} className="mb-8 sm:mb-10 md:mb-12 lg:mb-14">
-              <h2 className="mb-2 font-sans text-3xl font-light leading-[1.05] tracking-tight text-foreground sm:text-4xl sm:mb-3 md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl">
+            <div ref={titleRef} className="mb-12 sm:mb-14 md:mb-16">
+              <h2 className="mb-3 font-sans text-4xl font-normal leading-[1.05] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
                 {t("contact.title")}
                 <br />
-                {t("contact.title2")}
+                <span className="text-foreground/75">{t("contact.title2")}</span>
               </h2>
-              <p className="font-mono text-xs text-foreground/60 sm:text-sm md:text-base">
-                / {t("contact.subtitle")}
+              <p className="font-mono text-sm text-foreground/60 tracking-wide sm:text-base">
+                {t("contact.subtitle")}
               </p>
             </div>
-            <div className="space-y-6 sm:space-y-7 md:space-y-8">
+            <div className="space-y-8 sm:space-y-9">
               <Link
                 data-contact-left
                 href={`mailto:${t("contact.emailValue")}`}
-                className="group block transform-gpu"
+                className="group block"
               >
-                <div className="mb-1 flex items-center gap-2 sm:mb-1.5">
-                  <Mail className="h-3 w-3 text-foreground/60 sm:h-3.5 sm:w-3.5" />
-                  <span className="font-mono text-xs text-foreground/60 sm:text-sm">
+                <div className="mb-2 flex items-center gap-2">
+                  <Mail className="h-3.5 w-3.5 text-foreground/60" />
+                  <span className="font-mono text-xs text-foreground/60 tracking-wide">
                     {t("contact.email")}
                   </span>
                 </div>
-                <p className="text-base text-foreground transition-colors group-hover:text-foreground/70 sm:text-lg md:text-xl lg:text-2xl break-all">
+                <p className="text-lg text-foreground transition-colors group-hover:text-foreground/75 md:text-xl lg:text-2xl">
                   {t("contact.emailValue")}
                 </p>
               </Link>
-              <div data-contact-left className="transform-gpu">
-                <div className="mb-1 flex items-center gap-2 sm:mb-1.5">
-                  <MapPin className="h-3 w-3 text-foreground/60 sm:h-3.5 sm:w-3.5" />
-                  <span className="font-mono text-xs text-foreground/60 sm:text-sm">
+              <div data-contact-left>
+                <div className="mb-2 flex items-center gap-2">
+                  <MapPin className="h-3.5 w-3.5 text-foreground/60" />
+                  <span className="font-mono text-xs text-foreground/60 tracking-wide">
                     {t("contact.location")}
                   </span>
                 </div>
-                <p className="text-base text-foreground sm:text-lg md:text-xl lg:text-2xl">
+                <p className="text-lg text-foreground md:text-xl lg:text-2xl">
                   {t("contact.locationValue")}
                 </p>
               </div>
-              <div data-contact-left className="flex flex-wrap gap-2 pt-2 sm:gap-3 md:pt-4 transform-gpu">
+              <div data-contact-left className="flex flex-wrap gap-3 pt-2 sm:gap-4">
                 {[
                   t("contact.social.twitter"),
                   t("contact.social.instagram"),
@@ -294,18 +279,44 @@ export function ContactSection() {
                   <Link
                     key={social}
                     href="#"
-                    className="border-b border-transparent font-mono text-xs text-foreground/60 transition-all hover:border-foreground/60 hover:text-foreground/90 sm:text-sm"
+                    className="border-b border-transparent font-mono text-xs text-foreground/60 transition-all hover:border-foreground/60 hover:text-foreground/85 sm:text-sm"
                   >
                     {social}
                   </Link>
                 ))}
               </div>
+              <div data-contact-left className="pt-6 sm:pt-8">
+                <Link
+                  href="/schedule"
+                  className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-linear-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white font-medium text-base shadow-lg hover:shadow-xl hover:shadow-teal-500/50 transition-all duration-300"
+                >
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm group-hover:bg-white/30 transition-all">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <span className="group-hover:translate-x-0.5 transition-transform">
+                    {t("contact.scheduleMeeting")}
+                  </span>
+                  <svg 
+                    className="w-4 h-4 transition-transform group-hover:translate-x-1" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
+                <p className="mt-3 text-xs text-foreground/60 font-mono">
+                  {t("contact.scheduleDescription")}
+                </p>
+              </div>
             </div>
           </div>
           <div className="flex flex-col justify-center">
-            <form onSubmit={onSubmit} className="space-y-5 sm:space-y-6" noValidate>
-              <div data-contact-right className="transform-gpu">
-                <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
+            <form onSubmit={onSubmit} className="space-y-6" noValidate>
+              <div data-contact-right>
+                <Label className="mb-2 block font-mono text-xs text-foreground/60 tracking-wide sm:text-sm">
                   {t("contact.form.name")} <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -313,25 +324,24 @@ export function ContactSection() {
                   value={formData.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
                   className={cn(
-                    "w-full border-b bg-transparent py-2 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none sm:text-base md:py-2.5 will-change-transform transition-all",
+                    "w-full border-b bg-transparent py-2.5 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none sm:text-base transition-all",
                     formErrors.name
                       ? "border-red-500 focus:border-red-500"
-                      : "border-foreground/30 focus:border-foreground/50"
+                      : "border-foreground/25 focus:border-foreground/50"
                   )}
                   placeholder={t("contact.form.namePlaceholder")}
                   aria-invalid={!!formErrors.name}
-                  aria-describedby={formErrors.name ? "name-error" : undefined}
                   disabled={isSubmitting}
                 />
                 {formErrors.name && (
-                  <p id="name-error" className="mt-1 text-xs text-red-500 flex items-center gap-1">
+                  <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
                     <AlertCircle className="h-3 w-3" />
                     {formErrors.name}
                   </p>
                 )}
               </div>
-              <div data-contact-right className="transform-gpu">
-                <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
+              <div data-contact-right>
+                <Label className="mb-2 block font-mono text-xs text-foreground/60 tracking-wide sm:text-sm">
                   {t("contact.form.email")} <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -339,66 +349,65 @@ export function ContactSection() {
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
                   className={cn(
-                    "w-full border-b bg-transparent py-2 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none sm:text-base md:py-2.5 will-change-transform transition-all",
+                    "w-full border-b bg-transparent py-2.5 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none sm:text-base transition-all",
                     formErrors.email
                       ? "border-red-500 focus:border-red-500"
-                      : "border-foreground/30 focus:border-foreground/50"
+                      : "border-foreground/25 focus:border-foreground/50"
                   )}
                   placeholder={t("contact.form.emailPlaceholder")}
                   aria-invalid={!!formErrors.email}
-                  aria-describedby={formErrors.email ? "email-error" : undefined}
                   disabled={isSubmitting}
                 />
                 {formErrors.email && (
-                  <p id="email-error" className="mt-1 text-xs text-red-500 flex items-center gap-1">
+                  <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
                     <AlertCircle className="h-3 w-3" />
                     {formErrors.email}
                   </p>
                 )}
               </div>
-              <div data-contact-right className="transform-gpu">
-                <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
-                  Service Interest (Optional)
+              <div data-contact-right>
+                <Label className="mb-2 block font-mono text-xs text-foreground/60 tracking-wide sm:text-sm">
+                  Service Interest
                 </Label>
                 <Select
                   value={formData.serviceInterest || ""}
                   onValueChange={(value) => handleInputChange("serviceInterest", value || undefined)}
                   disabled={isSubmitting}
                 >
-                  <SelectTrigger className="w-full border-b border-foreground/30 bg-transparent rounded-md p-2 text-sm text-foreground focus:border-foreground/50 focus:outline-none sm:text-base md:p-2.5 will-change-transform transition-all hover:bg-transparent">
-                    <SelectValue placeholder="Select a service..." />
+                  <SelectTrigger className="w-full border-b border-foreground/25 bg-transparent rounded-none p-2.5 text-sm hover:bg-transparent focus:border-foreground/50">
+                    <SelectValue placeholder="What do you need?" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="web-development">Web Development</SelectItem>
                     <SelectItem value="ecommerce">E-Commerce</SelectItem>
-                    <SelectItem value="multilingual">Multi-Language Sites</SelectItem>
-                    <SelectItem value="ui-ux">UI/UX Implementation</SelectItem>
+                    <SelectItem value="multilingual">Multi-Language</SelectItem>
+                    <SelectItem value="ui-ux">UI/UX</SelectItem>
                     <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-              <div data-contact-right className="transform-gpu">
-                <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
-                  Project Timeline (Optional)
+              <div data-contact-right>
+                <Label className="mb-2 block font-mono text-xs text-foreground/60 tracking-wide sm:text-sm">
+                  Timeline
                 </Label>
                 <Select
                   value={formData.projectTimeline || ""}
                   onValueChange={(value) => handleInputChange("projectTimeline", value || undefined)}
                   disabled={isSubmitting}
                 >
-                  <SelectTrigger className="w-full border-b rounded-md bg-transparent p-2 text-sm text-foreground focus:outline-none sm:text-base md:p-2.5 will-change-transform transition-all hover:bg-transparent">
-                    <SelectValue placeholder="Select timeline..." />
+                  <SelectTrigger className="w-full border-b border-foreground/25 bg-transparent rounded-none p-2.5 text-sm hover:bg-transparent focus:border-foreground/50">
+                    <SelectValue placeholder="When do you need it?" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="immediate">Immediate (within 1 month)</SelectItem>
+                    <SelectItem value="immediate">ASAP (1 month)</SelectItem>
                     <SelectItem value="soon">Soon (1-3 months)</SelectItem>
                     <SelectItem value="planning">Planning (3-6 months)</SelectItem>
                     <SelectItem value="exploring">Exploring (6+ months)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-              <div data-contact-right className="transform-gpu">
-                <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
+              <div data-contact-right>
+                <Label className="mb-2 block font-mono text-xs text-foreground/60 tracking-wide sm:text-sm">
                   {t("contact.form.message")} <span className="text-red-500">*</span>
                 </Label>
                 <Textarea
@@ -406,153 +415,23 @@ export function ContactSection() {
                   onChange={(e) => handleInputChange("message", e.target.value)}
                   rows={4}
                   className={cn(
-                    "w-full border-b bg-transparent py-2 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none resize-none sm:text-base md:py-2.5 will-change-transform transition-all",
+                    "w-full border-b bg-transparent py-2.5 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none resize-none sm:text-base transition-all",
                     formErrors.message
                       ? "border-red-500 focus:border-red-500"
-                      : "border-foreground/30 focus:border-foreground/50"
+                      : "border-foreground/25 focus:border-foreground/50"
                   )}
                   placeholder={t("contact.form.messagePlaceholder")}
                   aria-invalid={!!formErrors.message}
-                  aria-describedby={formErrors.message ? "message-error" : undefined}
                   disabled={isSubmitting}
                 />
                 {formErrors.message && (
-                  <p id="message-error" className="mt-1 text-xs text-red-500 flex items-center gap-1">
+                  <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
                     <AlertCircle className="h-3 w-3" />
                     {formErrors.message}
                   </p>
                 )}
               </div>
-              <div data-contact-right className="transform-gpu">
-                <button
-                  type="button"
-                  onClick={() => {
-                    const params = new URLSearchParams()
-                    if (formData.name) params.append("name", formData.name)
-                    if (formData.email) params.append("email", formData.email)
-                    if (formData.message) params.append("message", formData.message)
-                    router.push(`/schedule?${params.toString()}`)
-                  }}
-                  className="w-full text-left p-3 rounded-md border border-foreground/20 hover:border-foreground/40 bg-foreground/5 hover:bg-foreground/10 transition-all group"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-md bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                      <Clock className="h-4.5 w-4.5 text-primary" />
-                    </div>
-                    <div>
-                      <div className="font-mono text-base font-medium text-foreground">
-                        Schedule a Meeting
-                      </div>
-                      <div className="text-sm text-foreground/70 mt-0.5">
-                        Choose exact date and time
-                      </div>
-                    </div>
-                  </div>
-                </button>
-              </div>
 
-              {/* Quick Meeting Request Toggle */}
-              <div data-contact-right className="transform-gpu">
-                <Label className="flex items-center gap-3 cursor-pointer">
-                  <Input
-                    type="checkbox"
-                    checked={formData.requestMeeting}
-                    onChange={(e) => handleInputChange("requestMeeting", e.target.checked)}
-                    className="h-4 w-4 rounded border-foreground/30 text-foreground focus:ring-2 focus:ring-foreground/50"
-                    disabled={isSubmitting}
-                  />
-                  <span className="flex items-center gap-2 font-mono text-xs sm:text-sm text-foreground/80">
-                    <Calendar className="h-3.5 w-3.5" />
-                    Or use quick selection (time slots)
-                  </span>
-                </Label>
-              </div>
-              {formData.requestMeeting && (
-                <>
-                  <div data-contact-right className="transform-gpu">
-                    <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
-                      Preferred Date <span className="text-red-500">*</span>
-                    </Label>
-                    <DatePicker
-                      date={formData.preferredDate ? new Date(formData.preferredDate) : undefined}
-                      onDateChange={(date) => {
-                        if (date) {
-                          const dateStr = date.toISOString().split('T')[0]
-                          handleInputChange("preferredDate", dateStr)
-                        } else {
-                          handleInputChange("preferredDate", undefined)
-                        }
-                      }}
-                      disabled={isSubmitting}
-                      placeholder="Select a date"
-                      minDate={new Date()}
-                      maxDate={(() => {
-                        const maxDate = new Date()
-                        maxDate.setMonth(maxDate.getMonth() + 3)
-                        return maxDate
-                      })()}
-                      className={cn(
-                        formErrors.preferredDate
-                          ? "border-red-500 focus:border-red-500"
-                          : ""
-                      )}
-                    />
-                    {formErrors.preferredDate && (
-                      <p id="date-error" className="mt-1 text-xs text-red-500 flex items-center gap-1">
-                        <AlertCircle className="h-3 w-3" />
-                        {formErrors.preferredDate}
-                      </p>
-                    )}
-                  </div>
-                  <div data-contact-right className="transform-gpu">
-                    <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
-                      Preferred Time <span className="text-red-500">*</span>
-                    </Label>
-                    <Select
-                      value={formData.preferredTime || ""}
-                      onValueChange={(value) => handleInputChange("preferredTime", value || undefined)}
-                      disabled={isSubmitting}
-                    >
-                      <SelectTrigger className={cn(
-                        "w-full border-b rounded-md bg-transparent p-2 text-sm text-foreground focus:outline-none sm:text-base md:p-2.5 will-change-transform transition-all hover:bg-transparent",
-                        formErrors.preferredTime
-                          ? "border-red-500 focus:border-red-500"
-                          : "border-foreground/30 focus:border-foreground/50"
-                      )}>
-                        <SelectValue placeholder="Select time slot..." />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="morning">Morning (9am - 12pm)</SelectItem>
-                        <SelectItem value="afternoon">Afternoon (12pm - 3pm)</SelectItem>
-                        <SelectItem value="evening">Evening (3pm - 6pm)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    {formErrors.preferredTime && (
-                      <p id="time-error" className="mt-1 text-xs text-red-500 flex items-center gap-1">
-                        <AlertCircle className="h-3 w-3" />
-                        {formErrors.preferredTime}
-                      </p>
-                    )}
-                    <div className="mt-3">
-                      <Button
-                        variant={"link"}
-                        type="button"
-                        onClick={() => {
-                          const params = new URLSearchParams()
-                          if (formData.name) params.append("name", formData.name)
-                          if (formData.email) params.append("email", formData.email)
-                          if (formData.message) params.append("message", formData.message)
-                          if (formData.preferredDate) params.append("date", formData.preferredDate)
-                          router.push(`/schedule?${params.toString()}`)
-                        }}
-                      >
-                        <Clock className="h-3 w-3" />
-                        Need precise time? Click here
-                      </Button>
-                    </div>
-                  </div>
-                </>
-              )}
               <Input
                 type="text"
                 value={formData.website}
@@ -562,27 +441,27 @@ export function ContactSection() {
                 autoComplete="off"
                 aria-hidden="true"
               />
-              <div data-contact-right className="pt-2 transform-gpu">
+              <div data-contact-right className="pt-3">
                 <MagneticButton
                   type="submit"
                   variant="primary"
                   size="lg"
-                  className="w-full text-sm sm:text-base py-3 sm:py-3.5"
+                  className="w-full text-base"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? t("contact.form.submitting") : t("contact.form.submit")}
                 </MagneticButton>
                 {submitSuccess && (
-                  <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                    <p className="text-center font-mono text-xs sm:text-sm text-foreground flex items-center justify-center gap-2">
+                  <div className="mt-4 p-4 rounded-lg bg-green-500/10 border border-green-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                    <p className="text-center font-mono text-sm text-foreground flex items-center justify-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-green-500" />
                       {t("contact.form.success")}
                     </p>
                   </div>
                 )}
                 {submitError && (
-                  <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                    <p className="text-center font-mono text-xs sm:text-sm text-foreground flex items-center justify-center gap-2">
+                  <div className="mt-4 p-4 rounded-lg bg-red-500/10 border border-red-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                    <p className="text-center font-mono text-sm text-foreground flex items-center justify-center gap-2">
                       <AlertCircle className="h-4 w-4 text-red-500" />
                       {submitError}
                     </p>

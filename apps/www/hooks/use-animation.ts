@@ -1,7 +1,8 @@
 "use client"
 
-import { useEffect, useRef, RefObject } from "react"
+import { useLoading } from "@/components/providers/loading-provider"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
+import { RefObject, useEffect, useMemo, useRef } from "react"
 
 export type AnimationDirection = "up" | "down" | "left" | "right" | "fade" | "scale"
 
@@ -80,6 +81,8 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(
   config: AnimationConfig = {}
 ): RefObject<T | null> {
   const ref = useRef<T | null>(null)
+  const { isInitialLoadComplete } = useLoading()
+
   const {
     direction,
     delay,
@@ -91,11 +94,11 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(
     once,
     scrub,
     markers,
-  } = { ...DEFAULT_CONFIG, ...config }
+  } = useMemo(() => ({ ...DEFAULT_CONFIG, ...config }), [config])
 
   useEffect(() => {
     const element = ref.current
-    if (!element) return
+    if (!element || !isInitialLoadComplete) return
 
     if (prefersReducedMotion()) {
       gsap.set(element, { opacity: 1, x: 0, y: 0, scale: 1 })
@@ -125,7 +128,7 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(
       animation.scrollTrigger?.kill()
       animation.kill()
     }
-  }, [direction, delay, duration, distance, ease, start, end, once, scrub, markers])
+  }, [isInitialLoadComplete, direction, delay, duration, distance, ease, start, end, once, scrub, markers])
 
   return ref
 }
@@ -134,6 +137,8 @@ export function useBatchReveal<T extends HTMLElement = HTMLDivElement>(
   config: BatchAnimationConfig
 ): RefObject<T | null> {
   const ref = useRef<T | null>(null)
+  const { isInitialLoadComplete } = useLoading()
+
   const {
     targets,
     direction = DEFAULT_CONFIG.direction,
@@ -150,7 +155,7 @@ export function useBatchReveal<T extends HTMLElement = HTMLDivElement>(
 
   useEffect(() => {
     const container = ref.current
-    if (!container) return
+    if (!container || !isInitialLoadComplete) return
 
     const elements = container.querySelectorAll(targets)
     if (!elements.length) return
@@ -191,7 +196,7 @@ export function useBatchReveal<T extends HTMLElement = HTMLDivElement>(
     return () => {
       triggers.forEach((trigger) => trigger.kill())
     }
-  }, [targets, direction, delay, duration, distance, ease, start, once, stagger, alternate, markers])
+  }, [isInitialLoadComplete, targets, direction, delay, duration, distance, ease, start, once, stagger, alternate, markers])
 
   return ref
 }

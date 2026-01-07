@@ -1,15 +1,15 @@
+import { BackgroundShader } from "@/components/background-shader";
+import CustomCursor from "@/components/custom-cursor";
 import { InitialLoader } from "@/components/initial-loader";
 import { Providers } from "@/components/providers";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeScript } from "@/components/theme-script";
-import { BackgroundShader } from "@/components/background-shader";
 import { routing } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from "next/navigation";
-import "../globals.css";
 import { Suspense } from "react";
-import CustomCursor from "@/components/custom-cursor";
+import "../globals.css";
 
 type Props = {
   children: React.ReactNode;
@@ -37,8 +37,8 @@ export default async function RootLayout({
         className={cn("min-h-screen flex flex-col antialiased")}
       >
         <NextIntlClientProvider>
-          <InitialLoader />
           <Providers>
+            <InitialLoader />
             <ThemeScript />
             <ThemeProvider
               attribute="class"

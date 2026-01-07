@@ -1,44 +1,39 @@
 "use client"
 
 import { useReveal } from "@/hooks/use-animation"
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
-import { gsap, ScrollTrigger } from "@/lib/gsap"
 
 export function ServicesSection() {
   const t = useTranslations()
   const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.8 })
+  const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.5 })
 
   useEffect(() => {
     if (!sectionRef.current) return
 
     const sectionElement = sectionRef.current
     const cards = sectionElement.querySelectorAll("[data-service-card]")
+    if (cards.length === 0) return
+
     const triggers: ScrollTrigger[] = []
 
     cards.forEach((card, index) => {
-      const directions = ["up", "right", "left", "down"]
-      const direction = directions[index % 4]
-
-      const initialState: gsap.TweenVars = { opacity: 0 }
-      if (direction === "up") initialState.y = 40
-      if (direction === "down") initialState.y = -40
-      if (direction === "left") initialState.x = 40
-      if (direction === "right") initialState.x = -40
-
-      gsap.set(card, initialState)
+      gsap.set(card, {
+        opacity: 0,
+        y: 20,
+      })
 
       const revealTween = gsap.to(card, {
         opacity: 1,
-        x: 0,
         y: 0,
-        duration: 0.8,
-        delay: index * 0.1,
-        ease: "power3.out",
+        duration: 0.4,      
+        delay: index * 0.06, 
+        ease: "power2.out",
         scrollTrigger: {
           trigger: card,
-          start: "top 85%",
+          start: "top 90%",
           toggleActions: "play none none none",
           once: true,
         },
@@ -51,13 +46,6 @@ export function ServicesSection() {
 
     return () => {
       triggers.forEach((trigger) => trigger.kill())
-      if (sectionElement) {
-        ScrollTrigger.getAll().forEach((trigger) => {
-          if (sectionElement.contains(trigger.vars.trigger as Element)) {
-            trigger.kill()
-          }
-        })
-      }
     }
   }, [])
 
@@ -66,17 +54,18 @@ export function ServicesSection() {
       suppressHydrationWarning={true}
       id="services"
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center px-6 pt-20 md:px-12 md:pt-24 lg:px-16"
+      className="flex min-h-screen w-full items-center px-6 pt-24 md:px-12 md:pt-32 lg:px-16"
     >
       <div className="mx-auto w-full max-w-7xl">
-        <div ref={titleRef} className="mb-12 md:mb-16">
-          <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
+        <div ref={titleRef} className="mb-16 md:mb-20">
+          <h2 className="mb-3 font-sans text-5xl font-normal tracking-tight text-foreground md:text-6xl lg:text-7xl">
             {t("services.title")}
           </h2>
-          <p className="font-mono text-sm text-foreground/60 md:text-base">/ {t("services.subtitle")}</p>
+          <p className="font-mono text-sm text-foreground/60 tracking-wide md:text-base">
+            {t("services.subtitle")}
+          </p>
         </div>
-
-        <div className="grid gap-8 md:grid-cols-2 md:gap-x-16 md:gap-y-12 lg:gap-x-24">
+        <div className="grid gap-12 md:grid-cols-2 md:gap-x-20 md:gap-y-16 lg:gap-x-28">
           {[
             {
               title: t("services.service1.title"),
@@ -117,19 +106,32 @@ function ServiceCard({
 
     const card = cardRef.current
     const line = card.querySelector("[data-service-line]")
+    const number = card.querySelector("[data-service-number]")
 
     const handleMouseEnter = () => {
-      gsap.to(line, {
-        width: 48,
-        duration: 0.3,
+      if (line) gsap.to(line, {
+        width: 56,
+        duration: 0.25,
+        ease: "power2.out",
+      })
+      if (number) gsap.to(number, {
+        x: 4,
+        opacity: 0.8,
+        duration: 0.25,
         ease: "power2.out",
       })
     }
 
     const handleMouseLeave = () => {
-      gsap.to(line, {
-        width: 32,
-        duration: 0.3,
+      if (line) gsap.to(line, {
+        width: 40,
+        duration: 0.25,
+        ease: "power2.out",
+      })
+      if (number) gsap.to(number, {
+        x: 0,
+        opacity: 0.5,
+        duration: 0.25,
         ease: "power2.out",
       })
     }
@@ -144,16 +146,29 @@ function ServiceCard({
   }, [])
 
   return (
-    <div ref={cardRef} data-service-card className="group">
-      <div className="mb-3 flex items-center gap-3">
+    <div
+      ref={cardRef}
+      data-service-card
+      className="group cursor-default"
+    >
+      <div className="mb-4 flex items-center gap-4">
         <div
           data-service-line
-          className="h-px w-8 bg-foreground/30 transition-colors group-hover:bg-foreground/50"
+          className="h-px w-10 bg-foreground/25 transition-colors group-hover:bg-foreground/40"
         />
-        <span className="font-mono text-xs text-foreground/60">0{index + 1}</span>
+        <span
+          data-service-number
+          className="font-mono text-xs text-foreground/50 transition-all"
+        >
+          {String(index + 1).padStart(2, '0')}
+        </span>
       </div>
-      <h3 className="mb-2 font-sans text-2xl font-light text-foreground md:text-3xl">{service.title}</h3>
-      <p className="max-w-sm text-sm leading-relaxed text-foreground/80 md:text-base">{service.description}</p>
+      <h3 className="mb-3 font-sans text-2xl font-medium text-foreground transition-colors group-hover:text-foreground/90 md:text-3xl">
+        {service.title}
+      </h3>
+      <p className="max-w-md text-base leading-relaxed text-foreground/75 md:text-lg">
+        {service.description}
+      </p>
     </div>
   )
 }

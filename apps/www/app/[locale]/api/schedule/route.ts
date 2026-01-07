@@ -1,25 +1,17 @@
-import { NextRequest, NextResponse } from "next/server"
-import { prisma } from "@repo/database"
 import { meetingRequestSchema, standaloneMeetingSchema } from "@/lib/validations/contact"
+import { prisma } from "@repo/database"
+import { NextRequest, NextResponse } from "next/server"
 import { ZodError } from "zod"
 
-/**
- * POST /api/schedule
- * Handle standalone meeting requests (from schedule page)
- */
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json()
 
-        // Check if this is a standalone meeting (has name/email) or linked to existing submission
         if (body.name && body.email && body.scheduledDate && body.scheduledTime) {
-            // Standalone meeting request
             const validatedData = standaloneMeetingSchema.parse(body)
 
-            // Parse the scheduled datetime
             const scheduledDate = new Date(validatedData.scheduledDate)
 
-            // Check if date is in the past
             const now = new Date()
             if (scheduledDate < now) {
                 return NextResponse.json(
@@ -28,7 +20,6 @@ export async function POST(request: NextRequest) {
                 )
             }
 
-            // Check if date is too far in the future (e.g., more than 3 months)
             const threeMonthsFromNow = new Date()
             threeMonthsFromNow.setMonth(threeMonthsFromNow.getMonth() + 3)
             if (scheduledDate > threeMonthsFromNow) {
@@ -38,7 +29,6 @@ export async function POST(request: NextRequest) {
                 )
             }
 
-            // Create contact submission first
             const userAgent = request.headers.get("user-agent") || undefined
             const forwardedFor = request.headers.get("x-forwarded-for")
             const ipAddress = forwardedFor ? forwardedFor.split(",")[0].trim() : undefined
@@ -57,21 +47,18 @@ export async function POST(request: NextRequest) {
                 },
             })
 
-            // Create meeting with precise time
             const meeting = await prisma.meeting.create({
                 data: {
                     title: `Meeting with ${validatedData.name}`,
                     type: "CONSULTATION",
                     scheduledDate,
-                    scheduledTime: validatedData.scheduledTime, // Store as "HH:MM" format
+                    scheduledTime: validatedData.scheduledTime,
                     guestName: validatedData.name,
                     guestEmail: validatedData.email,
                     submissionId: submission.id,
                     notes: validatedData.message,
                 },
             })
-
-            // Create notifications for admins
             const admins = await prisma.user.findMany({
                 where: { role: { in: ["ADMIN", "SUPERADMIN"] } },
                 select: { id: true },
@@ -101,7 +88,6 @@ export async function POST(request: NextRequest) {
                 { status: 201 }
             )
         } else {
-            // Legacy: Meeting request linked to existing contact submission
             const validatedData = meetingRequestSchema.parse(body)
 
             const submission = await prisma.contactSubmission.findUnique({
@@ -115,7 +101,6 @@ export async function POST(request: NextRequest) {
                 )
             }
 
-            // Convert YYYY-MM-DD to Date object
             const dateParts = validatedData.preferredDate.split('-')
             const requestedDate = new Date(
                 parseInt(dateParts[0]),
@@ -124,7 +109,6 @@ export async function POST(request: NextRequest) {
                 12, 0, 0
             )
 
-            // Check if date is in the past
             const today = new Date()
             today.setHours(0, 0, 0, 0)
             if (requestedDate < today) {
@@ -134,7 +118,6 @@ export async function POST(request: NextRequest) {
                 )
             }
 
-            // Check if date is too far in the future
             const threeMonthsFromNow = new Date()
             threeMonthsFromNow.setMonth(threeMonthsFromNow.getMonth() + 3)
             threeMonthsFromNow.setHours(23, 59, 59, 999)
@@ -145,7 +128,6 @@ export async function POST(request: NextRequest) {
                 )
             }
 
-            // Create meeting
             const meeting = await prisma.meeting.create({
                 data: {
                     title: `Meeting with ${submission.name}`,
@@ -159,7 +141,6 @@ export async function POST(request: NextRequest) {
                 },
             })
 
-            // Create notifications for admins
             const admins = await prisma.user.findMany({
                 where: { role: { in: ["ADMIN", "SUPERADMIN"] } },
                 select: { id: true },

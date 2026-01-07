@@ -4,8 +4,8 @@ import { BackgroundShader } from "@/components/background-shader"
 import { ErrorBoundary } from "@/components/error-boundary"
 import { Nav } from "@/components/nav"
 import { NAV_ITEMS } from "@/lib/constants"
-import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
+
 const HeroSection = lazy(() => import("@/components/sections/hero-section").then(m => ({ default: m.HeroSection })))
 const WorkSection = lazy(() => import("@/components/sections/work-section").then(m => ({ default: m.WorkSection })))
 const ServicesSection = lazy(() => import("@/components/sections/services-section").then(m => ({ default: m.ServicesSection })))
@@ -33,7 +33,6 @@ export default function Home() {
 
     const navItems = useMemo(() => NAV_ITEMS, [])
 
-    // Scroll tracking
     useEffect(() => {
         const handleScroll = () => {
             if (scrollTimeoutRef.current) {
@@ -59,7 +58,7 @@ export default function Home() {
                 if (current.top < window.innerHeight * 0.8) {
                     setCurrentSection(current.id)
                 }
-            }, 100)
+            }, 80)
         }
 
         let ticking = false
@@ -99,50 +98,11 @@ export default function Home() {
         }
     }, [])
 
-    // Section entrance animations
-    useEffect(() => {
-        const sections = ["work", "services", "about", "contact"]
-        const sectionConfigs = {
-            work: { x: -100, y: 0, rotation: -5 },
-            services: { x: 0, y: 100, rotation: 0 },
-            about: { x: 100, y: 0, rotation: 5 },
-            contact: { x: 0, y: -100, rotation: 0 },
-        }
-
-        sections.forEach((sectionId) => {
-            const section = document.getElementById(sectionId)
-            if (!section) return
-
-            const config = sectionConfigs[sectionId as keyof typeof sectionConfigs]
-
-            gsap.set(section, {
-                opacity: 0,
-                x: config.x,
-                y: config.y,
-                rotation: config.rotation,
-                scale: 0.95,
-                force3D: true,
-                willChange: "transform, opacity"
-            })
-        })
-
-        return () => {
-            ScrollTrigger.getAll().forEach((trigger) => {
-                const triggerElement = trigger.vars.trigger as Element
-                if (triggerElement && sections.some(id => {
-                    const section = document.getElementById(id)
-                    return section?.contains(triggerElement)
-                })) {
-                    trigger.kill()
-                }
-            })
-        }
-    }, [])
-
     return (
         <main className="relative min-h-screen w-full bg-background">
             <BackgroundShader />
             <Nav scrollToSection={scrollToSection} currentSection={currentSection} />
+
             <div className="relative z-10">
                 <ErrorBoundary>
                     <Suspense fallback={<SectionSkeleton />}>

@@ -1,8 +1,8 @@
 "use client"
 
-import type React from "react"
-import { useRef, useEffect, useState } from "react"
 import { gsap } from "@/lib/gsap"
+import type React from "react"
+import { useEffect, useRef, useState } from "react"
 
 type ButtonVariant = "primary" | "secondary" | "ghost"
 type ButtonSize = "default" | "lg"
@@ -104,7 +104,7 @@ export function MagneticButton({
       data-cursor-pointer
       {...props}
     >
-      <span className="relative z-10">{children}</span>
+      <span className="relative z-10 flex items-center justify-center gap-2">{children}</span>
     </button>
   )
 }

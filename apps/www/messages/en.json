@@ -8,6 +8,7 @@
         "services": "Services",
         "about": "About",
         "contact": "Contact",
+        "schedule": "Schedule",
         "getStarted": "Let's Talk",
         "openMenu": "Open menu",
         "closeMenu": "Close menu",
@@ -18,74 +19,74 @@
         "theme": "Theme"
     },
     "hero": {
-        "badge": "Web Development Studio",
-        "title": "We build websites",
-        "title2": "that work",
-        "description": "Alpha crafts modern web applications with clean code, thoughtful design, and attention to detail. We work with businesses ready to establish or improve their digital presence.",
-        "ctaPrimary": "Start a Conversation",
-        "ctaSecondary": "View Our Work",
+        "badge": "Web Development • Cairo",
+        "title": "We build web",
+        "title2": "experiences that matter",
+        "description": "Clean code. Thoughtful design. No templates, no shortcuts. For businesses that value quality over quick fixes.",
+        "ctaPrimary": "Start a Project",
+        "ctaSecondary": "See Our Work",
         "scrollHint": "Scroll to explore"
     },
     "work": {
-        "title": "Recent Work",
-        "subtitle": "What we've built",
+        "title": "Selected Work",
+        "subtitle": "Recent projects",
         "projects": {
             "project1": {
-                "title": "E-Commerce Platform",
-                "category": "Full-stack Next.js application with Stripe integration",
+                "title": "Art Lighting Store",
+                "category": "E-Commerce • Stripe • Next.js",
                 "link": "https://eg-artlighting.vercel.app/",
                 "year": "2024"
             },
             "project2": {
-                "title": "Custom Product Store",
-                "category": "Product customization platform with real-time preview",
+                "title": "Custom Case Builder",
+                "category": "Product Configurator • Real-time Preview",
                 "link": "https://casescobra.vercel.app/",
                 "year": "2024"
             },
             "project3": {
-                "title": "Corporate Website",
-                "category": "Multi-language business site with PWA capabilities",
+                "title": "Corporate Presence",
+                "category": "Multi-language • PWA • Business",
                 "link": "https://www.newlight-eg.com/",
                 "year": "2024"
             },
             "project4": {
-                "title": "International Business Portal",
-                "category": "Bilingual (EN/AR) web application",
+                "title": "International Portal",
+                "category": "Bilingual Platform • EN/AR",
                 "link": "https://www.newlight-eg.com/",
                 "year": "2024"
             }
         }
     },
     "services": {
-        "title": "What We Do",
-        "subtitle": "Our core services",
+        "title": "What We Build",
+        "subtitle": "Core capabilities",
         "service1": {
-            "title": "Web Development",
-            "description": "Modern websites and applications built with React, Next.js, and TypeScript. We focus on performance, accessibility, and maintainable code."
+            "title": "Modern Web Apps",
+            "description": "React, Next.js, TypeScript. Fast, accessible, maintainable. Built for growth, not just launch."
         },
         "service2": {
-            "title": "E-Commerce Solutions",
-            "description": "Complete online stores with payment integration, inventory management, and responsive design. Built for growth and easy management."
+            "title": "E-Commerce That Converts",
+            "description": "Complete stores with payments, inventory, and responsive design. We focus on the checkout, not just the catalog."
         },
         "service3": {
-            "title": "Multi-Language Sites",
-            "description": "Websites that work seamlessly in Arabic and English, with proper RTL support and culturally adapted content."
+            "title": "Arabic + English Done Right",
+            "description": "True RTL support, culturally adapted content. Not just translated—reimagined for each audience."
         },
         "service4": {
-            "title": "UI/UX Implementation",
-            "description": "Translating designs into functional interfaces with smooth animations, intuitive interactions, and pixel-perfect execution."
+            "title": "Design Implementation",
+            "description": "Your designs, executed precisely. Smooth animations, intuitive interactions, pixel-perfect delivery."
         }
     },
     "about": {
-        "title": "We're a small team",
-        "title2": "focused on",
-        "title3": "quality work",
-        "description1": "Alpha is a web development studio based in Cairo, Egypt. We specialize in building modern web applications for businesses that value quality and attention to detail.",
-        "description2": "Every project gets our full focus. We don't outsource, we don't use templates, and we don't overpromise. We write clean code, meet deadlines, and stay in touch throughout the process.",
+        "title": "Small team.",
+        "title2": "Focused work.",
+        "title3": "Clear results.",
+        "description1": "Alpha is a web development studio in Cairo. We specialize in building modern applications for businesses that need a partner, not just a vendor.",
+        "description2": "Every project gets our full attention. We don't outsource. We don't use templates. We don't overpromise. We write clean code, meet deadlines, and stay honest throughout.",
         "stat1": {
             "value": "20+",
             "label": "Projects",
-            "sublabel": "Completed successfully"
+            "sublabel": "Delivered successfully"
         },
         "stat2": {
             "value": "3",
@@ -95,29 +96,31 @@
         "stat3": {
             "value": "100%",
             "label": "Client",
-            "sublabel": "Satisfaction rate"
+            "sublabel": "Satisfaction"
         },
         "ctaPrimary": "Discuss Your Project",
-        "ctaSecondary": "See Our Work"
+        "ctaSecondary": "View Our Work"
     },
     "contact": {
-        "title": "Let's work",
-        "title2": "together",
-        "subtitle": "Get in touch",
+        "title": "Let's build",
+        "title2": "something great",
+        "subtitle": "Start a conversation",
         "email": "Email",
         "emailValue": "hello@alpha.com",
         "location": "Location",
         "locationValue": "Cairo, Egypt",
+        "scheduleMeeting": "Schedule a Meeting",
+        "scheduleDescription": "Choose your exact date and time",
         "form": {
             "name": "Name",
             "namePlaceholder": "Your name",
             "email": "Email",
             "emailPlaceholder": "your@email.com",
             "message": "Message",
-            "messagePlaceholder": "Tell us about your project - what you need, your timeline, and your budget range...",
+            "messagePlaceholder": "Tell us about your project. What do you need? What's your timeline?",
             "submit": "Send Message",
             "submitting": "Sending...",
-            "success": "Thanks! We'll get back to you within 24 hours."
+            "success": "Thanks. We'll reply within 24 hours."
         },
         "social": {
             "twitter": "Twitter",

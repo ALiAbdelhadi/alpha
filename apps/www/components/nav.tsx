@@ -7,9 +7,12 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Link } from "@/i18n/navigation"
 import { gsap } from "@/lib/gsap"
 import { cn } from "@/lib/utils"
+import { Calendar } from "lucide-react"
 import { useLocale, useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from "react"
 import { AlphaLogo } from "./alpha-logo"
+import { MagneticButton } from "./magnetic-button"
+import { useLoading } from "./providers/loading-provider"
 
 interface NavProps {
     scrollToSection?: (sectionId: string) => void
@@ -19,10 +22,12 @@ interface NavProps {
 export function Nav({ scrollToSection, currentSection: externalCurrentSection }: NavProps) {
     const t = useTranslations('nav');
     const [isScrolled, setIsScrolled] = useState(false)
+    const { isInitialLoadComplete } = useLoading()
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const navRef = useRef<HTMLElement>(null)
     const logoRef = useRef<HTMLAnchorElement>(null)
     const navItemsRef = useRef<HTMLElement>(null)
+    const actionsRef = useRef<HTMLDivElement>(null)
     const mobileMenuRef = useRef<HTMLDivElement>(null)
 
     const navItems = [
@@ -45,10 +50,12 @@ export function Nav({ scrollToSection, currentSection: externalCurrentSection }:
     }, [])
 
     useEffect(() => {
-        if (!logoRef.current || !navItemsRef.current) return
+        if (!isInitialLoadComplete) return
+        if (!logoRef.current || !navItemsRef.current || !actionsRef.current) return
 
         const ctx = gsap.context(() => {
             gsap.set(logoRef.current, { opacity: 0, y: -10 })
+            gsap.set(actionsRef.current, { opacity: 0, y: -10 })
 
             const navChildren = navItemsRef.current?.children
             if (navChildren && navChildren.length > 0) {
@@ -75,10 +82,20 @@ export function Nav({ scrollToSection, currentSection: externalCurrentSection }:
                     "-=0.4"
                 )
             }
+
+            tl.to(
+                actionsRef.current,
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                },
+                "-=0.3"
+            )
         })
 
         return () => ctx.revert()
-    }, [])
+    }, [isInitialLoadComplete])
 
     useEffect(() => {
         if (!mobileMenuRef.current) return
@@ -126,15 +143,66 @@ export function Nav({ scrollToSection, currentSection: externalCurrentSection }:
     return (
         <>
             <header
-                ref={navRef}
-                className={`fixed top-0 z-40 w-full transition-all duration-500 ${isScrolled
-                    ? "bg-[rgba(255,255,255,0.5)] dark:bg-[rgba(20,20,20,0.4)] backdrop-blur-xl shadow-sm"
-                    : "bg-transparent"
-                    }`}
+                className={cn(
+                    "fixed top-0 z-40 w-full transition-all duration-500",
+                    isInitialLoadComplete ? "opacity-100" : "opacity-0 pointer-events-none",
+                    isScrolled
+                        ? "bg-[rgba(255,255,255,0.5)] dark:bg-[rgba(20,20,20,0.4)] backdrop-blur-xl shadow-sm"
+                        : "bg-transparent"
+                )}
             >
                 <Container>
-                    <div className="flex h-16 items-center justify-center">
-                        <div className="flex w-full items-center justify-between gap-8">
+                    <div className="flex h-16 items-center">
+                        <div className="hidden lg:grid lg:grid-cols-3 w-full items-center gap-8">
+                            <div className="flex justify-start">
+                                <Link
+                                    ref={logoRef}
+                                    href="/"
+                                    className="flex items-baseline gap-1 group relative"
+                                    onClick={(e) => {
+                                        if (scrollToSection) {
+                                            e.preventDefault()
+                                            scrollToSection("home")
+                                        }
+                                    }}
+                                >
+                                    <AlphaLogo size="md" variant="full" />
+                                </Link>
+                            </div>
+                            <nav ref={navItemsRef} className="flex items-center justify-center gap-1">
+                                {navItems.map((item) => (
+                                    <NavItem key={item.key}>
+                                        <button
+                                            onClick={() => handleNavClick(item)}
+                                            className={`group relative font-sans text-sm font-medium transition-colors rounded px-3 py-1.5 ${currentSection === item.sectionId
+                                                    ? "text-foreground"
+                                                    : "text-foreground/80 hover:text-foreground"
+                                                }`}
+                                            aria-current={currentSection === item.sectionId ? "page" : undefined}
+                                        >
+                                            {t(item.key)}
+                                            <span
+                                                className={`absolute -bottom-1 left-0 right-0 h-px bg-foreground transition-all duration-300 ${currentSection === item.sectionId ? "w-full" : "w-0 group-hover:w-full"
+                                                    }`}
+                                            />
+                                        </button>
+                                    </NavItem>
+                                ))}
+                            </nav>
+                            <div ref={actionsRef} className="flex items-center justify-end gap-2">
+                                <LanguageChanger />
+                                <NavDivider />
+                                <ThemeChanger />
+                                <NavDivider />
+                                <Link href="/schedule">
+                                    <MagneticButton>
+                                        <Calendar className="h-4 w-4 transition-transform group-hover:scale-110" />
+                                        <span>{t('schedule')}</span>
+                                    </MagneticButton>
+                                </Link>
+                            </div>
+                        </div>
+                        <div className="flex lg:hidden w-full items-center justify-between">
                             <Link
                                 ref={logoRef}
                                 href="/"
@@ -148,37 +216,9 @@ export function Nav({ scrollToSection, currentSection: externalCurrentSection }:
                             >
                                 <AlphaLogo size="md" variant="full" />
                             </Link>
-                            <nav ref={navItemsRef} className="hidden lg:flex items-center gap-2 text-sm">
-                                {navItems.map((item) => (
-                                    <NavItem key={item.key}>
-                                        <button
-                                            onClick={() => handleNavClick(item)}
-                                            className={`group relative font-sans text-sm font-medium transition-colors rounded px-2 py-1 ${currentSection === item.sectionId
-                                                ? "text-foreground"
-                                                : "text-foreground/80 hover:text-foreground"
-                                                }`}
-                                            aria-current={currentSection === item.sectionId ? "page" : undefined}
-                                        >
-                                            {t(item.key)}
-                                            <span
-                                                className={`absolute -bottom-1 left-0 right-0 h-px bg-foreground transition-all duration-300 ${currentSection === item.sectionId ? "w-full" : "w-0 group-hover:w-full"
-                                                    }`}
-                                            />
-                                        </button>
-                                    </NavItem>
-                                ))}
-                                <NavDivider />
-                                <NavItem>
-                                    <LanguageChanger />
-                                </NavItem>
-                                <NavDivider />
-                                <NavItem>
-                                    <ThemeChanger />
-                                </NavItem>
-                            </nav>
                             <button
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                className="lg:hidden relative z-50 w-[24px] h-[24px] flex items-center justify-center"
+                                className="relative z-50 w-[24px] h-[24px] flex items-center justify-center"
                                 aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                             >
                                 <span
@@ -225,6 +265,19 @@ export function Nav({ scrollToSection, currentSection: externalCurrentSection }:
                                         ))}
                                     </div>
                                     <div className="h-px w-full bg-border/70" />
+                                    <MobileMenuItem>
+                                        <Link
+                                            href="/schedule"
+                                            onClick={() => handleMobileLinkClick()}
+                                            className="block"
+                                        >
+                                            <MagneticButton className="w-full justify-center">
+                                                <Calendar className="h-4 w-4 transition-transform group-hover:scale-110" />
+                                                <span>{t('schedule')}</span>
+                                            </MagneticButton>
+                                        </Link>
+                                    </MobileMenuItem>
+                                    <div className="h-px w-full bg-border/70" />
                                     <div className="space-y-4">
                                         <MobileMenuItem>
                                             <div className="flex items-center justify-between py-2">
@@ -233,7 +286,6 @@ export function Nav({ scrollToSection, currentSection: externalCurrentSection }:
                                                 </span>
                                                 <LanguageChanger />
                                             </div>
-
                                         </MobileMenuItem>
                                         <MobileMenuItem>
                                             <div className="flex items-center justify-between py-2">
@@ -244,7 +296,6 @@ export function Nav({ scrollToSection, currentSection: externalCurrentSection }:
                                             </div>
                                         </MobileMenuItem>
                                     </div>
-                                    <div className="h-px w-full bg-border/30" />
                                 </div>
                             </div>
                         </ScrollArea>

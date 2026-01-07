@@ -3,10 +3,10 @@
 import { AlphaLogo } from "@/components/alpha-logo"
 import { LanguageChanger } from "@/components/language-switcher"
 import { MagneticButton } from "@/components/magnetic-button"
+import { gsap } from "@/lib/gsap"
+import { Menu, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
-import { Menu, X } from "lucide-react"
-import { gsap } from "@/lib/gsap"
 
 interface MobileNavProps {
   currentSection: string

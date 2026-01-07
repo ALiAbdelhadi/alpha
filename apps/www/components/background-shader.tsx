@@ -1,6 +1,6 @@
 "use client"
 
-import { BRAND_COLORS, SHADER_CONFIG } from "@/lib/constants"
+import { BRAND_COLORS } from "@/lib/constants"
 import { useEffect, useRef, useState } from "react"
 import { ChromaFlow, Shader, Swirl } from "shaders/react"
 
@@ -8,7 +8,6 @@ export function BackgroundShader() {
     const [isLoaded, setIsLoaded] = useState(false)
     const shaderContainerRef = useRef<HTMLDivElement>(null)
 
-    // Shader loading detection
     useEffect(() => {
         const checkShaderReady = () => {
             const canvas = shaderContainerRef.current?.querySelector("canvas")
@@ -46,45 +45,47 @@ export function BackgroundShader() {
         >
             <Shader className="h-full w-full">
                 <Swirl
-                    colorA={SHADER_CONFIG.swirl.colorA}
-                    colorB={SHADER_CONFIG.swirl.colorB}
-                    speed={SHADER_CONFIG.swirl.speed}
-                    detail={SHADER_CONFIG.swirl.detail}
-                    blend={SHADER_CONFIG.swirl.blend}
-                    coarseX={SHADER_CONFIG.swirl.coarseX}
-                    coarseY={SHADER_CONFIG.swirl.coarseY}
-                    mediumX={SHADER_CONFIG.swirl.mediumX}
-                    mediumY={SHADER_CONFIG.swirl.mediumY}
-                    fineX={SHADER_CONFIG.swirl.fineX}
-                    fineY={SHADER_CONFIG.swirl.fineY}
+                    colorA={BRAND_COLORS.tealDarkest}
+                    colorB={BRAND_COLORS.cyan}
+                    speed={0.4}           // أبطأ من 0.6
+                    detail={0.75}         // أقل من 0.85
+                    blend={50}            // أقل من 60
+                    coarseX={40}          // أقل من 45
+                    coarseY={40}
+                    mediumX={35}          // أقل من 40
+                    mediumY={35}
+                    fineX={30}            // أقل من 35
+                    fineY={30}
                 />
+
+                {/* ChromaFlow - إعدادات محسّنة */}
                 <ChromaFlow
-                    baseColor={SHADER_CONFIG.chromaFlow.baseColor}
-                    upColor={SHADER_CONFIG.chromaFlow.upColor}
-                    downColor={SHADER_CONFIG.chromaFlow.downColor}
-                    leftColor={SHADER_CONFIG.chromaFlow.leftColor}
-                    rightColor={SHADER_CONFIG.chromaFlow.rightColor}
-                    intensity={SHADER_CONFIG.chromaFlow.intensity}
-                    radius={SHADER_CONFIG.chromaFlow.radius}
-                    momentum={SHADER_CONFIG.chromaFlow.momentum}
-                    maskType={SHADER_CONFIG.chromaFlow.maskType}
-                    opacity={SHADER_CONFIG.chromaFlow.opacity}
+                    baseColor={BRAND_COLORS.teal}
+                    upColor={BRAND_COLORS.cyanLight}
+                    downColor={BRAND_COLORS.navyDeep}
+                    leftColor={BRAND_COLORS.tealDark}
+                    rightColor={BRAND_COLORS.cyanLighter}
+                    intensity={0.7}       // أقل من 1.0
+                    radius={1.8}          // أقل من 2.0
+                    momentum={25}         // أقل من 30
+                    maskType="alpha"
+                    opacity={0.85}        // أقل من 0.92
                 />
             </Shader>
+
             <div
-                className="absolute inset-0 opacity-30 mix-blend-overlay"
+                className="absolute inset-0 opacity-20 mix-blend-overlay"
                 style={{
                     background: `
-                        radial-gradient(circle at 20% 30%, ${BRAND_COLORS.teal}30 0%, transparent 40%),
-                        radial-gradient(circle at 80% 70%, ${BRAND_COLORS.navyDeep}50 0%, transparent 40%),
-                        radial-gradient(circle at 50% 50%, ${BRAND_COLORS.cyanDark}20 0%, transparent 50%)
+                        radial-gradient(circle at 20% 30%, ${BRAND_COLORS.teal}25 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, ${BRAND_COLORS.navyDeep}40 0%, transparent 40%)
                     `
                 }}
             />
+
             <div
-                className="absolute inset-0 bg-linear-to-b from-black/30 via-transparent to-black/40"
+                className="absolute inset-0 bg-linear-to-b from-black/20 via-transparent to-black/30"
             />
         </div>
     )
 }
-

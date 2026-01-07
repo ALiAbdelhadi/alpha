@@ -3,58 +3,45 @@
 import { useReveal } from "@/hooks/use-animation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { useTranslations } from "next-intl"
+import Link from "next/link"
 import { useEffect, useMemo, useRef } from "react"
 import { Container } from "../container"
-import Link from "next/link"
 
 export function WorkSection() {
   const t = useTranslations()
   const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useReveal<HTMLDivElement>({ direction: "left", delay: 0, duration: 0.8 })
+  const titleRef = useReveal<HTMLDivElement>({ direction: "left", delay: 0, duration: 0.5 })
 
   useEffect(() => {
     if (!sectionRef.current) return
 
     const cards = sectionRef.current.querySelectorAll("[data-project-card]")
-
     const sectionElement = sectionRef.current
     const triggers: ScrollTrigger[] = []
 
     cards.forEach((card, index) => {
-      const isEven = index % 2 === 0
-      const distance = isEven ? 80 : -80
-
       gsap.set(card, {
         opacity: 0,
-        x: distance,
         y: 20,
-        scale: 0.95,
-        rotation: isEven ? -2 : 2,
-        force3D: true,
-        willChange: "transform, opacity"
       })
 
-      gsap.to(card, {
+      const revealTween = gsap.to(card, {
         opacity: 1,
-        x: 0,
         y: 0,
-        scale: 1,
-        rotation: 0,
-        duration: 1,
-        delay: index * 0.15,
-        ease: "power3.out",
-        force3D: true,
+        duration: 0.5,
+        delay: index * 0.08,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: card,
-          start: "top 85%",
+          start: "top 90%",
           toggleActions: "play none none none",
           once: true,
         },
-        onComplete: () => {
-          gsap.set(card, { willChange: "auto" })
-        }
       })
 
+      if (revealTween.scrollTrigger) {
+        triggers.push(revealTween.scrollTrigger)
+      }
     })
 
     return () => {
@@ -90,8 +77,7 @@ export function WorkSection() {
       category: t("work.projects.project3.category"),
       link: t("work.projects.project3.link"),
       year: t("work.projects.project3.year"),
-    }
-    ,
+    },
     {
       number: "04",
       title: t("work.projects.project4.title"),
@@ -106,18 +92,20 @@ export function WorkSection() {
       id="work"
       suppressHydrationWarning={true}
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center pt-20 md:pt-24"
+      className="flex min-h-screen w-full items-center pt-24 md:pt-32"
     >
       <Container>
-        <div ref={titleRef} className="mb-12 md:mb-16">
-          <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
+        <div ref={titleRef} className="mb-16 md:mb-20">
+          <h2 className="mb-3 font-sans text-5xl font-normal tracking-tight text-foreground md:text-6xl lg:text-7xl">
             {t("work.title")}
           </h2>
-          <p className="font-mono text-sm text-foreground/60 md:text-base">/ {t("work.subtitle")}</p>
+          <p className="font-mono text-sm text-foreground/60 tracking-wide md:text-base">
+            {t("work.subtitle")}
+          </p>
         </div>
-        <div className="space-y-6 md:space-y-8">
-          {projects.map((project, i) => (
-            <ProjectCard key={project.number} project={project} index={i} />
+        <div className="space-y-0">
+          {projects.map((project) => (
+            <ProjectCard key={project.number} project={project} index={0} />
           ))}
         </div>
       </Container>
@@ -127,9 +115,8 @@ export function WorkSection() {
 
 function ProjectCard({
   project,
-  index,
 }: {
-  project: { number: string; title: string; category: string; year: string, link: string }
+  project: { number: string; title: string; category: string; year: string; link: string }
   index: number
 }) {
   const cardRef = useRef<HTMLDivElement>(null)
@@ -137,12 +124,6 @@ function ProjectCard({
   const numberRef = useRef<HTMLSpanElement>(null)
   const categoryRef = useRef<HTMLParagraphElement>(null)
   const yearRef = useRef<HTMLSpanElement>(null)
-  const animationRef = useRef<gsap.core.Timeline | null>(null)
-
-  const cardStyle = useMemo(() => ({
-    marginLeft: index % 2 === 0 ? "0" : "auto",
-    maxWidth: index % 2 === 0 ? "85%" : "90%",
-  }), [index])
 
   useEffect(() => {
     const card = cardRef.current
@@ -153,77 +134,44 @@ function ProjectCard({
     if (!card || !title) return
 
     const handleMouseEnter = () => {
-      if (animationRef.current) {
-        animationRef.current.kill()
-      }
-
-      animationRef.current = gsap.timeline()
-
-      animationRef.current
-        .to(title, {
-          x: 12,
-          duration: 0.4,
-          ease: "power2.out",
-        }, 0)
-        .to(number, {
-          x: -4,
-          opacity: 0.7,
-          duration: 0.4,
-          ease: "power2.out",
-        }, 0)
-        .to(category, {
-          x: 8,
-          opacity: 0.8,
-          duration: 0.4,
-          ease: "power2.out",
-        }, 0)
-        .to(year, {
-          opacity: 0.6,
-          duration: 0.4,
-          ease: "power2.out",
-        }, 0)
-        .to(card, {
-          scale: 1.02,
-          duration: 0.4,
-          ease: "power2.out",
-        }, 0)
+      if (title) gsap.to(title, {
+        x: 6,
+        duration: 0.25,
+        ease: "power2.out",
+      })
+      if (number) gsap.to(number, {
+        x: -2,
+        opacity: 0.6,
+        duration: 0.25,
+        ease: "power2.out",
+      })
+      if (category) gsap.to(category, {
+        x: 4,
+        opacity: 0.75,
+        duration: 0.25,
+        ease: "power2.out",
+      })
+      if (year) gsap.to(year, {
+        opacity: 0.5,
+        duration: 0.25,
+        ease: "power2.out",
+      })
     }
 
     const handleMouseLeave = () => {
-      if (animationRef.current) {
-        animationRef.current.kill()
-      }
-
-      animationRef.current = gsap.timeline()
-
-      animationRef.current
-        .to(title, {
-          x: 0,
-          duration: 0.4,
-          ease: "power2.out",
-        }, 0)
-        .to(number, {
-          x: 0,
-          opacity: 0.3,
-          duration: 0.4,
-          ease: "power2.out",
-        }, 0)
-        .to(category, {
-          x: 0,
-          opacity: 0.5,
-          duration: 0.4,
-          ease: "power2.out",
-        }, 0)
-        .to(year, {
-          opacity: 0.3,
-          duration: 0.4,
-          ease: "power2.out",
-        }, 0)
-        .to(card, {
-          scale: 1,
-          duration: 0.4,
-          ease: "power2.out",
-        }, 0)
+      const elements = [title, number, category, year].filter(Boolean) as Element[]
+      if (elements.length === 0) return
+      
+      gsap.to(elements, {
+        x: 0,
+        opacity: (i, el) => {
+          if (el === title) return 1
+          if (el === number) return 0.4
+          return 0.6
+        },
+        duration: 0.25,
+        ease: "power2.out",
+      })
     }
 
     card.addEventListener("mouseenter", handleMouseEnter, { passive: true })
@@ -232,42 +180,52 @@ function ProjectCard({
     return () => {
       card.removeEventListener("mouseenter", handleMouseEnter)
       card.removeEventListener("mouseleave", handleMouseLeave)
-      if (animationRef.current) {
-        animationRef.current.kill()
-      }
     }
   }, [])
 
   return (
-    <Link href={project.link} target="_blank">
+    <Link href={project.link} target="_blank" rel="noopener noreferrer">
       <div
         ref={cardRef}
         data-project-card
-        className="group flex items-center justify-between border-b border-foreground/10 py-6 hover:border-foreground/20 md:py-8 will-change-transform cursor-pointer"
-        style={cardStyle}
+        className="group flex items-center justify-between border-b border-foreground/10 py-8 hover:border-foreground/20 transition-colors md:py-10 cursor-pointer"
       >
-        <div className="flex items-baseline gap-4 md:gap-8">
+        <div className="flex items-baseline gap-6 md:gap-10">
           <span
             ref={numberRef}
-            className="font-mono text-sm text-foreground/30 transition-colors group-hover:text-foreground/50 md:text-base will-change-transform"
+            className="font-mono text-sm text-foreground/40 transition-all md:text-base"
           >
             {project.number}
           </span>
           <div>
             <h3
               ref={titleRef}
-              className="mb-1 font-sans text-2xl font-light text-foreground md:text-3xl lg:text-4xl will-change-transform"
+              className="mb-2 font-sans text-2xl font-medium text-foreground transition-all md:text-3xl lg:text-4xl"
             >
               {project.title}
             </h3>
             <p
               ref={categoryRef}
-              className="font-mono text-xs text-foreground/50 md:text-sm will-change-transform"
+              className="font-mono text-xs text-foreground/60 transition-all md:text-sm"
             >
               {project.category}
             </p>
           </div>
         </div>
+        <span
+          ref={yearRef}
+          className="hidden font-mono text-sm text-foreground/40 transition-all md:block"
+        >
+          {project.year}
+        </span>
+        <svg 
+          className="ml-4 h-5 w-5 text-foreground/40 transition-all group-hover:translate-x-2 group-hover:text-foreground/70" 
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
       </div>
     </Link>
   )

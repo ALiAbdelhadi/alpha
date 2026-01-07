@@ -1,26 +1,26 @@
 "use client"
 
-import { useState } from "react"
-import { useSearchParams, usePathname } from "next/navigation"
-import { useRouter } from "@/i18n/navigation"
+import { Container } from "@/components/container"
 import { Button } from "@/components/ui/button"
 import { DatePicker } from "@/components/ui/date-picker"
-import { TimePicker } from "@/components/ui/time-picker"
-import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Container } from "@/components/container"
-import { AlertCircle, CheckCircle2, Calendar, Clock, ArrowLeft } from "lucide-react"
+import { TimePicker } from "@/components/ui/time-picker"
+import { useRouter } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
+import { AlertCircle, ArrowLeft, Calendar, CheckCircle2, Clock } from "lucide-react"
+import { usePathname, useSearchParams } from "next/navigation"
+import { useState } from "react"
+
+
 export default function SchedulePage() {
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
 
-    // Get locale from pathname
     const locale = pathname.split('/')[1] || 'en'
 
-    // Get initial values from URL params (if coming from contact form)
     const initialName = searchParams.get("name") || ""
     const initialEmail = searchParams.get("email") || ""
     const initialMessage = searchParams.get("message") || ""
@@ -30,7 +30,7 @@ export default function SchedulePage() {
         email: initialEmail,
         message: initialMessage,
         date: undefined as Date | undefined,
-        time: "", // Format: "HH:MM"
+        time: "",
     })
 
     const [errors, setErrors] = useState<Record<string, string>>({})
@@ -95,7 +95,6 @@ export default function SchedulePage() {
         setIsSubmitting(true)
 
         try {
-            // Combine date and time into a single datetime string
             const [hours, minutes] = formData.time.split(":")
             const scheduledDateTime = new Date(formData.date!)
             scheduledDateTime.setHours(parseInt(hours), parseInt(minutes), 0, 0)
@@ -134,7 +133,6 @@ export default function SchedulePage() {
         <section className="flex min-h-screen items-center py-16 sm:py-20 md:py-24">
             <Container>
                 <div className="mx-auto max-w-2xl">
-                    {/* Back Button */}
                     <Button
                         variant="ghost"
                         onClick={() => router.back()}
@@ -143,8 +141,6 @@ export default function SchedulePage() {
                         <ArrowLeft className="mr-2 h-4 w-4" />
                         Back
                     </Button>
-
-                    {/* Header */}
                     <div className="mb-8">
                         <h1 className="mb-2 font-sans text-3xl font-light leading-tight tracking-tight text-foreground sm:text-4xl md:text-5xl">
                             Schedule a Meeting
@@ -153,10 +149,7 @@ export default function SchedulePage() {
                             Choose your preferred date and time for a detailed consultation
                         </p>
                     </div>
-
-                    {/* Form */}
                     <form onSubmit={onSubmit} className="space-y-6" noValidate>
-                        {/* Name */}
                         <div>
                             <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
                                 Name <span className="text-red-500">*</span>
@@ -181,8 +174,6 @@ export default function SchedulePage() {
                                 </p>
                             )}
                         </div>
-
-                        {/* Email */}
                         <div>
                             <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
                                 Email <span className="text-red-500">*</span>
@@ -207,8 +198,6 @@ export default function SchedulePage() {
                                 </p>
                             )}
                         </div>
-
-                        {/* Message */}
                         <div>
                             <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
                                 Message (Optional)
@@ -221,8 +210,6 @@ export default function SchedulePage() {
                                 placeholder="Tell us about your project..."
                             />
                         </div>
-
-                        {/* Date */}
                         <div>
                             <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
                                 <Calendar className="inline h-3.5 w-3.5 mr-1" />
@@ -250,8 +237,6 @@ export default function SchedulePage() {
                                 </p>
                             )}
                         </div>
-
-                        {/* Time */}
                         <div>
                             <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
                                 <Clock className="inline h-3.5 w-3.5 mr-1" />
@@ -275,8 +260,6 @@ export default function SchedulePage() {
                                 Available hours: 9:00 AM - 6:00 PM (15-minute intervals)
                             </p>
                         </div>
-
-                        {/* Submit Button */}
                         <div className="pt-4">
                             <Button
                                 type="submit"
@@ -287,8 +270,6 @@ export default function SchedulePage() {
                             >
                                 {isSubmitting ? "Scheduling..." : "Schedule Meeting"}
                             </Button>
-
-                            {/* Success Message */}
                             {submitSuccess && (
                                 <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
                                     <p className="text-center font-mono text-xs sm:text-sm text-foreground flex items-center justify-center gap-2">
@@ -297,8 +278,6 @@ export default function SchedulePage() {
                                     </p>
                                 </div>
                             )}
-
-                            {/* Error Message */}
                             {submitError && (
                                 <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
                                     <p className="text-center font-mono text-xs sm:text-sm text-foreground flex items-center justify-center gap-2">
@@ -314,4 +293,3 @@ export default function SchedulePage() {
         </section>
     )
 }
-

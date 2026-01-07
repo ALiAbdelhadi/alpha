@@ -1,13 +1,6 @@
 "use client"
 
-import {
-    Calendar,
-    Eye,
-    Mail,
-    Search
-} from "lucide-react"
-import Link from "next/link"
-import { useEffect, useState } from "react"
+import { Button } from "@/components/ui/button"
 import {
     Select,
     SelectContent,
@@ -15,6 +8,15 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import {
+    ArrowLeft,
+    Calendar,
+    Eye,
+    Mail,
+    Search
+} from "lucide-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 
 type SubmissionStatus =
     | "NEW"
@@ -156,7 +158,14 @@ export default function ContactsPage() {
 
     return (
         <div className="p-6 space-y-6 max-w-7xl mx-auto">
-            {/* Header */}
+            <div className="flex items-center justify-start py-4">
+                <Link href={"/"}>
+                    <Button variant={"outline"}>
+                        <ArrowLeft className="h-4 w-4" />
+                        Back (Dashboard)
+                    </Button>
+                </Link>
+            </div>
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold">Contact Submissions</h1>
@@ -168,8 +177,6 @@ export default function ContactsPage() {
                     {filteredContacts.length} {filteredContacts.length === 1 ? "submission" : "submissions"}
                 </div>
             </div>
-
-            {/* Filters */}
             <div className="flex flex-col sm:flex-row gap-4">
                 <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -211,7 +218,6 @@ export default function ContactsPage() {
                 </Select>
             </div>
 
-            {/* Table */}
             <div className="border rounded-lg overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full">
@@ -247,7 +253,7 @@ export default function ContactsPage() {
                             ) : (
                                 filteredContacts.map((contact) => (
                                     <tr key={contact.id} className="hover:bg-muted/30 transition-colors">
-                                        <td className="px-4 py-4">
+                                        <td className="p-4">
                                             <div className="font-medium">{contact.name}</div>
                                             <div className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
                                                 <Mail className="h-3 w-3" />
@@ -259,12 +265,12 @@ export default function ContactsPage() {
                                                 </div>
                                             )}
                                         </td>
-                                        <td className="px-4 py-4">
+                                        <td className="p-4">
                                             <div className="text-sm line-clamp-2 max-w-md">
                                                 {contact.message}
                                             </div>
                                         </td>
-                                        <td className="px-4 py-4">
+                                        <td className="p-4">
                                             <Select
                                                 value={contact.status}
                                                 onValueChange={(value) =>
@@ -289,7 +295,7 @@ export default function ContactsPage() {
                                                 </SelectContent>
                                             </Select>
                                         </td>
-                                        <td className="px-4 py-4">
+                                        <td className="p-4">
                                             <Select
                                                 value={contact.priority}
                                                 onValueChange={(value) =>
@@ -310,13 +316,13 @@ export default function ContactsPage() {
                                                 </SelectContent>
                                             </Select>
                                         </td>
-                                        <td className="px-4 py-4">
-                                            <div className="text-sm text-muted-foreground flex items-center gap-1">
+                                        <td className="p4">
+                                            <div className="text-sm text-muted-foreground flex items-center gap-1 text-nowrap">
                                                 <Calendar className="h-3 w-3" />
                                                 {formatDate(contact.submittedAt)}
                                             </div>
                                         </td>
-                                        <td className="px-4 py-4">
+                                        <td className="p-4">
                                             <Link
                                                 href={`/contacts/${contact.id}`}
                                                 className="inline-flex items-center gap-1 text-sm text-primary hover:underline"

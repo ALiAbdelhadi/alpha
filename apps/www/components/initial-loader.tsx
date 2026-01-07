@@ -1,188 +1,45 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
+import { useLoading } from "@/components/providers/loading-provider"
+import { BRAND_COLORS } from "@/lib/constants"
+import { gsap } from "@/lib/gsap"
+import { cn } from "@/lib/utils"
 import { useLocale } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 
-const BRAND_COLORS = {
-    tealDarkest: "#064e3b",
-    tealDark: "#0f766e",
-    teal: "#0d9488",
-    tealLight: "#14b8a6",
-    tealLighter: "#2dd4bf",
-    cyanDark: "#0891b2",
-    cyan: "#06b6d4",
-    cyanLight: "#22d3ee",
-    cyanLighter: "#67e8f9",
-    navyDeep: "#0a1929",
-    navy: "#0f172a",
-    navyMedium: "#1e293b",
-    accent: "#0ea5e9",
-    accentLight: "#38bdf8",
-} as const
-
-function cn(...classes: (string | undefined | null | false)[]) {
-    return classes.filter(Boolean).join(" ")
-}
-
-interface GSAPType {
-    timeline: (config?: any) => any
-    context: (func: () => void, scope?: any) => { revert: () => void }
-    set: (target: any, vars: any) => void
-    to: (target: any, vars: any) => void
-    from: (target: any, vars: any) => void
-    fromTo: (target: any, fromVars: any, toVars: any) => void
-}
-
-declare global {
-    interface Window {
-        gsap?: GSAPType
-    }
-}
-
-const useGSAP = () => {
-    const [gsapRef, setGsapRef] = useState<GSAPType | null>(null)
-    const loadingRef = useRef(false)
-
-    useEffect(() => {
-        if (loadingRef.current) return
-        loadingRef.current = true
-
-        if (typeof window !== "undefined" && window.gsap) {
-            setGsapRef(() => window.gsap!)
-            return
-        }
-
-        const script = document.createElement("script")
-        script.src = "https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
-        script.async = true
-        script.onload = () => {
-            if (window.gsap) {
-                setGsapRef(() => window.gsap!)
-            }
-        }
-        script.onerror = () => {
-            console.error("Failed to load GSAP library")
-            loadingRef.current = false
-        }
-        document.body.appendChild(script)
-
-        return () => {
-            if (script.parentNode) {
-                script.parentNode.removeChild(script)
-            }
-        }
-    }, [])
-
-    return gsapRef
-}
-
-const SimulatedShaderBackground = () => {
-    return (
-        <div className="absolute inset-0 overflow-hidden bg-background">
-            <style jsx>{`
-                @keyframes float {
-                    0% { transform: translate(0px, 0px) scale(1); }
-                    33% { transform: translate(30px, -50px) scale(1.1); }
-                    66% { transform: translate(-20px, 20px) scale(0.9); }
-                    100% { transform: translate(0px, 0px) scale(1); }
-                }
-                @keyframes floatReverse {
-                    0% { transform: translate(0px, 0px) scale(1); }
-                    33% { transform: translate(-40px, 40px) scale(1.05); }
-                    66% { transform: translate(30px, -30px) scale(0.95); }
-                    100% { transform: translate(0px, 0px) scale(1); }
-                }
-                .orb {
-                    position: absolute;
-                    border-radius: 50%;
-                    filter: blur(100px);
-                    opacity: 0.6;
-                    animation: float 18s infinite ease-in-out;
-                    will-change: transform;
-                }
-                .orb-reverse {
-                    animation: floatReverse 20s infinite ease-in-out;
-                }
-            `}</style>
-
-            <div
-                className="orb w-[65vw] h-[65vw] top-[-25%] left-[-15%]"
-                style={{
-                    background: `radial-gradient(circle, ${BRAND_COLORS.navyDeep} 0%, ${BRAND_COLORS.tealDarkest} 100%)`,
-                    animationDelay: "0s"
-                }}
-            />
-
-            <div
-                className="orb orb-reverse w-[55vw] h-[55vw] bottom-[-15%] right-[-15%]"
-                style={{
-                    background: `radial-gradient(circle, ${BRAND_COLORS.teal} 0%, ${BRAND_COLORS.cyan} 100%)`,
-                    animationDelay: "-6s",
-                    opacity: 0.7
-                }}
-            />
-
-            <div
-                className="orb w-[45vw] h-[45vw] top-[35%] left-[35%]"
-                style={{
-                    background: `radial-gradient(circle, ${BRAND_COLORS.cyanLight} 0%, ${BRAND_COLORS.accent} 100%)`,
-                    animationDelay: "-10s",
-                    opacity: 0.4
-                }}
-            />
-
-            <div
-                className="orb orb-reverse w-[40vw] h-[40vw] top-[10%] right-[5%]"
-                style={{
-                    background: `radial-gradient(circle, ${BRAND_COLORS.navyMedium} 0%, ${BRAND_COLORS.tealDark} 100%)`,
-                    animationDelay: "-14s",
-                    opacity: 0.5
-                }}
-            />
-
-            <div
-                className="orb w-[35vw] h-[35vw] bottom-[5%] left-[10%]"
-                style={{
-                    background: `radial-gradient(circle, ${BRAND_COLORS.tealLight} 0%, ${BRAND_COLORS.cyanLighter} 100%)`,
-                    animationDelay: "-3s",
-                    opacity: 0.35
-                }}
-            />
-
-            <div className="absolute inset-0 backdrop-blur-[90px]" />
-            <div
-                className="absolute inset-0"
-                style={{
-                    background: `radial-gradient(circle at 30% 40%, ${BRAND_COLORS.teal}10 0%, transparent 50%)`
-                }}
-            />
-            <div className="absolute inset-0 bg-background/40" />
-        </div>
-    )
-}
+const INITIAL_LOAD_KEY = 'alpha_initial_load_complete'
 
 export function InitialLoader() {
     const locale = useLocale()
     const isRTL = locale === "ar"
     const greeting = isRTL ? "ألفا" : "ALPHA"
 
+    const { setIsLoading } = useLoading()
+
     const containerRef = useRef<HTMLDivElement>(null)
     const textContainerRef = useRef<HTMLDivElement>(null)
     const shaderRef = useRef<HTMLDivElement>(null)
     const hasAnimatedRef = useRef(false)
 
-    const [shouldRender, setShouldRender] = useState(true)
+    const [shouldRender, setShouldRender] = useState(false)
     const [mounted, setMounted] = useState(false)
-
-    const gsap = useGSAP()
 
     useEffect(() => {
         setMounted(true)
-    }, [])
+
+        const hasSeenLoader = sessionStorage.getItem(INITIAL_LOAD_KEY)
+
+        if (hasSeenLoader) {
+
+            setShouldRender(false)
+            setIsLoading(false)
+        } else {
+            setShouldRender(true)
+        }
+    }, [setIsLoading])
 
     useEffect(() => {
-        if (!mounted || !shouldRender || !gsap || !containerRef.current || hasAnimatedRef.current) {
+        if (!mounted || !shouldRender || !containerRef.current || hasAnimatedRef.current) {
             return
         }
 
@@ -190,21 +47,26 @@ export function InitialLoader() {
 
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({
-                defaults: { ease: "expo.out" },
+                defaults: { ease: "power3.out" },
                 onComplete: () => {
-                    setTimeout(() => setShouldRender(false), 100)
+                    sessionStorage.setItem(INITIAL_LOAD_KEY, 'true')
+
+                    setTimeout(() => {
+                        setShouldRender(false)
+                        setIsLoading(false)
+                    }, 100)
                 },
             })
 
             const chars = textContainerRef.current?.querySelectorAll(".char")
 
             gsap.set(containerRef.current, { opacity: 1 })
-            gsap.set(shaderRef.current, { opacity: 0, scale: 1.1 })
+            gsap.set(shaderRef.current, { opacity: 0, scale: 1.05 })
 
             tl.to(shaderRef.current, {
                 opacity: 1,
                 scale: 1,
-                duration: 2.8,
+                duration: 1.5,
                 ease: "power2.out",
             })
 
@@ -214,52 +76,52 @@ export function InitialLoader() {
                     filter: "blur(0px)",
                     scale: 1,
                     y: 0,
-                    x: 0,
-                    duration: 1.3,
+                    duration: 0.8,
                     stagger: {
-                        each: 0.09,
+                        each: 0.06,
                         from: "start",
                     },
-                }, "-=2.0")
+                }, "-=1.2")
             }
 
             tl.to(textContainerRef.current, {
-                scale: 1.02,
-                letterSpacing: isRTL ? "0em" : "0.03em",
-                duration: 2.2,
-                ease: "power1.inOut",
-            }, "-=0.6")
+                scale: 1.01,
+                letterSpacing: isRTL ? "0em" : "0.02em",
+                duration: 1.2,
+                ease: "power2.inOut",
+            }, "-=0.4")
+
 
             tl.to(shaderRef.current, {
-                scale: 1.15,
+                scale: 1.08,
                 opacity: 0,
-                duration: 1.3,
-                ease: "power3.in",
-            }, "-=1.6")
+                duration: 0.8,
+                ease: "power2.in",
+            }, "-=0.8")
 
             tl.to(chars, {
-                y: -90,
+                y: -60,
                 opacity: 0,
-                filter: "blur(25px)",
+                filter: "blur(15px)",
                 stagger: {
-                    each: 0.04,
+                    each: 0.03,
                     from: "center",
                 },
-                duration: 0.9,
-                ease: "power3.in",
+                duration: 0.6,
+                ease: "power2.in",
             }, "<")
 
             tl.to(containerRef.current, {
                 opacity: 0,
-                duration: 0.6,
-            }, "-=0.4")
+                duration: 0.4,
+            }, "-=0.3")
 
         }, containerRef)
 
         return () => {
             ctx.revert()
         }
-    }, [gsap, shouldRender, isRTL, mounted])
+    }, [mounted, shouldRender, isRTL, setIsLoading])
 
     if (!mounted || !shouldRender) return null
 
@@ -273,20 +135,37 @@ export function InitialLoader() {
                 ref={shaderRef}
                 className="absolute inset-0 z-0 opacity-0 will-change-transform transform-gpu"
             >
-                <SimulatedShaderBackground />
+                    <div className="absolute inset-0 overflow-hidden bg-background">
+                    <style jsx>{`
+                        @keyframes float {
+                            0%, 100% { transform: translate(0px, 0px) scale(1); }
+                            50% { transform: translate(15px, -20px) scale(1.02); }
+                        }
+                        .orb {
+                            position: absolute;
+                            border-radius: 50%;
+                            filter: blur(60px);
+                            opacity: 0.4;
+                            animation: float 20s infinite ease-in-out;
+                        }
+                    `}</style>
+
+                    <div
+                        className="orb w-[50vw] h-[50vw] top-[-15%] left-[-10%]"
+                        style={{
+                            background: `radial-gradient(circle, ${BRAND_COLORS.navyDeep} 0%, ${BRAND_COLORS.tealDarkest} 100%)`,
+                        }}
+                    />
+
+                    <div className="absolute inset-0 backdrop-blur-[40px]" />
+                    <div className="absolute inset-0 bg-background/60" />
+                </div>
             </div>
 
             <div
-                className="absolute inset-0 z-10 opacity-[0.06] pointer-events-none mix-blend-overlay"
+                className="absolute inset-0 z-10 opacity-[0.04] pointer-events-none mix-blend-overlay"
                 style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
-                }}
-            />
-
-            <div
-                className="absolute inset-0 z-5 opacity-20 pointer-events-none"
-                style={{
-                    background: `radial-gradient(circle at 50% 50%, ${BRAND_COLORS.cyanLight}20 0%, transparent 60%)`
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`
                 }}
             />
 
@@ -295,15 +174,14 @@ export function InitialLoader() {
                     <div
                         ref={textContainerRef}
                         className={cn(
-                            "relative font-light tracking-tight flex items-center select-none overflow-visible",
+                            "relative font-normal tracking-tight flex items-center select-none overflow-visible",
                             "text-6xl md:text-8xl lg:text-9xl",
                             isRTL ? "font-arabic" : "font-sans"
                         )}
                         style={{
                             textShadow: `
-                                0 0 40px ${BRAND_COLORS.cyan}40,
-                                0 0 80px ${BRAND_COLORS.teal}30,
-                                0 0 120px ${BRAND_COLORS.accent}20
+                                0 0 30px ${BRAND_COLORS.cyan}30,
+                                0 0 60px ${BRAND_COLORS.teal}20
                             `,
                         }}
                     >
@@ -312,7 +190,7 @@ export function InitialLoader() {
                                 key={i}
                                 data-char={i}
                                 className={cn(
-                                    "char opacity-0 blur-sm scale-110 translate-y-2",
+                                    "char opacity-0 blur-sm scale-105 translate-y-2",
                                     isRTL ? "inline" : "inline-block"
                                 )}
                                 style={{ willChange: "transform, opacity, filter" }}

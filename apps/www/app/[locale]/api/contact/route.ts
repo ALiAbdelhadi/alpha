@@ -4,18 +4,12 @@ import { prisma } from "@repo/database"
 import { NextRequest, NextResponse } from "next/server"
 import { ZodError } from "zod"
 
-/**
- * POST /api/contact
- * Handle contact form submissions
- */
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json()
 
-        // Validate input
         const validatedData = contactFormSchema.parse(body)
 
-        // Honeypot check - if website field is filled, it's likely a bot
         if (validatedData.website && validatedData.website.length > 0) {
             console.log("Honeypot triggered - potential spam")
             return NextResponse.json(
@@ -24,13 +18,11 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        // Extract metadata
         const userAgent = request.headers.get("user-agent") || undefined
         const forwardedFor = request.headers.get("x-forwarded-for")
         const ipAddress = forwardedFor ? forwardedFor.split(",")[0].trim() : undefined
         const referer = request.headers.get("referer") || undefined
 
-        // Create contact submission
         const submission = await prisma.contactSubmission.create({
             data: {
                 name: validatedData.name,
@@ -49,13 +41,11 @@ export async function POST(request: NextRequest) {
                 utmSource: body.utmSource,
                 utmMedium: body.utmMedium,
                 utmCampaign: body.utmCampaign,
-                // Auto-prioritize based on timeline
                 priority: validatedData.projectTimeline === "immediate" ? "URGENT" :
                     validatedData.projectTimeline === "soon" ? "HIGH" : "MEDIUM",
             },
         })
 
-        // Create notification for admins
         const admins = await prisma.user.findMany({
             where: { role: { in: ["ADMIN", "SUPERADMIN"] } },
             select: { id: true },
@@ -76,9 +66,7 @@ export async function POST(request: NextRequest) {
             )
         )
 
-        // If meeting was requested, create meeting request
         if (validatedData.requestMeeting && validatedData.preferredDate && validatedData.preferredTime) {
-            // Convert YYYY-MM-DD to Date object (set to noon to avoid timezone issues)
             const dateParts = validatedData.preferredDate.split('-')
             const scheduledDate = new Date(
                 parseInt(dateParts[0]),
@@ -100,7 +88,6 @@ export async function POST(request: NextRequest) {
                 },
             })
 
-            // Create meeting notification
             await Promise.all(
                 admins.map((admin: { id: string }) =>
                     prisma.notification.create({
@@ -154,11 +141,6 @@ export async function POST(request: NextRequest) {
     }
 }
 
-/**
- * Rate limiting implementation (currently not active)
- * To enable: Add middleware check at the start of POST handler
- * Example: if (!checkRateLimit(ipAddress)) return NextResponse.json({...}, {status: 429})
- */
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
 
 export function checkRateLimit(ip: string): boolean {
