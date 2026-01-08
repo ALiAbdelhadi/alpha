@@ -1,4 +1,3 @@
-import { BackgroundShader } from "@/components/background-shader";
 import CustomCursor from "@/components/custom-cursor";
 import { InitialLoader } from "@/components/initial-loader";
 import { Providers } from "@/components/providers";
@@ -49,7 +48,6 @@ export default async function RootLayout({
               <Suspense fallback={null}>
                 <CustomCursor />
               </Suspense>
-              <BackgroundShader />
               <div id="main-content">
                 {children}
               </div>

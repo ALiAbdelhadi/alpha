@@ -1,6 +1,7 @@
 "use client"
 
 import { LoadingProvider } from "@/components/providers/loading-provider"
+import { NavigationProvider } from "@/components/providers/navigation-provider"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { type ReactNode, useState } from "react"
 
@@ -10,7 +11,9 @@ export function Providers({ children }: { children: ReactNode }) {
     return (
         <QueryClientProvider client={queryClient}>
             <LoadingProvider>
-                {children}
+                <NavigationProvider>
+                    {children}
+                </NavigationProvider>
             </LoadingProvider>
         </QueryClientProvider>
     )

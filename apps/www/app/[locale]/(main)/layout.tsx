@@ -1,6 +1,5 @@
-import { BackgroundShader } from "@/components/background-shader";
+import { MainLayoutContent } from "@/components/main-layout-content";
 import { generateMetadata as generatePageMetadata, generateStructuredData } from "@/lib/metadata";
-import { layoutChildren } from "@/types";
 import Script from "next/script";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
@@ -8,8 +7,14 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     return generatePageMetadata(locale);
 }
 
-export default function MainLayout({ children }: layoutChildren) {
+type MainLayoutProps = {
+    children: React.ReactNode;
+    params: Promise<{ locale: string }>;
+};
+
+export default async function MainLayout({ children, params }: MainLayoutProps) {
     const structuredData = generateStructuredData();
+    await params;
 
     return (
         <>
@@ -20,10 +25,9 @@ export default function MainLayout({ children }: layoutChildren) {
                     __html: JSON.stringify(structuredData),
                 }}
             />
-            <main>
-                <BackgroundShader />
+            <MainLayoutContent>
                 {children}
-            </main>
+            </MainLayoutContent>
         </>
     )
 }

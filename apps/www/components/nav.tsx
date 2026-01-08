@@ -13,18 +13,19 @@ import { useEffect, useRef, useState } from "react"
 import { AlphaLogo } from "./alpha-logo"
 import { MagneticButton } from "./magnetic-button"
 import { useLoading } from "./providers/loading-provider"
+import { useNavigation } from "./providers/navigation-provider"
 
 interface NavProps {
     scrollToSection?: (sectionId: string) => void
     currentSection?: string
 }
 
-export function Nav({ scrollToSection, currentSection: externalCurrentSection }: NavProps) {
+export function Nav({ scrollToSection: externalScrollToSection, currentSection: externalCurrentSection }: NavProps = {}) {
     const t = useTranslations('nav');
     const [isScrolled, setIsScrolled] = useState(false)
     const { isInitialLoadComplete } = useLoading()
+    const { currentSection: contextCurrentSection, scrollToSection: contextScrollToSection } = useNavigation()
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-    const navRef = useRef<HTMLElement>(null)
     const logoRef = useRef<HTMLAnchorElement>(null)
     const navItemsRef = useRef<HTMLElement>(null)
     const actionsRef = useRef<HTMLDivElement>(null)
@@ -38,7 +39,9 @@ export function Nav({ scrollToSection, currentSection: externalCurrentSection }:
         { key: "contact", sectionId: "contact", href: "/#contact" },
     ]
 
-    const currentSection = externalCurrentSection || "home"
+    // Use external props if provided, otherwise use context
+    const scrollToSection = externalScrollToSection || contextScrollToSection
+    const currentSection = externalCurrentSection || contextCurrentSection
 
     useEffect(() => {
         const handleScroll = () => {

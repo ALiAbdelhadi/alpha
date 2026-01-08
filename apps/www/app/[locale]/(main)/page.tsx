@@ -1,10 +1,9 @@
 "use client"
 
-import { BackgroundShader } from "@/components/background-shader"
 import { ErrorBoundary } from "@/components/error-boundary"
-import { Nav } from "@/components/nav"
 import { NAV_ITEMS } from "@/lib/constants"
-import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useNavigation } from "@/components/providers/navigation-provider"
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef } from "react"
 
 const HeroSection = lazy(() => import("@/components/sections/hero-section").then(m => ({ default: m.HeroSection })))
 const WorkSection = lazy(() => import("@/components/sections/work-section").then(m => ({ default: m.WorkSection })))
@@ -28,10 +27,31 @@ function SectionSkeleton() {
 }
 
 export default function Home() {
-    const [currentSection, setCurrentSection] = useState("home")
+    const { setCurrentSection, setScrollToSection } = useNavigation()
     const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
     const navItems = useMemo(() => NAV_ITEMS, [])
+
+    const scrollToSection = useCallback((sectionId: string) => {
+        const element = document.getElementById(sectionId)
+        if (element) {
+            const navHeight = 80
+            const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+            const offsetPosition = elementPosition - navHeight
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth",
+            })
+            setCurrentSection(sectionId)
+        }
+    }, [setCurrentSection])
+
+    // Register scrollToSection function in context
+    useEffect(() => {
+        setScrollToSection(scrollToSection)
+        return () => setScrollToSection(null)
+    }, [scrollToSection, setScrollToSection])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -81,29 +101,10 @@ export default function Home() {
                 clearTimeout(scrollTimeoutRef.current)
             }
         }
-    }, [navItems])
-
-    const scrollToSection = useCallback((sectionId: string) => {
-        const element = document.getElementById(sectionId)
-        if (element) {
-            const navHeight = 80
-            const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
-            const offsetPosition = elementPosition - navHeight
-
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: "smooth",
-            })
-            setCurrentSection(sectionId)
-        }
-    }, [])
+    }, [navItems, setCurrentSection])
 
     return (
-        <main className="relative min-h-screen w-full bg-background">
-            <BackgroundShader />
-            <Nav scrollToSection={scrollToSection} currentSection={currentSection} />
-
-            <div className="relative z-10">
+        <>
                 <ErrorBoundary>
                     <Suspense fallback={<SectionSkeleton />}>
                         <HeroSection scrollToSection={scrollToSection} />
@@ -133,7 +134,6 @@ export default function Home() {
                         <ContactSection />
                     </Suspense>
                 </ErrorBoundary>
-            </div>
-        </main>
+        </>
     )
 }
