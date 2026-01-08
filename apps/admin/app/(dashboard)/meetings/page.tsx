@@ -1,5 +1,15 @@
 "use client"
 
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import {
     Select,
@@ -14,11 +24,13 @@ import {
     Clock,
     Mail,
     Search,
+    Trash2,
     User,
     Video
 } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 type MeetingStatus = "PENDING" | "APPROVED" | "REJECTED" | "COMPLETED" | "CANCELLED" | "RESCHEDULED"
 type MeetingType = "DISCOVERY" | "CONSULTATION" | "PROPOSAL" | "FOLLOWUP"
@@ -51,6 +63,9 @@ export default function MeetingsPage() {
     const [statusFilter, setStatusFilter] = useState<string>("all")
     const [typeFilter, setTypeFilter] = useState<string>("all")
     const [updating, setUpdating] = useState<string | null>(null)
+    const [deleting, setDeleting] = useState<string | null>(null)
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+    const [meetingToDelete, setMeetingToDelete] = useState<{ id: string; title: string } | null>(null)
 
     useEffect(() => {
         fetchMeetings()
@@ -71,6 +86,7 @@ export default function MeetingsPage() {
             }
         } catch (error) {
             console.error("Error fetching meetings:", error)
+            toast.error("Failed to load meetings")
         } finally {
             setLoading(false)
         }
@@ -91,11 +107,46 @@ export default function MeetingsPage() {
             const data = await response.json()
             if (data.success) {
                 await fetchMeetings()
+                toast.success("Meeting updated successfully")
+            } else {
+                toast.error(data.message || "Failed to update meeting")
             }
         } catch (error) {
             console.error("Error updating meeting:", error)
+            toast.error("Failed to update meeting")
         } finally {
             setUpdating(null)
+        }
+    }
+
+    const openDeleteDialog = (id: string, title: string) => {
+        setMeetingToDelete({ id, title })
+        setDeleteDialogOpen(true)
+    }
+
+    const confirmDelete = async () => {
+        if (!meetingToDelete) return
+
+        try {
+            setDeleting(meetingToDelete.id)
+            const response = await fetch(`/api/admin/meetings?id=${meetingToDelete.id}`, {
+                method: "DELETE",
+            })
+
+            const data = await response.json()
+            if (data.success) {
+                toast.success(`Meeting "${meetingToDelete.title}" deleted successfully`)
+                await fetchMeetings()
+            } else {
+                toast.error(data.message || "Failed to delete meeting")
+            }
+        } catch (error) {
+            console.error("Error deleting meeting:", error)
+            toast.error("Failed to delete meeting")
+        } finally {
+            setDeleting(null)
+            setDeleteDialogOpen(false)
+            setMeetingToDelete(null)
         }
     }
 
@@ -341,15 +392,26 @@ export default function MeetingsPage() {
                                             </span>
                                         </td>
                                         <td className="px-4 py-4">
-                                            {meeting.contactSubmission && (
-                                                <Link
-                                                    href={`/contacts/${meeting.contactSubmission.id}`}
-                                                    className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
+                                            <div className="flex items-center gap-2">
+                                                {meeting.contactSubmission && (
+                                                    <Link
+                                                        href={`/contacts/${meeting.contactSubmission.id}`}
+                                                        className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
+                                                    >
+                                                        <User className="h-4 w-4" />
+                                                        View Contact
+                                                    </Link>
+                                                )}
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={() => openDeleteDialog(meeting.id, meeting.title)}
+                                                    disabled={deleting === meeting.id}
+                                                    className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950"
                                                 >
-                                                    <User className="h-4 w-4" />
-                                                    View Contact
-                                                </Link>
-                                            )}
+                                                    <Trash2 className="h-4 w-4" />
+                                                </Button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))
@@ -358,7 +420,28 @@ export default function MeetingsPage() {
                     </table>
                 </div>
             </div>
+
+            <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            This will permanently delete the meeting{" "}
+                            <span className="font-semibold text-foreground">&quot;{meetingToDelete?.title}&quot;</span>.
+                            This action cannot be undone.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                            onClick={confirmDelete}
+                            className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+                        >
+                            Delete
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     )
 }
-

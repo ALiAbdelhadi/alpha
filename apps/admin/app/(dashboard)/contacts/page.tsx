@@ -9,14 +9,26 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
+import {
     ArrowLeft,
     Calendar,
     Eye,
     Mail,
-    Search
+    Search,
+    Trash2
 } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 type SubmissionStatus =
     | "NEW"
@@ -54,6 +66,9 @@ export default function ContactsPage() {
     const [statusFilter, setStatusFilter] = useState<string>("all")
     const [priorityFilter, setPriorityFilter] = useState<string>("all")
     const [updating, setUpdating] = useState<string | null>(null)
+    const [deleting, setDeleting] = useState<string | null>(null)
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+    const [contactToDelete, setContactToDelete] = useState<{ id: string; name: string } | null>(null)
 
     useEffect(() => {
         fetchContacts()
@@ -74,6 +89,7 @@ export default function ContactsPage() {
             }
         } catch (error) {
             console.error("Error fetching contacts:", error)
+            toast.error("Failed to load contacts")
         } finally {
             setLoading(false)
         }
@@ -91,11 +107,46 @@ export default function ContactsPage() {
             const data = await response.json()
             if (data.success) {
                 await fetchContacts()
+                toast.success("Contact updated successfully")
+            } else {
+                toast.error(data.message || "Failed to update contact")
             }
         } catch (error) {
             console.error("Error updating contact:", error)
+            toast.error("Failed to update contact")
         } finally {
             setUpdating(null)
+        }
+    }
+
+    const openDeleteDialog = (id: string, name: string) => {
+        setContactToDelete({ id, name })
+        setDeleteDialogOpen(true)
+    }
+
+    const confirmDelete = async () => {
+        if (!contactToDelete) return
+
+        try {
+            setDeleting(contactToDelete.id)
+            const response = await fetch(`/api/admin/contacts?id=${contactToDelete.id}`, {
+                method: "DELETE",
+            })
+
+            const data = await response.json()
+            if (data.success) {
+                toast.success(`Contact "${contactToDelete.name}" deleted successfully`)
+                await fetchContacts()
+            } else {
+                toast.error(data.message || "Failed to delete contact")
+            }
+        } catch (error) {
+            console.error("Error deleting contact:", error)
+            toast.error("Failed to delete contact")
+        } finally {
+            setDeleting(null)
+            setDeleteDialogOpen(false)
+            setContactToDelete(null)
         }
     }
 
@@ -316,20 +367,31 @@ export default function ContactsPage() {
                                                 </SelectContent>
                                             </Select>
                                         </td>
-                                        <td className="p4">
+                                        <td className="p-4">
                                             <div className="text-sm text-muted-foreground flex items-center gap-1 text-nowrap">
                                                 <Calendar className="h-3 w-3" />
                                                 {formatDate(contact.submittedAt)}
                                             </div>
                                         </td>
                                         <td className="p-4">
-                                            <Link
-                                                href={`/contacts/${contact.id}`}
-                                                className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
-                                            >
-                                                <Eye className="h-4 w-4" />
-                                                View
-                                            </Link>
+                                            <div className="flex items-center gap-2">
+                                                <Link
+                                                    href={`/contacts/${contact.id}`}
+                                                    className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
+                                                >
+                                                    <Eye className="h-4 w-4" />
+                                                    View
+                                                </Link>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={() => openDeleteDialog(contact.id, contact.name)}
+                                                    disabled={deleting === contact.id}
+                                                    className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950"
+                                                >
+                                                    <Trash2 className="h-4 w-4" />
+                                                </Button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))
@@ -338,6 +400,28 @@ export default function ContactsPage() {
                     </table>
                 </div>
             </div>
+
+            <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            This will permanently delete the contact submission from{" "}
+                            <span className="font-semibold text-foreground">&quot;{contactToDelete?.name}&quot;</span>.
+                            This action cannot be undone.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                            onClick={confirmDelete}
+                            className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+                        >
+                            Delete
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     )
 }

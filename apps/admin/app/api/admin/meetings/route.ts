@@ -196,3 +196,54 @@ export async function PATCH(request: NextRequest) {
     }
 }
 
+
+export async function DELETE(request: NextRequest) {
+    try {
+        const { searchParams } = new URL(request.url)
+        const id = searchParams.get("id")
+
+        if (!id) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Meeting ID is required",
+                },
+                { status: 400 }
+            )
+        }
+
+        // Check if meeting exists
+        const meeting = await prisma.meeting.findUnique({
+            where: { id },
+        })
+
+        if (!meeting) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Meeting not found",
+                },
+                { status: 404 }
+            )
+        }
+
+        // Delete the meeting
+        await prisma.meeting.delete({
+            where: { id },
+        })
+
+        return NextResponse.json({
+            success: true,
+            message: "Meeting deleted successfully",
+        })
+    } catch (error) {
+        console.error("Error deleting meeting:", error)
+        return NextResponse.json(
+            {
+                success: false,
+                message: "Failed to delete meeting",
+            },
+            { status: 500 }
+        )
+    }
+}

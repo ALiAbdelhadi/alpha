@@ -171,3 +171,53 @@ export async function PATCH(request: NextRequest) {
     }
 }
 
+export async function DELETE(request: NextRequest) {
+    try {
+        const { searchParams } = new URL(request.url)
+        const id = searchParams.get("id")
+
+        if (!id) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Contact ID is required",
+                },
+                { status: 400 }
+            )
+        }
+
+        // Check if contact exists
+        const contact = await prisma.contactSubmission.findUnique({
+            where: { id },
+        })
+
+        if (!contact) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Contact not found",
+                },
+                { status: 404 }
+            )
+        }
+
+        // Delete the contact (cascade will handle notes, tags, meetings)
+        await prisma.contactSubmission.delete({
+            where: { id },
+        })
+
+        return NextResponse.json({
+            success: true,
+            message: "Contact deleted successfully",
+        })
+    } catch (error) {
+        console.error("Error deleting contact:", error)
+        return NextResponse.json(
+            {
+                success: false,
+                message: "Failed to delete contact",
+            },
+            { status: 500 }
+        )
+    }
+}
