@@ -7,11 +7,19 @@ import { useEffect, useRef, useState } from "react"
 type ButtonVariant = "primary" | "secondary" | "ghost"
 type ButtonSize = "default" | "lg"
 
+interface Ripple {
+  x: number
+  y: number
+  id: number
+}
+
 interface MagneticButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
   className?: string
   variant?: ButtonVariant
   size?: ButtonSize
+  soundEnabled?: boolean // تفعيل الصوت (اختياري)
+  hapticEnabled?: boolean // تفعيل الاهتزاز (افتراضي: true)
 }
 
 export function MagneticButton({
@@ -19,6 +27,8 @@ export function MagneticButton({
   className = "",
   variant = "primary",
   size = "default",
+  soundEnabled = false,
+  hapticEnabled = true,
   onClick,
   ...props
 }: MagneticButtonProps) {
@@ -26,10 +36,11 @@ export function MagneticButton({
   const xTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null)
   const yTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const [isPressed, setIsPressed] = useState(false)
+  const [ripples, setRipples] = useState<Ripple[]>([])
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPrefersReducedMotion(mediaQuery.matches)
 
     const handleChange = (e: MediaQueryListEvent) => {
@@ -68,6 +79,76 @@ export function MagneticButton({
     if (!xTo.current || !yTo.current || prefersReducedMotion) return
     xTo.current(0)
     yTo.current(0)
+    setIsPressed(false)
+  }
+
+  const handleMouseDown = () => {
+    if (!prefersReducedMotion) {
+      setIsPressed(true)
+    }
+  }
+
+  const handleMouseUp = () => {
+    setIsPressed(false)
+  }
+
+  const playClickSound = () => {
+    try {
+      // يمكنك استبدال هذا بملف صوتي حقيقي
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+      const oscillator = audioContext.createOscillator()
+      const gainNode = audioContext.createGain()
+
+      oscillator.connect(gainNode)
+      gainNode.connect(audioContext.destination)
+
+      oscillator.frequency.value = 800
+      oscillator.type = 'sine'
+
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime)
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1)
+
+      oscillator.start(audioContext.currentTime)
+      oscillator.stop(audioContext.currentTime + 0.1)
+    } catch (error) {
+      console.warn('Audio playback failed:', error)
+    }
+  }
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!ref.current) return
+
+    // إضافة Ripple effect
+    const rect = ref.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const rippleId = Date.now()
+
+    setRipples(prev => [...prev, { x, y, id: rippleId }])
+
+    // حذف الـ ripple بعد انتهاء الأنيميشن
+    setTimeout(() => {
+      setRipples(prev => prev.filter(ripple => ripple.id !== rippleId))
+    }, 600)
+
+    // Haptic feedback للموبايل
+    if (hapticEnabled && 'vibrate' in navigator) {
+      try {
+        navigator.vibrate(10)
+      } catch (error) {
+        console.warn('Haptic feedback failed:', error)
+      }
+    }
+
+    // تشغيل الصوت (اختياري)
+    if (soundEnabled) {
+      playClickSound()
+    }
+
+    // استدعاء onClick الأصلي
+    if (onClick) {
+      onClick(e)
+    }
   }
 
   const variants: Record<ButtonVariant, string> = {
@@ -86,15 +167,18 @@ export function MagneticButton({
   return (
     <button
       ref={ref}
-      onClick={onClick}
+      onClick={handleClick}
       onMouseMove={prefersReducedMotion ? undefined : handleMouseMove}
       onMouseLeave={prefersReducedMotion ? undefined : handleMouseLeave}
+      onMouseDown={prefersReducedMotion ? undefined : handleMouseDown}
+      onMouseUp={prefersReducedMotion ? undefined : handleMouseUp}
       className={`
         relative overflow-hidden rounded-full font-medium
-        transition-colors duration-300 ease-out will-change-transform
+        transition-all duration-300 ease-out will-change-transform
         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground/50
         ${variants[variant]}
         ${sizes[size]}
+        ${isPressed && !prefersReducedMotion ? 'scale-95' : 'scale-100'}
         ${className}
       `}
       style={{
@@ -104,7 +188,24 @@ export function MagneticButton({
       data-cursor-pointer
       {...props}
     >
-      <span className="relative z-10 flex items-center justify-center gap-2">{children}</span>
+      <span className="relative z-10 flex items-center justify-center gap-2">
+        {children}
+      </span>
+
+      {/* Ripple Effects */}
+      {!prefersReducedMotion && ripples.map(ripple => (
+        <span
+          key={ripple.id}
+          className="absolute pointer-events-none rounded-full bg-current opacity-30 animate-ripple"
+          style={{
+            left: ripple.x,
+            top: ripple.y,
+            width: '10px',
+            height: '10px',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      ))}
     </button>
   )
 }

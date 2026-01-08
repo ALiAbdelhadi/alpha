@@ -5,6 +5,7 @@ import { NAV_ITEMS } from "@/lib/constants"
 import { useNavigation } from "@/components/providers/navigation-provider"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef } from "react"
 
+const CtaSection = lazy(() => import("@/components/sections/cta-section").then(m => ({ default: m.CtaSection })))
 const HeroSection = lazy(() => import("@/components/sections/hero-section").then(m => ({ default: m.HeroSection })))
 const WorkSection = lazy(() => import("@/components/sections/work-section").then(m => ({ default: m.WorkSection })))
 const ServicesSection = lazy(() => import("@/components/sections/services-section").then(m => ({ default: m.ServicesSection })))
@@ -105,35 +106,40 @@ export default function Home() {
 
     return (
         <>
-                <ErrorBoundary>
-                    <Suspense fallback={<SectionSkeleton />}>
-                        <HeroSection scrollToSection={scrollToSection} />
-                    </Suspense>
-                </ErrorBoundary>
+            <ErrorBoundary>
+                <Suspense fallback={<SectionSkeleton />}>
+                    <HeroSection scrollToSection={scrollToSection} />
+                </Suspense>
+            </ErrorBoundary>
 
-                <ErrorBoundary>
-                    <Suspense fallback={<SectionSkeleton />}>
-                        <WorkSection />
-                    </Suspense>
-                </ErrorBoundary>
+            <ErrorBoundary>
+                <Suspense fallback={<SectionSkeleton />}>
+                    <WorkSection />
+                </Suspense>
+            </ErrorBoundary>
 
-                <ErrorBoundary>
-                    <Suspense fallback={<SectionSkeleton />}>
-                        <ServicesSection />
-                    </Suspense>
-                </ErrorBoundary>
+            <ErrorBoundary>
+                <Suspense fallback={<SectionSkeleton />}>
+                    <ServicesSection />
+                </Suspense>
+            </ErrorBoundary>
 
-                <ErrorBoundary>
-                    <Suspense fallback={<SectionSkeleton />}>
-                        <AboutSection scrollToSection={scrollToSection} />
-                    </Suspense>
-                </ErrorBoundary>
+            <ErrorBoundary>
+                <Suspense fallback={<SectionSkeleton />}>
+                    <AboutSection scrollToSection={scrollToSection} />
+                </Suspense>
+            </ErrorBoundary>
+            <ErrorBoundary>
+                <Suspense fallback={<SectionSkeleton />}>
+                    <CtaSection scrollToSection={scrollToSection} />
+                </Suspense>
+            </ErrorBoundary>
 
-                <ErrorBoundary>
-                    <Suspense fallback={<SectionSkeleton />}>
-                        <ContactSection />
-                    </Suspense>
-                </ErrorBoundary>
+            <ErrorBoundary>
+                <Suspense fallback={<SectionSkeleton />}>
+                    <ContactSection />
+                </Suspense>
+            </ErrorBoundary>
         </>
     )
 }

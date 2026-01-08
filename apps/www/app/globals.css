@@ -178,8 +178,6 @@
   }
 }
 
-
-
 @layer utilities {
   .border-grid {
     @apply border-dashed border-border/70 dark:border-border;
@@ -236,5 +234,21 @@
   ::selection {
     background-color: hsl(var(--primary));
     color: hsl(var(--primary-foreground));
+  }
+  @keyframes ripple {
+    0% {
+      width: 10px;
+      height: 10px;
+      opacity: 0.3;
+    }
+    100% {
+      width: 300px;
+      height: 300px;
+      opacity: 0;
+    }
+  }
+
+  .animate-ripple {
+    animation: ripple 0.6s ease-out forwards;
   }
 }

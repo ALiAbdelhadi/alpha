@@ -330,12 +330,14 @@ export function ContactSection() {
                       : "border-foreground/25 focus:border-foreground/50"
                   )}
                   placeholder={t("contact.form.namePlaceholder")}
+                  aria-required="true"
                   aria-invalid={!!formErrors.name}
+                  aria-describedby={formErrors.name ? "name-error" : undefined}
                   disabled={isSubmitting}
                 />
                 {formErrors.name && (
-                  <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
-                    <AlertCircle className="h-3 w-3" />
+                  <p id="name-error" role="alert" className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
+                    <AlertCircle className="h-3 w-3" aria-hidden="true" />
                     {formErrors.name}
                   </p>
                 )}
@@ -355,12 +357,15 @@ export function ContactSection() {
                       : "border-foreground/25 focus:border-foreground/50"
                   )}
                   placeholder={t("contact.form.emailPlaceholder")}
+                  aria-required="true"
                   aria-invalid={!!formErrors.email}
+                  aria-describedby={formErrors.email ? "email-error" : undefined}
+                  autoComplete="email"
                   disabled={isSubmitting}
                 />
                 {formErrors.email && (
-                  <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
-                    <AlertCircle className="h-3 w-3" />
+                  <p id="email-error" role="alert" className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
+                    <AlertCircle className="h-3 w-3" aria-hidden="true" />
                     {formErrors.email}
                   </p>
                 )}
@@ -421,12 +426,14 @@ export function ContactSection() {
                       : "border-foreground/25 focus:border-foreground/50"
                   )}
                   placeholder={t("contact.form.messagePlaceholder")}
+                  aria-required="true"
                   aria-invalid={!!formErrors.message}
+                  aria-describedby={formErrors.message ? "message-error" : undefined}
                   disabled={isSubmitting}
                 />
                 {formErrors.message && (
-                  <p className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
-                    <AlertCircle className="h-3 w-3" />
+                  <p id="message-error" role="alert" className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
+                    <AlertCircle className="h-3 w-3" aria-hidden="true" />
                     {formErrors.message}
                   </p>
                 )}

@@ -9,6 +9,7 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import "../globals.css";
+import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
 
 type Props = {
   children: React.ReactNode;
@@ -37,21 +38,23 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider>
           <Providers>
-            <InitialLoader />
-            <ThemeScript />
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <Suspense fallback={null}>
-                <CustomCursor />
-              </Suspense>
-              <div id="main-content">
-                {children}
-              </div>
-            </ThemeProvider>
+            <SmoothScrollProvider>
+              <InitialLoader />
+              <ThemeScript />
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <Suspense fallback={null}>
+                  <CustomCursor />
+                </Suspense>
+                <div id="main-content">
+                  {children}
+                </div>
+              </ThemeProvider>
+            </SmoothScrollProvider>
           </Providers>
         </NextIntlClientProvider>
       </body>

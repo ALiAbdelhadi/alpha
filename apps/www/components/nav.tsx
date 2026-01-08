@@ -177,7 +177,7 @@ export function Nav({ scrollToSection: externalScrollToSection, currentSection: 
                                     <NavItem key={item.key}>
                                         <button
                                             onClick={() => handleNavClick(item)}
-                                            className={`group relative font-sans text-sm font-medium transition-colors rounded px-3 py-1.5 ${currentSection === item.sectionId
+                                            className={`group relative font-sans text-sm font-medium transition-colors rounded px-3 py-1.5 text-nowrap ${currentSection === item.sectionId
                                                     ? "text-foreground"
                                                     : "text-foreground/80 hover:text-foreground"
                                                 }`}
@@ -198,7 +198,7 @@ export function Nav({ scrollToSection: externalScrollToSection, currentSection: 
                                 <ThemeChanger />
                                 <NavDivider />
                                 <Link href="/schedule">
-                                    <MagneticButton>
+                                    <MagneticButton className="h-11 w-auto sm:h-9">
                                         <Calendar className="h-4 w-4 transition-transform group-hover:scale-110" />
                                         <span>{t('schedule')}</span>
                                     </MagneticButton>

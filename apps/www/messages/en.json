@@ -23,9 +23,10 @@
         "title": "We build web",
         "title2": "experiences that matter",
         "description": "Clean code. Thoughtful design. No templates, no shortcuts. For businesses that value quality over quick fixes.",
-        "ctaPrimary": "Start a Project",
+        "ctaPrimary": "Get Free Consultation",
         "ctaSecondary": "See Our Work",
-        "scrollHint": "Scroll to explore"
+        "scrollHint": "Scroll to explore",
+        "clientsLabel": "happy clients"
     },
     "work": {
         "title": "Selected Work",
@@ -70,7 +71,7 @@
         },
         "service3": {
             "title": "Arabic + English Done Right",
-            "description": "True RTL support, culturally adapted content. Not just translated—reimagined for each audience."
+            "description": "True RTL support, culturally adapted content. Not just translated-reimagined for each audience."
         },
         "service4": {
             "title": "Design Implementation",
@@ -100,6 +101,13 @@
         },
         "ctaPrimary": "Discuss Your Project",
         "ctaSecondary": "View Our Work"
+    },
+    "cta": {
+        "title": "Let’s evaluate your idea - before you build it.",
+        "description": "We help teams clarify technical direction, reduce risk, and design systems that scale - before a single line of code is wasted.",
+        "primaryAction": "Schedule a technical review",
+        "secondaryAction": "See how we approach complex projects",
+        "footnote": "No sales scripts. No pressure. Just clarity."
     },
     "contact": {
         "title": "Let's build",

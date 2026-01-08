@@ -86,33 +86,41 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
             <span className="text-pretty">{t("hero.description")}</span>
           </p>
 
-          <div ref={buttonsRef} className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <MagneticButton
-              size="lg"
-              variant="primary"
-              onClick={() => scrollToSection("contact")}
-              aria-label={t("hero.ctaPrimary")}
-              className="group"
-            >
-              <span>{t("hero.ctaPrimary")}</span>
-              <svg
-                className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+          <div ref={buttonsRef} className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <MagneticButton
+                size="lg"
+                variant="primary"
+                onClick={() => scrollToSection("contact")}
+                aria-label={t("hero.ctaPrimary")}
+                className="group relative"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </MagneticButton>
+                <span className="flex items-center gap-2">
+                  {t("hero.ctaPrimary")}
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 text-xs font-medium border border-green-500/30">
+                    <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
+                    24h Response
+                  </span>
+                </span>
+                <svg
+                  className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 rtl:-rotate-180"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </MagneticButton>
 
-            <MagneticButton
-              size="lg"
-              variant="secondary"
-              onClick={() => scrollToSection("work")}
-              aria-label={t("hero.ctaSecondary")}
-            >
-              {t("hero.ctaSecondary")}
-            </MagneticButton>
+              <MagneticButton
+                size="lg"
+                variant="secondary"
+                onClick={() => scrollToSection("work")}
+                aria-label={t("hero.ctaSecondary")}
+              >
+                {t("hero.ctaSecondary")}
+              </MagneticButton>
+            </div>
           </div>
         </div>
         <div
