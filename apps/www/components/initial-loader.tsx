@@ -22,7 +22,6 @@ export function InitialLoader() {
     const isRTL = locale === "ar"
     const greeting = isRTL ? "ألفا" : "ALPHA"
 
-
     const segments = useMemo(() => {
         if (isRTL) {
             return [greeting]
@@ -77,11 +76,11 @@ export function InitialLoader() {
             gsap.set(containerRef.current, { opacity: 1 })
             gsap.set(shaderRef.current, { opacity: 0, scale: 1.05 })
 
-            // Shader animation
+            // Shader animation - جعلها أبطأ
             tl.to(shaderRef.current, {
                 opacity: 1,
                 scale: 1,
-                duration: 1.5,
+                duration: 2.0, // زيادة من 1.5 إلى 2.0
                 ease: "power2.out",
             })
 
@@ -98,29 +97,29 @@ export function InitialLoader() {
                     filter: "blur(0px)",
                     scale: 1,
                     y: 0,
-                    duration: 1.2,
+                    duration: 1.6, // زيادة من 1.2 إلى 1.6
                     ease: "power3.out",
-                }, "-=1.2")
+                }, "-=1.6") // زيادة من -1.2 إلى -1.6
 
                 tl.to(textContainerRef.current, {
                     scale: 1.01,
-                    duration: 1.2,
+                    duration: 1.6, // زيادة من 1.2 إلى 1.6
                     ease: "power2.inOut",
-                }, "-=0.4")
+                }, "-=0.6") // زيادة من -0.4 إلى -0.6
 
                 // Exit animation
                 tl.to(shaderRef.current, {
                     scale: 1.08,
                     opacity: 0,
-                    duration: 0.8,
+                    duration: 1.2, // زيادة من 0.8 إلى 1.2
                     ease: "power2.in",
-                }, "-=0.8")
+                }, "-=1.0") // زيادة من -0.8 إلى -1.0
 
                 tl.to(textContainerRef.current, {
                     y: -60,
                     opacity: 0,
                     filter: "blur(15px)",
-                    duration: 0.6,
+                    duration: 1.0, // زيادة من 0.6 إلى 1.0
                     ease: "power2.in",
                 }, "<")
 
@@ -134,28 +133,28 @@ export function InitialLoader() {
                         filter: "blur(0px)",
                         scale: 1,
                         y: 0,
-                        duration: 0.8,
+                        duration: 1.2, // زيادة من 0.8 إلى 1.2
                         stagger: {
-                            each: 0.06,
+                            each: 0.08, // زيادة من 0.06 إلى 0.08
                             from: "start",
                         },
-                    }, "-=1.2")
+                    }, "-=1.6") // زيادة من -1.2 إلى -1.6
                 }
 
                 tl.to(textContainerRef.current, {
                     scale: 1.01,
                     letterSpacing: "0.02em",
-                    duration: 1.2,
+                    duration: 1.6, // زيادة من 1.2 إلى 1.6
                     ease: "power2.inOut",
-                }, "-=0.4")
+                }, "-=0.6") // زيادة من -0.4 إلى -0.6
 
                 // Exit animation
                 tl.to(shaderRef.current, {
                     scale: 1.08,
                     opacity: 0,
-                    duration: 0.8,
+                    duration: 1.2, // زيادة من 0.8 إلى 1.2
                     ease: "power2.in",
-                }, "-=0.8")
+                }, "-=1.0") // زيادة من -0.8 إلى -1.0
 
                 if (chars && chars.length > 0) {
                     tl.to(chars, {
@@ -163,10 +162,10 @@ export function InitialLoader() {
                         opacity: 0,
                         filter: "blur(15px)",
                         stagger: {
-                            each: 0.03,
+                            each: 0.05, // زيادة من 0.03 إلى 0.05
                             from: "center",
                         },
-                        duration: 0.6,
+                        duration: 1.0, // زيادة من 0.6 إلى 1.0
                         ease: "power2.in",
                     }, "<")
                 }
@@ -175,8 +174,8 @@ export function InitialLoader() {
             // Container fade out
             tl.to(containerRef.current, {
                 opacity: 0,
-                duration: 0.4,
-            }, "-=0.3")
+                duration: 0.6, // زيادة من 0.4 إلى 0.6
+            }, "-=0.4") // زيادة من -0.3 إلى -0.4
 
         }, containerRef)
 
