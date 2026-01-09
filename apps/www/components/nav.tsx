@@ -13,19 +13,13 @@ import { useEffect, useRef, useState } from "react"
 import { AlphaLogo } from "./alpha-logo"
 import { MagneticButton } from "./magnetic-button"
 import { useLoading } from "./providers/loading-provider"
-import { useNavigation } from "./providers/navigation-provider"
 
-interface NavProps {
-    scrollToSection?: (sectionId: string) => void
-    currentSection?: string
-}
-
-export function Nav({ scrollToSection: externalScrollToSection, currentSection: externalCurrentSection }: NavProps = {}) {
+export function Nav() {
     const t = useTranslations('nav');
     const [isScrolled, setIsScrolled] = useState(false)
     const { isInitialLoadComplete } = useLoading()
-    const { currentSection: contextCurrentSection, scrollToSection: contextScrollToSection } = useNavigation()
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const [isClosing, setIsClosing] = useState(false)
     const logoRef = useRef<HTMLAnchorElement>(null)
     const navItemsRef = useRef<HTMLElement>(null)
     const actionsRef = useRef<HTMLDivElement>(null)
@@ -39,9 +33,6 @@ export function Nav({ scrollToSection: externalScrollToSection, currentSection: 
         { key: 'writing', sectionId: 'writing', href: '/writing' },
     ]
 
-    // Use external props if provided, otherwise use context
-    const scrollToSection = externalScrollToSection || contextScrollToSection
-    const currentSection = externalCurrentSection || contextCurrentSection
 
     useEffect(() => {
         const handleScroll = () => {
@@ -100,10 +91,42 @@ export function Nav({ scrollToSection: externalScrollToSection, currentSection: 
         return () => ctx.revert()
     }, [isInitialLoadComplete])
 
+    const closeMobileMenu = () => {
+        if (!mobileMenuRef.current) {
+            setIsMobileMenuOpen(false)
+            return
+        }
+
+        setIsClosing(true)
+
+        const items = mobileMenuRef.current.querySelectorAll('.mobile-menu-item')
+        if (items.length > 0) {
+            gsap.to(Array.from(items), {
+                opacity: 0,
+                x: -20,
+                duration: 0.3,
+                stagger: 0.05,
+                ease: "power2.in"
+            })
+        }
+
+        gsap.to(mobileMenuRef.current, {
+            opacity: 0,
+            y: -20,
+            duration: 0.4,
+            ease: "power3.in",
+            onComplete: () => {
+                setIsMobileMenuOpen(false)
+                setIsClosing(false)
+                document.body.style.overflow = "unset"
+            }
+        })
+    }
+
     useEffect(() => {
         if (!mobileMenuRef.current) return
 
-        if (isMobileMenuOpen) {
+        if (isMobileMenuOpen && !isClosing) {
             document.body.style.overflow = "hidden"
             gsap.fromTo(
                 mobileMenuRef.current,
@@ -119,29 +142,28 @@ export function Nav({ scrollToSection: externalScrollToSection, currentSection: 
                     { opacity: 1, x: 0, duration: 0.4, stagger: 0.08, ease: "power2.out" }
                 )
             }
-        } else {
-            document.body.style.overflow = "unset"
         }
 
         return () => {
-            document.body.style.overflow = "unset"
+            if (isMobileMenuOpen && !isClosing) {
+                document.body.style.overflow = "unset"
+            }
         }
-    }, [isMobileMenuOpen])
-
-    const handleMobileLinkClick = (sectionId?: string) => {
-        setIsMobileMenuOpen(false)
-        if (sectionId && scrollToSection) {
-            setTimeout(() => scrollToSection(sectionId), 100)
-        }
-    }
-
-    const handleNavClick = (item: typeof navItems[0]) => {
-        if (scrollToSection) {
-            scrollToSection(item.sectionId)
-        }
-    }
+    }, [isMobileMenuOpen, isClosing])
 
     const locale = useLocale() === "ar" ? "rtl" : "ltr"
+
+    const handleMobileLinkClick = () => {
+        closeMobileMenu()
+    }
+
+    const toggleMobileMenu = () => {
+        if (isMobileMenuOpen) {
+            closeMobileMenu()
+        } else {
+            setIsMobileMenuOpen(true)
+        }
+    }
 
     return (
         <>
@@ -162,12 +184,6 @@ export function Nav({ scrollToSection: externalScrollToSection, currentSection: 
                                     ref={logoRef}
                                     href="/"
                                     className="flex items-baseline gap-1 group relative"
-                                    onClick={(e) => {
-                                        if (scrollToSection) {
-                                            e.preventDefault()
-                                            scrollToSection("home")
-                                        }
-                                    }}
                                 >
                                     <AlphaLogo size="md" variant="full" />
                                 </Link>
@@ -177,18 +193,10 @@ export function Nav({ scrollToSection: externalScrollToSection, currentSection: 
                                     <NavItem key={item.key}>
                                         <Link href={item.href}>
                                             <button
-                                                onClick={() => handleNavClick(item)}
-                                                className={`group relative font-sans text-sm font-medium transition-colors rounded px-3 py-1.5 text-nowrap ${currentSection === item.sectionId
-                                                    ? "text-foreground"
-                                                    : "text-foreground/80 hover:text-foreground"
-                                                    }`}
-                                                aria-current={currentSection === item.sectionId ? "page" : undefined}
+                                                className={`group relative font-sans text-sm font-medium transition-colors rounded px-3 py-1.5 text-nowrap`}
                                             >
                                                 {t(item.key)}
-                                                <span
-                                                    className={`absolute -bottom-1 left-0 right-0 h-px bg-foreground transition-all duration-300 ${currentSection === item.sectionId ? "w-full" : "w-0 group-hover:w-full"
-                                                        }`}
-                                                />
+                                                <span className="absolute -bottom-1 left-0 right-0 h-px bg-transparent group-hover:bg-foreground transition-all duration-300" />
                                             </button>
                                         </Link>
                                     </NavItem>
@@ -212,17 +220,11 @@ export function Nav({ scrollToSection: externalScrollToSection, currentSection: 
                                 ref={logoRef}
                                 href="/"
                                 className="flex items-baseline gap-1 group relative z-50"
-                                onClick={(e) => {
-                                    if (scrollToSection) {
-                                        e.preventDefault()
-                                        scrollToSection("home")
-                                    }
-                                }}
                             >
                                 <AlphaLogo size="md" variant="full" />
                             </Link>
                             <button
-                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                onClick={toggleMobileMenu}
                                 className="relative z-50 w-[24px] h-[24px] flex items-center justify-center"
                                 aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                             >
@@ -247,7 +249,7 @@ export function Nav({ scrollToSection: externalScrollToSection, currentSection: 
                     </div>
                 </Container>
             </header>
-            {isMobileMenuOpen && (
+            {(isMobileMenuOpen || isClosing) && (
                 <div
                     ref={mobileMenuRef}
                     className="fixed inset-0 z-40 lg:hidden bg-background/98 backdrop-blur-2xl"
@@ -255,17 +257,21 @@ export function Nav({ scrollToSection: externalScrollToSection, currentSection: 
                 >
                     <Container className="h-full">
                         <ScrollArea className="h-[calc(100vh-64px)] w-full" dir={locale}>
-                            <div className="py-8 px-2">
+                            <div className="py-8">
                                 <div className="space-y-6">
                                     <div className="space-y-4">
                                         {navItems.map((item) => (
                                             <MobileMenuItem key={item.key}>
-                                                <button
-                                                    onClick={() => handleMobileLinkClick(item.sectionId)}
-                                                    className="block text-2xl font-light tracking-wide text-foreground hover:text-foreground/70 transition-colors py-2 w-full text-left"
+                                                <Link
+                                                    href={item.href}
+                                                    onClick={handleMobileLinkClick}
                                                 >
-                                                    {t(item.key)}
-                                                </button>
+                                                    <button
+                                                        className="block text-2xl font-light tracking-wide text-foreground hover:text-foreground/70 transition-colors py-2 w-full text-left"
+                                                    >
+                                                        {t(item.key)}
+                                                    </button>
+                                                </Link>
                                             </MobileMenuItem>
                                         ))}
                                     </div>
@@ -273,8 +279,8 @@ export function Nav({ scrollToSection: externalScrollToSection, currentSection: 
                                     <MobileMenuItem>
                                         <Link
                                             href="/schedule"
-                                            onClick={() => handleMobileLinkClick()}
                                             className="block"
+                                            onClick={handleMobileLinkClick}
                                         >
                                             <MagneticButton className="w-full justify-center">
                                                 <Calendar className="h-4 w-4 transition-transform group-hover:scale-110" />
