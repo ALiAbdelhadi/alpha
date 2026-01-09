@@ -30,7 +30,7 @@ export function Callout({ type = 'info', children }: CalloutProps) {
                 styles[type]
             )}
         >
-            <Icon className="mt-0.5 h-5 w-5 flex-shrink-0" />
+            <Icon className="mt-0.5 h-5 w-5 shrink-0" />
             <div className="flex-1">{children}</div>
         </div>
     );

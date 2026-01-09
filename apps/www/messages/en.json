@@ -145,7 +145,7 @@
     "approach": {
         "hero": {
             "title": "Systems that outlast trends.",
-            "description": "Most web projects are built to launch. We build to last. The difference isn't in the framework—it's in the questions asked before the first commit."
+            "description": "Most web projects are built to launch. We build to last. The difference isn't in the framework-it's in the questions asked before the first commit."
         },
         "contrasts": {
             "label": {
@@ -173,11 +173,11 @@
             },
             "scale": {
                 "title": "Scale Assumptions",
-                "description": "We design for 10x before you need it. Not because you'll get there—but because assumptions about growth change every technical decision."
+                "description": "We design for 10x before you need it. Not because you'll get there-but because assumptions about growth change every technical decision."
             },
             "maintenance": {
                 "title": "Maintenance Cost",
-                "description": "A system that requires constant intervention isn't finished. We optimize for long stretches of silence—where nothing breaks, nothing drifts."
+                "description": "A system that requires constant intervention isn't finished. We optimize for long stretches of silence-where nothing breaks, nothing drifts."
             },
             "handoff": {
                 "title": "Team Handoff",
@@ -186,11 +186,11 @@
         },
         "constraints": {
             "title": "Constraints are design tools.",
-            "paragraphs": "Unlimited options paralyze. We start every project by defining what we won't build. What features won't exist. What use cases won't be supported. What browsers won't be accommodated.\n\nThis isn't limitation—it's focus. A system designed for everyone serves no one well.\n\nConstraints force decisions. Decisions create character. Character builds identity."
+            "paragraphs": "Unlimited options paralyze. We start every project by defining what we won't build. What features won't exist. What use cases won't be supported. What browsers won't be accommodated.\n\nThis isn't limitation-it's focus. A system designed for everyone serves no one well.\n\nConstraints force decisions. Decisions create character. Character builds identity."
         },
         "bilingual": {
             "title": "Structure that respects direction.",
-            "paragraphs": "Most sites treat RTL as an afterthought—flipping layouts and hoping it works. We design systems where direction is a first-class citizen.\n\nBecause this isn't about translation. It's about cultural adaptation. About understanding that right-aligned navigation isn't just mirrored—it's reconsidered.\n\nEvery component. Every layout. Every interaction. Built to work in both directions without compromise."
+            "paragraphs": "Most sites treat RTL as an afterthought-flipping layouts and hoping it works. We design systems where direction is a first-class citizen.\n\nBecause this isn't about translation. It's about cultural adaptation. About understanding that right-aligned navigation isn't just mirrored-it's reconsidered.\n\nEvery component. Every layout. Every interaction. Built to work in both directions without compromise."
         },
         "boundaries": {
             "title": "Where we draw lines.",
@@ -205,14 +205,14 @@
         },
         "closing": {
             "title": "If this resonates, let's talk.",
-            "description": "Not every project needs this level of thinking. Some need speed. Some need iteration. Some need experimentation. But if you're building something that needs to last—if the system is the product, not just the storefront—then we should have a conversation. No pitch. No pressure. Just a technical discussion about what you're trying to build and whether our approach fits.",
+            "description": "Not every project needs this level of thinking. Some need speed. Some need iteration. Some need experimentation. But if you're building something that needs to last-if the system is the product, not just the storefront-then we should have a conversation. No pitch. No pressure. Just a technical discussion about what you're trying to build and whether our approach fits.",
             "cta": "Start conversation: hello@alpha.com"
         }
     },
     "process": {
         "hero": {
             "title": "How we work.",
-            "description": "A framework, not a formula. Every project follows the same fundamental structure—but adapts to what it needs to become."
+            "description": "A framework, not a formula. Every project follows the same fundamental structure-but adapts to what it needs to become."
         },
         "phases": {
             "deliverables": "Deliverables",
@@ -231,13 +231,13 @@
             },
             "development": {
                 "title": "Development",
-                "description": "Iterative, not waterfall. We build in vertical slices—complete features that work end-to-end. You see progress in days, not months. Feedback shapes direction without derailing momentum.",
+                "description": "Iterative, not waterfall. We build in vertical slices-complete features that work end-to-end. You see progress in days, not months. Feedback shapes direction without derailing momentum.",
                 "deliverables": "Working software | Weekly demos | Code documentation | Test coverage reports",
                 "timeline": "8-16 weeks, project-dependent"
             },
             "launch": {
                 "title": "Launch",
-                "description": "Launch isn't an event—it's a transition. We monitor, measure, and respond. The first week post-launch teaches more than the last month of development. We stay close until the system proves itself.",
+                "description": "Launch isn't an event-it's a transition. We monitor, measure, and respond. The first week post-launch teaches more than the last month of development. We stay close until the system proves itself.",
                 "deliverables": "Production deployment | Performance monitoring | Documentation | Team training",
                 "timeline": "2-4 weeks"
             },
@@ -262,7 +262,7 @@
         "subtitle": "High-resolution product imagery at scale. Real-time inventory. Zero-compromise load times.",
         "problem": {
             "title": "The Problem",
-            "description": "The client sold premium lighting fixtures—products where detail matters. Existing platforms compressed images to the point of uselessness. Customers couldn't see finishes, textures, or scale.\n\nSimultaneously, inventory was managed across three systems: physical warehouse, Shopify, and a custom ERP. Updates took hours. Overselling was frequent.\n\nThey needed a system that felt expensive, loaded instantly, and stayed in sync."
+            "description": "The client sold premium lighting fixtures-products where detail matters. Existing platforms compressed images to the point of uselessness. Customers couldn't see finishes, textures, or scale.\n\nSimultaneously, inventory was managed across three systems: physical warehouse, Shopify, and a custom ERP. Updates took hours. Overselling was frequent.\n\nThey needed a system that felt expensive, loaded instantly, and stayed in sync."
         },
         "technical": {
             "title": "Technical Decisions",
@@ -328,7 +328,7 @@
             },
             "performance": {
                 "title": "Performance Benchmarks",
-                "description": "Fast isn't a feature—it's a requirement. We measure, optimize, and maintain performance as a core deliverable.",
+                "description": "Fast isn't a feature-it's a requirement. We measure, optimize, and maintain performance as a core deliverable.",
                 "requirements": "Lighthouse Performance score > 90 | First Contentful Paint < 1.5s | Time to Interactive < 3.5s | Cumulative Layout Shift < 0.1 | Total Blocking Time < 300ms",
                 "benchmarks": "Initial bundle size: < 200KB gzipped | Image optimization: WebP with fallbacks | Code splitting: Route-based minimum | Caching strategy: Documented and tested"
             },
@@ -353,7 +353,7 @@
     "writing": {
         "hero": {
             "title": "Technical writing.",
-            "description": "Deep examinations of decisions, trade-offs, and systems. Not tutorials—perspectives."
+            "description": "Deep examinations of decisions, trade-offs, and systems. Not tutorials-perspectives."
         },
         "articles": {
             "why-not-wordpress": {

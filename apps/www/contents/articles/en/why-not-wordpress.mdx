@@ -9,7 +9,7 @@ coverImage: "/images/articles/wordpress-vs-modern.jpg"
 readTime: "12 min read"
 ---
 
-WordPress powers 43% of the web. It's the default answer for "we need a website." But for technical projects—systems that need to scale, perform, and evolve—WordPress is a liability.
+WordPress powers 43% of the web. It's the default answer for "we need a website." But for technical projects-systems that need to scale, perform, and evolve-WordPress is a liability.
 
 <Callout type="warning">
 This article isn't about WordPress being "bad." It's about understanding when the platform's trade-offs work against you.
@@ -24,12 +24,12 @@ This becomes the problem.
 Each plugin is a black box. You don't know what it does to your database. You don't know what JavaScript it injects. You don't know what security vulnerabilities it introduces.
 
 <Quote author="Alpha Team" role="Technical Architects">
-When you have 20+ plugins (the average WordPress site), you don't have a system—you have a Jenga tower. Remove one piece, and the whole thing collapses.
+When you have 20+ plugins (the average WordPress site), you don't have a system-you have a Jenga tower. Remove one piece, and the whole thing collapses.
 </Quote>
 
 ## Performance by Default
 
-WordPress generates pages on every request. Even with caching plugins, you're fighting the architecture. Modern frameworks like Next.js generate static pages at build time. The difference isn't marginal—it's orders of magnitude.
+WordPress generates pages on every request. Even with caching plugins, you're fighting the architecture. Modern frameworks like Next.js generate static pages at build time. The difference isn't marginal-it's orders of magnitude.
 
 ```typescript
 // Next.js: Generate once, serve forever
@@ -44,7 +44,7 @@ A WordPress site with WooCommerce loading in under 2 seconds is impressive. A Ne
 
 ## The Update Trap
 
-WordPress updates break things. Not occasionally—regularly. Core updates break themes. Theme updates break plugins. Plugin updates break other plugins.
+WordPress updates break things. Not occasionally-regularly. Core updates break themes. Theme updates break plugins. Plugin updates break other plugins.
 
 This creates a perverse incentive: don't update. But not updating means accumulating security vulnerabilities.
 
@@ -52,7 +52,7 @@ You're forced to choose between stability and security. Modern frameworks don't 
 
 ## When WordPress Makes Sense
 
-WordPress isn't inherently bad. For content-heavy sites managed by non-technical teams, it's often the right choice. Blogs, magazines, small business sites—WordPress excels here.
+WordPress isn't inherently bad. For content-heavy sites managed by non-technical teams, it's often the right choice. Blogs, magazines, small business sites-WordPress excels here.
 
 But for applications? For systems that need to perform under load? For platforms that will evolve over years?
 

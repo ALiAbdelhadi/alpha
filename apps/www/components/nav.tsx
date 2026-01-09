@@ -35,7 +35,7 @@ export function Nav({ scrollToSection: externalScrollToSection, currentSection: 
         { key: 'approach', sectionId: 'approach', href: '/approach' },
         { key: 'process', sectionId: 'process', href: '/process' },
         { key: 'standards', sectionId: 'standards', href: '/standards' },
-        { key: 'case-study', sectionId: 'case-Study', href: '/case-Study' },
+        { key: 'case-study', sectionId: 'case-Study', href: '/case-study' },
         { key: 'writing', sectionId: 'writing', href: '/writing' },
     ]
 

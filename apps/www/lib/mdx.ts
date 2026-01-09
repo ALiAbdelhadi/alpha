@@ -2,13 +2,11 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { cache } from 'react';
-import readingTime from 'reading-time';
 import type { Article, ArticleFrontmatter, ArticleListItem } from '@/types/mdx';
 
-const articlesDirectory = path.join(process.cwd(), 'content/articles');
+const articlesDirectory = path.join(process.cwd(), 'contents/articles');
 
-// Get all article slugs for a locale
-export function getArticleSlugs(locale: 'en' | 'ar'): string[] {
+function getArticleSlugs(locale: 'en' | 'ar'): string[] {
     const localeDir = path.join(articlesDirectory, locale);
 
     if (!fs.existsSync(localeDir)) {
@@ -21,7 +19,6 @@ export function getArticleSlugs(locale: 'en' | 'ar'): string[] {
         .map((file) => file.replace(/\.mdx$/, ''));
 }
 
-// Get article by slug (cached for performance)
 export const getArticle = cache(async (
     slug: string,
     locale: 'en' | 'ar'
@@ -29,17 +26,18 @@ export const getArticle = cache(async (
     try {
         const filePath = path.join(articlesDirectory, locale, `${slug}.mdx`);
         const fileContents = fs.readFileSync(filePath, 'utf8');
-
         const { data, content } = matter(fileContents);
 
-        // Calculate reading time
-        const stats = readingTime(content);
+        // حساب وقت القراءة التقريبي
+        const wordsPerMinute = 200;
+        const wordCount = content.split(/\s+/).length;
+        const readTime = Math.ceil(wordCount / wordsPerMinute);
 
         return {
             slug,
             frontmatter: {
                 ...data,
-                readTime: stats.text,
+                readTime: `${readTime} min read`,
                 locale,
             } as ArticleFrontmatter,
             content,
@@ -51,7 +49,6 @@ export const getArticle = cache(async (
     }
 });
 
-// Get all articles for listing (cached)
 export const getAllArticles = cache(async (
     locale: 'en' | 'ar'
 ): Promise<ArticleListItem[]> => {
@@ -69,17 +66,15 @@ export const getAllArticles = cache(async (
         })
     );
 
-    // Filter out null values and sort by date
     return articles
         .filter((article): article is ArticleListItem => article !== null)
         .sort((a, b) => {
             const dateA = new Date(a.frontmatter.date).getTime();
             const dateB = new Date(b.frontmatter.date).getTime();
-            return dateB - dateA; // Most recent first
+            return dateB - dateA;
         });
 });
 
-// Get featured articles
 export async function getFeaturedArticles(
     locale: 'en' | 'ar',
     limit = 3
@@ -90,7 +85,6 @@ export async function getFeaturedArticles(
         .slice(0, limit);
 }
 
-// Get related articles by tags
 export async function getRelatedArticles(
     currentSlug: string,
     tags: string[],

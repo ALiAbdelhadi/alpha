@@ -3,15 +3,16 @@
 import { Container } from "@/components/container"
 import { useReveal } from "@/hooks/use-animation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
+import { localizeNumbers } from "@/lib/number"
+
 import { useEffect, useRef } from "react"
 
 export default function ProcessPage() {
-    const t = useTranslations("process")
     const sectionRef = useRef<HTMLElement>(null)
 
     return (
-        <main ref={sectionRef} className="relative min-h-screen w-full bg-background">
+        <main ref={sectionRef} className="relative min-h-screen w-full">
             <OpeningSection />
             <PhasesList />
             <ClosingSection />
@@ -47,7 +48,7 @@ function OpeningSection() {
 function PhasesList() {
     const t = useTranslations("process.phases")
     const sectionRef = useRef<HTMLElement>(null)
-
+    const locale = useLocale()
     useEffect(() => {
         if (!sectionRef.current) return
 
@@ -78,11 +79,11 @@ function PhasesList() {
     }, [])
 
     const phases = [
-        { number: "01", key: "discovery" },
-        { number: "02", key: "architecture" },
-        { number: "03", key: "development" },
-        { number: "04", key: "launch" },
-        { number: "05", key: "support" },
+        { number: "1", key: "discovery" },
+        { number: "2", key: "architecture" },
+        { number: "3", key: "development" },
+        { number: "4", key: "launch" },
+        { number: "5", key: "support" },
     ]
 
     return (
@@ -97,10 +98,11 @@ function PhasesList() {
                         >
                             <div>
                                 <div className="mb-4 font-mono text-5xl font-light text-foreground/40 md:text-6xl">
-                                    {phase.number}
+                                    {localizeNumbers(phase.number, locale)}
                                 </div>
+
                                 <div className="font-mono text-sm text-foreground/60">
-                                    {t(`${phase.key}.timeline`)}
+                                    {localizeNumbers(t(`${phase.key}.timeline`), locale)}
                                 </div>
                             </div>
                             <div className="max-w-2xl">

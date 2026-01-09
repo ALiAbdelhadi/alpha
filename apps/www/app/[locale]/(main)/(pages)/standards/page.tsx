@@ -11,7 +11,7 @@ export default function StandardsPage() {
     const sectionRef = useRef<HTMLElement>(null)
 
     return (
-        <main ref={sectionRef} className="relative min-h-screen w-full bg-background">
+        <main ref={sectionRef} className="relative min-h-screen w-full">
             <OpeningSection />
             <CategoriesSection />
             <ClosingSection />

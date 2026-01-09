@@ -8,10 +8,39 @@ import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 
 export default function WritingPage() {
+    const sectionRef = useRef<HTMLElement>(null)
+    return (
+        <main ref={sectionRef} className="relative min-h-screen w-full">
+            <OpeningSection />
+            <ListSection />
+        </main>
+    )
+}
+
+
+
+function OpeningSection() {
     const t = useTranslations("writing")
+    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.6 })
+    const descRef = useReveal({ direction: "up", delay: 0.2, duration: 0.6 })
+
+    return (
+        <section className="flex min-h-screen items-center pt-24 md:pt-32">
+            <Container>
+                <h1 ref={titleRef} className="mb-6 font-sans text-5xl font-normal leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl">
+                    {t("hero.title")}
+                </h1>
+                <p ref={descRef} className="max-w-2xl text-lg leading-relaxed text-foreground/85 md:text-xl">
+                    {t("hero.description")}
+                </p>
+            </Container>
+        </section>
+    )
+}
+
+function ListSection() {
     const tArticles = useTranslations("writing.articles")
     const sectionRef = useRef<HTMLElement>(null)
-    const heroRef = useReveal({ direction: "up", delay: 0, duration: 0.6 })
 
     useEffect(() => {
         if (!sectionRef.current) return
@@ -41,64 +70,53 @@ export default function WritingPage() {
         {
             slug: "why-not-wordpress",
             date: "November 2024",
-            readTime: "12 min read",
+            readTime: "2 min read",
         },
         {
             slug: "technical-debt",
             date: "October 2024",
-            readTime: "15 min read",
+            readTime: "3 min read",
         },
         {
             slug: "evaluating-developers",
             date: "September 2024",
-            readTime: "18 min read",
+            readTime: "4 min read",
         },
         {
             slug: "multilingual-architecture",
             date: "August 2024",
-            readTime: "20 min read",
+            readTime: "3 min read",
         },
     ]
 
     return (
-        <main ref={sectionRef} className="min-h-screen pt-24 md:pt-32">
+        <section className="flex items-center pt-24 md:pt-32 pb-24 pd:mb-32">
             <Container>
-                <section ref={heroRef} className="mb-24 md:mb-32">
-                    <h1 className="mb-6 font-sans text-5xl font-normal leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl">
-                        {t("hero.title")}
-                    </h1>
-                    <p className="max-w-2xl text-lg leading-relaxed text-foreground/85 md:text-xl">
-                        {t("hero.description")}
-                    </p>
-                </section>
-
-                <section className="space-y-0">
-                    {articles.map((article) => (
-                        <Link
-                            key={article.slug}
-                            href={`/writing/${article.slug}`}
-                            data-article
-                            className="group block border-t border-foreground/10 py-8 transition-colors hover:bg-foreground/5 -mx-6 px-6 md:-mx-12 md:px-12"
-                        >
-                            <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                                <div className="flex-1">
-                                    <h2 className="mb-2 font-sans text-2xl font-medium text-foreground transition-colors group-hover:text-foreground/70 md:text-3xl">
-                                        {tArticles(`${article.slug}.title`)}
-                                    </h2>
-                                    <p className="text-base text-foreground/75">
-                                        {tArticles(`${article.slug}.excerpt`)}
-                                    </p>
-                                </div>
-                                <div className="flex items-center gap-4 font-mono text-xs text-foreground/60 md:text-sm">
-                                    <span>{article.date}</span>
-                                    <span>·</span>
-                                    <span>{article.readTime}</span>
-                                </div>
+                {articles.map((article) => (
+                    <Link
+                        key={article.slug}
+                        href={`/writing/${article.slug}`}
+                        data-article
+                        className="group block border-t border-foreground/10 py-8 transition-colors hover:bg-foreground/5 -mx-6 px-6 md:-mx-12 md:px-12"
+                    >
+                        <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                            <div className="flex-1">
+                                <h2 className="mb-2 font-sans text-2xl font-medium text-foreground transition-colors group-hover:text-foreground/70 md:text-3xl">
+                                    {tArticles(`${article.slug}.title`)}
+                                </h2>
+                                <p className="text-base text-foreground/75">
+                                    {tArticles(`${article.slug}.excerpt`)}
+                                </p>
                             </div>
-                        </Link>
-                    ))}
-                </section>
+                            <div className="flex items-center gap-4 font-mono text-xs text-foreground/60 md:text-sm">
+                                <span>{article.date}</span>
+                                <span>·</span>
+                                <span>{article.readTime}</span>
+                            </div>
+                        </div>
+                    </Link>
+                ))}
             </Container>
-        </main>
+        </section>
     )
 }

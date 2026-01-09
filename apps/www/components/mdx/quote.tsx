@@ -6,9 +6,10 @@ interface QuoteProps {
 
 export function Quote({ author, role, children }: QuoteProps) {
     return (
-        <figure className="my-8 border-l-4 border-primary pl-6">
+        <figure className="my-8 ltr:border-l-4 rtl:border-r-4 border-primary ltr:pl-6 rtl:pr-6">
             <blockquote className="mb-4 text-xl italic text-foreground/75">
                 {children}
+                
             </blockquote>
             <figcaption className="text-sm">
                 <span className="font-semibold text-foreground">{author}</span>

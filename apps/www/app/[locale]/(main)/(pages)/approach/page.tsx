@@ -7,11 +7,10 @@ import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 
 export default function ApproachPage() {
-    const t = useTranslations("approach")
     const sectionRef = useRef<HTMLElement>(null)
 
     return (
-        <main ref={sectionRef} className="relative min-h-screen w-full bg-background">
+        <main ref={sectionRef} className="relative min-h-screen w-full">
             <OpeningSection />
             <ProblemSection />
             <DecisionsSection />
@@ -179,7 +178,7 @@ function DecisionsSection() {
                         <div
                             key={i}
                             data-decision-item
-                            className="border-l-2 border-foreground/10 pl-8"
+                            className="ltr:border-l-2 rtl:border-r-2 border-foreground/10 ltr:pl-8 rtl:pr-8"
                         >
                             <h3 className="mb-4 font-sans text-2xl font-medium text-foreground md:text-3xl">
                                 {decision.title}
@@ -323,7 +322,7 @@ function BoundariesSection() {
                             data-boundary-item
                             className="flex items-start gap-4 text-base text-foreground/85 md:text-lg"
                         >
-                            <span className="mt-1 text-foreground/40">—</span>
+                            <span className="mt-1 text-foreground/40">-</span>
                             <p>{t(`items.${num}`)}</p>
                         </div>
                     ))}
@@ -359,7 +358,7 @@ function ClosingSection() {
                             className="inline-flex items-center gap-2 font-mono text-base text-foreground transition-colors hover:text-foreground/70 md:text-lg"
                         >
                             {t("cta")}
-                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="h-4 w-4 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
                         </a>
