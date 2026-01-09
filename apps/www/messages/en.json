@@ -8,7 +8,12 @@
         "services": "Services",
         "about": "About",
         "contact": "Contact",
+        "approach": "Approach",
+        "process": "Process",
+        "standards": "Standards",
+        "writing": "Writing",
         "schedule": "Schedule",
+        "case-study": "Case Study",
         "getStarted": "Let's Talk",
         "openMenu": "Open menu",
         "closeMenu": "Close menu",
@@ -103,7 +108,7 @@
         "ctaSecondary": "View Our Work"
     },
     "cta": {
-        "title": "Let’s evaluate your idea - before you build it.",
+        "title": "Let's evaluate your idea - before you build it.",
         "description": "We help teams clarify technical direction, reduce risk, and design systems that scale - before a single line of code is wasted.",
         "primaryAction": "Schedule a technical review",
         "secondaryAction": "See how we approach complex projects",
@@ -135,6 +140,277 @@
             "instagram": "Instagram",
             "linkedin": "LinkedIn",
             "dribbble": "Dribbble"
+        }
+    },
+    "approach": {
+        "hero": {
+            "title": "Systems that outlast trends.",
+            "description": "Most web projects are built to launch. We build to last. The difference isn't in the framework—it's in the questions asked before the first commit."
+        },
+        "contrasts": {
+            "label": {
+                "common": "Common",
+                "alpha": "Alpha"
+            },
+            "1": {
+                "common": "Build the features users asked for",
+                "alpha": "Understand what problem users are trying to solve"
+            },
+            "2": {
+                "common": "Get it working, then optimize",
+                "alpha": "Define constraints before opening the editor"
+            },
+            "3": {
+                "common": "We'll fix that after launch",
+                "alpha": "Launch is when the system starts working, not when work starts"
+            }
+        },
+        "decisions": {
+            "title": "Architecture precedes implementation.",
+            "data": {
+                "title": "Data First",
+                "description": "Before UI. Before features. Before branding. We map what the system needs to know. Bad data models can't be fixed with good code."
+            },
+            "scale": {
+                "title": "Scale Assumptions",
+                "description": "We design for 10x before you need it. Not because you'll get there—but because assumptions about growth change every technical decision."
+            },
+            "maintenance": {
+                "title": "Maintenance Cost",
+                "description": "A system that requires constant intervention isn't finished. We optimize for long stretches of silence—where nothing breaks, nothing drifts."
+            },
+            "handoff": {
+                "title": "Team Handoff",
+                "description": "Code written for one person is fragile. Every commit assumes someone else will need to understand it in six months."
+            }
+        },
+        "constraints": {
+            "title": "Constraints are design tools.",
+            "paragraphs": "Unlimited options paralyze. We start every project by defining what we won't build. What features won't exist. What use cases won't be supported. What browsers won't be accommodated.\n\nThis isn't limitation—it's focus. A system designed for everyone serves no one well.\n\nConstraints force decisions. Decisions create character. Character builds identity."
+        },
+        "bilingual": {
+            "title": "Structure that respects direction.",
+            "paragraphs": "Most sites treat RTL as an afterthought—flipping layouts and hoping it works. We design systems where direction is a first-class citizen.\n\nBecause this isn't about translation. It's about cultural adaptation. About understanding that right-aligned navigation isn't just mirrored—it's reconsidered.\n\nEvery component. Every layout. Every interaction. Built to work in both directions without compromise."
+        },
+        "boundaries": {
+            "title": "Where we draw lines.",
+            "intro": "We don't:",
+            "items": {
+                "1": "Accept projects with immovable deadlines set before scoping",
+                "2": "Build systems we can't maintain",
+                "3": "Work with agencies positioning themselves between us and the end client",
+                "4": "Compete on price",
+                "5": "Start work before the problem is understood"
+            }
+        },
+        "closing": {
+            "title": "If this resonates, let's talk.",
+            "description": "Not every project needs this level of thinking. Some need speed. Some need iteration. Some need experimentation. But if you're building something that needs to last—if the system is the product, not just the storefront—then we should have a conversation. No pitch. No pressure. Just a technical discussion about what you're trying to build and whether our approach fits.",
+            "cta": "Start conversation: hello@alpha.com"
+        }
+    },
+    "process": {
+        "hero": {
+            "title": "How we work.",
+            "description": "A framework, not a formula. Every project follows the same fundamental structure—but adapts to what it needs to become."
+        },
+        "phases": {
+            "deliverables": "Deliverables",
+            "timeline": "Timeline",
+            "discovery": {
+                "title": "Discovery",
+                "description": "Before committing to solutions, we map the territory. Technical requirements. User needs. Business constraints. The gaps between what's asked for and what's actually needed.",
+                "deliverables": "Requirements document | Technical audit | Risk assessment | Architecture proposal",
+                "timeline": "1-2 weeks, depending on complexity"
+            },
+            "architecture": {
+                "title": "Architecture",
+                "description": "The foundation determines everything that follows. We define data structures, system boundaries, integration points, and performance targets. This phase is complete when we can explain every technical decision.",
+                "deliverables": "System architecture | Database schema | API design | Technology stack documentation",
+                "timeline": "2-3 weeks"
+            },
+            "development": {
+                "title": "Development",
+                "description": "Iterative, not waterfall. We build in vertical slices—complete features that work end-to-end. You see progress in days, not months. Feedback shapes direction without derailing momentum.",
+                "deliverables": "Working software | Weekly demos | Code documentation | Test coverage reports",
+                "timeline": "8-16 weeks, project-dependent"
+            },
+            "launch": {
+                "title": "Launch",
+                "description": "Launch isn't an event—it's a transition. We monitor, measure, and respond. The first week post-launch teaches more than the last month of development. We stay close until the system proves itself.",
+                "deliverables": "Production deployment | Performance monitoring | Documentation | Team training",
+                "timeline": "2-4 weeks"
+            },
+            "support": {
+                "title": "Support",
+                "description": "Code doesn't age well without care. Dependencies update. Browsers change. Security vulnerabilities emerge. We provide ongoing maintenance or transfer knowledge for internal teams.",
+                "deliverables": "Security patches | Dependency updates | Performance optimization | Priority bug fixes",
+                "timeline": "Ongoing, as needed"
+            }
+        },
+        "flexibility": {
+            "title": "Process serves the project.",
+            "description": "These phases are a framework, not a contract. Some projects need more discovery. Others need to launch fast and iterate. We adapt without abandoning discipline."
+        }
+    },
+    "caseStudy": {
+        "meta": {
+            "client": "Confidential E-Commerce",
+            "duration": "14 weeks"
+        },
+        "title": "Art Lighting Store",
+        "subtitle": "High-resolution product imagery at scale. Real-time inventory. Zero-compromise load times.",
+        "problem": {
+            "title": "The Problem",
+            "description": "The client sold premium lighting fixtures—products where detail matters. Existing platforms compressed images to the point of uselessness. Customers couldn't see finishes, textures, or scale.\n\nSimultaneously, inventory was managed across three systems: physical warehouse, Shopify, and a custom ERP. Updates took hours. Overselling was frequent.\n\nThey needed a system that felt expensive, loaded instantly, and stayed in sync."
+        },
+        "technical": {
+            "title": "Technical Decisions",
+            "decision1": {
+                "title": "Image Optimization Without Quality Loss",
+                "description": "Standard e-commerce platforms serve one image size to all devices. We built a dynamic image pipeline that generates optimal sizes on-demand and caches aggressively.",
+                "code": "// Dynamic image optimization\nimport { getOptimizedImage } from '@/lib/images'\n\nconst ProductImage = ({ src, alt, priority }) => {\n  return (\n    <Image\n      src={getOptimizedImage(src, { width: 1200, quality: 95 })}\n      alt={alt}\n      width={1200}\n      height={1200}\n      priority={priority}\n      sizes=\"(max-width: 768px) 100vw, 50vw\"\n    />\n  )\n}"
+            },
+            "decision2": {
+                "title": "Real-Time Inventory Sync",
+                "description": "We built a webhook-based inventory system that updates across all platforms within 30 seconds. Overselling became impossible.",
+                "code": "// Inventory webhook handler\nexport async function POST(request: Request) {\n  const { productId, quantity } = await request.json()\n  \n  await prisma.product.update({\n    where: { id: productId },\n    data: { stock: quantity }\n  })\n  \n  await revalidateTag(`product-${productId}`)\n  return Response.json({ success: true })\n}"
+            },
+            "decision3": {
+                "title": "Performance Under Load",
+                "description": "During peak shopping periods, the site needed to handle 10x normal traffic without degradation. We used edge caching, static generation, and database read replicas.",
+                "code": "// Edge-cached product pages\nexport const revalidate = 3600 // 1 hour\n\nexport async function generateStaticParams() {\n  const products = await prisma.product.findMany({\n    select: { slug: true }\n  })\n  return products.map(p => ({ slug: p.slug }))\n}"
+            }
+        },
+        "architecture": {
+            "title": "System Architecture",
+            "description": "The system is built as a modular monolith: single deployment, clear boundaries. Each domain (products, orders, inventory) is isolated but shares infrastructure.",
+            "structure": "apps/\n├── web/           # Customer-facing store\n├── admin/         # Inventory management\n└── api/           # Shared API layer\n\npackages/\n├── database/      # Prisma schema + migrations\n├── images/        # Image optimization pipeline\n├── inventory/     # Real-time sync logic\n└── payments/      # Stripe integration\n\ninfra/\n├── cdn/           # Cloudflare edge config\n├── database/      # PostgreSQL + read replicas\n└── storage/       # R2 for images"
+        },
+        "performance": {
+            "title": "Performance Metrics",
+            "metrics": {
+                "lighthouse": {
+                    "value": "98",
+                    "label": "Lighthouse Score",
+                    "detail": "Performance, accessibility, SEO"
+                },
+                "loadTime": {
+                    "value": "1.2s",
+                    "label": "Initial Load",
+                    "detail": "First contentful paint"
+                },
+                "bundle": {
+                    "value": "142KB",
+                    "label": "JS Bundle",
+                    "detail": "Gzipped, initial route"
+                }
+            }
+        },
+        "results": {
+            "title": "Results",
+            "description": "The system launched on schedule. Within the first month:\n\nConversion rate increased 34% (better product imagery made the difference). Page load times dropped from 6.2s to 1.2s. Customer complaints about \"site feels slow\" disappeared.\n\nMost importantly: the client's team can now manage inventory without technical intervention. The system runs itself."
+        }
+    },
+    "standards": {
+        "hero": {
+            "title": "What quality means to us.",
+            "description": "Standards aren't suggestions. They're the baseline for every line of code we write."
+        },
+        "requirements": "Requirements",
+        "benchmarks": "Benchmarks",
+        "categories": {
+            "code": {
+                "title": "Code Standards",
+                "description": "Code is read more than it's written. We optimize for clarity, not cleverness.",
+                "requirements": "TypeScript strict mode enforced | ESLint + Prettier with zero warnings | 100% type coverage on public APIs | Meaningful variable names (no abbreviations) | Functions under 50 lines | Components under 200 lines",
+                "benchmarks": "Max cyclomatic complexity: 10 | Test coverage: 80% minimum | Documentation: Every public function | Code review: Required before merge"
+            },
+            "performance": {
+                "title": "Performance Benchmarks",
+                "description": "Fast isn't a feature—it's a requirement. We measure, optimize, and maintain performance as a core deliverable.",
+                "requirements": "Lighthouse Performance score > 90 | First Contentful Paint < 1.5s | Time to Interactive < 3.5s | Cumulative Layout Shift < 0.1 | Total Blocking Time < 300ms",
+                "benchmarks": "Initial bundle size: < 200KB gzipped | Image optimization: WebP with fallbacks | Code splitting: Route-based minimum | Caching strategy: Documented and tested"
+            },
+            "accessibility": {
+                "title": "Accessibility Requirements",
+                "description": "Accessible design isn't optional. Every interface must work for everyone.",
+                "requirements": "WCAG 2.1 Level AA compliance | Keyboard navigation: Complete | Screen reader testing: NVDA + VoiceOver | Color contrast: 4.5:1 minimum | Focus indicators: Visible on all interactive elements | ARIA labels: Semantic and accurate",
+                "benchmarks": "Axe DevTools: Zero violations | Lighthouse Accessibility: > 95 | Manual testing: Required for complex interactions"
+            },
+            "security": {
+                "title": "Security Protocols",
+                "description": "Security is built in, not bolted on. We follow industry best practices and go beyond when necessary.",
+                "requirements": "Dependencies: Automated vulnerability scanning | Authentication: Industry-standard (OAuth, JWT) | Input validation: Server and client | SQL injection: Parameterized queries only | XSS protection: Content Security Policy | HTTPS: Enforced everywhere",
+                "benchmarks": "Security headers: A+ rating (securityheaders.com) | Dependency updates: Weekly automated | Penetration testing: Before major launches | Secrets management: Never in code"
+            }
+        },
+        "enforcement": {
+            "title": "How we enforce this.",
+            "description": "Standards mean nothing without enforcement. Every pull request is checked automatically. Code that doesn't meet standards doesn't merge. No exceptions."
+        }
+    },
+    "writing": {
+        "hero": {
+            "title": "Technical writing.",
+            "description": "Deep examinations of decisions, trade-offs, and systems. Not tutorials—perspectives."
+        },
+        "articles": {
+            "why-not-wordpress": {
+                "title": "Why we don't use WordPress",
+                "excerpt": "WordPress powers 43% of the web. We're not part of that 43%. Here's why technical debt compounds faster in WordPress than any other platform."
+            },
+            "technical-debt": {
+                "title": "The cost of technical debt",
+                "excerpt": "Every shortcut you take today is a loan against tomorrow's velocity. Most teams don't realize they're bankrupt until it's too late."
+            },
+            "evaluating-developers": {
+                "title": "How to evaluate development partners",
+                "excerpt": "Agencies promise the world. Freelancers promise speed. In-house promises control. All three are wrong. Here's what actually matters."
+            },
+            "multilingual-architecture": {
+                "title": "Multi-language web architecture",
+                "excerpt": "Most 'bilingual' websites are English sites with Arabic text. Real multi-language support means rethinking structure from the ground up."
+            }
+        }
+    },
+    "articles": {
+        "backToWriting": "Back to writing",
+        "why-not-wordpress": {
+            "title": "Why we don't use WordPress",
+            "excerpt": "WordPress powers 43% of the web. We're not part of that 43%. Here's why technical debt compounds faster in WordPress than any other platform.",
+            "meta": {
+                "date": "November 2024",
+                "readTime": "12 min read"
+            },
+            "content": "WordPress powers 43% of the web. It's the default answer for \"we need a website.\" But for technical projects—systems that need to scale, perform, and evolve—WordPress is a liability.\n\n## The Plugin Problem\n\nWordPress's strength is its ecosystem. Need a contact form? There's a plugin. Need SEO? There's a plugin. Need e-commerce? There's a plugin.\n\nThis becomes the problem.\n\nEach plugin is a black box. You don't know what it does to your database. You don't know what JavaScript it injects. You don't know what security vulnerabilities it introduces.\n\nWhen you have 20+ plugins (the average WordPress site), you don't have a system—you have a Jenga tower. Remove one piece, and the whole thing collapses.\n\n## Performance by Default\n\nWordPress generates pages on every request. Even with caching plugins, you're fighting the architecture. Modern frameworks like Next.js generate static pages at build time. The difference isn't marginal—it's orders of magnitude.\n\nA WordPress site with WooCommerce loading in under 2 seconds is impressive. A Next.js site loading in under 2 seconds is concerning.\n\n## The Update Trap\n\nWordPress updates break things. Not occasionally—regularly. Core updates break themes. Theme updates break plugins. Plugin updates break other plugins.\n\nThis creates a perverse incentive: don't update. But not updating means accumulating security vulnerabilities.\n\nYou're forced to choose between stability and security. Modern frameworks don't have this problem because dependencies are explicit and version-locked.\n\n## When WordPress Makes Sense\n\nWordPress isn't inherently bad. For content-heavy sites managed by non-technical teams, it's often the right choice. Blogs, magazines, small business sites—WordPress excels here.\n\nBut for applications? For systems that need to perform under load? For platforms that will evolve over years?\n\nWordPress is the wrong foundation."
+        },
+        "technical-debt": {
+            "title": "The cost of technical debt",
+            "excerpt": "Every shortcut you take today is a loan against tomorrow's velocity. Most teams don't realize they're bankrupt until it's too late.",
+            "meta": {
+                "date": "October 2024",
+                "readTime": "15 min read"
+            },
+            "content": "Technical debt is a loan. Every shortcut you take today must be repaid—with interest.\n\nMost teams understand this conceptually. Few understand it viscerally until they're drowning.\n\n## The Compounding Problem\n\nFinancial debt compounds monthly. Technical debt compounds with every new feature.\n\nSkip writing tests? Now every change is risky. Skip documentation? Now every new developer is slow. Skip refactoring? Now every feature takes longer than the last.\n\nThe interest rate on technical debt is variable—and it accelerates. A small shortcut taken in month one might cost 10x by month twelve.\n\n## The Types of Debt\n\n### Deliberate Debt\n\nSometimes shortcuts are strategic. Ship fast, learn, iterate. This is acceptable if:\n1. You document what was skipped\n2. You plan time to repay it\n3. You actually repay it\n\nMost teams fail at step 3.\n\n### Accidental Debt\n\nThis is debt from ignorance. The junior developer who doesn't know best practices. The rushed senior who ships without thinking.\n\nAccidental debt is expensive because no one knows it exists until it breaks.\n\n### Bit Rot\n\nCode doesn't stay good. Dependencies update. Browsers change. Security vulnerabilities emerge. Code that was fine last year is a liability today.\n\nBit rot isn't optional—it's inevitable. The only question is whether you're maintaining or accumulating.\n\n## The Bankruptcy Moment\n\nThere's a point where technical debt becomes terminal. Where the cost of change exceeds the value of the system.\n\nYou know you're there when:\n- Simple changes take weeks\n- Deploys are terrifying\n- Developers leave rather than deal with the codebase\n- The only solution is \"rewrite from scratch\"\n\nMost rewrites fail. Not because the code is hard—because the organization hasn't changed the behaviors that created the debt.\n\n## How to Avoid Bankruptcy\n\n### Budget for Maintenance\n\nPlan 20-30% of engineering time for debt repayment. Not features. Not bugs. Debt.\n\nRefactoring. Testing. Documentation. Dependency updates. Security patches.\n\nIf you're not spending time here, you're accumulating debt.\n\n### Make Debt Visible\n\nCreate a debt register. List every known shortcut, hack, or \"we'll fix it later\" decision.\n\nReview it quarterly. Prioritize. Pay down the highest-interest items first.\n\n### Slow Down to Go Fast\n\nThe fastest way to build a system is to build it carefully the first time.\n\nTests slow down initial development but speed up long-term velocity. Documentation feels wasteful until someone new joins. Refactoring feels indulgent until you need to change something.\n\nThe teams that ship fast in year one are often the teams that can't ship at all by year three."
+        },
+        "evaluating-developers": {
+            "title": "How to evaluate development partners",
+            "excerpt": "Agencies promise the world. Freelancers promise speed. In-house promises control. All three are wrong. Here's what actually matters.",
+            "meta": {
+                "date": "September 2024",
+                "readTime": "18 min read"
+            },
+            "content": "Most businesses evaluate development partners wrong. They optimize for cost, speed, or impressive portfolios. Then they're surprised when the project fails.\n\nHere's what actually predicts success.\n\n## Not Portfolio—Process\n\nA beautiful portfolio proves they can build one thing well. It doesn't prove they can build your thing well.\n\nInstead, ask about process:\n- How do you handle changing requirements?\n- What happens when you disagree with a decision?\n- How do you prioritize when everything is urgent?\n- What's your approach to technical debt?\n\nTheir answers reveal how they think, not just what they've built.\n\n## Not Speed—Velocity\n\nSpeed is how fast they start. Velocity is how fast they maintain pace.\n\nMany developers sprint for the first month and crawl by month three. Why? Because they accumulated debt without realizing it.\n\nAsk:\n- How do you maintain velocity over time?\n- What's your approach to refactoring?\n- How do you handle dependency updates?\n\nPartners who talk about sustainability over speed will deliver more in the long run.\n\n## Not Promises—Boundaries\n\nGood developers know their limits. They'll say \"I don't know\" or \"That's not my expertise.\"\n\nBad developers promise everything. They'll figure it out along the way (at your expense).\n\nIf they haven't said \"no\" or \"I'm not sure\" in the sales conversation, they're selling, not consulting.\n\n## Not Technology—Judgment\n\nThe tech stack matters less than the reasoning behind it.\n\nA developer who says \"We use React because it's popular\" is following trends.\n\nA developer who says \"We use React because your team already knows it, and onboarding new developers will be faster\" is making strategic decisions.\n\nAsk why they choose specific technologies. The quality of their reasoning matters more than the technologies themselves.\n\n## The Red Flags\n\n### They Lead with Tools\n\nIf the first thing they talk about is their tech stack, they're technologists, not problem solvers.\n\nGood developers start with questions, not solutions.\n\n### They Don't Ask About Maintenance\n\nIf they don't ask who will maintain the system after launch, they're not thinking long-term.\n\n### They Quote Without Discovery\n\nNo one can accurately estimate a project without understanding it. Fixed quotes before discovery phase = guaranteed scope creep or cut corners.\n\n### They Don't Talk About Trade-offs\n\nEvery technical decision is a trade-off. Speed vs. maintainability. Flexibility vs. simplicity. Cost vs. performance.\n\nIf they're not discussing trade-offs, they're not thinking critically.\n\n## The Green Flags\n\n### They Ask About Your Team\n\nThey want to know who will work with the system, who will maintain it, and what your team's technical capabilities are.\n\n### They Push Back\n\nThey question requirements. They challenge assumptions. They suggest alternatives.\n\nThis isn't rudeness—it's rigor.\n\n### They Talk About Constraints\n\nThey ask about budget, timeline, and must-haves. They help you prioritize. They tell you what you can't have.\n\n### They Explain Simply\n\nComplex topics explained clearly = deep understanding. Complex topics explained complexly = shallow understanding or gatekeeping.\n\n## The Question to Ask\n\n\"Tell me about a project that went wrong and how you handled it.\"\n\nTheir answer tells you:\n- Whether they're honest (everyone has failures)\n- How they handle adversity\n- Whether they learn from mistakes\n- How they communicate bad news\n\nIf they say they've never had a failed project, they're lying or inexperienced. Either way, walk away."
+        },
+        "multilingual-architecture": {
+            "title": "Multi-language web architecture",
+            "excerpt": "Most 'bilingual' websites are English sites with Arabic text. Real multi-language support means rethinking structure from the ground up.",
+            "meta": {
+                "date": "August 2024",
+                "readTime": "20 min read"
+            },
+            "content": "Most websites that claim \"multi-language support\" have English structure with translated text. They flip the layout for RTL languages and call it done.\n\nThis is not multi-language architecture. It's translation theater.\n\nReal multi-language support means reconsidering everything—from database schema to component design to navigation patterns.\n\n## The Text Direction Problem\n\nRTL (Right-to-Left) languages like Arabic and Hebrew don't just read backwards. They think differently.\n\nNavigation structure, visual hierarchy, even whitespace usage differs between LTR and RTL contexts.\n\nMost sites apply `dir=\"rtl\"` and mirror everything with CSS. This breaks:\n- Icons (arrows point the wrong way)\n- Layouts (elements stack incorrectly)\n- Interactions (swipe gestures feel backwards)\n\n### The Solution\n\nDirection must be a first-class citizen in your component system.\n\n```typescript\nconst Button = ({{ children, icon }}) => {{\n  const {{ direction }} = useLocale()\n  const Icon = direction === 'rtl' ? FlippedIcon : icon\n  return <button>{{children}} <Icon /></button>\n}}\n```\n\nEvery component considers direction. Not as an afterthought—as a core parameter.\n\n## The Content Length Problem\n\nArabic text is typically 20-30% longer than equivalent English. German can be 40% longer.\n\nLayouts designed for English break when content expands.\n\n### Common Failures\n\n- Fixed-width navigation items that overflow\n- Buttons that wrap to multiple lines\n- Truncated headlines that lose meaning\n- Layouts that shift based on content length\n\n### The Solution\n\nDesign for maximum expected length, not average length.\n\nUse flexible layouts. Avoid fixed widths. Test with the longest language first.\n\n## The URL Structure Problem\n\nHow do you structure URLs for multiple languages?\n\n### Option 1: Subdomain\n`ar.example.com` vs `example.com`\n\nPros: Clear separation, easier CDN configuration\nCons: SEO complexity, shared authentication challenges\n\n### Option 2: Path-based\n`example.com/ar/about` vs `example.com/about`\n\nPros: Single domain, easier authentication\nCons: More complex routing\n\n### Option 3: Query Parameter\n`example.com/about?lang=ar`\n\nPros: Simple implementation\nCons: Poor SEO, not shareable, user-hostile\n\n### Our Choice\n\nPath-based. It's the most user-friendly and SEO-friendly approach.\n\n## The Database Problem\n\nHow do you store multi-language content?\n\n### Approach 1: Separate Tables\n```sql\nCREATE TABLE products_en (id, name, description)\nCREATE TABLE products_ar (id, name, description)\n```\n\nPros: Simple queries\nCons: Data duplication, schema maintenance nightmare\n\n### Approach 2: JSON Columns\n```sql\nCREATE TABLE products (\n  id INT,\n  name JSONB, -- {{ \"en\": \"Product\", \"ar\": \"منتج\" }}\n  description JSONB\n)\n```\n\nPros: Single source of truth\nCons: Complex queries, type safety issues\n\n### Approach 3: Translation Tables\n```sql\nCREATE TABLE products (id, sku)\nCREATE TABLE product_translations (\n  product_id,\n  locale,\n  name,\n  description\n)\n```\n\nPros: Flexible, maintainable, type-safe\nCons: More complex queries\n\n### Our Choice\n\nTranslation tables. They scale better and maintain referential integrity.\n\n## The Component Problem\n\nComponents must handle:\n- Direction-aware layouts\n- Text length variations\n- Locale-specific formatting (dates, numbers, currency)\n- Cultural adaptations (colors, imagery)\n\n### Example: Date Picker\n\nIn English: MM/DD/YYYY\nIn Arabic: DD/MM/YYYY\nIn Swedish: YYYY-MM-DD\n\nYour date picker must adapt format, first day of week, and month names.\n\n```typescript\nimport {{ format }} from 'date-fns'\nimport {{ ar, enUS }} from 'date-fns/locale'\n\nconst formatDate = (date, locale) => {{\n  const localeMap = {{ ar, en: enUS }}\n  return format(date, 'P', {{ locale: localeMap[locale] }})\n}}\n```\n\n## The Testing Problem\n\nMulti-language sites require multi-language testing.\n\n- Visual regression testing in both directions\n- Content length testing at extremes\n- Translation accuracy (not just presence)\n- Cultural appropriateness\n\n## The Performance Problem\n\nServing multiple languages can degrade performance if not handled correctly.\n\n### Bundle Size\n\nLoading all translations upfront = massive bundle.\n\n### Solution\n\nCode-split by language. Load only the active locale.\n\n```typescript\nimport(`@/locales/${{locale}}.json`).then(setTranslations)\n```\n\n### Font Loading\n\nArabic typography requires different fonts than Latin. Loading both = wasted bandwidth.\n\n### Solution\n\nConditionally load fonts based on active locale.\n\n```css\n@font-face {{\n  font-family: 'Primary';\n  src: url('/fonts/latin.woff2');\n  unicode-range: U+0000-00FF;\n}}\n\n@font-face {{\n  font-family: 'Primary';\n  src: url('/fonts/arabic.woff2');\n  unicode-range: U+0600-06FF;\n}}\n```\n\n## The Reality\n\nTrue multi-language support requires:\n- Database restructuring\n- Component redesign\n- Layout adaptation\n- Performance optimization\n- Cultural consultation\n\nIt's not a feature. It's an architectural decision.\n\nMost teams underestimate the work by 3-5x.\n\nIf you're adding multi-language support to an existing codebase, expect to touch every component, every layout, and every data model.\n\nIf you're starting fresh, make it a first-class concern from day one. Build the infrastructure before you need it.\n\nBecause retrofitting multi-language support is painful. Designing it in from the start is just... design."
         }
     }
 }

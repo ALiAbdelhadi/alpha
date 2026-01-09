@@ -32,11 +32,11 @@ export function Nav({ scrollToSection: externalScrollToSection, currentSection: 
     const mobileMenuRef = useRef<HTMLDivElement>(null)
 
     const navItems = [
-        { key: "home", sectionId: "home", href: "/" },
-        { key: "work", sectionId: "work", href: "/#work" },
-        { key: "services", sectionId: "services", href: "/#services" },
-        { key: "about", sectionId: "about", href: "/#about" },
-        { key: "contact", sectionId: "contact", href: "/#contact" },
+        { key: 'approach', sectionId: 'approach', href: '/approach' },
+        { key: 'process', sectionId: 'process', href: '/process' },
+        { key: 'standards', sectionId: 'standards', href: '/standards' },
+        { key: 'case-study', sectionId: 'case-Study', href: '/case-Study' },
+        { key: 'writing', sectionId: 'writing', href: '/writing' },
     ]
 
     // Use external props if provided, otherwise use context
@@ -175,20 +175,22 @@ export function Nav({ scrollToSection: externalScrollToSection, currentSection: 
                             <nav ref={navItemsRef} className="flex items-center justify-center gap-1">
                                 {navItems.map((item) => (
                                     <NavItem key={item.key}>
-                                        <button
-                                            onClick={() => handleNavClick(item)}
-                                            className={`group relative font-sans text-sm font-medium transition-colors rounded px-3 py-1.5 text-nowrap ${currentSection === item.sectionId
+                                        <Link href={item.href}>
+                                            <button
+                                                onClick={() => handleNavClick(item)}
+                                                className={`group relative font-sans text-sm font-medium transition-colors rounded px-3 py-1.5 text-nowrap ${currentSection === item.sectionId
                                                     ? "text-foreground"
                                                     : "text-foreground/80 hover:text-foreground"
-                                                }`}
-                                            aria-current={currentSection === item.sectionId ? "page" : undefined}
-                                        >
-                                            {t(item.key)}
-                                            <span
-                                                className={`absolute -bottom-1 left-0 right-0 h-px bg-foreground transition-all duration-300 ${currentSection === item.sectionId ? "w-full" : "w-0 group-hover:w-full"
                                                     }`}
-                                            />
-                                        </button>
+                                                aria-current={currentSection === item.sectionId ? "page" : undefined}
+                                            >
+                                                {t(item.key)}
+                                                <span
+                                                    className={`absolute -bottom-1 left-0 right-0 h-px bg-foreground transition-all duration-300 ${currentSection === item.sectionId ? "w-full" : "w-0 group-hover:w-full"
+                                                        }`}
+                                                />
+                                            </button>
+                                        </Link>
                                     </NavItem>
                                 ))}
                             </nav>

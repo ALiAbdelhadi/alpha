@@ -18,34 +18,34 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
     direction: "up",
     duration: 0.4,
     distance: 15,
-    delay: isInitialLoadComplete ? 0 : 9999 
+    delay: isInitialLoadComplete ? 0 : 9999,
   })
 
   const titleRef = useReveal<HTMLHeadingElement>({
     direction: "up",
     duration: 0.5,
     distance: 25,
-    delay: isInitialLoadComplete ? 0.15 : 9999
+    delay: isInitialLoadComplete ? 0.15 : 9999,
   })
 
   const descriptionRef = useReveal<HTMLParagraphElement>({
     direction: "up",
     duration: 0.5,
     distance: 20,
-    delay: isInitialLoadComplete ? 0.25 : 9999
+    delay: isInitialLoadComplete ? 0.25 : 9999,
   })
 
   const buttonsRef = useReveal<HTMLDivElement>({
     direction: "up",
     duration: 0.4,
     distance: 15,
-    delay: isInitialLoadComplete ? 0.35 : 9999
+    delay: isInitialLoadComplete ? 0.35 : 9999,
   })
 
   const scrollHintRef = useReveal<HTMLDivElement>({
     direction: "fade",
     duration: 0.4,
-    delay: isInitialLoadComplete ? 0.45 : 9999
+    delay: isInitialLoadComplete ? 0.45 : 9999,
   })
 
   return (
@@ -97,10 +97,6 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
               >
                 <span className="flex items-center gap-2">
                   {t("hero.ctaPrimary")}
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 text-xs font-medium border border-green-500/30">
-                    <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
-                    24h Response
-                  </span>
                 </span>
                 <svg
                   className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 rtl:-rotate-180"

@@ -1,3 +1,4 @@
+// apps/www/components/sections/about-section.tsx (replace stat3)
 "use client"
 
 import { MagneticButton } from "@/components/magnetic-button"
@@ -21,7 +22,7 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
     const sectionElement = sectionRef.current
     const stats = sectionElement.querySelectorAll("[data-stat]")
     const triggers: ScrollTrigger[] = []
-    
+
     stats.forEach((stat, index) => {
       const valueElement = stat.querySelector("[data-stat-value]")
       const borderElement = stat.querySelector("[data-stat-border]")
@@ -74,10 +75,11 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
           triggers.push(borderTween.scrollTrigger)
         }
       }
+
       if (valueElement) {
         const finalValue = valueElement.textContent || ""
         const numericValue = parseInt(finalValue.replace(/\D/g, ""))
-        
+
         if (!isNaN(numericValue)) {
           const counterObj = { value: 0 }
           const counterTween = gsap.to(counterObj, {
@@ -91,7 +93,7 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
               toggleActions: "play none none none",
               once: true,
             },
-            onUpdate: function() {
+            onUpdate: function () {
               const currentValue = Math.floor(counterObj.value)
               valueElement.textContent = finalValue.replace(/\d+/, currentValue.toString())
             }
@@ -146,19 +148,19 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
           </div>
           <div className="flex flex-col justify-center space-y-10 md:space-y-14">
             {[
-              { 
-                value: t("about.stat1.value"), 
-                label: t("about.stat1.label"), 
+              {
+                value: t("about.stat1.value"),
+                label: t("about.stat1.label"),
                 sublabel: t("about.stat1.sublabel")
               },
-              { 
-                value: t("about.stat2.value"), 
-                label: t("about.stat2.label"), 
+              {
+                value: t("about.stat2.value"),
+                label: t("about.stat2.label"),
                 sublabel: t("about.stat2.sublabel")
               },
-              { 
-                value: t("about.stat3.value"), 
-                label: t("about.stat3.label"), 
+              {
+                value: t("about.stat3.value"),
+                label: t("about.stat3.label"),
                 sublabel: t("about.stat3.sublabel")
               },
             ].map((stat, i) => (
@@ -167,11 +169,11 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
                 data-stat
                 className="flex items-baseline gap-6 pl-6 md:gap-10 md:pl-10 relative"
               >
-                <div 
+                <div
                   data-stat-border
                   className="absolute left-0 top-0 bottom-0 w-px bg-foreground/25 origin-bottom"
                 />
-                <div 
+                <div
                   data-stat-value
                   className="text-4xl font-normal text-foreground md:text-5xl lg:text-6xl tabular-nums"
                 >
@@ -190,16 +192,16 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
           </div>
         </div>
         <div ref={buttonsRef} className="mt-12 flex flex-wrap gap-4 md:mt-20">
-          <MagneticButton 
-            size="lg" 
-            variant="primary" 
+          <MagneticButton
+            size="lg"
+            variant="primary"
             onClick={() => scrollToSection?.("contact")}
           >
             {t("about.ctaPrimary")}
           </MagneticButton>
-          <MagneticButton 
-            size="lg" 
-            variant="secondary" 
+          <MagneticButton
+            size="lg"
+            variant="secondary"
             onClick={() => scrollToSection?.("work")}
           >
             {t("about.ctaSecondary")}
