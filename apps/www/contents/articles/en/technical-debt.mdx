@@ -1,0 +1,101 @@
+---
+title: "The cost of technical debt"
+excerpt: "Every shortcut you take today is a loan against tomorrow's velocity. Most teams don't realize they're bankrupt until it's too late."
+date: "2024-10-15"
+author: "Alpha Team"
+tags: ["technical-debt", "software-engineering", "best-practices"]
+featured: true
+coverImage: "/images/articles/technical-debt.jpg"
+readTime: "15 min read"
+---
+
+Technical debt is a loan. Every shortcut you take today must be repaid—with interest.
+
+Most teams understand this conceptually. Few understand it viscerally until they're drowning.
+
+## The Compounding Problem
+
+Financial debt compounds monthly. Technical debt compounds with every new feature.
+
+Skip writing tests? Now every change is risky. Skip documentation? Now every new developer is slow. Skip refactoring? Now every feature takes longer than the last.
+
+<Callout type="danger">
+The interest rate on technical debt is variable—and it accelerates. A small shortcut taken in month one might cost 10x by month twelve.
+</Callout>
+
+## The Types of Debt
+
+### Deliberate Debt
+
+Sometimes shortcuts are strategic. Ship fast, learn, iterate. This is acceptable if:
+
+1. You document what was skipped
+2. You plan time to repay it
+3. You actually repay it
+
+Most teams fail at step 3.
+
+### Accidental Debt
+
+This is debt from ignorance. The junior developer who doesn't know best practices. The rushed senior who ships without thinking.
+
+Accidental debt is expensive because no one knows it exists until it breaks.
+
+### Bit Rot
+
+Code doesn't stay good. Dependencies update. Browsers change. Security vulnerabilities emerge. Code that was fine last year is a liability today.
+
+<Quote author="Alpha Team" role="Technical Architects">
+Bit rot isn't optional—it's inevitable. The only question is whether you're maintaining or accumulating.
+</Quote>
+
+## The Bankruptcy Moment
+
+There's a point where technical debt becomes terminal. Where the cost of change exceeds the value of the system.
+
+You know you're there when:
+
+- Simple changes take weeks
+- Deploys are terrifying
+- Developers leave rather than deal with the codebase
+- The only solution is "rewrite from scratch"
+
+Most rewrites fail. Not because the code is hard—because the organization hasn't changed the behaviors that created the debt.
+
+## How to Avoid Bankruptcy
+
+### Budget for Maintenance
+
+Plan 20-30% of engineering time for debt repayment. Not features. Not bugs. Debt.
+
+Refactoring. Testing. Documentation. Dependency updates. Security patches.
+
+If you're not spending time here, you're accumulating debt.
+
+### Make Debt Visible
+
+Create a debt register. List every known shortcut, hack, or "we'll fix it later" decision.
+
+Review it quarterly. Prioritize. Pay down the highest-interest items first.
+
+### Slow Down to Go Fast
+
+The fastest way to build a system is to build it carefully the first time.
+
+```typescript
+// Writing tests feels slow initially
+describe('UserService', () => {
+  it('should validate email format', () => {
+    expect(validateEmail('invalid')).toBe(false);
+    expect(validateEmail('valid@email.com')).toBe(true);
+  });
+});
+
+// But it speeds up long-term velocity
+```
+
+Tests slow down initial development but speed up long-term velocity. Documentation feels wasteful until someone new joins. Refactoring feels indulgent until you need to change something.
+
+<Callout type="info">
+The teams that ship fast in year one are often the teams that can't ship at all by year three.
+</Callout>

@@ -1,0 +1,224 @@
+---
+title: "Multi-language web architecture"
+excerpt: "Most 'bilingual' websites are English sites with Arabic text. Real multi-language support means rethinking structure from the ground up."
+date: "2024-08-15"
+author: "Alpha Team"
+tags: ["i18n", "localization", "rtl", "architecture", "performance"]
+featured: true
+coverImage: "/images/articles/multilingual-architecture.jpg"
+readTime: "20 min read"
+---
+
+Most websites that claim "multi-language support" have English structure with translated text. They flip the layout for RTL languages and call it done.
+
+This is not multi-language architecture. It's translation theater.
+
+Real multi-language support means reconsidering everything—from database schema to component design to navigation patterns.
+
+## The Text Direction Problem
+
+RTL (Right-to-Left) languages like Arabic and Hebrew don't just read backwards. They think differently.
+
+Navigation structure, visual hierarchy, even whitespace usage differs between LTR and RTL contexts.
+
+<Callout type="warning">
+Most sites apply `dir="rtl"` and mirror everything with CSS. This breaks icons, layouts, and interactions.
+</Callout>
+
+### The Solution
+
+Direction must be a first-class citizen in your component system.
+
+```typescript
+const Button = ({ children, icon }) => {
+  const { direction } = useLocale()
+  const Icon = direction === 'rtl' ? FlippedIcon : icon
+  return <button>{children} <Icon /></button>
+}
+```
+
+Every component considers direction. Not as an afterthought—as a core parameter.
+
+## The Content Length Problem
+
+Arabic text is typically 20-30% longer than equivalent English. German can be 40% longer.
+
+Layouts designed for English break when content expands.
+
+### Common Failures
+
+- Fixed-width navigation items that overflow
+- Buttons that wrap to multiple lines
+- Truncated headlines that lose meaning
+- Layouts that shift based on content length
+
+### The Solution
+
+Design for maximum expected length, not average length.
+
+Use flexible layouts. Avoid fixed widths. Test with the longest language first.
+
+## The URL Structure Problem
+
+How do you structure URLs for multiple languages?
+
+### Option 1: Subdomain
+
+`ar.example.com` vs `example.com`
+
+**Pros:** Clear separation, easier CDN configuration  
+**Cons:** SEO complexity, shared authentication challenges
+
+### Option 2: Path-based
+
+`example.com/ar/about` vs `example.com/about`
+
+**Pros:** Single domain, easier authentication  
+**Cons:** More complex routing
+
+### Option 3: Query Parameter
+
+`example.com/about?lang=ar`
+
+**Pros:** Simple implementation  
+**Cons:** Poor SEO, not shareable, user-hostile
+
+### Our Choice
+
+Path-based. It's the most user-friendly and SEO-friendly approach.
+
+## The Database Problem
+
+How do you store multi-language content?
+
+### Approach 1: Separate Tables
+
+```sql
+CREATE TABLE products_en (id, name, description)
+CREATE TABLE products_ar (id, name, description)
+```
+
+**Pros:** Simple queries  
+**Cons:** Data duplication, schema maintenance nightmare
+
+### Approach 2: JSON Columns
+
+```sql
+CREATE TABLE products (
+  id INT,
+  name JSONB, -- { "en": "Product", "ar": "منتج" }
+  description JSONB
+)
+```
+
+**Pros:** Single source of truth  
+**Cons:** Complex queries, type safety issues
+
+### Approach 3: Translation Tables
+
+```sql
+CREATE TABLE products (id, sku)
+CREATE TABLE product_translations (
+  product_id,
+  locale,
+  name,
+  description
+)
+```
+
+**Pros:** Flexible, maintainable, type-safe  
+**Cons:** More complex queries
+
+<Quote author="Alpha Team" role="Database Architects">
+Translation tables scale better and maintain referential integrity. This is our choice.
+</Quote>
+
+## The Component Problem
+
+Components must handle:
+
+- Direction-aware layouts
+- Text length variations
+- Locale-specific formatting (dates, numbers, currency)
+- Cultural adaptations (colors, imagery)
+
+### Example: Date Picker
+
+In English: MM/DD/YYYY  
+In Arabic: DD/MM/YYYY  
+In Swedish: YYYY-MM-DD
+
+Your date picker must adapt format, first day of week, and month names.
+
+```typescript
+import { format } from 'date-fns'
+import { ar, enUS } from 'date-fns/locale'
+
+const formatDate = (date, locale) => {
+  const localeMap = { ar, en: enUS }
+  return format(date, 'P', { locale: localeMap[locale] })
+}
+```
+
+## The Testing Problem
+
+Multi-language sites require multi-language testing:
+
+- Visual regression testing in both directions
+- Content length testing at extremes
+- Translation accuracy (not just presence)
+- Cultural appropriateness
+
+## The Performance Problem
+
+Serving multiple languages can degrade performance if not handled correctly.
+
+### Bundle Size
+
+Loading all translations upfront = massive bundle.
+
+**Solution:** Code-split by language. Load only the active locale.
+
+```typescript
+import(`@/locales/${locale}.json`).then(setTranslations)
+```
+
+### Font Loading
+
+Arabic typography requires different fonts than Latin. Loading both = wasted bandwidth.
+
+**Solution:** Conditionally load fonts based on active locale.
+
+```css
+@font-face {
+  font-family: 'Primary';
+  src: url('/fonts/latin.woff2');
+  unicode-range: U+0000-00FF;
+}
+
+@font-face {
+  font-family: 'Primary';
+  src: url('/fonts/arabic.woff2');
+  unicode-range: U+0600-06FF;
+}
+```
+
+## The Reality
+
+True multi-language support requires:
+
+- Database restructuring
+- Component redesign
+- Layout adaptation
+- Performance optimization
+- Cultural consultation
+
+<Callout type="danger">
+It's not a feature. It's an architectural decision. Most teams underestimate the work by 3-5x.
+</Callout>
+
+If you're adding multi-language support to an existing codebase, expect to touch every component, every layout, and every data model.
+
+If you're starting fresh, make it a first-class concern from day one. Build the infrastructure before you need it.
+
+Because retrofitting multi-language support is painful. Designing it in from the start is just... design.
