@@ -36,6 +36,7 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   const currentLang = LANGUAGES.find((lang) => lang.code === locale) || LANGUAGES[0]
+  const isRTL = currentLang.direction === 'rtl'
 
   const switchLocale = (newLocale: string) => {
     const newPath = pathname.replace(`/${locale}`, `/${newLocale}`)
@@ -111,7 +112,10 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
 
   if (variant === "toggle") {
     return (
-      <div className={cn("flex items-center gap-1 rounded-lg border border-foreground/20 bg-foreground/10 p-1 backdrop-blur-md", className)}>
+      <div 
+        dir={isRTL ? "rtl" : "ltr"}
+        className={cn("flex items-center gap-1 rounded-lg border border-foreground/20 bg-foreground/10 p-1 backdrop-blur-md", className)}
+      >
         {LANGUAGES.map((lang) => {
           const isActive = locale === lang.code
 
@@ -141,9 +145,8 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
     )
   }
 
-  // Default and Compact variants (dropdown)
   return (
-    <div className={cn("relative", className)}>
+    <div className={cn("relative", className)} dir={isRTL ? "rtl" : "ltr"}>
       <button
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
@@ -159,7 +162,12 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
         {variant === "compact" ? (
           <>
             <Globe className="h-4 w-4 mx-auto text-foreground/80" strokeWidth={2.5} />
-            <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-background text-[10px] font-mono font-semibold">
+            <span 
+              className={cn(
+                "absolute -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-background text-[10px] font-mono font-semibold",
+                isRTL ? "-left-1" : "-right-1"
+              )}
+            >
               {currentLang.code.charAt(0).toUpperCase()}
             </span>
           </>
@@ -178,12 +186,12 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
         )}
       </button>
 
-      {/* Dropdown Menu */}
       <div
         ref={menuRef}
         className={cn(
-          "absolute right-0 top-full z-50 mt-2 rounded-lg border border-foreground/20 bg-foreground/10 backdrop-blur-md shadow-lg",
-          variant === "compact" ? "w-40" : "w-48"
+          "absolute top-full z-50 mt-2 rounded-lg border border-foreground/20 bg-foreground/10 backdrop-blur-md shadow-lg",
+          variant === "compact" ? "w-40" : "w-48",
+          isRTL ? "left-0" : "right-0"
         )}
         style={{ opacity: 0, pointerEvents: 'none' }}
         role="menu"
@@ -191,18 +199,21 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
       >
         {LANGUAGES.map((lang) => {
           const isActive = locale === lang.code
+          const langIsRTL = lang.direction === 'rtl'
 
           return (
             <button
               key={lang.code}
               onClick={() => switchLocale(lang.code)}
               data-cursor-pointer
+              dir={langIsRTL ? "rtl" : "ltr"}
               className={cn(
-                "flex w-full items-center justify-between gap-2 px-3 py-2 text-left transition-colors first:rounded-t-lg last:rounded-b-lg",
+                "flex w-full items-center justify-between gap-2 px-3 py-2 transition-colors first:rounded-t-lg last:rounded-b-lg",
                 variant === "compact" ? "gap-2 px-3 py-2" : "gap-3 px-4 py-2.5",
                 isActive
                   ? "bg-foreground/20 text-foreground"
-                  : "text-foreground/80 hover:bg-foreground/15 hover:text-foreground"
+                  : "text-foreground/80 hover:bg-foreground/15 hover:text-foreground",
+                langIsRTL ? "text-right" : "text-left"
               )}
               role="menuitem"
               aria-current={isActive ? "true" : undefined}
@@ -221,7 +232,13 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
               </div>
 
               {isActive && (
-                <Check className={cn("text-foreground", variant === "compact" ? "h-3.5 w-3.5" : "h-4 w-4")} strokeWidth={2.5} />
+                <Check 
+                  className={cn(
+                    "text-foreground flex-shrink-0", 
+                    variant === "compact" ? "h-3.5 w-3.5" : "h-4 w-4"
+                  )} 
+                  strokeWidth={2.5} 
+                />
               )}
             </button>
           )
@@ -230,4 +247,3 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
     </div>
   )
 }
-
