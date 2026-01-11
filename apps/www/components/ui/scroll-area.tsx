@@ -115,10 +115,10 @@ const ScrollBar = React.forwardRef<React.ElementRef<typeof ScrollAreaPrimitive.S
                     autoHide && "opacity-0 hover:opacity-100 data-[state=visible]:opacity-100",
                     isVertical
                         ? [
-                            "h-full w-2.5 p-px hover:w-3",
+                            "h-full w-2.5 p-[1px] hover:w-3",
                             isRTL ? "border-r border-r-transparent" : "border-l border-l-transparent"
                         ]
-                        : "w-full h-2.5 border-t border-t-transparent p-px hover:h-3",
+                        : "w-full h-2.5 border-t border-t-transparent p-[1px] hover:h-3",
                     className,
                 )}
                 {...props}
