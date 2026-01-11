@@ -1,19 +1,15 @@
 "use client"
 
+import type React from "react"
+
 import { MagneticButton } from "@/components/magnetic-button"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useReveal } from "@/hooks/use-animation"
 import { Link } from "@/i18n/navigation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { cn } from "@/lib/utils"
 import { contactFormSchema, type ContactFormData } from "@/lib/validations/contact"
-import { AlertCircle, CheckCircle2, Mail, MapPin } from "lucide-react"
+import { AlertCircle, Calendar, CheckCircle2, Mail, MapPin } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 import { Container } from "../container"
@@ -164,16 +160,16 @@ export function ContactSection() {
     try {
       const validatedData = contactFormSchema.parse(formData)
 
-      const locale = window.location.pathname.split('/')[1] || document.documentElement.lang || 'en'
+      const locale = window.location.pathname.split("/")[1] || document.documentElement.lang || "en"
       const apiPath = `/${locale}/api/contact`
 
       const response = await fetch(apiPath, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...validatedData,
           locale,
-        })
+        }),
       })
 
       const result = await response.json()
@@ -202,8 +198,8 @@ export function ContactSection() {
         }
       }
     } catch (error: unknown) {
-      console.error('Submission error:', error)
-      if (error && typeof error === 'object' && 'errors' in error) {
+      console.error("Submission error:", error)
+      if (error && typeof error === "object" && "errors" in error) {
         const zodErrors: Record<string, string> = {}
         const zodError = error as { errors: Array<{ path: (string | number)[]; message: string }> }
         zodError.errors.forEach((err) => {
@@ -230,7 +226,7 @@ export function ContactSection() {
       className="flex min-h-screen shrink-0 snap-start items-center py-20 sm:py-24 md:py-32 overflow-x-hidden"
     >
       <Container>
-        <div className="grid gap-12 sm:gap-14 md:grid-cols-[1.2fr_1fr] md:gap-16 lg:gap-24 xl:gap-32">
+        <div className="grid gap-12 md:grid-cols-2 md:gap-20 lg:gap-28">
           <div className="flex flex-col justify-center">
             <div ref={titleRef} className="mb-12 sm:mb-14 md:mb-16">
               <h2 className="mb-3 font-sans text-4xl font-normal leading-[1.05] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
@@ -238,21 +234,13 @@ export function ContactSection() {
                 <br />
                 <span className="text-foreground/75">{t("contact.title2")}</span>
               </h2>
-              <p className="font-mono text-sm text-foreground/60 tracking-wide sm:text-base">
-                {t("contact.subtitle")}
-              </p>
+              <p className="font-mono text-sm text-foreground/60 tracking-wide sm:text-base">{t("contact.subtitle")}</p>
             </div>
             <div className="space-y-8 sm:space-y-9">
-              <Link
-                data-contact-left
-                href={`mailto:${t("contact.emailValue")}`}
-                className="group block"
-              >
+              <Link data-contact-left href={`mailto:${t("contact.emailValue")}`} className="group block">
                 <div className="mb-2 flex items-center gap-2">
                   <Mail className="h-3.5 w-3.5 text-foreground/60" />
-                  <span className="font-mono text-xs text-foreground/60 tracking-wide">
-                    {t("contact.email")}
-                  </span>
+                  <span className="font-mono text-xs text-foreground/60 tracking-wide">{t("contact.email")}</span>
                 </div>
                 <p className="text-lg text-foreground transition-colors group-hover:text-foreground/75 md:text-xl lg:text-2xl">
                   {t("contact.emailValue")}
@@ -261,13 +249,9 @@ export function ContactSection() {
               <div data-contact-left>
                 <div className="mb-2 flex items-center gap-2">
                   <MapPin className="h-3.5 w-3.5 text-foreground/60" />
-                  <span className="font-mono text-xs text-foreground/60 tracking-wide">
-                    {t("contact.location")}
-                  </span>
+                  <span className="font-mono text-xs text-foreground/60 tracking-wide">{t("contact.location")}</span>
                 </div>
-                <p className="text-lg text-foreground md:text-xl lg:text-2xl">
-                  {t("contact.locationValue")}
-                </p>
+                <p className="text-lg text-foreground md:text-xl lg:text-2xl">{t("contact.locationValue")}</p>
               </div>
               <div data-contact-left className="flex flex-wrap gap-3 pt-2 sm:gap-4">
                 {[
@@ -286,30 +270,13 @@ export function ContactSection() {
                 ))}
               </div>
               <div data-contact-left className="pt-6 sm:pt-8">
-                <Link
-                  href="/schedule"
-                  className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-linear-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 text-white font-medium text-base shadow-lg hover:shadow-xl hover:shadow-teal-500/50 transition-all duration-300"
-                >
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm group-hover:bg-white/30 transition-all">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <span className="group-hover:translate-x-0.5 transition-transform">
-                    {t("contact.scheduleMeeting")}
-                  </span>
-                  <svg 
-                    className="w-4 h-4 transition-transform group-hover:translate-x-1" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+                <Link href="/schedule">
+                  <MagneticButton size="lg" className="h-11 w-auto sm:h-9 flex items-center justify-center">
+                    <Calendar className="h-4 w-4 transition-transform group-hover:scale-110" />
+                    <span>{t("contact.scheduleMeeting")}</span>
+                  </MagneticButton>
                 </Link>
-                <p className="mt-3 text-xs text-foreground/60 font-mono">
-                  {t("contact.scheduleDescription")}
-                </p>
+                <p className="mt-3 text-xs text-foreground/60 font-mono">{t("contact.scheduleDescription")}</p>
               </div>
             </div>
           </div>
@@ -327,7 +294,7 @@ export function ContactSection() {
                     "w-full border-b bg-transparent py-2.5 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none sm:text-base transition-all",
                     formErrors.name
                       ? "border-red-500 focus:border-red-500"
-                      : "border-foreground/25 focus:border-foreground/50"
+                      : "border-foreground/25 focus:border-foreground/50",
                   )}
                   placeholder={t("contact.form.namePlaceholder")}
                   aria-required="true"
@@ -354,7 +321,7 @@ export function ContactSection() {
                     "w-full border-b bg-transparent py-2.5 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none sm:text-base transition-all",
                     formErrors.email
                       ? "border-red-500 focus:border-red-500"
-                      : "border-foreground/25 focus:border-foreground/50"
+                      : "border-foreground/25 focus:border-foreground/50",
                   )}
                   placeholder={t("contact.form.emailPlaceholder")}
                   aria-required="true"
@@ -423,7 +390,7 @@ export function ContactSection() {
                     "w-full border-b bg-transparent py-2.5 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none resize-none sm:text-base transition-all",
                     formErrors.message
                       ? "border-red-500 focus:border-red-500"
-                      : "border-foreground/25 focus:border-foreground/50"
+                      : "border-foreground/25 focus:border-foreground/50",
                   )}
                   placeholder={t("contact.form.messagePlaceholder")}
                   aria-required="true"

@@ -18,8 +18,8 @@ interface MagneticButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
   className?: string
   variant?: ButtonVariant
   size?: ButtonSize
-  soundEnabled?: boolean // تفعيل الصوت (اختياري)
-  hapticEnabled?: boolean // تفعيل الاهتزاز (افتراضي: true)
+  soundEnabled?: boolean
+  hapticEnabled?: boolean
 }
 
 export function MagneticButton({
@@ -40,15 +40,15 @@ export function MagneticButton({
   const [ripples, setRipples] = useState<Ripple[]>([])
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
     setPrefersReducedMotion(mediaQuery.matches)
 
     const handleChange = (e: MediaQueryListEvent) => {
       setPrefersReducedMotion(e.matches)
     }
 
-    mediaQuery.addEventListener('change', handleChange)
-    return () => mediaQuery.removeEventListener('change', handleChange)
+    mediaQuery.addEventListener("change", handleChange)
+    return () => mediaQuery.removeEventListener("change", handleChange)
   }, [])
 
   useEffect(() => {
@@ -103,7 +103,7 @@ export function MagneticButton({
       gainNode.connect(audioContext.destination)
 
       oscillator.frequency.value = 800
-      oscillator.type = 'sine'
+      oscillator.type = "sine"
 
       gainNode.gain.setValueAtTime(0.1, audioContext.currentTime)
       gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1)
@@ -111,7 +111,7 @@ export function MagneticButton({
       oscillator.start(audioContext.currentTime)
       oscillator.stop(audioContext.currentTime + 0.1)
     } catch (error) {
-      console.warn('Audio playback failed:', error)
+      console.warn("Audio playback failed:", error)
     }
   }
 
@@ -124,19 +124,19 @@ export function MagneticButton({
     const y = e.clientY - rect.top
     const rippleId = Date.now()
 
-    setRipples(prev => [...prev, { x, y, id: rippleId }])
+    setRipples((prev) => [...prev, { x, y, id: rippleId }])
 
     // حذف الـ ripple بعد انتهاء الأنيميشن
     setTimeout(() => {
-      setRipples(prev => prev.filter(ripple => ripple.id !== rippleId))
+      setRipples((prev) => prev.filter((ripple) => ripple.id !== rippleId))
     }, 600)
 
     // Haptic feedback للموبايل
-    if (hapticEnabled && 'vibrate' in navigator) {
+    if (hapticEnabled && "vibrate" in navigator) {
       try {
         navigator.vibrate(10)
       } catch (error) {
-        console.warn('Haptic feedback failed:', error)
+        console.warn("Haptic feedback failed:", error)
       }
     }
 
@@ -152,8 +152,7 @@ export function MagneticButton({
   }
 
   const variants: Record<ButtonVariant, string> = {
-    primary:
-      "bg-foreground/95 text-background hover:bg-foreground backdrop-blur-md",
+    primary: "bg-foreground/95 text-background hover:bg-foreground backdrop-blur-md",
     secondary:
       "bg-foreground/5 text-foreground hover:bg-foreground/10 backdrop-blur-xl border border-foreground/10 hover:border-foreground/20",
     ghost: "bg-transparent text-foreground hover:bg-foreground/5 backdrop-blur-sm",
@@ -178,7 +177,7 @@ export function MagneticButton({
         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground/50
         ${variants[variant]}
         ${sizes[size]}
-        ${isPressed && !prefersReducedMotion ? 'scale-95' : 'scale-100'}
+        ${isPressed && !prefersReducedMotion ? "scale-95" : "scale-100"}
         ${className}
       `}
       style={{
@@ -188,24 +187,23 @@ export function MagneticButton({
       data-cursor-pointer
       {...props}
     >
-      <span className="relative z-10 flex items-center justify-center gap-2">
-        {children}
-      </span>
+      <span className="relative z-10 flex items-center justify-center gap-2">{children}</span>
 
       {/* Ripple Effects */}
-      {!prefersReducedMotion && ripples.map(ripple => (
-        <span
-          key={ripple.id}
-          className="absolute pointer-events-none rounded-full bg-current opacity-30 animate-ripple"
-          style={{
-            left: ripple.x,
-            top: ripple.y,
-            width: '10px',
-            height: '10px',
-            transform: 'translate(-50%, -50%)',
-          }}
-        />
-      ))}
+      {!prefersReducedMotion &&
+        ripples.map((ripple) => (
+          <span
+            key={ripple.id}
+            className="absolute pointer-events-none rounded-full bg-current opacity-30 animate-ripple"
+            style={{
+              left: ripple.x,
+              top: ripple.y,
+              width: "10px",
+              height: "10px",
+              transform: "translate(-50%, -50%)",
+            }}
+          />
+        ))}
     </button>
   )
 }

@@ -63,9 +63,7 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
             aria-live="polite"
           >
             <div className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-pulse" />
-            <p className="font-mono text-xs text-foreground/90 tracking-wide">
-              {t("hero.badge")}
-            </p>
+            <p className="font-mono text-xs text-foreground/90 tracking-wide">{t("hero.badge")}</p>
           </div>
           <h1
             ref={titleRef}
@@ -74,9 +72,7 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
             <span className="text-balance">
               {t("hero.title")}
               <br />
-              <span className="text-foreground/80">
-                {t("hero.title2")}
-              </span>
+              <span className="text-foreground/80">{t("hero.title2")}</span>
             </span>
           </h1>
           <p
@@ -95,9 +91,7 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
                 aria-label={t("hero.ctaPrimary")}
                 className="group relative"
               >
-                <span className="flex items-center gap-2">
-                  {t("hero.ctaPrimary")}
-                </span>
+                <span className="flex items-center gap-2">{t("hero.ctaPrimary")}</span>
                 <svg
                   className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 rtl:-rotate-180"
                   fill="none"
@@ -125,12 +119,12 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
           aria-hidden="true"
         >
           <div className="flex flex-col items-center gap-3">
-            <p className="font-mono text-xs text-foreground/70 tracking-wider uppercase">
-              {t("hero.scrollHint")}
-            </p>
+            <p className="font-mono text-xs text-foreground/70 tracking-wider uppercase">{t("hero.scrollHint")}</p>
             <div className="flex h-10 w-6 items-start justify-center rounded-full border border-foreground/20 bg-foreground/5 backdrop-blur-sm p-1.5">
-              <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-foreground/70"
-                style={{ animationDuration: '1.5s' }} />
+              <div
+                className="h-1.5 w-1.5 animate-bounce rounded-full bg-foreground/70"
+                style={{ animationDuration: "1.5s" }}
+              />
             </div>
           </div>
         </div>

@@ -5,7 +5,7 @@ import { BRAND_COLORS } from "@/lib/constants"
 import { gsap } from "@/lib/gsap"
 import { cn } from "@/lib/utils"
 import { useLocale } from "next-intl"
-import { useEffect, useRef, useState, useMemo, startTransition } from "react"
+import { startTransition, useEffect, useMemo, useRef, useState } from "react"
 
 const INITIAL_LOAD_KEY = 'alpha_initial_load_complete'
 
@@ -76,11 +76,10 @@ export function InitialLoader() {
             gsap.set(containerRef.current, { opacity: 1 })
             gsap.set(shaderRef.current, { opacity: 0, scale: 1.05 })
 
-            // Shader animation - جعلها أبطأ
             tl.to(shaderRef.current, {
                 opacity: 1,
                 scale: 1,
-                duration: 2.0, // زيادة من 1.5 إلى 2.0
+                duration: 2.0,
                 ease: "power2.out",
             })
 
@@ -97,34 +96,31 @@ export function InitialLoader() {
                     filter: "blur(0px)",
                     scale: 1,
                     y: 0,
-                    duration: 1.6, // زيادة من 1.2 إلى 1.6
+                    duration: 1.6, 
                     ease: "power3.out",
-                }, "-=1.6") // زيادة من -1.2 إلى -1.6
+                }, "-=1.6") 
 
                 tl.to(textContainerRef.current, {
                     scale: 1.01,
-                    duration: 1.6, // زيادة من 1.2 إلى 1.6
+                    duration: 1.6,
                     ease: "power2.inOut",
-                }, "-=0.6") // زيادة من -0.4 إلى -0.6
-
-                // Exit animation
+                }, "-=0.6")
                 tl.to(shaderRef.current, {
                     scale: 1.08,
                     opacity: 0,
-                    duration: 1.2, // زيادة من 0.8 إلى 1.2
+                    duration: 1.2,
                     ease: "power2.in",
-                }, "-=1.0") // زيادة من -0.8 إلى -1.0
+                }, "-=1.0")
 
                 tl.to(textContainerRef.current, {
                     y: -60,
                     opacity: 0,
                     filter: "blur(15px)",
-                    duration: 1.0, // زيادة من 0.6 إلى 1.0
+                    duration: 1.0,
                     ease: "power2.in",
                 }, "<")
 
             } else {
-                // للإنجليزية: نحرك كل حرف على حدة (الكود الأصلي)
                 const chars = textContainerRef.current?.querySelectorAll(".char")
 
                 if (chars && chars.length > 0) {
@@ -133,28 +129,26 @@ export function InitialLoader() {
                         filter: "blur(0px)",
                         scale: 1,
                         y: 0,
-                        duration: 1.2, // زيادة من 0.8 إلى 1.2
+                        duration: 1.2,
                         stagger: {
-                            each: 0.08, // زيادة من 0.06 إلى 0.08
+                            each: 0.08,
                             from: "start",
                         },
-                    }, "-=1.6") // زيادة من -1.2 إلى -1.6
+                    }, "-=1.6")
                 }
 
                 tl.to(textContainerRef.current, {
                     scale: 1.01,
                     letterSpacing: "0.02em",
-                    duration: 1.6, // زيادة من 1.2 إلى 1.6
+                    duration: 1.6,
                     ease: "power2.inOut",
-                }, "-=0.6") // زيادة من -0.4 إلى -0.6
-
-                // Exit animation
+                }, "-=0.6") 
                 tl.to(shaderRef.current, {
                     scale: 1.08,
                     opacity: 0,
-                    duration: 1.2, // زيادة من 0.8 إلى 1.2
+                    duration: 1.2,
                     ease: "power2.in",
-                }, "-=1.0") // زيادة من -0.8 إلى -1.0
+                }, "-=1.0") 
 
                 if (chars && chars.length > 0) {
                     tl.to(chars, {
@@ -162,20 +156,19 @@ export function InitialLoader() {
                         opacity: 0,
                         filter: "blur(15px)",
                         stagger: {
-                            each: 0.05, // زيادة من 0.03 إلى 0.05
+                            each: 0.05, 
                             from: "center",
                         },
-                        duration: 1.0, // زيادة من 0.6 إلى 1.0
+                        duration: 1.0, 
                         ease: "power2.in",
                     }, "<")
                 }
             }
 
-            // Container fade out
             tl.to(containerRef.current, {
                 opacity: 0,
-                duration: 0.6, // زيادة من 0.4 إلى 0.6
-            }, "-=0.4") // زيادة من -0.3 إلى -0.4
+                duration: 0.6,
+            }, "-=0.4")
 
         }, containerRef)
 

@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
 import { gsap } from "@/lib/gsap"
+import { useEffect, useRef, useState } from "react"
 
 const CURSOR_SIZE = { outer: 32, inner: 8 }
 const IDLE_TIMEOUT = 2000

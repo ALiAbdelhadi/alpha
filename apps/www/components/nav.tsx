@@ -208,7 +208,7 @@ export function Nav() {
                                 <ThemeChanger />
                                 <NavDivider />
                                 <Link href="/schedule">
-                                    <MagneticButton className="h-11 w-auto sm:h-9">
+                                    <MagneticButton className="h-11 w-full sm:h-9 flex items-center justify-center">
                                         <Calendar className="h-4 w-4 transition-transform group-hover:scale-110" />
                                         <span>{t('schedule')}</span>
                                     </MagneticButton>

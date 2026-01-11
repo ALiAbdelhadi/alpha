@@ -1,4 +1,3 @@
-// apps/www/components/sections/about-section.tsx (replace stat3)
 "use client"
 
 import { MagneticButton } from "@/components/magnetic-button"
@@ -167,11 +166,11 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
               <div
                 key={i}
                 data-stat
-                className="flex items-baseline gap-6 pl-6 md:gap-10 md:pl-10 relative"
+                className="flex items-baseline gap-6 ltr:pl-6 rtl:pr-6 md:gap-10 ltr:md:pl-10 rtl:md:pr-10 relative"
               >
                 <div
                   data-stat-border
-                  className="absolute left-0 top-0 bottom-0 w-px bg-foreground/25 origin-bottom"
+                  className="absolute ltr:left-0 rtl:right-0 top-0 bottom-0 w-px bg-foreground/25 origin-bottom"
                 />
                 <div
                   data-stat-value

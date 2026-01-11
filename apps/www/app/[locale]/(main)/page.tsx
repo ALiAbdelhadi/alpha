@@ -5,7 +5,7 @@ import { NAV_ITEMS } from "@/lib/constants"
 import { useNavigation } from "@/components/providers/navigation-provider"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef } from "react"
 
-const CtaSection = lazy(() => import("@/components/sections/cta-section").then(m => ({ default: m.CtaSection })))
+const CtaSection = lazy(() => import("@/components/sections/cta-section").then(m => ({ default: m.CtaSectionEnhanced })))
 const HeroSection = lazy(() => import("@/components/sections/hero-section").then(m => ({ default: m.HeroSection })))
 const WorkSection = lazy(() => import("@/components/sections/work-section").then(m => ({ default: m.WorkSection })))
 const ServicesSection = lazy(() => import("@/components/sections/services-section").then(m => ({ default: m.ServicesSection })))

@@ -4,6 +4,7 @@ import { useReveal } from "@/hooks/use-animation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
+import { Container } from "../container"
 
 export function ServicesSection() {
   const t = useTranslations()
@@ -54,9 +55,9 @@ export function ServicesSection() {
       suppressHydrationWarning={true}
       id="services"
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center px-6 pt-24 md:px-12 md:pt-32 lg:px-16"
+      className="flex min-h-screen w-full items-center pt-24 md:pt-32"
     >
-      <div className="mx-auto w-full max-w-7xl">
+      <Container>
         <div ref={titleRef} className="mb-16 md:mb-20">
           <h2 className="mb-3 font-sans text-5xl font-normal tracking-tight text-foreground md:text-6xl lg:text-7xl">
             {t("services.title")}
@@ -87,7 +88,7 @@ export function ServicesSection() {
             <ServiceCard key={i} service={service} index={i} />
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   )
 }
