@@ -33,7 +33,7 @@ export default function NotFound() {
             opacity: number
         }> = []
 
-        const particleCount = 15 
+        const particleCount = 15
         for (let i = 0; i < particleCount; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
@@ -41,7 +41,7 @@ export default function NotFound() {
                 vx: (Math.random() - 0.5) * 0.2,
                 vy: (Math.random() - 0.5) * 0.2,
                 radius: Math.random() * 2.5 + 1,
-                opacity: Math.random() * 0.3 + 0.15, 
+                opacity: Math.random() * 0.3 + 0.15,
             })
         }
 
@@ -128,10 +128,10 @@ export default function NotFound() {
                     </h1>
                 </div>
                 <div className="space-y-4">
-                    <h2 className="text-3xl md:text-4xl font-medium text-foreground">
+                    <h2 className="text-3xl md:text-4xl font-medium text-primary">
                         Page Not Found
                     </h2>
-                    <p className="text-foreground/75 text-lg max-w-md">
+                    <p className="text-primary/75 text-lg max-w-md">
                         The page you&apos;re looking for doesn&apos;t exist or has been moved.
                     </p>
                 </div>

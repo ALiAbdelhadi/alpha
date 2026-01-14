@@ -96,10 +96,10 @@ export function WorkSection() {
     >
       <Container>
         <div ref={titleRef} className="mb-16 md:mb-20">
-          <h2 className="mb-3 font-sans text-5xl font-normal tracking-tight text-foreground md:text-6xl lg:text-7xl">
+          <h2 className="mb-3 font-sans text-5xl font-normal tracking-tight text-primary md:text-6xl lg:text-7xl">
             {t("work.title")}
           </h2>
-          <p className="font-mono text-sm text-foreground/60 tracking-wide md:text-base">
+          <p className="font-mono text-sm text-primary/60 tracking-wide md:text-base">
             {t("work.subtitle")}
           </p>
         </div>
@@ -193,20 +193,20 @@ function ProjectCard({
         <div className="flex items-baseline gap-6 md:gap-10">
           <span
             ref={numberRef}
-            className="font-mono text-sm text-foreground/40 transition-all md:text-base"
+            className="font-mono text-sm text-primary/40 transition-all md:text-base"
           >
             {project.number}
           </span>
           <div>
             <h3
               ref={titleRef}
-              className="mb-2 font-sans text-2xl font-medium text-foreground transition-all md:text-3xl lg:text-4xl"
+              className="mb-2 font-sans text-2xl font-medium text-primary transition-all md:text-3xl lg:text-4xl"
             >
               {project.title}
             </h3>
             <p
               ref={categoryRef}
-              className="font-mono text-xs text-foreground/60 transition-all md:text-sm"
+              className="font-mono text-xs text-primary/60 transition-all md:text-sm"
             >
               {project.category}
             </p>
@@ -214,12 +214,12 @@ function ProjectCard({
         </div>
         <span
           ref={yearRef}
-          className="hidden font-mono text-sm text-foreground/40 transition-all md:block"
+          className="hidden font-mono text-sm text-primary/40 transition-all md:block"
         >
           {project.year}
         </span>
         <svg 
-          className="ml-4 h-5 w-5 text-foreground/40 transition-all group-hover:translate-x-2 group-hover:text-foreground/70" 
+          className="ml-4 h-5 w-5 text-primary/40 transition-all group-hover:translate-x-2 group-hover:text-primary/70" 
           fill="none" 
           viewBox="0 0 24 24" 
           stroke="currentColor"

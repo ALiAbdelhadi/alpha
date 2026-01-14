@@ -69,7 +69,7 @@ export function MobileNav({ currentSection, navItems, scrollToSection, onClose }
     <>
       <button
         onClick={toggleMenu}
-        className="md:hidden p-2 text-foreground focus:outline-none focus:ring-2 focus:ring-foreground/50 focus:ring-offset-2 rounded-lg"
+        className="md:hidden p-2 text-primary focus:outline-none focus:ring-2 focus:ring-foreground/50 focus:ring-offset-2 rounded-lg"
         aria-label={isOpen ? t("nav.closeMenu") : t("nav.openMenu")}
         aria-expanded={isOpen}
       >
@@ -95,7 +95,7 @@ export function MobileNav({ currentSection, navItems, scrollToSection, onClose }
             <AlphaLogo size="md" variant="full" />
             <button
               onClick={() => setIsOpen(false)}
-              className="p-2 text-foreground focus:outline-none focus:ring-2 focus:ring-foreground/50 rounded-lg"
+              className="p-2 text-primary focus:outline-none focus:ring-2 focus:ring-foreground/50 rounded-lg"
               aria-label={t("nav.closeMenu")}
             >
               <X className="h-6 w-6" />
@@ -109,8 +109,8 @@ export function MobileNav({ currentSection, navItems, scrollToSection, onClose }
                 onClick={() => handleNavClick(item.sectionId)}
                 className={`group relative rounded-lg px-4 py-3 text-left font-sans text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-foreground/50 ${
                   currentSection === item.sectionId
-                    ? "bg-foreground/10 text-foreground"
-                    : "text-foreground/80 hover:bg-foreground/5 hover:text-foreground"
+                    ? "bg-foreground/10 text-primary"
+                    : "text-primary/80 hover:bg-foreground/5 hover:text-primary"
                 }`}
               >
                 {t(`nav.${item.key}`)}

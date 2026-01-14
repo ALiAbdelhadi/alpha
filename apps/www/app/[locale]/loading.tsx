@@ -29,8 +29,7 @@ export default function Loading() {
                         }}
                     />
                 </div>
-
-                <p className="font-mono text-sm text-foreground/70 tracking-wide animate-pulse">
+                <p className="font-mono text-sm text-primary/70 tracking-wide animate-pulse">
                     {text}
                 </p>
             </div>

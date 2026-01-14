@@ -27,10 +27,10 @@ function OpeningSection() {
     return (
         <section className="flex min-h-screen items-center pt-24 md:pt-32">
             <Container>
-                <h1 ref={titleRef} className="mb-6 font-sans text-5xl font-normal leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl">
+                <h1 ref={titleRef} className="mb-6 font-sans text-5xl font-normal leading-[1.1] tracking-tight text-primary md:text-6xl lg:text-7xl">
                     {t("hero.title")}
                 </h1>
-                <p ref={descRef} className="max-w-2xl text-lg leading-relaxed text-foreground/85 md:text-xl">
+                <p ref={descRef} className="max-w-2xl text-lg leading-relaxed text-primary/85 md:text-xl">
                     {t("hero.description")}
                 </p>
             </Container>
@@ -101,14 +101,14 @@ function ListSection() {
                     >
                         <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                             <div className="flex-1">
-                                <h2 className="mb-2 font-sans text-2xl font-medium text-foreground transition-colors group-hover:text-foreground/70 md:text-3xl">
+                                <h2 className="mb-2 font-sans text-2xl font-medium text-primary transition-colors group-hover:text-primary/70 md:text-3xl">
                                     {tArticles(`${article.slug}.title`)}
                                 </h2>
-                                <p className="text-base text-foreground/75">
+                                <p className="text-base text-primary/75">
                                     {tArticles(`${article.slug}.excerpt`)}
                                 </p>
                             </div>
-                            <div className="flex items-center gap-4 font-mono text-xs text-foreground/60 md:text-sm">
+                            <div className="flex items-center gap-4 font-mono text-xs text-primary/60 md:text-sm">
                                 <span>{article.date}</span>
                                 <span>·</span>
                                 <span>{article.readTime}</span>

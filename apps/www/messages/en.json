@@ -142,6 +142,51 @@
             "dribbble": "Dribbble"
         }
     },
+    "schedule": {
+        "back": "Back",
+        "title": "Schedule a Meeting",
+        "subtitle": "Choose your preferred date and time for a detailed consultation",
+        "form": {
+            "name": {
+                "label": "Name",
+                "placeholder": "Your name",
+                "required": "*",
+                "error": "Name must be at least 2 characters"
+            },
+            "email": {
+                "label": "Email",
+                "placeholder": "your.email@example.com",
+                "required": "*",
+                "error": "Please enter a valid email address"
+            },
+            "message": {
+                "label": "Message (Optional)",
+                "placeholder": "Tell us about your project..."
+            },
+            "date": {
+                "label": "Preferred Date",
+                "placeholder": "Select a date",
+                "required": "*",
+                "errorPast": "Date must be today or in the future",
+                "errorFuture": "Date must be within the next 3 months",
+                "errorRequired": "Please select a date"
+            },
+            "time": {
+                "label": "Preferred Time",
+                "placeholder": "Select a time",
+                "required": "*",
+                "error": "Please select a time",
+                "availableHours": "Available hours: 9:00 AM - 6:00 PM (15-minute intervals)"
+            }
+        },
+        "submit": {
+            "button": "Schedule Meeting",
+            "submitting": "Scheduling...",
+            "success": "Meeting scheduled successfully! Redirecting...",
+            "errorGeneric": "Something went wrong. Please try again.",
+            "errorNetwork": "Network error. Please check your connection and try again."
+        }
+    },
     "approach": {
         "hero": {
             "title": "Systems that outlast trends.",

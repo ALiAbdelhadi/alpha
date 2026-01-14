@@ -30,12 +30,12 @@ function OpeningSection() {
             <Container>
                 <div className="max-w-4xl">
                     <div ref={titleRef}>
-                        <h1 className="mb-8 font-sans text-5xl font-normal leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl xl:text-8xl">
+                        <h1 className="mb-8 font-sans text-5xl font-normal leading-[1.1] tracking-tight text-primary md:text-6xl lg:text-7xl xl:text-8xl">
                             {t("title")}
                         </h1>
                     </div>
                     <div ref={descRef}>
-                        <p className="max-w-2xl text-lg leading-relaxed text-foreground/85 md:text-xl lg:text-2xl">
+                        <p className="max-w-2xl text-lg leading-relaxed text-primary/85 md:text-xl lg:text-2xl">
                             {t("description")}
                         </p>
                     </div>
@@ -97,26 +97,26 @@ function PhasesList() {
                             className="grid gap-8 md:grid-cols-[200px_1fr] md:gap-16 lg:gap-24"
                         >
                             <div>
-                                <div className="mb-4 font-mono text-5xl font-light text-foreground/40 md:text-6xl">
+                                <div className="mb-4 font-mono text-5xl font-light text-primary/40 md:text-6xl">
                                     {localizeNumbers(phase.number, locale)}
                                 </div>
 
-                                <div className="font-mono text-sm text-foreground/60">
+                                <div className="font-mono text-sm text-primary/60">
                                     {localizeNumbers(t(`${phase.key}.timeline`), locale)}
                                 </div>
                             </div>
                             <div className="max-w-2xl">
-                                <h3 className="mb-6 font-sans text-3xl font-medium text-foreground md:text-4xl">
+                                <h3 className="mb-6 font-sans text-3xl font-medium text-primary md:text-4xl">
                                     {t(`${phase.key}.title`)}
                                 </h3>
-                                <p className="mb-6 text-lg leading-relaxed text-foreground/75 md:text-xl">
+                                <p className="mb-6 text-lg leading-relaxed text-primary/75 md:text-xl">
                                     {t(`${phase.key}.description`)}
                                 </p>
                                 <div className="space-y-2">
-                                    <p className="font-mono text-xs font-medium uppercase tracking-wide text-foreground/60">
+                                    <p className="font-mono text-xs font-medium uppercase tracking-wide text-primary/60">
                                         {t("deliverables")}
                                     </p>
-                                    <p className="text-sm text-foreground/75">
+                                    <p className="text-sm text-primary/75">
                                         {t(`${phase.key}.deliverables`)}
                                     </p>
                                 </div>
@@ -139,12 +139,12 @@ function ClosingSection() {
             <Container>
                 <div className="max-w-3xl">
                     <div ref={titleRef} className="mb-8 md:mb-12">
-                        <h2 className="mb-3 font-sans text-4xl font-normal tracking-tight text-foreground md:text-5xl lg:text-6xl">
+                        <h2 className="mb-3 font-sans text-4xl font-normal tracking-tight text-primary md:text-5xl lg:text-6xl">
                             {t("title")}
                         </h2>
                     </div>
                     <div ref={descRef}>
-                        <p className="text-lg leading-relaxed text-foreground/85 md:text-xl">
+                        <p className="text-lg leading-relaxed text-primary/85 md:text-xl">
                             {t("description")}
                         </p>
                     </div>

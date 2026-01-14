@@ -63,21 +63,21 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
             aria-live="polite"
           >
             <div className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-pulse" />
-            <p className="font-mono text-xs text-foreground/90 tracking-wide">{t("hero.badge")}</p>
+            <p className="font-mono text-xs text-primary/90 tracking-wide">{t("hero.badge")}</p>
           </div>
           <h1
             ref={titleRef}
-            className="mb-8 font-sans text-5xl font-normal leading-[1.08] tracking-tight text-foreground md:text-6xl lg:text-7xl xl:text-8xl"
+            className="mb-8 font-sans text-5xl font-normal leading-[1.08] tracking-tight text-primary md:text-6xl lg:text-7xl xl:text-8xl"
           >
             <span className="text-balance">
               {t("hero.title")}
               <br />
-              <span className="text-foreground/80">{t("hero.title2")}</span>
+              <span className="text-primary/80">{t("hero.title2")}</span>
             </span>
           </h1>
           <p
             ref={descriptionRef}
-            className="mb-10 max-w-2xl text-lg leading-relaxed text-foreground/85 md:text-xl lg:text-2xl"
+            className="mb-10 max-w-2xl text-lg leading-relaxed text-primary/85 md:text-xl lg:text-2xl"
           >
             <span className="text-pretty">{t("hero.description")}</span>
           </p>
@@ -119,10 +119,10 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
           aria-hidden="true"
         >
           <div className="flex flex-col items-center gap-3">
-            <p className="font-mono text-xs text-foreground/70 tracking-wider uppercase">{t("hero.scrollHint")}</p>
-            <div className="flex h-10 w-6 items-start justify-center rounded-full border border-foreground/20 bg-foreground/5 backdrop-blur-sm p-1.5">
+            <p className="font-mono text-xs text-primary/70 tracking-wider uppercase">{t("hero.scrollHint")}</p>
+            <div className="flex h-10 w-6 items-start justify-center rounded-full border border-primary/20 bg-primary/5 backdrop-blur-sm p-1.5">
               <div
-                className="h-1.5 w-1.5 animate-bounce rounded-full bg-foreground/70"
+                className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary/70"
                 style={{ animationDuration: "1.5s" }}
               />
             </div>

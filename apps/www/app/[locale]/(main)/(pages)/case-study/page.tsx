@@ -29,22 +29,22 @@ function HeroSection() {
             <Container>
                 <div className="flex flex-col">
                     <div className="mb-6 flex items-center gap-4">
-                        <span className="font-mono text-sm text-foreground/60">
+                        <span className="font-mono text-sm text-primary/60">
                             {t("meta.client")}
                         </span>
                         <span className="h-px w-12 bg-foreground/20" />
-                        <span className="font-mono text-sm text-foreground/60">
+                        <span className="font-mono text-sm text-primary/60">
                             {t("meta.duration")}
                         </span>
                     </div>
                     <div className="max-w-4xl">
                         <div ref={titleRef}>
-                            <h1 className="mb-8 font-sans text-5xl font-normal leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl xl:text-8xl">
+                            <h1 className="mb-8 font-sans text-5xl font-normal leading-[1.1] tracking-tight text-primary md:text-6xl lg:text-7xl xl:text-8xl">
                                 {t("title")}
                             </h1>
                         </div>
                         <div ref={descRef}>
-                            <p className="max-w-2xl text-lg leading-relaxed text-foreground/85 md:text-xl lg:text-2xl">
+                            <p className="max-w-2xl text-lg leading-relaxed text-primary/85 md:text-xl lg:text-2xl">
                                 {t("subtitle")}
                             </p>
                         </div>
@@ -90,7 +90,7 @@ function ProblemSection() {
         <section ref={sectionRef} className="mb-24 md:mb-32">
             <Container>
                 <div ref={titleRef}>
-                    <h2 className="mb-8 font-sans text-3xl font-normal tracking-tight text-foreground md:text-4xl">
+                    <h2 className="mb-8 font-sans text-3xl font-normal tracking-tight text-primary md:text-4xl">
                         {t("title")}
                     </h2>
                 </div>
@@ -100,7 +100,7 @@ function ProblemSection() {
                         .map((para: string, i: number) => (
                             <p
                                 key={i}
-                                className="text-base leading-relaxed text-foreground/85"
+                                className="text-base leading-relaxed text-primary/85"
                             >
                                 {para}
                             </p>
@@ -147,21 +147,21 @@ function TechnicalSection() {
         <section ref={sectionRef} className="mb-24 md:mb-32">
             <Container>
                 <div ref={titleRef}>
-                    <h2 className="mb-8 font-sans text-3xl font-normal tracking-tight text-foreground md:text-4xl">
+                    <h2 className="mb-8 font-sans text-3xl font-normal tracking-tight text-primary md:text-4xl">
                         {t("title")}
                     </h2>
                 </div>
                 <div className="space-y-12">
                     {decisions.map((key) => (
                         <div key={key} data-tech-item className="max-w-3xl">
-                            <h3 className="mb-3 text-xl font-medium text-foreground">
+                            <h3 className="mb-3 text-xl font-medium text-primary">
                                 {t(`${key}.title`)}
                             </h3>
-                            <p className="mb-4 text-base leading-relaxed text-foreground/75">
+                            <p className="mb-4 text-base leading-relaxed text-primary/75">
                                 {t(`${key}.description`)}
                             </p>
                             <div className="rounded-lg border border-foreground/10 bg-foreground/5 p-4">
-                                <pre className="overflow-x-auto text-xs text-foreground/70">
+                                <pre className="overflow-x-auto text-xs text-primary/70">
                                     <code>{t(`${key}.code`)}</code>
                                 </pre>
                             </div>
@@ -182,16 +182,16 @@ function ArchitectureSection() {
         <section className="mb-24 md:mb-32">
             <Container>
                 <div ref={titleRef}>
-                    <h2 className="mb-8 font-sans text-3xl font-normal tracking-tight text-foreground md:text-4xl">
+                    <h2 className="mb-8 font-sans text-3xl font-normal tracking-tight text-primary md:text-4xl">
                         {t("title")}
                     </h2>
                 </div>
                 <div ref={contentRef} className="max-w-3xl space-y-8">
-                    <p className="text-base leading-relaxed text-foreground/85">
+                    <p className="text-base leading-relaxed text-primary/85">
                         {t("description")}
                     </p>
                     <div className="rounded-lg border border-foreground/10 bg-foreground/5 p-6">
-                        <pre className="overflow-x-auto text-sm text-foreground/70">
+                        <pre className="overflow-x-auto text-sm text-primary/70">
                             <code>{t("structure")}</code>
                         </pre>
                     </div>
@@ -237,7 +237,7 @@ function PerformanceSection() {
         <section ref={sectionRef} className="mb-24 md:mb-32">
             <Container>
                 <div ref={titleRef}>
-                    <h2 className="mb-8 font-sans text-3xl font-normal tracking-tight text-foreground md:text-4xl">
+                    <h2 className="mb-8 font-sans text-3xl font-normal tracking-tight text-primary md:text-4xl">
                         {t("title")}
                     </h2>
                 </div>
@@ -248,13 +248,13 @@ function PerformanceSection() {
                             data-metric-item
                             className="rounded-lg border border-foreground/10 p-6"
                         >
-                            <p className="mb-2 font-mono text-3xl font-medium text-foreground">
+                            <p className="mb-2 font-mono text-3xl font-medium text-primary">
                                 {t(`metrics.${metric}.value`)}
                             </p>
-                            <p className="mb-1 text-sm font-medium text-foreground/80">
+                            <p className="mb-1 text-sm font-medium text-primary/80">
                                 {t(`metrics.${metric}.label`)}
                             </p>
-                            <p className="text-xs text-foreground/60">
+                            <p className="text-xs text-primary/60">
                                 {t(`metrics.${metric}.detail`)}
                             </p>
                         </div>
@@ -293,7 +293,7 @@ function ResultsSection() {
         <section ref={sectionRef} className="pb-24 md:p-32 border-t border-foreground/10 pt-16">
             <Container>
                 <div ref={titleRef}>
-                    <h2 className="mb-8 font-sans text-3xl font-normal tracking-tight text-foreground md:text-4xl">
+                    <h2 className="mb-8 font-sans text-3xl font-normal tracking-tight text-primary md:text-4xl">
                         {t("title")}
                     </h2>
                 </div>
@@ -303,7 +303,7 @@ function ResultsSection() {
                         .map((para: string, i: number) => (
                             <p
                                 key={i}
-                                className="text-base leading-relaxed text-foreground/85"
+                                className="text-base leading-relaxed text-primary/85"
                             >
                                 {para}
                             </p>

@@ -129,7 +129,7 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
                 "focus:outline-none focus:ring-2 focus:ring-foreground/50 focus:ring-offset-1",
                 isActive
                   ? "bg-foreground/90 text-background shadow-md"
-                  : "text-foreground/60 hover:bg-foreground/20 hover:text-foreground"
+                  : "text-primary/60 hover:bg-foreground/20 hover:text-primary"
               )}
               aria-label={`Switch to ${lang.name}`}
               aria-pressed={isActive}
@@ -161,7 +161,7 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
       >
         {variant === "compact" ? (
           <>
-            <Globe className="h-4 w-4 mx-auto text-foreground/80" strokeWidth={2.5} />
+            <Globe className="h-4 w-4 mx-auto text-primary/80" strokeWidth={2.5} />
             <span 
               className={cn(
                 "absolute -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-background text-[10px] font-mono font-semibold",
@@ -173,12 +173,12 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
           </>
         ) : (
           <>
-            <span className="font-mono text-xs text-foreground/80 uppercase">
+            <span className="font-mono text-xs text-primary/80 uppercase">
               {currentLang.code}
             </span>
             <ChevronDown
               className={cn(
-                "h-3 w-3 text-foreground/60 transition-transform duration-300",
+                "h-3 w-3 text-primary/60 transition-transform duration-300",
                 isOpen && "rotate-180"
               )}
             />
@@ -211,8 +211,8 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
                 "flex w-full items-center justify-between gap-2 px-3 py-2 transition-colors first:rounded-t-lg last:rounded-b-lg",
                 variant === "compact" ? "gap-2 px-3 py-2" : "gap-3 px-4 py-2.5",
                 isActive
-                  ? "bg-foreground/20 text-foreground"
-                  : "text-foreground/80 hover:bg-foreground/15 hover:text-foreground",
+                  ? "bg-foreground/20 text-primary"
+                  : "text-primary/80 hover:bg-foreground/15 hover:text-primary",
                 langIsRTL ? "text-right" : "text-left"
               )}
               role="menuitem"
@@ -224,7 +224,7 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
                 ) : (
                   <div className="flex flex-col">
                     <span className="text-sm font-medium">{lang.nativeName}</span>
-                    <span className="font-mono text-xs text-foreground/50">
+                    <span className="font-mono text-xs text-primary/50">
                       {lang.name}
                     </span>
                   </div>
@@ -234,7 +234,7 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
               {isActive && (
                 <Check 
                   className={cn(
-                    "text-foreground flex-shrink-0", 
+                    "text-primary shrink-0", 
                     variant === "compact" ? "h-3.5 w-3.5" : "h-4 w-4"
                   )} 
                   strokeWidth={2.5} 

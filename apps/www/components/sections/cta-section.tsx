@@ -152,13 +152,13 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
                     <div className="relative z-10">
                         <h2
                             ref={headingRef}
-                            className="mb-6 sm:mb-8 font-sans text-4xl sm:text-5xl md:text-6xl font-normal leading-tight tracking-tight text-foreground"
+                            className="mb-6 sm:mb-8 font-sans text-4xl sm:text-5xl md:text-6xl font-normal leading-tight tracking-tight text-primary"
                         >
                             <span className="text-balance">{t("title") || "Ready to transform your vision?"}</span>
                         </h2>
                         <p
                             ref={descriptionRef}
-                            className="mb-10 sm:mb-12 max-w-2xl text-base sm:text-lg md:text-xl leading-relaxed text-foreground/80"
+                            className="mb-10 sm:mb-12 max-w-2xl text-base sm:text-lg md:text-xl leading-relaxed text-primary/80"
                         >
                             <span className="text-pretty">
                                 {t("description") ||
@@ -199,7 +199,7 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
                                 </MagneticButton>
                             </Link>
                         </div>
-                        <p className="text-xs sm:text-sm text-foreground/60 font-mono tracking-wide">
+                        <p className="text-xs sm:text-sm text-primary/60 font-mono tracking-wide">
                             {t("footnote") || "Typically respond within 24 hours • Available Mon-Fri, 9am-6pm"}
                         </p>
                     </div>

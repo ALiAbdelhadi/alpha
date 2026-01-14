@@ -22,7 +22,7 @@ export const mdxComponents: MDXComponents = {
         </h3>
     ),
     p: ({ children }) => (
-        <p className="mb-6 text-lg leading-relaxed text-foreground/85">
+        <p className="mb-6 text-lg leading-relaxed text-primary/85">
             {children}
         </p>
     ),
@@ -37,7 +37,7 @@ export const mdxComponents: MDXComponents = {
         </ol>
     ),
     li: ({ children }) => (
-        <li className="text-base leading-relaxed text-foreground/85">
+        <li className="text-base leading-relaxed text-primary/85">
             {children}
         </li>
     ),
@@ -59,7 +59,7 @@ export const mdxComponents: MDXComponents = {
         />
     ),
     blockquote: ({ children }) => (
-        <blockquote className="my-6 border-l-4 border-primary pl-6 italic text-foreground/75">
+        <blockquote className="my-6 border-l-4 border-primary pl-6 italic text-primary/75">
             {children}
         </blockquote>
     ),

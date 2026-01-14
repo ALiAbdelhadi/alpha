@@ -59,10 +59,10 @@ export function ServicesSection() {
     >
       <Container>
         <div ref={titleRef} className="mb-16 md:mb-20">
-          <h2 className="mb-3 font-sans text-5xl font-normal tracking-tight text-foreground md:text-6xl lg:text-7xl">
+          <h2 className="mb-3 font-sans text-5xl font-normal tracking-tight text-primary md:text-6xl lg:text-7xl">
             {t("services.title")}
           </h2>
-          <p className="font-mono text-sm text-foreground/60 tracking-wide md:text-base">
+          <p className="font-mono text-sm text-primary/60 tracking-wide md:text-base">
             {t("services.subtitle")}
           </p>
         </div>
@@ -159,15 +159,15 @@ function ServiceCard({
         />
         <span
           data-service-number
-          className="font-mono text-xs text-foreground/50 transition-all"
+          className="font-mono text-xs text-primary/50 transition-all"
         >
           {String(index + 1).padStart(2, '0')}
         </span>
       </div>
-      <h3 className="mb-3 font-sans text-2xl font-medium text-foreground transition-colors group-hover:text-foreground/90 md:text-3xl">
+      <h3 className="mb-3 font-sans text-2xl font-medium text-primary transition-colors group-hover:text-primary/90 md:text-3xl">
         {service.title}
       </h3>
-      <p className="max-w-md text-base leading-relaxed text-foreground/75 md:text-lg">
+      <p className="max-w-md text-base leading-relaxed text-primary/75 md:text-lg">
         {service.description}
       </p>
     </div>

@@ -38,7 +38,7 @@ export default function OfflinePage() {
                             }}
                         />
                     </div>
-                    <h1 className="mb-4 font-sans text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-foreground">
+                    <h1 className="mb-4 font-sans text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-primary">
                         You&apos;re Offline
                     </h1>
                     <p className="mb-8 max-w-md text-lg text-muted-foreground">

@@ -29,12 +29,12 @@ function OpeningSection() {
             <Container>
                 <div className="max-w-4xl">
                     <div ref={titleRef}>
-                        <h1 className="mb-8 font-sans text-5xl font-normal leading-[1.1] tracking-tight text-foreground md:text-6xl lg:text-7xl xl:text-8xl">
+                        <h1 className="mb-8 font-sans text-5xl font-normal leading-[1.1] tracking-tight text-primary md:text-6xl lg:text-7xl xl:text-8xl">
                             {t("title")}
                         </h1>
                     </div>
                     <div ref={descRef}>
-                        <p className="max-w-2xl text-lg leading-relaxed text-foreground/85 md:text-xl lg:text-2xl">
+                        <p className="max-w-2xl text-lg leading-relaxed text-primary/85 md:text-xl lg:text-2xl">
                             {t("description")}
                         </p>
                     </div>
@@ -86,19 +86,19 @@ function CategoriesSection() {
                 <div className="space-y-24 md:space-y-32">
                     {categories.map((category) => (
                         <div key={category} data-category className="max-w-4xl">
-                            <h2 className="mb-4 font-sans text-3xl font-medium text-foreground md:text-4xl">
+                            <h2 className="mb-4 font-sans text-3xl font-medium text-primary md:text-4xl">
                                 {tCat(`${category}.title`)}
                             </h2>
-                            <p className="mb-8 text-lg leading-relaxed text-foreground/75">
+                            <p className="mb-8 text-lg leading-relaxed text-primary/75">
                                 {tCat(`${category}.description`)}
                             </p>
 
                             <div className="grid gap-8 md:grid-cols-2">
                                 <div className="rounded-lg border border-foreground/10 bg-foreground/5 p-6">
-                                    <h3 className="mb-4 font-mono text-sm font-medium uppercase tracking-wide text-foreground/60">
+                                    <h3 className="mb-4 font-mono text-sm font-medium uppercase tracking-wide text-primary/60">
                                         {t("requirements")}
                                     </h3>
-                                    <div className="space-y-2 text-sm text-foreground/75">
+                                    <div className="space-y-2 text-sm text-primary/75">
                                         {tCat(`${category}.requirements`).split(" | ").map((req: string, i: number) => (
                                             <p key={i}>• {req}</p>
                                         ))}
@@ -106,10 +106,10 @@ function CategoriesSection() {
                                 </div>
 
                                 <div className="rounded-lg border border-foreground/10 bg-foreground/5 p-6">
-                                    <h3 className="mb-4 font-mono text-sm font-medium uppercase tracking-wide text-foreground/60">
+                                    <h3 className="mb-4 font-mono text-sm font-medium uppercase tracking-wide text-primary/60">
                                         {t("benchmarks")}
                                     </h3>
-                                    <div className="space-y-2 text-sm text-foreground/75">
+                                    <div className="space-y-2 text-sm text-primary/75">
                                         {tCat(`${category}.benchmarks`).split(" | ").map((bench: string, i: number) => (
                                             <p key={i}>• {bench}</p>
                                         ))}
@@ -134,12 +134,12 @@ function ClosingSection() {
             <Container>
                 <div className="max-w-3xl">
                     <div ref={titleRef} className="mb-8 md:mb-12">
-                        <h2 className="mb-3 font-sans text-4xl font-normal tracking-tight text-foreground md:text-5xl lg:text-6xl">
+                        <h2 className="mb-3 font-sans text-4xl font-normal tracking-tight text-primary md:text-5xl lg:text-6xl">
                             {t("title")}
                         </h2>
                     </div>
                     <div ref={descRef}>
-                        <p className="text-lg leading-relaxed text-foreground/85 md:text-xl">
+                        <p className="text-lg leading-relaxed text-primary/85 md:text-xl">
                             {t("description")}
                         </p>
                     </div>

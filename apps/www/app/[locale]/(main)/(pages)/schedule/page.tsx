@@ -11,13 +11,15 @@ import { usePathname, useRouter } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
 import { AlertCircle, ArrowLeft, Calendar, CheckCircle2, Clock } from "lucide-react"
 import { useSearchParams } from "next/navigation"
-import { useState } from "react"
-
+import { useState, useEffect, useRef } from "react"
+import { gsap } from "gsap"
+import { useTranslations } from "next-intl"
 
 export default function SchedulePage() {
     const router = useRouter()
     const pathname = usePathname()
     const searchParams = useSearchParams()
+    const t = useTranslations('schedule')
 
     const locale = pathname.split('/')[1] || 'en'
 
@@ -38,6 +40,49 @@ export default function SchedulePage() {
     const [submitSuccess, setSubmitSuccess] = useState(false)
     const [submitError, setSubmitError] = useState<string | null>(null)
 
+    // Refs for animation
+    const backButtonRef = useRef<HTMLDivElement>(null)
+    const headerRef = useRef<HTMLDivElement>(null)
+    const formRef = useRef<HTMLFormElement>(null)
+
+    // GSAP Animation on mount
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            // Set initial states
+            gsap.set([backButtonRef.current, headerRef.current], {
+                opacity: 0,
+                y: -20
+            })
+
+            gsap.set(".form-field", {
+                opacity: 0,
+                y: 30
+            })
+
+            // Create animation timeline
+            const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
+
+            tl.to(backButtonRef.current, {
+                opacity: 1,
+                y: 0,
+                duration: 0.6
+            })
+                .to(headerRef.current, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6
+                }, "-=0.4")
+                .to(".form-field", {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.5,
+                    stagger: 0.08
+                }, "-=0.3")
+        })
+
+        return () => ctx.revert()
+    }, [])
+
     const handleInputChange = (field: string, value: string | Date | undefined) => {
         setFormData((prev) => ({ ...prev, [field]: value }))
         if (errors[field]) {
@@ -53,30 +98,30 @@ export default function SchedulePage() {
         const newErrors: Record<string, string> = {}
 
         if (!formData.name || formData.name.length < 2) {
-            newErrors.name = "Name must be at least 2 characters"
+            newErrors.name = t('form.name.error')
         }
 
         if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            newErrors.email = "Please enter a valid email address"
+            newErrors.email = t('form.email.error')
         }
 
         if (!formData.date) {
-            newErrors.date = "Please select a date"
+            newErrors.date = t('form.date.errorRequired')
         } else {
             const today = new Date()
             today.setHours(0, 0, 0, 0)
             if (formData.date < today) {
-                newErrors.date = "Date must be today or in the future"
+                newErrors.date = t('form.date.errorPast')
             }
             const maxDate = new Date()
             maxDate.setMonth(maxDate.getMonth() + 3)
             if (formData.date > maxDate) {
-                newErrors.date = "Date must be within the next 3 months"
+                newErrors.date = t('form.date.errorFuture')
             }
         }
 
         if (!formData.time) {
-            newErrors.time = "Please select a time"
+            newErrors.time = t('form.time.error')
         }
 
         setErrors(newErrors)
@@ -119,11 +164,11 @@ export default function SchedulePage() {
                     router.push('/')
                 }, 2000)
             } else {
-                setSubmitError(result.message || "Something went wrong. Please try again.")
+                setSubmitError(result.message || t('submit.errorGeneric'))
             }
         } catch (error) {
             console.error('Submission error:', error)
-            setSubmitError("Network error. Please check your connection and try again.")
+            setSubmitError(t('submit.errorNetwork'))
         } finally {
             setIsSubmitting(false)
         }
@@ -133,38 +178,40 @@ export default function SchedulePage() {
         <section className="flex min-h-screen items-center py-16 sm:py-20 md:py-24">
             <Container>
                 <div className="mx-auto max-w-2xl">
-                    <Button
-                        variant="ghost"
-                        onClick={() => router.back()}
-                        className="mb-6"
-                    >
-                        <ArrowLeft className="mr-2 h-4 w-4" />
-                        Back
-                    </Button>
-                    <div className="mb-8">
-                        <h1 className="mb-2 font-sans text-3xl font-light leading-tight tracking-tight text-foreground sm:text-4xl md:text-5xl">
-                            Schedule a Meeting
+                    <div ref={backButtonRef}>
+                        <Button
+                            variant="ghost"
+                            onClick={() => router.back()}
+                            className="mb-6"
+                        >
+                            <ArrowLeft className="mr-2 h-4 w-4" />
+                            {t('back')}
+                        </Button>
+                    </div>
+                    <div className="mb-8" ref={headerRef}>
+                        <h1 className="mb-2 font-sans text-3xl font-light leading-tight tracking-tight text-primary sm:text-4xl md:text-5xl">
+                            {t('title')}
                         </h1>
-                        <p className="font-mono text-xs text-foreground/60 sm:text-sm md:text-base">
-                            Choose your preferred date and time for a detailed consultation
+                        <p className="font-mono text-xs text-primary/60 sm:text-sm md:text-base">
+                            {t('subtitle')}
                         </p>
                     </div>
-                    <form onSubmit={onSubmit} className="space-y-6" noValidate>
-                        <div>
-                            <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
-                                Name <span className="text-red-500">*</span>
+                    <form ref={formRef} onSubmit={onSubmit} className="space-y-6" noValidate>
+                        <div className="form-field">
+                            <Label className="mb-1.5 block font-mono text-xs text-primary/60 sm:text-sm md:mb-2">
+                                {t('form.name.label')} <span className="text-red-500">{t('form.name.required')}</span>
                             </Label>
                             <Input
                                 type="text"
                                 value={formData.name}
                                 onChange={(e) => handleInputChange("name", e.target.value)}
                                 className={cn(
-                                    "w-full border-b bg-transparent py-2 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none sm:text-base md:py-2.5",
+                                    "w-full border-b bg-transparent py-2 text-sm text-primary placeholder:text-primary/40 focus:outline-none sm:text-base md:py-2.5",
                                     errors.name
                                         ? "border-red-500 focus:border-red-500"
                                         : "border-foreground/30 focus:border-foreground/50"
                                 )}
-                                placeholder="Your name"
+                                placeholder={t('form.name.placeholder')}
                                 aria-invalid={!!errors.name}
                             />
                             {errors.name && (
@@ -174,21 +221,21 @@ export default function SchedulePage() {
                                 </p>
                             )}
                         </div>
-                        <div>
-                            <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
-                                Email <span className="text-red-500">*</span>
+                        <div className="form-field">
+                            <Label className="mb-1.5 block font-mono text-xs text-primary/60 sm:text-sm md:mb-2">
+                                {t('form.email.label')} <span className="text-red-500">{t('form.email.required')}</span>
                             </Label>
                             <Input
                                 type="email"
                                 value={formData.email}
                                 onChange={(e) => handleInputChange("email", e.target.value)}
                                 className={cn(
-                                    "w-full border-b bg-transparent py-2 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none sm:text-base md:py-2.5",
+                                    "w-full border-b bg-transparent py-2 text-sm text-primary placeholder:text-primary/40 focus:outline-none sm:text-base md:py-2.5",
                                     errors.email
                                         ? "border-red-500 focus:border-red-500"
                                         : "border-foreground/30 focus:border-foreground/50"
                                 )}
-                                placeholder="your.email@example.com"
+                                placeholder={t('form.email.placeholder')}
                                 aria-invalid={!!errors.email}
                             />
                             {errors.email && (
@@ -198,28 +245,28 @@ export default function SchedulePage() {
                                 </p>
                             )}
                         </div>
-                        <div>
-                            <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
-                                Message (Optional)
+                        <div className="form-field">
+                            <Label className="mb-1.5 block font-mono text-xs text-primary/60 sm:text-sm md:mb-2">
+                                {t('form.message.label')}
                             </Label>
                             <Textarea
                                 value={formData.message}
                                 onChange={(e) => handleInputChange("message", e.target.value)}
                                 rows={4}
-                                className="w-full border-b bg-transparent py-2 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none resize-none sm:text-base md:py-2.5"
-                                placeholder="Tell us about your project..."
+                                className="w-full border-b bg-transparent py-2 text-sm text-primary placeholder:text-primary/40 focus:outline-none resize-none sm:text-base md:py-2.5"
+                                placeholder={t('form.message.placeholder')}
                             />
                         </div>
-                        <div>
-                            <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
+                        <div className="form-field">
+                            <Label className="mb-1.5 block font-mono text-xs text-primary/60 sm:text-sm md:mb-2">
                                 <Calendar className="inline h-3.5 w-3.5 mr-1" />
-                                Preferred Date <span className="text-red-500">*</span>
+                                {t('form.date.label')} <span className="text-red-500">{t('form.date.required')}</span>
                             </Label>
                             <DatePicker
                                 date={formData.date}
                                 onDateChange={(date) => handleInputChange("date", date)}
                                 disabled={isSubmitting}
-                                placeholder="Select a date"
+                                placeholder={t('form.date.placeholder')}
                                 minDate={new Date()}
                                 maxDate={(() => {
                                     const maxDate = new Date()
@@ -237,10 +284,10 @@ export default function SchedulePage() {
                                 </p>
                             )}
                         </div>
-                        <div>
-                            <Label className="mb-1.5 block font-mono text-xs text-foreground/60 sm:text-sm md:mb-2">
+                        <div className="form-field">
+                            <Label className="mb-1.5 block font-mono text-xs text-primary/60 sm:text-sm md:mb-2">
                                 <Clock className="inline h-3.5 w-3.5 mr-1" />
-                                Preferred Time <span className="text-red-500">*</span>
+                                {t('form.time.label')} <span className="text-red-500">{t('form.time.required')}</span>
                             </Label>
                             <TimePicker
                                 value={formData.time}
@@ -257,10 +304,10 @@ export default function SchedulePage() {
                                 </p>
                             )}
                             <p className="mt-2 text-xs text-muted-foreground">
-                                Available hours: 9:00 AM - 6:00 PM (15-minute intervals)
+                                {t('form.time.availableHours')}
                             </p>
                         </div>
-                        <div className="pt-4">
+                        <div className="pt-4 form-field">
                             <Button
                                 type="submit"
                                 variant="default"
@@ -268,19 +315,19 @@ export default function SchedulePage() {
                                 className="w-full"
                                 disabled={isSubmitting}
                             >
-                                {isSubmitting ? "Scheduling..." : "Schedule Meeting"}
+                                {isSubmitting ? t('submit.submitting') : t('submit.button')}
                             </Button>
                             {submitSuccess && (
                                 <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                                    <p className="text-center font-mono text-xs sm:text-sm text-foreground flex items-center justify-center gap-2">
+                                    <p className="text-center font-mono text-xs sm:text-sm text-primary flex items-center justify-center gap-2">
                                         <CheckCircle2 className="h-4 w-4 text-green-500" />
-                                        Meeting scheduled successfully! Redirecting...
+                                        {t('submit.success')}
                                     </p>
                                 </div>
                             )}
                             {submitError && (
                                 <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                                    <p className="text-center font-mono text-xs sm:text-sm text-foreground flex items-center justify-center gap-2">
+                                    <p className="text-center font-mono text-xs sm:text-sm text-primary flex items-center justify-center gap-2">
                                         <AlertCircle className="h-4 w-4 text-red-500" />
                                         {submitError}
                                     </p>

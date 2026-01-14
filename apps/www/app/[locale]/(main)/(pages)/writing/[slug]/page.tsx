@@ -43,7 +43,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <Container>
                 <Link
                     href="/writing"
-                    className="mb-8 inline-flex items-center gap-2 text-sm text-foreground/70 hover:text-foreground transition-colors"
+                    className="mb-8 inline-flex items-center gap-2 text-sm text-primary/70 hover:text-primary transition-colors"
                 >
                     <ArrowLeft className="h-4 w-4" />
                     Back to writing
@@ -51,7 +51,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
                 <article>
                     <header className="mb-16 md:mb-20">
-                        <div className="mb-6 flex items-center gap-4 font-mono text-xs text-foreground/60">
+                        <div className="mb-6 flex items-center gap-4 font-mono text-xs text-primary/60">
                             <time dateTime={article.frontmatter.date}>
                                 {new Date(article.frontmatter.date).toLocaleDateString(locale, {
                                     year: 'numeric',
@@ -63,11 +63,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                             <span>{article.frontmatter.readTime}</span>
                         </div>
 
-                        <h1 className="mb-6 font-sans text-4xl font-normal leading-[1.1] tracking-tight text-foreground md:text-5xl lg:text-6xl">
+                        <h1 className="mb-6 font-sans text-4xl font-normal leading-[1.1] tracking-tight text-primary md:text-5xl lg:text-6xl">
                             {article.frontmatter.title}
                         </h1>
 
-                        <p className="max-w-2xl text-lg leading-relaxed text-foreground/85">
+                        <p className="max-w-2xl text-lg leading-relaxed text-primary/85">
                             {article.frontmatter.excerpt}
                         </p>
 
@@ -100,10 +100,10 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                                     href={`/writing/${related.slug}`}
                                     className="group rounded-lg border border-foreground/10 p-6 transition-colors hover:bg-foreground/5"
                                 >
-                                    <h3 className="mb-2 font-sans text-lg font-medium group-hover:text-foreground/70">
+                                    <h3 className="mb-2 font-sans text-lg font-medium group-hover:text-primary/70">
                                         {related.frontmatter.title}
                                     </h3>
-                                    <p className="text-sm text-foreground/75">
+                                    <p className="text-sm text-primary/75">
                                         {related.frontmatter.excerpt}
                                     </p>
                                 </Link>
@@ -115,7 +115,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 <footer className="mb-20 mt-16 border-t border-foreground/10 pt-12">
                     <Link
                         href="/writing"
-                        className="inline-flex items-center gap-2 text-sm text-foreground hover:text-foreground/70 transition-colors"
+                        className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary/70 transition-colors"
                     >
                         <ArrowLeft className="h-4 w-4" />
                         Back to writing

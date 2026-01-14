@@ -229,29 +229,29 @@ export function ContactSection() {
         <div className="grid gap-12 md:grid-cols-2 md:gap-20 lg:gap-28">
           <div className="flex flex-col justify-center">
             <div ref={titleRef} className="mb-12 sm:mb-14 md:mb-16">
-              <h2 className="mb-3 font-sans text-4xl font-normal leading-[1.05] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
+              <h2 className="mb-3 font-sans text-4xl font-normal leading-[1.05] tracking-tight text-primary sm:text-5xl md:text-6xl lg:text-7xl">
                 {t("contact.title")}
                 <br />
-                <span className="text-foreground/75">{t("contact.title2")}</span>
+                <span className="text-primary/75">{t("contact.title2")}</span>
               </h2>
-              <p className="font-mono text-sm text-foreground/60 tracking-wide sm:text-base">{t("contact.subtitle")}</p>
+              <p className="font-mono text-sm text-primary/60 tracking-wide sm:text-base">{t("contact.subtitle")}</p>
             </div>
             <div className="space-y-8 sm:space-y-9">
               <Link data-contact-left href={`mailto:${t("contact.emailValue")}`} className="group block">
                 <div className="mb-2 flex items-center gap-2">
-                  <Mail className="h-3.5 w-3.5 text-foreground/60" />
-                  <span className="font-mono text-xs text-foreground/60 tracking-wide">{t("contact.email")}</span>
+                  <Mail className="h-3.5 w-3.5 text-primary/60" />
+                  <span className="font-mono text-xs text-primary/60 tracking-wide">{t("contact.email")}</span>
                 </div>
-                <p className="text-lg text-foreground transition-colors group-hover:text-foreground/75 md:text-xl lg:text-2xl">
+                <p className="text-lg text-primary transition-colors group-hover:text-primary/75 md:text-xl lg:text-2xl">
                   {t("contact.emailValue")}
                 </p>
               </Link>
               <div data-contact-left>
                 <div className="mb-2 flex items-center gap-2">
-                  <MapPin className="h-3.5 w-3.5 text-foreground/60" />
-                  <span className="font-mono text-xs text-foreground/60 tracking-wide">{t("contact.location")}</span>
+                  <MapPin className="h-3.5 w-3.5 text-primary/60" />
+                  <span className="font-mono text-xs text-primary/60 tracking-wide">{t("contact.location")}</span>
                 </div>
-                <p className="text-lg text-foreground md:text-xl lg:text-2xl">{t("contact.locationValue")}</p>
+                <p className="text-lg text-primary md:text-xl lg:text-2xl">{t("contact.locationValue")}</p>
               </div>
               <div data-contact-left className="flex flex-wrap gap-3 pt-2 sm:gap-4">
                 {[
@@ -263,7 +263,7 @@ export function ContactSection() {
                   <Link
                     key={social}
                     href="#"
-                    className="border-b border-transparent font-mono text-xs text-foreground/60 transition-all hover:border-foreground/60 hover:text-foreground/85 sm:text-sm"
+                    className="border-b border-transparent font-mono text-xs text-primary/60 transition-all hover:border-foreground/60 hover:text-primary/85 sm:text-sm"
                   >
                     {social}
                   </Link>
@@ -276,14 +276,14 @@ export function ContactSection() {
                     <span>{t("contact.scheduleMeeting")}</span>
                   </MagneticButton>
                 </Link>
-                <p className="mt-3 text-xs text-foreground/60 font-mono">{t("contact.scheduleDescription")}</p>
+                <p className="mt-3 text-xs text-primary/60 font-mono">{t("contact.scheduleDescription")}</p>
               </div>
             </div>
           </div>
           <div className="flex flex-col justify-center">
             <form onSubmit={onSubmit} className="space-y-6" noValidate>
               <div data-contact-right>
-                <Label className="mb-2 block font-mono text-xs text-foreground/60 tracking-wide sm:text-sm">
+                <Label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
                   {t("contact.form.name")} <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -291,7 +291,7 @@ export function ContactSection() {
                   value={formData.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
                   className={cn(
-                    "w-full border-b bg-transparent py-2.5 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none sm:text-base transition-all",
+                    "w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/40 focus:outline-none sm:text-base transition-all",
                     formErrors.name
                       ? "border-red-500 focus:border-red-500"
                       : "border-foreground/25 focus:border-foreground/50",
@@ -310,7 +310,7 @@ export function ContactSection() {
                 )}
               </div>
               <div data-contact-right>
-                <Label className="mb-2 block font-mono text-xs text-foreground/60 tracking-wide sm:text-sm">
+                <Label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
                   {t("contact.form.email")} <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -318,7 +318,7 @@ export function ContactSection() {
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
                   className={cn(
-                    "w-full border-b bg-transparent py-2.5 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none sm:text-base transition-all",
+                    "w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/40 focus:outline-none sm:text-base transition-all",
                     formErrors.email
                       ? "border-red-500 focus:border-red-500"
                       : "border-foreground/25 focus:border-foreground/50",
@@ -338,7 +338,7 @@ export function ContactSection() {
                 )}
               </div>
               <div data-contact-right>
-                <Label className="mb-2 block font-mono text-xs text-foreground/60 tracking-wide sm:text-sm">
+                <Label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
                   Service Interest
                 </Label>
                 <Select
@@ -347,7 +347,7 @@ export function ContactSection() {
                   disabled={isSubmitting}
                 >
                   <SelectTrigger className="w-full border-b border-foreground/25 bg-transparent rounded-none p-2.5 text-sm hover:bg-transparent focus:border-foreground/50">
-                    <SelectValue placeholder="What do you need?" />
+                    <SelectValue className="text-primary/60 " placeholder="What do you need?" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="web-development">Web Development</SelectItem>
@@ -359,7 +359,7 @@ export function ContactSection() {
                 </Select>
               </div>
               <div data-contact-right>
-                <Label className="mb-2 block font-mono text-xs text-foreground/60 tracking-wide sm:text-sm">
+                <Label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
                   Timeline
                 </Label>
                 <Select
@@ -368,7 +368,7 @@ export function ContactSection() {
                   disabled={isSubmitting}
                 >
                   <SelectTrigger className="w-full border-b border-foreground/25 bg-transparent rounded-none p-2.5 text-sm hover:bg-transparent focus:border-foreground/50">
-                    <SelectValue placeholder="When do you need it?" />
+                    <SelectValue className="text-primary/60 " placeholder="When do you need it?" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="immediate">ASAP (1 month)</SelectItem>
@@ -379,7 +379,7 @@ export function ContactSection() {
                 </Select>
               </div>
               <div data-contact-right>
-                <Label className="mb-2 block font-mono text-xs text-foreground/60 tracking-wide sm:text-sm">
+                <Label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
                   {t("contact.form.message")} <span className="text-red-500">*</span>
                 </Label>
                 <Textarea
@@ -387,7 +387,7 @@ export function ContactSection() {
                   onChange={(e) => handleInputChange("message", e.target.value)}
                   rows={4}
                   className={cn(
-                    "w-full border-b bg-transparent py-2.5 text-sm text-foreground placeholder:text-foreground/40 focus:outline-none resize-none sm:text-base transition-all",
+                    "w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/40 focus:outline-none resize-none sm:text-base transition-all",
                     formErrors.message
                       ? "border-red-500 focus:border-red-500"
                       : "border-foreground/25 focus:border-foreground/50",
@@ -427,7 +427,7 @@ export function ContactSection() {
                 </MagneticButton>
                 {submitSuccess && (
                   <div className="mt-4 p-4 rounded-lg bg-green-500/10 border border-green-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                    <p className="text-center font-mono text-sm text-foreground flex items-center justify-center gap-2">
+                    <p className="text-center font-mono text-sm text-primary flex items-center justify-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-green-500" />
                       {t("contact.form.success")}
                     </p>
@@ -435,7 +435,7 @@ export function ContactSection() {
                 )}
                 {submitError && (
                   <div className="mt-4 p-4 rounded-lg bg-red-500/10 border border-red-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                    <p className="text-center font-mono text-sm text-foreground flex items-center justify-center gap-2">
+                    <p className="text-center font-mono text-sm text-primary flex items-center justify-center gap-2">
                       <AlertCircle className="h-4 w-4 text-red-500" />
                       {submitError}
                     </p>

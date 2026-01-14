@@ -253,7 +253,7 @@ export function Nav() {
                 <div
                     dir={dir}
                     ref={mobileMenuRef}
-                    className="fixed inset-0 z-40 lg:hidden bg-background/98 backdrop-blur-2xl"
+                    className="fixed inset-0 z-40 lg:hidden bg-gray-950/90 backdrop-blur-2xl"
                     style={{ top: "64px" }}
                 >
                     <Container className="h-full">
@@ -269,7 +269,7 @@ export function Nav() {
                                                 >
                                                     <button
                                                         className={cn(
-                                                            "block text-2xl font-light tracking-wide text-foreground hover:text-foreground/70 transition-colors py-2 w-full",
+                                                            "block text-2xl font-light tracking-wide text-primary hover:text-primary/70 transition-colors py-2 w-full",
                                                             isRTL ? "text-right" : "text-left"
                                                         )}
                                                     >
@@ -296,7 +296,7 @@ export function Nav() {
                                     <div className="space-y-4">
                                         <div className="mobile-menu-item">
                                             <div className="flex items-center justify-between py-2">
-                                                <span className="text-sm uppercase tracking-widest text-foreground/90 font-light">
+                                                <span className="text-sm uppercase tracking-widest text-primary/90 font-light">
                                                     {t('language') || 'Language'}
                                                 </span>
                                                 <LanguageChanger />
@@ -304,7 +304,7 @@ export function Nav() {
                                         </div>
                                         <div className="mobile-menu-item">
                                             <div className="flex items-center justify-between py-2">
-                                                <span className="text-sm uppercase tracking-widest text-foreground/90 font-light">
+                                                <span className="text-sm uppercase tracking-widest text-primary/90 font-light">
                                                     {t('theme') || 'Theme'}
                                                 </span>
                                                 <ThemeChanger />

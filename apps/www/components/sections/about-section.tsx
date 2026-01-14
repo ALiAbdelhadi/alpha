@@ -128,19 +128,19 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
         <div className="grid gap-12 md:grid-cols-2 md:gap-20 lg:gap-28">
           <div>
             <div ref={titleRef} className="mb-10 md:mb-14">
-              <h2 className="mb-4 font-sans text-4xl font-normal leading-[1.1] tracking-tight text-foreground md:text-5xl lg:text-6xl">
+              <h2 className="mb-4 font-sans text-4xl font-normal leading-[1.1] tracking-tight text-primary md:text-5xl lg:text-6xl">
                 {t("about.title")}
                 <br />
                 {t("about.title2")}
                 <br />
-                <span className="text-foreground/70">{t("about.title3")}</span>
+                <span className="text-primary/70">{t("about.title3")}</span>
               </h2>
             </div>
             <div ref={descriptionRef} className="space-y-5 md:space-y-6">
-              <p className="max-w-lg text-base leading-relaxed text-foreground/85 md:text-lg">
+              <p className="max-w-lg text-base leading-relaxed text-primary/85 md:text-lg">
                 {t("about.description1")}
               </p>
-              <p className="max-w-lg text-base leading-relaxed text-foreground/85 md:text-lg">
+              <p className="max-w-lg text-base leading-relaxed text-primary/85 md:text-lg">
                 {t("about.description2")}
               </p>
             </div>
@@ -174,15 +174,15 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
                 />
                 <div
                   data-stat-value
-                  className="text-4xl font-normal text-foreground md:text-5xl lg:text-6xl tabular-nums"
+                  className="text-4xl font-normal text-primary md:text-5xl lg:text-6xl tabular-nums"
                 >
                   {stat.value}
                 </div>
                 <div>
-                  <div className="font-sans text-lg font-medium text-foreground md:text-xl">
+                  <div className="font-sans text-lg font-medium text-primary md:text-xl">
                     {stat.label}
                   </div>
-                  <div className="font-mono text-xs text-foreground/60 tracking-wide">
+                  <div className="font-mono text-xs text-primary/60 tracking-wide">
                     {stat.sublabel}
                   </div>
                 </div>
