@@ -16,35 +16,35 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
 
   const badgeRef = useReveal<HTMLDivElement>({
     direction: "up",
-    duration: 0.4,
+    duration: 0.6,
     distance: 15,
     delay: isInitialLoadComplete ? 0 : 9999,
   })
 
   const titleRef = useReveal<HTMLHeadingElement>({
     direction: "up",
-    duration: 0.5,
+    duration: 0.7,
     distance: 25,
     delay: isInitialLoadComplete ? 0.15 : 9999,
   })
 
   const descriptionRef = useReveal<HTMLParagraphElement>({
     direction: "up",
-    duration: 0.5,
+    duration: 1,
     distance: 20,
     delay: isInitialLoadComplete ? 0.25 : 9999,
   })
 
   const buttonsRef = useReveal<HTMLDivElement>({
     direction: "up",
-    duration: 0.4,
+    duration: 0.7,
     distance: 15,
     delay: isInitialLoadComplete ? 0.35 : 9999,
   })
 
   const scrollHintRef = useReveal<HTMLDivElement>({
     direction: "fade",
-    duration: 0.4,
+    duration: 0.6,
     delay: isInitialLoadComplete ? 0.45 : 9999,
   })
 
@@ -72,7 +72,7 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
             <span className="text-balance">
               {t("hero.title")}
               <br />
-              <span className="text-primary/80">{t("hero.title2")}</span>
+              <span className="text-primary/70">{t("hero.title2")}</span>
             </span>
           </h1>
           <p
@@ -93,7 +93,7 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
               >
                 <span className="flex items-center gap-2">{t("hero.ctaPrimary")}</span>
                 <svg
-                  className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 rtl:-rotate-180"
+                  className="ml-2 h-4 w-4 transition-transform ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"

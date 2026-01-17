@@ -310,7 +310,9 @@ export default function ContactDetailPage() {
                                         href={`mailto:${contact.email}`}
                                         className="text-sm font-medium hover:underline"
                                     >
-                                        {contact.email}
+                                        <bdi>
+                                            {contact.email}
+                                        </bdi>
                                     </a>
                                 </div>
                             </div>
@@ -475,13 +477,12 @@ export default function ContactDetailPage() {
                                                 </p>
                                             </div>
                                             <span
-                                                className={`text-xs px-2 py-1 rounded ${
-                                                    meeting.status === "SCHEDULED"
+                                                className={`text-xs px-2 py-1 rounded ${meeting.status === "SCHEDULED"
                                                         ? "bg-blue-500/20 text-blue-700 dark:text-blue-400"
                                                         : meeting.status === "COMPLETED"
-                                                          ? "bg-green-500/20 text-green-700 dark:text-green-400"
-                                                          : "bg-gray-500/20 text-gray-700 dark:text-gray-400"
-                                                }`}
+                                                            ? "bg-green-500/20 text-green-700 dark:text-green-400"
+                                                            : "bg-gray-500/20 text-gray-700 dark:text-gray-400"
+                                                    }`}
                                             >
                                                 {meeting.status}
                                             </span>

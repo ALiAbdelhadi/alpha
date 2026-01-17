@@ -1,5 +1,5 @@
 // ============================================================================
-// ALPHABYTE BRAND COLORS - TEAL + NAVY HYBRID SYSTEM
+// Alpha BRAND COLORS - TEAL + NAVY HYBRID SYSTEM
 // ============================================================================
 // Strategic Approach: Monochromatic Teal (70%) + Deep Navy (30%)
 // Primary: Teal/Cyan gradient (Clean, Modern, Tech)

@@ -187,7 +187,7 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
                                     <span className="flex items-center justify-center gap-2">
                                         {t("secondaryAction") || "Explore portfolio"}
                                         <svg
-                                            className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                                            className="w-4 h-4 transition-transform ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             stroke="currentColor"

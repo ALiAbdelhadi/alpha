@@ -3,7 +3,6 @@
 import type React from "react"
 
 import { MagneticButton } from "@/components/magnetic-button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useReveal } from "@/hooks/use-animation"
 import { Link } from "@/i18n/navigation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
@@ -291,7 +290,7 @@ export function ContactSection() {
                   value={formData.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
                   className={cn(
-                    "w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/40 focus:outline-none sm:text-base transition-all",
+                    "w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none sm:text-base transition-all",
                     formErrors.name
                       ? "border-red-500 focus:border-red-500"
                       : "border-foreground/25 focus:border-foreground/50",
@@ -318,7 +317,7 @@ export function ContactSection() {
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
                   className={cn(
-                    "w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/40 focus:outline-none sm:text-base transition-all",
+                    "w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none sm:text-base transition-all",
                     formErrors.email
                       ? "border-red-500 focus:border-red-500"
                       : "border-foreground/25 focus:border-foreground/50",
@@ -333,50 +332,12 @@ export function ContactSection() {
                 {formErrors.email && (
                   <p id="email-error" role="alert" className="mt-1.5 text-xs text-red-500 flex items-center gap-1">
                     <AlertCircle className="h-3 w-3" aria-hidden="true" />
-                    {formErrors.email}
+                    <bdi>
+
+                      {formErrors.email}
+                    </bdi>
                   </p>
                 )}
-              </div>
-              <div data-contact-right>
-                <Label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
-                  Service Interest
-                </Label>
-                <Select
-                  value={formData.serviceInterest || ""}
-                  onValueChange={(value) => handleInputChange("serviceInterest", value || undefined)}
-                  disabled={isSubmitting}
-                >
-                  <SelectTrigger className="w-full border-b border-foreground/25 bg-transparent rounded-none p-2.5 text-sm hover:bg-transparent focus:border-foreground/50">
-                    <SelectValue className="text-primary/60 " placeholder="What do you need?" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="web-development">Web Development</SelectItem>
-                    <SelectItem value="ecommerce">E-Commerce</SelectItem>
-                    <SelectItem value="multilingual">Multi-Language</SelectItem>
-                    <SelectItem value="ui-ux">UI/UX</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div data-contact-right>
-                <Label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
-                  Timeline
-                </Label>
-                <Select
-                  value={formData.projectTimeline || ""}
-                  onValueChange={(value) => handleInputChange("projectTimeline", value || undefined)}
-                  disabled={isSubmitting}
-                >
-                  <SelectTrigger className="w-full border-b border-foreground/25 bg-transparent rounded-none p-2.5 text-sm hover:bg-transparent focus:border-foreground/50">
-                    <SelectValue className="text-primary/60 " placeholder="When do you need it?" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="immediate">ASAP (1 month)</SelectItem>
-                    <SelectItem value="soon">Soon (1-3 months)</SelectItem>
-                    <SelectItem value="planning">Planning (3-6 months)</SelectItem>
-                    <SelectItem value="exploring">Exploring (6+ months)</SelectItem>
-                  </SelectContent>
-                </Select>
               </div>
               <div data-contact-right>
                 <Label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
@@ -387,7 +348,7 @@ export function ContactSection() {
                   onChange={(e) => handleInputChange("message", e.target.value)}
                   rows={4}
                   className={cn(
-                    "w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/40 focus:outline-none resize-none sm:text-base transition-all",
+                    "w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none resize-none sm:text-base transition-all",
                     formErrors.message
                       ? "border-red-500 focus:border-red-500"
                       : "border-foreground/25 focus:border-foreground/50",

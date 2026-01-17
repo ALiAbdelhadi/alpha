@@ -193,7 +193,7 @@ function ProjectCard({
         <div className="flex items-baseline gap-6 md:gap-10">
           <span
             ref={numberRef}
-            className="font-mono text-sm text-primary/40 transition-all md:text-base"
+            className="font-mono text-sm text-primary/60 transition-all md:text-base"
           >
             {project.number}
           </span>
@@ -214,12 +214,12 @@ function ProjectCard({
         </div>
         <span
           ref={yearRef}
-          className="hidden font-mono text-sm text-primary/40 transition-all md:block"
+          className="hidden font-mono text-sm text-primary/60 transition-all md:block"
         >
           {project.year}
         </span>
         <svg 
-          className="ml-4 h-5 w-5 text-primary/40 transition-all group-hover:translate-x-2 group-hover:text-primary/70" 
+          className="ml-4 h-5 w-5 text-primary/60 transition-all ltr:group-hover:translate-x-2 rtl:group-hover:-translate-x-2 group-hover:text-primary/70 rtl:-rotate-180" 
           fill="none" 
           viewBox="0 0 24 24" 
           stroke="currentColor"

@@ -308,7 +308,9 @@ export default function ContactsPage() {
                                             <div className="font-medium">{contact.name}</div>
                                             <div className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
                                                 <Mail className="h-3 w-3" />
-                                                {contact.email}
+                                                <bdi>
+                                                    {contact.email}
+                                                </bdi>
                                             </div>
                                             {contact.serviceInterest && (
                                                 <div className="text-xs text-muted-foreground mt-1">

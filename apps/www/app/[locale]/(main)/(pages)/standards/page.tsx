@@ -21,9 +21,9 @@ export default function StandardsPage() {
 
 function OpeningSection() {
     const t = useTranslations("standards.hero")
-    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.6 })
-    const descRef = useReveal({ direction: "up", delay: 0.2, duration: 0.6 })
-
+    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.8 })
+    const descRef = useReveal({ direction: "up", delay: 0.4, duration: 1.2 })
+    
     return (
         <section className="flex min-h-screen items-center pt-24 md:pt-32">
             <Container>

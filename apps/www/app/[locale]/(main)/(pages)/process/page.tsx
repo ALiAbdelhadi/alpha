@@ -22,8 +22,8 @@ export default function ProcessPage() {
 
 function OpeningSection() {
     const t = useTranslations("process.hero")
-    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.6 })
-    const descRef = useReveal({ direction: "up", delay: 0.2, duration: 0.6 })
+    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.8 })
+    const descRef = useReveal({ direction: "up", delay: 0.4, duration: 1.2 })
 
     return (
         <section className="flex min-h-screen items-center pt-24 md:pt-32">
@@ -97,7 +97,7 @@ function PhasesList() {
                             className="grid gap-8 md:grid-cols-[200px_1fr] md:gap-16 lg:gap-24"
                         >
                             <div>
-                                <div className="mb-4 font-mono text-5xl font-light text-primary/40 md:text-6xl">
+                                <div className="mb-4 font-mono text-5xl font-light text-primary/60 md:text-6xl">
                                     {localizeNumbers(phase.number, locale)}
                                 </div>
 

@@ -9,11 +9,11 @@ import { Textarea } from "@/components/ui/textarea"
 import { TimePicker } from "@/components/ui/time-picker"
 import { usePathname, useRouter } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
-import { AlertCircle, ArrowLeft, Calendar, CheckCircle2, Clock } from "lucide-react"
-import { useSearchParams } from "next/navigation"
-import { useState, useEffect, useRef } from "react"
 import { gsap } from "gsap"
+import { AlertCircle, ArrowLeft, Calendar, CheckCircle2, Clock } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useSearchParams } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
 
 export default function SchedulePage() {
     const router = useRouter()
@@ -45,10 +45,8 @@ export default function SchedulePage() {
     const headerRef = useRef<HTMLDivElement>(null)
     const formRef = useRef<HTMLFormElement>(null)
 
-    // GSAP Animation on mount
     useEffect(() => {
         const ctx = gsap.context(() => {
-            // Set initial states
             gsap.set([backButtonRef.current, headerRef.current], {
                 opacity: 0,
                 y: -20
@@ -59,7 +57,6 @@ export default function SchedulePage() {
                 y: 30
             })
 
-            // Create animation timeline
             const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
 
             tl.to(backButtonRef.current, {
@@ -184,7 +181,7 @@ export default function SchedulePage() {
                             onClick={() => router.back()}
                             className="mb-6"
                         >
-                            <ArrowLeft className="mr-2 h-4 w-4" />
+                            <ArrowLeft className="mr-2 h-4 w-4 rtl:-rotate-180" />
                             {t('back')}
                         </Button>
                     </div>
@@ -206,7 +203,7 @@ export default function SchedulePage() {
                                 value={formData.name}
                                 onChange={(e) => handleInputChange("name", e.target.value)}
                                 className={cn(
-                                    "w-full border-b bg-transparent py-2 text-sm text-primary placeholder:text-primary/40 focus:outline-none sm:text-base md:py-2.5",
+                                    "w-full border-b bg-transparent py-2 text-sm text-primary placeholder:text-primary/60 focus:outline-none sm:text-base md:py-2.5",
                                     errors.name
                                         ? "border-red-500 focus:border-red-500"
                                         : "border-foreground/30 focus:border-foreground/50"
@@ -230,7 +227,7 @@ export default function SchedulePage() {
                                 value={formData.email}
                                 onChange={(e) => handleInputChange("email", e.target.value)}
                                 className={cn(
-                                    "w-full border-b bg-transparent py-2 text-sm text-primary placeholder:text-primary/40 focus:outline-none sm:text-base md:py-2.5",
+                                    "w-full border-b bg-transparent py-2 text-sm text-primary placeholder:text-primary/60 focus:outline-none sm:text-base md:py-2.5",
                                     errors.email
                                         ? "border-red-500 focus:border-red-500"
                                         : "border-foreground/30 focus:border-foreground/50"
@@ -253,13 +250,13 @@ export default function SchedulePage() {
                                 value={formData.message}
                                 onChange={(e) => handleInputChange("message", e.target.value)}
                                 rows={4}
-                                className="w-full border-b bg-transparent py-2 text-sm text-primary placeholder:text-primary/40 focus:outline-none resize-none sm:text-base md:py-2.5"
+                                className="w-full border-b bg-transparent py-2 text-sm text-primary placeholder:text-primary/60 focus:outline-none resize-none sm:text-base md:py-2.5"
                                 placeholder={t('form.message.placeholder')}
                             />
                         </div>
                         <div className="form-field">
                             <Label className="mb-1.5 block font-mono text-xs text-primary/60 sm:text-sm md:mb-2">
-                                <Calendar className="inline h-3.5 w-3.5 mr-1" />
+                                <Calendar className="inline h-3.5 w-3.5 rtl:ml-1 ltr:mr-1" />
                                 {t('form.date.label')} <span className="text-red-500">{t('form.date.required')}</span>
                             </Label>
                             <DatePicker
@@ -286,7 +283,7 @@ export default function SchedulePage() {
                         </div>
                         <div className="form-field">
                             <Label className="mb-1.5 block font-mono text-xs text-primary/60 sm:text-sm md:mb-2">
-                                <Clock className="inline h-3.5 w-3.5 mr-1" />
+                                <Clock className="inline h-3.5 w-3.5 rtl:ml-1 ltr:mr-1" />
                                 {t('form.time.label')} <span className="text-red-500">{t('form.time.required')}</span>
                             </Label>
                             <TimePicker

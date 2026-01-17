@@ -30,7 +30,6 @@ export function Nav() {
         { key: 'approach', sectionId: 'approach', href: '/approach' },
         { key: 'process', sectionId: 'process', href: '/process' },
         { key: 'standards', sectionId: 'standards', href: '/standards' },
-        { key: 'case-study', sectionId: 'case-Study', href: '/case-study' },
         { key: 'writing', sectionId: 'writing', href: '/writing' },
     ]
 
@@ -180,8 +179,8 @@ export function Nav() {
             >
                 <Container>
                     <div className="flex h-16 items-center">
-                        <div className="hidden lg:grid lg:grid-cols-3 w-full items-center gap-8">
-                            <div className={cn("flex", isRTL ? "justify-end" : "justify-start")}>
+                        <div className="hidden lg:grid w-full items-center gap-8" style={{ gridTemplateColumns: '1fr 2fr 1fr' }}>
+                            <div className={cn("flex", "order-1 justify-start" )}>
                                 <Link
                                     ref={logoRef}
                                     href="/"
@@ -190,11 +189,11 @@ export function Nav() {
                                     <AlphaLogo size="md" variant="full" />
                                 </Link>
                             </div>
-                            <nav ref={navItemsRef} className="flex items-center justify-center gap-1">
+                            <nav ref={navItemsRef} className="flex items-center justify-center gap-1 order-2">
                                 {navItems.map((item) => (
                                     <Link key={item.key} href={item.href}>
                                         <button
-                                            className={`group relative font-sans text-sm font-medium transition-colors rounded px-3 py-1.5 text-nowrap`}
+                                            className="group relative font-sans text-sm font-medium transition-colors rounded px-3 py-1.5 text-nowrap"
                                         >
                                             {t(item.key)}
                                             <span className="absolute -bottom-1 left-0 right-0 h-px bg-transparent group-hover:bg-foreground transition-all duration-300" />
@@ -202,7 +201,7 @@ export function Nav() {
                                     </Link>
                                 ))}
                             </nav>
-                            <div ref={actionsRef} className={cn("flex items-center gap-2", isRTL ? "justify-start" : "justify-end")}>
+                            <div ref={actionsRef} className={cn("flex items-center gap-2 order-3 justify-end text-nowrap",)}>
                                 <LanguageChanger />
                                 <NavDivider />
                                 <ThemeChanger />
@@ -253,7 +252,7 @@ export function Nav() {
                 <div
                     dir={dir}
                     ref={mobileMenuRef}
-                    className="fixed inset-0 z-40 lg:hidden bg-gray-950/90 backdrop-blur-2xl"
+                    className="fixed inset-0 z-40 lg:hidden bg-background/95 dark:bg-gray-950/90 backdrop-blur-2xl"
                     style={{ top: "64px" }}
                 >
                     <Container className="h-full">
@@ -268,10 +267,7 @@ export function Nav() {
                                                     onClick={handleMobileLinkClick}
                                                 >
                                                     <button
-                                                        className={cn(
-                                                            "block text-2xl font-light tracking-wide text-primary hover:text-primary/70 transition-colors py-2 w-full",
-                                                            isRTL ? "text-right" : "text-left"
-                                                        )}
+                                                        className="block text-2xl font-light tracking-wide text-foreground hover:text-foreground/70 transition-colors py-2 w-full ltr:text-left rtl:text-right"
                                                     >
                                                         {t(item.key)}
                                                     </button>
@@ -296,7 +292,7 @@ export function Nav() {
                                     <div className="space-y-4">
                                         <div className="mobile-menu-item">
                                             <div className="flex items-center justify-between py-2">
-                                                <span className="text-sm uppercase tracking-widest text-primary/90 font-light">
+                                                <span className="text-sm uppercase tracking-widest text-foreground/90 font-light">
                                                     {t('language') || 'Language'}
                                                 </span>
                                                 <LanguageChanger />
@@ -304,7 +300,7 @@ export function Nav() {
                                         </div>
                                         <div className="mobile-menu-item">
                                             <div className="flex items-center justify-between py-2">
-                                                <span className="text-sm uppercase tracking-widest text-primary/90 font-light">
+                                                <span className="text-sm uppercase tracking-widest text-foreground/90 font-light">
                                                     {t('theme') || 'Theme'}
                                                 </span>
                                                 <ThemeChanger />
@@ -322,5 +318,5 @@ export function Nav() {
 }
 
 function NavDivider() {
-    return <div className="h-5 w-px bg-border/40 mx-1" />
+    return <div className="h-5 w-px bg-border/40 ltr:mx-1 rtl:mx-1" />
 }
