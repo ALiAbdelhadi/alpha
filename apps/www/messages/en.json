@@ -12,6 +12,7 @@
         "process": "Process",
         "standards": "Standards",
         "writing": "Writing",
+        "estimator": "Estimator",
         "schedule": "Schedule",
         "case-study": "Case Study",
         "getStarted": "Let's Talk",
@@ -140,6 +141,36 @@
             "instagram": "Instagram",
             "linkedin": "LinkedIn",
             "dribbble": "Dribbble"
+        }
+    },
+    "contactPage": {
+        "badge": "Get in Touch",
+        "heroTitle": "Let's Talk",
+        "heroDescription": "Have a project in mind? We'd love to hear about it. Get in touch with our team and let's create something extraordinary together.",
+        "infoTitle": "Contact",
+        "infoTitleHighlight": "Information",
+        "infoSubtitle": "Multiple ways to reach us",
+        "emailLabel": "EMAIL",
+        "phoneLabel": "PHONE",
+        "locationLabel": "LOCATION",
+        "address1": "Cairo, Egypt",
+        "address2": "Remote worldwide",
+        "scheduleCall": "Schedule a Call",
+        "responseTime": "Typically respond within 24 hours",
+        "form": {
+            "nameLabel": "Full Name",
+            "namePlaceholder": "Your name",
+            "emailLabel": "Email",
+            "emailPlaceholder": "your@email.com",
+            "serviceLabel": "Service Interest",
+            "servicePlaceholder": "Select a service",
+            "serviceWebDesign": "Web Design",
+            "serviceDevelopment": "Development",
+            "serviceConsulting": "Consulting",
+            "serviceMaintenance": "Maintenance",
+            "messageLabel": "Message",
+            "messagePlaceholder": "Tell us about your project",
+            "submit": "Send Message"
         }
     },
     "schedule": {
@@ -421,5 +452,606 @@
     },
     "articles": {
         "backToWriting": "Back to writing"
+    },
+    "footer": {
+        "tagline": "Crafting digital excellence",
+        "description": "Alpha is a web development studio dedicated to transforming ideas into stunning digital experiences. We specialize in creating responsive, high-performance websites.",
+        "servicesTitle": "Services",
+        "resourcesTitle": "Resources",
+        "webDesign": "Web Design",
+        "development": "Development",
+        "consulting": "Consulting",
+        "maintenance": "Maintenance",
+        "contact": "Contact",
+        "aboutAlpha": "About Alpha",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "copyright": "© 2025 Alpha. All rights reserved."
+    },
+    "servicesPage": {
+        "badge": "Web Development Studio",
+        "title": "Premium Web Development",
+        "titleHighlight": "Services",
+        "description": "We craft beautiful, high-performance digital experiences that drive business growth. From design to development to ongoing support.",
+        "ctaPrimary": "Start Your Project",
+        "ctaSecondary": "Explore Services",
+        "gridTitle": "Our Services",
+        "gridSubtitle": "Comprehensive solutions for your digital needs",
+        "ctaTitle": "Ready to get started?",
+        "ctaDescription": "Let's work together to create something extraordinary. Our team is ready to bring your vision to life.",
+        "ctaButton": "Get in Touch",
+        "services": {
+            "webDesign": {
+                "title": "Web Design",
+                "description": "Beautiful, responsive designs that captivate your audience and drive engagement."
+            },
+            "development": {
+                "title": "Development",
+                "description": "Robust, scalable solutions built with cutting-edge technologies and best practices."
+            },
+            "consulting": {
+                "title": "Consulting",
+                "description": "Strategic guidance to navigate digital transformation and optimize your presence."
+            },
+            "maintenance": {
+                "title": "Maintenance",
+                "description": "Continuous support and optimization keeping your systems running at peak performance."
+            }
+        }
+    },
+    "serviceDetails": {
+        "whatWeOffer": "What We Offer",
+        "whatWeOfferSubtitle": "Comprehensive solutions tailored to your needs",
+        "ctaPrimary": "Start Your Project",
+        "ctaSecondary": "View Our Work",
+        "webDesign": {
+            "title": "Web Design",
+            "subtitle": "Premium Design Services",
+            "description": "We create stunning, user-centric web designs that captivate your audience and drive business results.",
+            "showcaseTitle": "Design Excellence",
+            "showcaseSubtitle": "Every design is crafted with attention to detail, focused on creating memorable experiences",
+            "showcaseEcommerce": "E-Commerce",
+            "showcaseCorporate": "Corporate",
+            "showcasePortfolio": "Portfolio",
+            "showcaseLanding": "Landing",
+            "ctaTitle": "Ready to create something beautiful?",
+            "ctaDescription": "Let's discuss your vision and craft a design that truly represents your brand.",
+            "features": {
+                "1": {
+                    "title": "Responsive Design",
+                    "description": "Beautiful designs that look perfect on all devices, from smartphones to desktops."
+                },
+                "2": {
+                    "title": "User-Centric Approach",
+                    "description": "We prioritize user experience and interface design to create intuitive digital products."
+                },
+                "3": {
+                    "title": "Modern Aesthetics",
+                    "description": "Contemporary design trends combined with timeless principles for lasting appeal."
+                },
+                "4": {
+                    "title": "Brand Alignment",
+                    "description": "Every design reflects your brand identity and communicates your unique value proposition."
+                },
+                "5": {
+                    "title": "Performance Optimized",
+                    "description": "Fast-loading, optimized designs that engage users and improve conversion rates."
+                },
+                "6": {
+                    "title": "Accessibility First",
+                    "description": "WCAG-compliant designs ensuring your website is accessible to all users."
+                }
+            },
+            "cta": {
+                "title": "Ready to create something beautiful?",
+                "description": "Let's discuss your vision and craft a design that truly represents your brand."
+            }
+        },
+        "development": {
+            "title": "Development",
+            "subtitle": "Full-Stack Solutions",
+            "description": "We build robust, scalable applications with cutting-edge technologies, delivering solutions that power modern businesses.",
+            "features": {
+                "1": {
+                    "title": "Full-Stack Development",
+                    "description": "From frontend to backend, we build complete solutions using modern technologies."
+                },
+                "2": {
+                    "title": "Scalable Architecture",
+                    "description": "Future-proof applications designed to grow with your business needs."
+                },
+                "3": {
+                    "title": "API Development",
+                    "description": "Robust RESTful and GraphQL APIs that power your applications and integrations."
+                },
+                "4": {
+                    "title": "Database Design",
+                    "description": "Optimized database structures ensuring data integrity and peak performance."
+                },
+                "5": {
+                    "title": "Quality Assurance",
+                    "description": "Comprehensive testing and debugging ensuring reliable, production-ready code."
+                },
+                "6": {
+                    "title": "Maintenance & Support",
+                    "description": "Ongoing technical support and updates to keep your applications running smoothly."
+                }
+            },
+            "techStack": {
+                "title": "Modern Tech Stack",
+                "subtitle": "Built with the latest technologies",
+                "categories": {
+                    "Framework": "Framework",
+                    "Library": "Library",
+                    "Language": "Language",
+                    "Runtime": "Runtime",
+                    "Database": "Database",
+                    "ORM": "ORM",
+                    "Styling": "Styling",
+                    "Deployment": "Deployment"
+                }
+            },
+            "cta": {
+                "preTitle": "// Let's build together",
+                "title": "Ready to start your project?",
+                "description": "From concept to deployment, we'll bring your ideas to life with clean, maintainable code."
+            }
+        },
+        "consulting": {
+            "title": "Consulting",
+            "subtitle": "Strategic Guidance",
+            "description": "Strategic expertise to navigate digital transformation and optimize your online presence for maximum impact.",
+            "hero": {
+                "ctaPrimary": "Book a Session",
+                "ctaSecondary": "Our Approach"
+            },
+            "approach": {
+                "title": "How We Work",
+                "subtitle": "A structured approach to solving complex technical challenges",
+                "steps": {
+                    "1": {
+                        "title": "Understand",
+                        "description": "Deep dive into your current challenges and goals"
+                    },
+                    "2": {
+                        "title": "Analyze",
+                        "description": "Thorough assessment of systems and processes"
+                    },
+                    "3": {
+                        "title": "Strategize",
+                        "description": "Develop actionable recommendations"
+                    },
+                    "4": {
+                        "title": "Execute",
+                        "description": "Guide implementation with ongoing support"
+                    }
+                }
+            },
+            "features": {
+                "1": {
+                    "title": "Technical Strategy",
+                    "description": "Expert guidance on technology choices, architecture decisions, and roadmap planning."
+                },
+                "2": {
+                    "title": "Performance Audit",
+                    "description": "Comprehensive analysis of your current systems with actionable improvement recommendations."
+                },
+                "3": {
+                    "title": "Digital Transformation",
+                    "description": "End-to-end support in modernizing your digital infrastructure and workflows."
+                },
+                "4": {
+                    "title": "Code Review",
+                    "description": "In-depth evaluation of your codebase with recommendations for quality and maintainability."
+                },
+                "5": {
+                    "title": "Security Assessment",
+                    "description": "Thorough security audits to identify vulnerabilities and implement protective measures."
+                },
+                "6": {
+                    "title": "Training & Workshops",
+                    "description": "Knowledge transfer sessions to upskill your team on modern development practices."
+                }
+            },
+            "cta": {
+                "title": "Let's solve your challenges together",
+                "description": "Schedule a free consultation to discuss your project and explore how we can help.",
+                "button": "Schedule Consultation"
+            }
+        },
+        "maintenance": {
+            "title": "Maintenance",
+            "subtitle": "Continuous Support",
+            "description": "Keep your digital assets running at peak performance with our comprehensive maintenance and support services.",
+            "stats": {
+                "uptime": "Uptime Guarantee",
+                "response": "Response Time",
+                "monitoring": "Monitoring",
+                "satisfaction": "Client Satisfaction"
+            },
+            "features": {
+                "1": {
+                    "title": "Proactive Monitoring",
+                    "description": "24/7 monitoring to detect and resolve issues before they impact your users."
+                },
+                "2": {
+                    "title": "Security Updates",
+                    "description": "Regular security patches and updates to protect against emerging threats."
+                },
+                "3": {
+                    "title": "Performance Optimization",
+                    "description": "Continuous improvements to maintain fast load times and smooth interactions."
+                },
+                "4": {
+                    "title": "Content Updates",
+                    "description": "Quick turnaround on content changes and minor feature additions."
+                },
+                "5": {
+                    "title": "Backup & Recovery",
+                    "description": "Automated backups and disaster recovery planning for peace of mind."
+                },
+                "6": {
+                    "title": "Priority Support",
+                    "description": "Dedicated support channel with rapid response times for critical issues."
+                }
+            },
+            "pricing": {
+                "title": "Maintenance Plans",
+                "subtitle": "Choose a plan that fits your needs",
+                "plans": {
+                    "essential": {
+                        "name": "Essential",
+                        "features": [
+                            "Monthly updates",
+                            "Security patches",
+                            "Email support",
+                            "Basic monitoring"
+                        ]
+                    },
+                    "professional": {
+                        "name": "Professional",
+                        "features": [
+                            "Weekly updates",
+                            "Priority support",
+                            "24/7 monitoring",
+                            "Performance reports",
+                            "Content updates"
+                        ]
+                    },
+                    "enterprise": {
+                        "name": "Enterprise",
+                        "features": [
+                            "Dedicated support",
+                            "SLA guarantee",
+                            "Custom solutions",
+                            "On-call team",
+                            "Strategic reviews"
+                        ]
+                    }
+                },
+                "getStarted": "Get Started",
+                "recommended": "Recommended"
+            },
+            "cta": {
+                "title": "Protect your investment",
+                "description": "Don't wait for issues to arise. Let us take care of your digital assets so you can focus on growing your business."
+            }
+        }
+    },
+    "whatWeOffer": "What We Offer",
+    "whatWeOfferSubtitle": "Comprehensive solutions tailored to your needs",
+    "ctaPrimary": "Start Your Project",
+    "ctaSecondary": "View Our Work",
+    "webDesign": {
+        "title": "Web Design",
+        "subtitle": "Premium Design Services",
+        "description": "We create stunning, user-centric web designs that captivate your audience and drive business results.",
+        "showcaseTitle": "Design Excellence",
+        "showcaseSubtitle": "Every design is crafted with attention to detail, focused on creating memorable experiences",
+        "showcaseEcommerce": "E-Commerce",
+        "showcaseCorporate": "Corporate",
+        "showcasePortfolio": "Portfolio",
+        "showcaseLanding": "Landing",
+        "ctaTitle": "Ready to create something beautiful?",
+        "ctaDescription": "Let's discuss your vision and craft a design that truly represents your brand.",
+        "features": {
+            "1": {
+                "title": "Responsive Design",
+                "description": "Beautiful designs that look perfect on all devices, from smartphones to desktops."
+            },
+            "2": {
+                "title": "User-Centric Approach",
+                "description": "We prioritize user experience and interface design to create intuitive digital products."
+            },
+            "3": {
+                "title": "Modern Aesthetics",
+                "description": "Contemporary design trends combined with timeless principles for lasting appeal."
+            },
+            "4": {
+                "title": "Brand Alignment",
+                "description": "Every design reflects your brand identity and communicates your unique value proposition."
+            },
+            "5": {
+                "title": "Performance Optimized",
+                "description": "Fast-loading, optimized designs that engage users and improve conversion rates."
+            },
+            "6": {
+                "title": "Accessibility First",
+                "description": "WCAG-compliant designs ensuring your website is accessible to all users."
+            }
+        },
+        "cta": {
+            "title": "Ready to create something beautiful?",
+            "description": "Let's discuss your vision and craft a design that truly represents your brand."
+        }
+    },
+    "development": {
+        "title": "Development",
+        "subtitle": "Full-Stack Solutions",
+        "description": "We build robust, scalable applications with cutting-edge technologies, delivering solutions that power modern businesses.",
+        "features": {
+            "1": {
+                "title": "Full-Stack Development",
+                "description": "From frontend to backend, we build complete solutions using modern technologies."
+            },
+            "2": {
+                "title": "Scalable Architecture",
+                "description": "Future-proof applications designed to grow with your business needs."
+            },
+            "3": {
+                "title": "API Development",
+                "description": "Robust RESTful and GraphQL APIs that power your applications and integrations."
+            },
+            "4": {
+                "title": "Database Design",
+                "description": "Optimized database structures ensuring data integrity and peak performance."
+            },
+            "5": {
+                "title": "Quality Assurance",
+                "description": "Comprehensive testing and debugging ensuring reliable, production-ready code."
+            },
+            "6": {
+                "title": "Maintenance & Support",
+                "description": "Ongoing technical support and updates to keep your applications running smoothly."
+            }
+        },
+        "techStack": {
+            "title": "Modern Tech Stack",
+            "subtitle": "Built with the latest technologies"
+        },
+        "cta": {
+            "preTitle": "// Let's build together",
+            "title": "Ready to start your project?",
+            "description": "From concept to deployment, we'll bring your ideas to life with clean, maintainable code."
+        }
+    },
+    "consulting": {
+        "title": "Consulting",
+        "subtitle": "Strategic Guidance",
+        "description": "Strategic expertise to navigate digital transformation and optimize your online presence for maximum impact.",
+        "features": {
+            "1": {
+                "title": "Technical Strategy",
+                "description": "Expert guidance on technology choices, architecture decisions, and roadmap planning."
+            },
+            "2": {
+                "title": "Performance Audit",
+                "description": "Comprehensive analysis of your current systems with actionable improvement recommendations."
+            },
+            "3": {
+                "title": "Digital Transformation",
+                "description": "End-to-end support in modernizing your digital infrastructure and workflows."
+            },
+            "4": {
+                "title": "Code Review",
+                "description": "In-depth evaluation of your codebase with recommendations for quality and maintainability."
+            },
+            "5": {
+                "title": "Security Assessment",
+                "description": "Thorough security audits to identify vulnerabilities and implement protective measures."
+            },
+            "6": {
+                "title": "Training & Workshops",
+                "description": "Knowledge transfer sessions to upskill your team on modern development practices."
+            }
+        },
+        "hero": {
+            "ctaPrimary": "Book a Session",
+            "ctaSecondary": "Our Approach"
+        },
+        "approach": {
+            "title": "How We Work",
+            "subtitle": "A structured approach to solving complex technical challenges",
+            "steps": {
+                "1": {
+                    "title": "Understand",
+                    "description": "Deep dive into your current challenges and goals"
+                },
+                "2": {
+                    "title": "Analyze",
+                    "description": "Thorough assessment of systems and processes"
+                },
+                "3": {
+                    "title": "Strategize",
+                    "description": "Develop actionable recommendations"
+                },
+                "4": {
+                    "title": "Execute",
+                    "description": "Guide implementation with ongoing support"
+                }
+            }
+        },
+        "cta": {
+            "title": "Let's solve your challenges together",
+            "description": "Schedule a free consultation to discuss your project and explore how we can help.",
+            "button": "Schedule Consultation"
+        }
+    },
+    "maintenance": {
+        "title": "Maintenance",
+        "subtitle": "Continuous Support",
+        "description": "Keep your digital assets running at peak performance with our comprehensive maintenance and support services.",
+        "hero": {
+            "systemStatus": "System Status",
+            "operational": "All systems operational",
+            "lastChecked": "Last checked: 2 min ago",
+            "uptimeLabel": "Uptime: 99.99%",
+            "secured": "✓ Secured",
+            "services": {
+                "website": "Website",
+                "database": "Database",
+                "api": "API",
+                "cdn": "CDN"
+            }
+        },
+        "features": {
+            "1": {
+                "title": "Proactive Monitoring",
+                "description": "24/7 monitoring to detect and resolve issues before they impact your users."
+            },
+            "2": {
+                "title": "Security Updates",
+                "description": "Regular security patches and updates to protect against emerging threats."
+            },
+            "3": {
+                "title": "Performance Optimization",
+                "description": "Continuous improvements to maintain fast load times and smooth interactions."
+            },
+            "4": {
+                "title": "Content Updates",
+                "description": "Quick turnaround on content changes and minor feature additions."
+            },
+            "5": {
+                "title": "Backup & Recovery",
+                "description": "Automated backups and disaster recovery planning for peace of mind."
+            },
+            "6": {
+                "title": "Priority Support",
+                "description": "Dedicated support channel with rapid response times for critical issues."
+            }
+        },
+        "stats": {
+            "uptime": "Uptime Guarantee",
+            "response": "Response Time",
+            "monitoring": "Monitoring",
+            "satisfaction": "Client Satisfaction"
+        },
+        "pricing": {
+            "title": "Maintenance Plans",
+            "subtitle": "Choose a plan that fits your needs",
+            "plans": {
+                "essential": {
+                    "name": "Essential",
+                    "features": [
+                        "Monthly updates",
+                        "Security patches",
+                        "Email support",
+                        "Basic monitoring"
+                    ]
+                },
+                "professional": {
+                    "name": "Professional",
+                    "features": [
+                        "Weekly updates",
+                        "Priority support",
+                        "24/7 monitoring",
+                        "Performance reports",
+                        "Content updates"
+                    ]
+                },
+                "enterprise": {
+                    "name": "Enterprise",
+                    "features": [
+                        "Dedicated support",
+                        "SLA guarantee",
+                        "Custom solutions",
+                        "On-call team",
+                        "Strategic reviews"
+                    ]
+                }
+            },
+            "getStarted": "Get Started",
+            "recommended": "Recommended"
+        },
+        "cta": {
+            "title": "Protect your investment",
+            "description": "Don't wait for issues to arise. Let us take care of your digital assets so you can focus on growing your business."
+        }
+    },
+    "estimator": {
+        "title": "Project Estimator",
+        "subtitle": "Get an instant estimate for your project",
+        "back": "Back",
+        "next": "Next",
+        "getEstimate": "Get My Estimate",
+        "startOver": "Start Over",
+        "step": "Step",
+        "of": "of",
+        "steps": {
+            "projectType": {
+                "title": "What type of project do you need?",
+                "options": {
+                    "website": {
+                        "title": "Website",
+                        "description": "Corporate site, landing page, or portfolio"
+                    },
+                    "webapp": {
+                        "title": "Web Application",
+                        "description": "Interactive app with user accounts and features"
+                    },
+                    "ecommerce": {
+                        "title": "E-Commerce",
+                        "description": "Online store with payments and inventory"
+                    },
+                    "pwa": {
+                        "title": "Progressive Web App",
+                        "description": "App-like experience that works offline"
+                    }
+                }
+            },
+            "complexity": {
+                "title": "What level of complexity?",
+                "options": {
+                    "basic": {
+                        "title": "Basic",
+                        "description": "Up to 5 pages, simple design"
+                    },
+                    "standard": {
+                        "title": "Standard",
+                        "description": "5-15 pages, custom design, integrations"
+                    },
+                    "premium": {
+                        "title": "Premium",
+                        "description": "Complex features, animations, multi-language"
+                    }
+                }
+            },
+            "timeline": {
+                "title": "When do you need it?",
+                "options": {
+                    "urgent": {
+                        "title": "Urgent",
+                        "description": "Within 2-4 weeks"
+                    },
+                    "standard": {
+                        "title": "Standard",
+                        "description": "1-2 months"
+                    },
+                    "flexible": {
+                        "title": "Flexible",
+                        "description": "3+ months, no rush"
+                    }
+                }
+            }
+        },
+        "results": {
+            "title": "Your Project Estimate",
+            "timeline": "Estimated Timeline",
+            "weeks": "weeks",
+            "investment": "Investment Range",
+            "disclaimer": "This is a preliminary estimate. Final pricing depends on detailed requirements.",
+            "cta": "Schedule a Consultation",
+            "ctaDescription": "Let's discuss your project in detail"
+        }
     }
 }

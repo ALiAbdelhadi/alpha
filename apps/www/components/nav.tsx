@@ -31,6 +31,7 @@ export function Nav() {
         { key: 'process', sectionId: 'process', href: '/process' },
         { key: 'standards', sectionId: 'standards', href: '/standards' },
         { key: 'writing', sectionId: 'writing', href: '/writing' },
+        { key: 'estimator', sectionId: 'estimator', href: '/estimator' },
     ]
 
     const dir = locale === "ar" ? "rtl" : "ltr"
@@ -180,7 +181,7 @@ export function Nav() {
                 <Container>
                     <div className="flex h-16 items-center">
                         <div className="hidden lg:grid w-full items-center gap-8" style={{ gridTemplateColumns: '1fr 2fr 1fr' }}>
-                            <div className={cn("flex", "order-1 justify-start" )}>
+                            <div className={cn("flex", "order-1 justify-start")}>
                                 <Link
                                     ref={logoRef}
                                     href="/"

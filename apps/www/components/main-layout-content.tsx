@@ -2,6 +2,7 @@
 import { Nav } from "@/components/nav";
 import { layoutChildren } from "@/types";
 import dynamic from 'next/dynamic';
+import Footer from "./footer";
 
 const BackgroundShader = dynamic(() => import("@/components/background-shader").then(mod => ({ default: mod.BackgroundShader })), {
     ssr: false,
@@ -18,6 +19,7 @@ export function MainLayoutContent({ children }: layoutChildren) {
             <div id="main-content" className="relative z-10">
                 {children}
             </div>
+            <Footer />
         </main>
     )
 }

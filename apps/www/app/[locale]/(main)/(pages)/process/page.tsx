@@ -12,11 +12,11 @@ export default function ProcessPage() {
     const sectionRef = useRef<HTMLElement>(null)
 
     return (
-        <main ref={sectionRef} className="relative min-h-screen w-full">
+        <div ref={sectionRef} className="relative min-h-screen w-full">
             <OpeningSection />
             <PhasesList />
             <ClosingSection />
-        </main>
+        </div>
     )
 }
 

@@ -1,8 +1,8 @@
 "use client"
 
 import { ErrorBoundary } from "@/components/error-boundary"
-import { NAV_ITEMS } from "@/lib/constants"
 import { useNavigation } from "@/components/providers/navigation-provider"
+import { NAV_ITEMS } from "@/lib/constants"
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef } from "react"
 
 const CtaSection = lazy(() => import("@/components/sections/cta-section").then(m => ({ default: m.CtaSectionEnhanced })))
@@ -129,6 +129,7 @@ export default function Home() {
                     <AboutSection scrollToSection={scrollToSection} />
                 </Suspense>
             </ErrorBoundary>
+
             <ErrorBoundary>
                 <Suspense fallback={<SectionSkeleton />}>
                     <CtaSection scrollToSection={scrollToSection} />

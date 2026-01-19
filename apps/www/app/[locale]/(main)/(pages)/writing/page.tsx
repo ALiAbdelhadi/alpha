@@ -10,10 +10,10 @@ import { useEffect, useRef } from "react"
 export default function WritingPage() {
     const sectionRef = useRef<HTMLElement>(null)
     return (
-        <main ref={sectionRef} className="relative min-h-screen w-full">
+        <div ref={sectionRef} className="relative min-h-screen w-full">
             <OpeningSection />
             <ListSection />
-        </main>
+        </div>
     )
 }
 
