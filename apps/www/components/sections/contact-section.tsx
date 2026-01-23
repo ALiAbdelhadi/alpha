@@ -223,17 +223,21 @@ export function ContactSection() {
       suppressHydrationWarning={true}
       ref={sectionRef}
       className="flex min-h-screen shrink-0 snap-start items-center overflow-x-hidden"
-      style={{ paddingTop: '8rem', paddingBottom: '8rem' }}
+      style={{
+        minHeight: '100vh',
+        paddingTop: 'clamp(6rem, 10vh, 8rem)',
+        paddingBottom: 'clamp(6rem, 10vh, 8rem)'
+      }}
     >
       <Container>
         <div className="grid gap-16 md:grid-cols-2 md:gap-20 lg:gap-24">
           {/* Contact Info */}
           <div className="flex flex-col justify-center">
             <div ref={titleRef} className="mb-12">
-              <h2 
+              <h2
                 className="mb-4 font-sans font-normal text-primary"
                 style={{
-                  fontSize: 'clamp(3.052rem, 6vw, 3.815rem)',
+                  fontSize: 'clamp(2.5rem, 6vw, 3.815rem)',
                   lineHeight: 1.1,
                   letterSpacing: '-0.02em',
                 }}
@@ -254,7 +258,7 @@ export function ContactSection() {
                     {t("contact.email")}
                   </span>
                 </div>
-                <p 
+                <p
                   className="text-primary transition-colors duration-300 group-hover:text-primary/75"
                   style={{
                     fontSize: 'clamp(1.25rem, 1.5vw, 1.5rem)',
@@ -271,7 +275,7 @@ export function ContactSection() {
                     {t("contact.location")}
                   </span>
                 </div>
-                <p 
+                <p
                   className="text-primary"
                   style={{
                     fontSize: 'clamp(1.25rem, 1.5vw, 1.5rem)',

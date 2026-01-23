@@ -56,7 +56,10 @@ export function ServicesSection() {
       id="services"
       ref={sectionRef}
       className="flex min-h-screen w-full items-center"
-      style={{ paddingTop: '8rem', paddingBottom: '8rem' }}
+      style={{
+        paddingTop: 'clamp(6rem, 10vh, 8rem)',
+        paddingBottom: 'clamp(6rem, 10vh, 8rem)'
+      }}
     >
       <Container>
         {/* Section Header */}
@@ -64,7 +67,7 @@ export function ServicesSection() {
           <h2 
             className="mb-4 font-sans font-normal text-primary"
             style={{
-              fontSize: 'clamp(3.052rem, 6vw, 3.815rem)',
+              fontSize: 'clamp(2.5rem, 6vw, 3.815rem)',
               lineHeight: 1.1,
               letterSpacing: '-0.02em',
             }}

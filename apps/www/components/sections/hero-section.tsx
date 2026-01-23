@@ -51,24 +51,27 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
   return (
     <section
       id="home"
-      className="relative flex w-full flex-col items-center justify-center min-h-screen"
-      style={{ paddingTop: '8rem', paddingBottom: '8rem' }}
+      className="relative flex w-full flex-col items-center justify-center"
+      style={{ 
+        minHeight: '100vh',
+        paddingTop: 'clamp(6rem, 10vh, 8rem)',
+        paddingBottom: 'clamp(6rem, 10vh, 8rem)'
+      }}
       aria-label="Hero section"
     >
       <Container>
           {/* Badge - Minimal, purposeful */}
           <div
-            ref={badgeRef}
-            className="mb-8 inline-flex items-center gap-2"
-            role="status"
-            aria-live="polite"
-          >
-            <div className="h-1 w-1 rounded-full bg-teal-400" />
-            <p className="font-mono text-xs text-primary/60 tracking-wider uppercase">
-              {t("hero.badge")}
-            </p>
-          </div>
-
+          ref={badgeRef}
+          className="mb-6 md:mb-8 inline-flex items-center gap-2"
+          role="status"
+          aria-live="polite"
+        >
+          <div className="h-1 w-1 rounded-full bg-teal-400" />
+          <p className="font-mono text-xs text-primary/60 tracking-wider uppercase">
+            {t("hero.badge")}
+          </p>
+        </div>
           {/* Hero Statement - Single, powerful message */}
           <h1
             ref={titleRef}

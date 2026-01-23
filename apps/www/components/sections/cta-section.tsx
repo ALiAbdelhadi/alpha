@@ -132,7 +132,11 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
             ref={sectionRef}
             id="cta"
             className="relative overflow-hidden"
-            style={{ paddingTop: '8rem', paddingBottom: '8rem' }}
+            style={{
+                minHeight: '100vh',
+                paddingTop: 'clamp(6rem, 10vh, 8rem)',
+                paddingBottom: 'clamp(6rem, 10vh, 8rem)'
+            }}
             aria-label="Call to action section"
         >
             <Container>
@@ -145,7 +149,7 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
                             ref={headingRef}
                             className="mb-8 font-sans font-normal text-primary"
                             style={{
-                                fontSize: 'clamp(3.052rem, 6vw, 3.815rem)',
+                                fontSize: 'clamp(2.5rem, 6vw, 3.815rem)',
                                 lineHeight: 1.1,
                                 letterSpacing: '-0.02em',
                             }}

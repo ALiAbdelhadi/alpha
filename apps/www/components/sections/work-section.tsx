@@ -10,7 +10,7 @@ import { Container } from "../container"
 export function WorkSection() {
   const t = useTranslations()
   const sectionRef = useRef<HTMLElement>(null)
-  const titleRef = useReveal<HTMLDivElement>({ direction: "left", delay: 0, duration: 0.5 })
+  const titleRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.5 })
 
   useEffect(() => {
     if (!sectionRef.current) return
@@ -20,10 +20,7 @@ export function WorkSection() {
     const triggers: ScrollTrigger[] = []
 
     cards.forEach((card, index) => {
-      gsap.set(card, {
-        opacity: 0,
-        y: 20,
-      })
+      gsap.set(card, { opacity: 0, y: 20 })
 
       const revealTween = gsap.to(card, {
         opacity: 1,
@@ -92,16 +89,19 @@ export function WorkSection() {
       id="work"
       suppressHydrationWarning={true}
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center"
-      style={{ paddingTop: '8rem', paddingBottom: '8rem' }}
+      className="flex w-full items-center"
+      style={{
+        minHeight: '100vh',
+        paddingTop: 'clamp(6rem, 10vh, 8rem)',
+        paddingBottom: 'clamp(6rem, 10vh, 8rem)'
+      }}
     >
       <Container>
-        {/* Section Header - Clear, minimal */}
-        <div ref={titleRef} className="mb-20">
-          <h2 
+        <div ref={titleRef} className="mb-16 md:mb-20">
+          <h2
             className="mb-4 font-sans font-normal text-primary"
             style={{
-              fontSize: 'clamp(3.052rem, 6vw, 3.815rem)',
+              fontSize: 'clamp(2.5rem, 6vw, 3.815rem)',
               lineHeight: 1.1,
               letterSpacing: '-0.02em',
             }}
@@ -113,10 +113,9 @@ export function WorkSection() {
           </p>
         </div>
 
-        {/* Projects - Evidence-based presentation */}
         <div className="space-y-0">
           {projects.map((project) => (
-            <ProjectCard key={project.number} project={project} index={0} />
+            <ProjectCard key={project.number} project={project} />
           ))}
         </div>
       </Container>
@@ -128,7 +127,6 @@ function ProjectCard({
   project,
 }: {
   project: { number: string; title: string; category: string; year: string; link: string }
-  index: number
 }) {
   const cardRef = useRef<HTMLDivElement>(null)
   const titleRef = useRef<HTMLHeadingElement>(null)
@@ -145,34 +143,16 @@ function ProjectCard({
     if (!card || !title) return
 
     const handleMouseEnter = () => {
-      if (title) gsap.to(title, {
-        x: 6,
-        duration: 0.25,
-        ease: "power2.out",
-      })
-      if (number) gsap.to(number, {
-        x: -2,
-        opacity: 0.6,
-        duration: 0.25,
-        ease: "power2.out",
-      })
-      if (category) gsap.to(category, {
-        x: 4,
-        opacity: 0.75,
-        duration: 0.25,
-        ease: "power2.out",
-      })
-      if (year) gsap.to(year, {
-        opacity: 0.5,
-        duration: 0.25,
-        ease: "power2.out",
-      })
+      if (title) gsap.to(title, { x: 6, duration: 0.25, ease: "power2.out" })
+      if (number) gsap.to(number, { x: -2, opacity: 0.6, duration: 0.25, ease: "power2.out" })
+      if (category) gsap.to(category, { x: 4, opacity: 0.75, duration: 0.25, ease: "power2.out" })
+      if (year) gsap.to(year, { opacity: 0.5, duration: 0.25, ease: "power2.out" })
     }
 
     const handleMouseLeave = () => {
       const elements = [title, number, category, year].filter(Boolean) as Element[]
       if (elements.length === 0) return
-      
+
       gsap.to(elements, {
         x: 0,
         opacity: (i, el) => {
@@ -199,12 +179,16 @@ function ProjectCard({
       <div
         ref={cardRef}
         data-project-card
-        className="group flex items-center justify-between border-b border-foreground/10 py-12 hover:border-foreground/25 transition-colors duration-300 cursor-pointer"
+        className="group flex items-center justify-between border-b border-foreground/10 transition-colors duration-300 cursor-pointer"
+        style={{
+          paddingTop: 'clamp(2rem, 4vh, 3rem)',
+          paddingBottom: 'clamp(2rem, 4vh, 3rem)'
+        }}
       >
-        <div className="flex items-baseline gap-8 md:gap-12">
+        <div className="flex items-baseline gap-6 md:gap-12">
           <span
             ref={numberRef}
-            className="font-mono text-sm text-primary/50 transition-all duration-300"
+            className="font-mono text-sm text-primary/40 transition-all duration-300"
           >
             {project.number}
           </span>
@@ -213,7 +197,7 @@ function ProjectCard({
               ref={titleRef}
               className="mb-2 font-sans font-medium text-primary transition-all duration-300"
               style={{
-                fontSize: 'clamp(2rem, 3vw, 2.441rem)',
+                fontSize: 'clamp(1.5rem, 3vw, 2.441rem)',
                 lineHeight: 1.2,
               }}
             >
@@ -234,10 +218,10 @@ function ProjectCard({
           >
             {project.year}
           </span>
-          <svg 
-            className="h-4 w-4 text-primary/50 transition-all duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 group-hover:text-primary/70 rtl:-rotate-180" 
-            fill="none" 
-            viewBox="0 0 24 24" 
+          <svg
+            className="h-4 w-4 text-primary/50 transition-all duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 group-hover:text-primary/70 rtl:-rotate-180"
+            fill="none"
+            viewBox="0 0 24 24"
             stroke="currentColor"
             strokeWidth={2}
           >

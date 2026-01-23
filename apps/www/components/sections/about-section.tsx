@@ -1,14 +1,17 @@
+// ===== About Section Updated =====
 "use client"
 
 import { MagneticButton } from "@/components/magnetic-button"
 import { useReveal } from "@/hooks/use-animation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 import { useEffect, useRef } from "react"
 import { Container } from "../container"
+import { localizeNumbers } from "@/lib/number"
 
 export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId: string) => void }) {
   const t = useTranslations()
+  const locale = useLocale()
   const sectionRef = useRef<HTMLElement>(null)
 
   const titleRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.5 })
@@ -26,17 +29,8 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
       const valueElement = stat.querySelector("[data-stat-value]")
       const borderElement = stat.querySelector("[data-stat-border]")
 
-      gsap.set(stat, {
-        opacity: 0,
-        y: 20,
-      })
-
-      if (borderElement) {
-        gsap.set(borderElement, {
-          scaleY: 0,
-          transformOrigin: "bottom center"
-        })
-      }
+      gsap.set(stat, { opacity: 0, y: 20 })
+      if (borderElement) gsap.set(borderElement, { scaleY: 0, transformOrigin: "bottom center" })
 
       const revealTween = gsap.to(stat, {
         opacity: 1,
@@ -52,9 +46,7 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
         },
       })
 
-      if (revealTween.scrollTrigger) {
-        triggers.push(revealTween.scrollTrigger)
-      }
+      if (revealTween.scrollTrigger) triggers.push(revealTween.scrollTrigger)
 
       if (borderElement) {
         const borderTween = gsap.to(borderElement, {
@@ -69,10 +61,7 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
             once: true,
           }
         })
-
-        if (borderTween.scrollTrigger) {
-          triggers.push(borderTween.scrollTrigger)
-        }
+        if (borderTween.scrollTrigger) triggers.push(borderTween.scrollTrigger)
       }
 
       if (valueElement) {
@@ -94,46 +83,41 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
             },
             onUpdate: function () {
               const currentValue = Math.floor(counterObj.value)
-              valueElement.textContent = finalValue.replace(/\d+/, currentValue.toString())
+              valueElement.textContent = localizeNumbers(
+                finalValue.replace(/\d+/, currentValue.toString()),
+                locale
+              )
             }
           })
-
-          if (counterTween.scrollTrigger) {
-            triggers.push(counterTween.scrollTrigger)
-          }
+          if (counterTween.scrollTrigger) triggers.push(counterTween.scrollTrigger)
         }
       }
     })
 
-    return () => {
-      triggers.forEach((trigger) => trigger.kill())
-      if (sectionElement) {
-        ScrollTrigger.getAll().forEach((trigger) => {
-          if (sectionElement.contains(trigger.vars.trigger as Element)) {
-            trigger.kill()
-          }
-        })
-      }
-    }
-  }, [])
+    return () => triggers.forEach((t) => t.kill())
+  }, [locale])
 
   return (
     <section
       suppressHydrationWarning={true}
       id="about"
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center"
-      style={{ paddingTop: '8rem', paddingBottom: '8rem' }}
+      className="flex w-full items-center"
+      style={{ 
+        minHeight: '100vh',
+        paddingTop: 'clamp(6rem, 10vh, 8rem)',
+        paddingBottom: 'clamp(6rem, 10vh, 8rem)'
+      }}
     >
       <Container>
-        <div className="grid gap-16 md:grid-cols-2 md:gap-20 lg:gap-24">
-          {/* Content - Authority through precision */}
+        <div className="grid gap-12 md:grid-cols-2 md:gap-20 lg:gap-24">
+          {/* Content - Facts over claims */}
           <div>
-            <div ref={titleRef} className="mb-12">
+            <div ref={titleRef} className="mb-8 md:mb-12">
               <h2 
                 className="mb-6 font-sans font-normal text-primary"
                 style={{
-                  fontSize: 'clamp(3.052rem, 6vw, 3.815rem)',
+                  fontSize: 'clamp(2.5rem, 6vw, 3.815rem)',
                   lineHeight: 1.1,
                   letterSpacing: '-0.02em',
                 }}
@@ -147,19 +131,21 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
             </div>
             <div ref={descriptionRef} className="space-y-6">
               <p 
-                className="max-w-lg text-primary/85"
+                className="text-primary/85"
                 style={{
                   fontSize: 'clamp(1rem, 1.2vw, 1.25rem)',
                   lineHeight: 1.6,
+                  maxWidth: '42ch'
                 }}
               >
                 {t("about.description1")}
               </p>
               <p 
-                className="max-w-lg text-primary/85"
+                className="text-primary/85"
                 style={{
                   fontSize: 'clamp(1rem, 1.2vw, 1.25rem)',
                   lineHeight: 1.6,
+                  maxWidth: '42ch'
                 }}
               >
                 {t("about.description2")}
@@ -167,8 +153,8 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
             </div>
           </div>
 
-          {/* Stats - Facts over claims */}
-          <div className="flex flex-col justify-center space-y-12 md:space-y-16">
+          {/* Stats - Evidence */}
+          <div className="flex flex-col justify-center space-y-10 md:space-y-12">
             {[
               {
                 value: t("about.stat1.value"),
@@ -189,7 +175,7 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
               <div
                 key={i}
                 data-stat
-                className="flex items-baseline gap-8 ltr:pl-8 rtl:pr-8 relative"
+                className="flex items-baseline gap-6 md:gap-8 ltr:pl-6 rtl:pr-6 relative"
               >
                 <div
                   data-stat-border
@@ -199,7 +185,7 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
                   data-stat-value
                   className="font-normal text-primary tabular-nums"
                   style={{
-                    fontSize: 'clamp(2.441rem, 4vw, 3.052rem)',
+                    fontSize: 'clamp(2rem, 4vw, 3.052rem)',
                     lineHeight: 1.1,
                   }}
                 >
@@ -209,7 +195,7 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
                   <div 
                     className="font-sans font-medium text-primary"
                     style={{
-                      fontSize: 'clamp(1.25rem, 1.5vw, 1.5rem)',
+                      fontSize: 'clamp(1.125rem, 1.5vw, 1.5rem)',
                       lineHeight: 1.3,
                     }}
                   >
@@ -224,8 +210,8 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
           </div>
         </div>
 
-        {/* Actions */}
-        <div ref={buttonsRef} className="mt-16 flex flex-wrap gap-4">
+        {/* Actions - Natural conversion */}
+        <div ref={buttonsRef} className="mt-12 md:mt-16 flex flex-wrap gap-4">
           <MagneticButton
             size="lg"
             variant="primary"
