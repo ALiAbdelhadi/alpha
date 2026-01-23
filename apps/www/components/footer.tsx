@@ -8,11 +8,13 @@ import { AlphaLogo } from "./alpha-logo"
 
 export default function Footer() {
     const t = useTranslations("footer")
+    const tLogo = useTranslations("logo")
     const taglineRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.5 })
     const linksRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.1, duration: 0.5 })
     const logoRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.2, duration: 0.6 })
     const descRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.3, duration: 0.5 })
     const bottomRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.4, duration: 0.5 })
+    const year = new Date().getFullYear()
 
     return (
         <footer className="w-full border-t border-foreground/10">
@@ -53,19 +55,23 @@ export default function Footer() {
                             className="font-semibold text-primary font-sans tracking-tighter select-none"
                             style={{ fontSize: 'clamp(120px, 20vw, 400px)', lineHeight: '0.9' }}
                         >
-                            Alpha
+                            {tLogo("logo")}
                         </h2>
                     </div>
                 </div>
                 <div ref={descRef} className="mb-16 max-w-2xl">
-                    <p className="text-primary/70 leading-relaxed">
+                    <p className="text-muted-foreground leading-relaxed">
                         {t("description")}
                     </p>
                 </div>
-                <div ref={bottomRef} className="flex flex-col gap-6 sm:flex-row sm:justify-between sm:items-center border-t border-foreground/10 pt-8">
+                <div 
+                    ref={bottomRef} 
+                    className="flex flex-col gap-6 sm:flex-row sm:justify-between sm:items-center border-t border-foreground/10 pt-8"
+                    style={{ minHeight: '48px' }}
+                >
                     <div className="flex items-center gap-2">
                         <AlphaLogo size="sm" variant="icon" />
-                        <span className="text-primary/70 text-sm">{t("copyright")}</span>
+                        <span className="text-primary/70 text-sm">{t("copyright", { year })}</span>
                     </div>
                     <div className="flex flex-wrap gap-6 sm:gap-8">
                         <Link href="/approach" className="text-primary/70 transition-colors text-sm hover:text-primary">

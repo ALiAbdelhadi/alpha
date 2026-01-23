@@ -122,13 +122,22 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
       suppressHydrationWarning={true}
       id="about"
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center pt-24 md:pt-32"
+      className="flex min-h-screen w-full items-center"
+      style={{ paddingTop: '8rem', paddingBottom: '8rem' }}
     >
       <Container>
-        <div className="grid gap-12 md:grid-cols-2 md:gap-20 lg:gap-28">
+        <div className="grid gap-16 md:grid-cols-2 md:gap-20 lg:gap-24">
+          {/* Content - Authority through precision */}
           <div>
-            <div ref={titleRef} className="mb-10 md:mb-14">
-              <h2 className="mb-4 font-sans text-4xl font-normal leading-[1.1] tracking-tight text-primary md:text-5xl lg:text-6xl">
+            <div ref={titleRef} className="mb-12">
+              <h2 
+                className="mb-6 font-sans font-normal text-primary"
+                style={{
+                  fontSize: 'clamp(3.052rem, 6vw, 3.815rem)',
+                  lineHeight: 1.1,
+                  letterSpacing: '-0.02em',
+                }}
+              >
                 {t("about.title")}
                 <br />
                 {t("about.title2")}
@@ -136,16 +145,30 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
                 <span className="text-primary/70">{t("about.title3")}</span>
               </h2>
             </div>
-            <div ref={descriptionRef} className="space-y-5 md:space-y-6">
-              <p className="max-w-lg text-base leading-relaxed text-primary/85 md:text-lg">
+            <div ref={descriptionRef} className="space-y-6">
+              <p 
+                className="max-w-lg text-primary/85"
+                style={{
+                  fontSize: 'clamp(1rem, 1.2vw, 1.25rem)',
+                  lineHeight: 1.6,
+                }}
+              >
                 {t("about.description1")}
               </p>
-              <p className="max-w-lg text-base leading-relaxed text-primary/85 md:text-lg">
+              <p 
+                className="max-w-lg text-primary/85"
+                style={{
+                  fontSize: 'clamp(1rem, 1.2vw, 1.25rem)',
+                  lineHeight: 1.6,
+                }}
+              >
                 {t("about.description2")}
               </p>
             </div>
           </div>
-          <div className="flex flex-col justify-center space-y-10 md:space-y-14">
+
+          {/* Stats - Facts over claims */}
+          <div className="flex flex-col justify-center space-y-12 md:space-y-16">
             {[
               {
                 value: t("about.stat1.value"),
@@ -166,23 +189,33 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
               <div
                 key={i}
                 data-stat
-                className="flex items-baseline gap-6 ltr:pl-6 rtl:pr-6 md:gap-10 ltr:md:pl-10 rtl:md:pr-10 relative"
+                className="flex items-baseline gap-8 ltr:pl-8 rtl:pr-8 relative"
               >
                 <div
                   data-stat-border
-                  className="absolute ltr:left-0 rtl:right-0 top-0 bottom-0 w-px bg-foreground/25 origin-bottom"
+                  className="absolute ltr:left-0 rtl:right-0 top-0 bottom-0 w-px bg-foreground/20 origin-bottom"
                 />
                 <div
                   data-stat-value
-                  className="text-4xl font-normal text-primary md:text-5xl lg:text-6xl tabular-nums"
+                  className="font-normal text-primary tabular-nums"
+                  style={{
+                    fontSize: 'clamp(2.441rem, 4vw, 3.052rem)',
+                    lineHeight: 1.1,
+                  }}
                 >
                   {stat.value}
                 </div>
                 <div>
-                  <div className="font-sans text-lg font-medium text-primary md:text-xl">
+                  <div 
+                    className="font-sans font-medium text-primary"
+                    style={{
+                      fontSize: 'clamp(1.25rem, 1.5vw, 1.5rem)',
+                      lineHeight: 1.3,
+                    }}
+                  >
                     {stat.label}
                   </div>
-                  <div className="font-mono text-xs text-primary/60 tracking-wide">
+                  <div className="font-mono text-xs text-primary/60 tracking-wide mt-1">
                     {stat.sublabel}
                   </div>
                 </div>
@@ -190,7 +223,9 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
             ))}
           </div>
         </div>
-        <div ref={buttonsRef} className="mt-12 flex flex-wrap gap-4 md:mt-20">
+
+        {/* Actions */}
+        <div ref={buttonsRef} className="mt-16 flex flex-wrap gap-4">
           <MagneticButton
             size="lg"
             variant="primary"

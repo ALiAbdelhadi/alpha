@@ -51,81 +51,97 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
   return (
     <section
       id="home"
-      className="flex w-full flex-col items-center justify-center min-h-screen py-24 md:py-32"
+      className="relative flex w-full flex-col items-center justify-center min-h-screen"
+      style={{ paddingTop: '8rem', paddingBottom: '8rem' }}
       aria-label="Hero section"
     >
       <Container>
-        <div className="max-w-4xl">
+          {/* Badge - Minimal, purposeful */}
           <div
             ref={badgeRef}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-foreground/10 px-4 py-2 backdrop-blur-sm transition-colors hover:border-foreground/25"
+            className="mb-8 inline-flex items-center gap-2"
             role="status"
             aria-live="polite"
           >
-            <div className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-pulse" />
-            <p className="font-mono text-xs text-primary/90 tracking-wide">{t("hero.badge")}</p>
+            <div className="h-1 w-1 rounded-full bg-teal-400" />
+            <p className="font-mono text-xs text-primary/60 tracking-wider uppercase">
+              {t("hero.badge")}
+            </p>
           </div>
+
+          {/* Hero Statement - Single, powerful message */}
           <h1
             ref={titleRef}
-            className="mb-8 font-sans text-5xl font-normal leading-[1.08] tracking-tight text-primary md:text-6xl lg:text-7xl xl:text-8xl"
+            className="mb-12 font-sans font-normal text-primary"
+            style={{
+              fontSize: 'clamp(3.815rem, 8vw, 4.768rem)',
+              lineHeight: 1.1,
+              letterSpacing: '-0.02em',
+            }}
           >
-            <span className="text-balance">
+            <span className="text-balance block">
               {t("hero.title")}
               <br />
               <span className="text-primary/70">{t("hero.title2")}</span>
             </span>
           </h1>
+
+          {/* Description - Clear value proposition */}
           <p
             ref={descriptionRef}
-            className="mb-10 max-w-2xl text-lg leading-relaxed text-primary/85 md:text-xl lg:text-2xl"
+            className="mb-16 max-w-3xl text-primary/85"
+            style={{
+              fontSize: 'clamp(1.25rem, 2vw, 1.5rem)',
+              lineHeight: 1.6,
+            }}
           >
             <span className="text-pretty">{t("hero.description")}</span>
           </p>
 
-          <div ref={buttonsRef} className="flex flex-col gap-6">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <MagneticButton
-                size="lg"
-                variant="primary"
-                onClick={() => scrollToSection("contact")}
-                aria-label={t("hero.ctaPrimary")}
-                className="group relative"
-              >
-                <span className="flex items-center gap-2">{t("hero.ctaPrimary")}</span>
+          {/* Actions - Clear, not aggressive */}
+          <div ref={buttonsRef} className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <MagneticButton
+              size="lg"
+              variant="primary"
+              onClick={() => scrollToSection("contact")}
+              aria-label={t("hero.ctaPrimary")}
+              className="group"
+            >
+              <span className="flex items-center gap-2">
+                {t("hero.ctaPrimary")}
                 <svg
-                  className="ml-2 h-4 w-4 transition-transform ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
+                  className="h-4 w-4 transition-transform duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  strokeWidth={2}
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
-              </MagneticButton>
+              </span>
+            </MagneticButton>
 
-              <MagneticButton
-                size="lg"
-                variant="secondary"
-                onClick={() => scrollToSection("work")}
-                aria-label={t("hero.ctaSecondary")}
-              >
-                {t("hero.ctaSecondary")}
-              </MagneticButton>
-            </div>
+            <MagneticButton
+              size="lg"
+              variant="secondary"
+              onClick={() => scrollToSection("work")}
+              aria-label={t("hero.ctaSecondary")}
+            >
+              {t("hero.ctaSecondary")}
+            </MagneticButton>
           </div>
-        </div>
+
+        {/* Scroll Hint - Subtle, non-intrusive */}
         <div
           ref={scrollHintRef}
           className="absolute bottom-12 left-1/2 -translate-x-1/2 hidden md:block"
           aria-hidden="true"
         >
-          <div className="flex flex-col items-center gap-3">
-            <p className="font-mono text-xs text-primary/70 tracking-wider uppercase">{t("hero.scrollHint")}</p>
-            <div className="flex h-10 w-6 items-start justify-center rounded-full border border-primary/20 bg-primary/5 backdrop-blur-sm p-1.5">
-              <div
-                className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary/70"
-                style={{ animationDuration: "1.5s" }}
-              />
-            </div>
+          <div className="flex flex-col items-center gap-2">
+            <p className="font-mono text-xs text-primary/50 tracking-wider uppercase">
+              {t("hero.scrollHint")}
+            </p>
+            <div className="h-8 w-px bg-primary/20" />
           </div>
         </div>
       </Container>

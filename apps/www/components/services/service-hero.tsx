@@ -67,18 +67,11 @@ export function ServiceHero({
     const preset = gradients[gradientPreset]
 
     return (
-        <section className="relative min-h-[90vh] flex items-center pt-24 md:pt-32 overflow-hidden">
+        <section className="relative min-h-screen flex items-center overflow-hidden">
             <div
                 className="absolute inset-0 pointer-events-none"
                 style={{ background: preset.bg }}
             />
-            
-            {/* Ambient noise texture overlay for 2026 feel */}
-            <div 
-                className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay"
-                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}
-            />
-
             <Container>
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                     <div>
@@ -118,9 +111,8 @@ export function ServiceHero({
                             </Link>
                         </div>
                     </div>
-                    
                     <div className="relative hidden lg:block">
-                         {visual}
+                        {visual}
                     </div>
                 </div>
             </Container>

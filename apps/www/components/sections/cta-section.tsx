@@ -131,51 +131,53 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
         <section
             ref={sectionRef}
             id="cta"
-            className="relative py-24 md:py-32 lg:py-40 overflow-hidden"
+            className="relative overflow-hidden"
+            style={{ paddingTop: '8rem', paddingBottom: '8rem' }}
             aria-label="Call to action section"
         >
             <Container>
                 <div
                     ref={contentRef}
-                    className="relative overflow-hidden rounded-3xl border border-foreground/10 backdrop-blur-md bg-foreground/2 p-8 sm:p-10 md:p-16 lg:p-20 will-animate-gpu"
+                    className="relative border-b border-foreground/10 pb-16"
                 >
-                    <div
-                        className="absolute inset-0 pointer-events-none"
-                        style={{
-                            background: `
-                radial-gradient(circle at 20% 30%, oklch(0.645 0.15 185)/8 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, oklch(0.35 0.12 185)/8 0%, transparent 40%)
-              `,
-                        }}
-                        aria-hidden="true"
-                    />
-                    <div className="relative z-10">
+                    <div className="relative z-10 max-w-4xl">
                         <h2
                             ref={headingRef}
-                            className="mb-6 sm:mb-8 font-sans text-4xl sm:text-5xl md:text-6xl font-normal leading-tight tracking-tight text-primary"
+                            className="mb-8 font-sans font-normal text-primary"
+                            style={{
+                                fontSize: 'clamp(3.052rem, 6vw, 3.815rem)',
+                                lineHeight: 1.1,
+                                letterSpacing: '-0.02em',
+                            }}
                         >
-                            <span className="text-balance">{t("title") || "Ready to transform your vision?"}</span>
+                            <span className="text-balance">
+                                {t("title") || "Ready to transform your vision?"}
+                            </span>
                         </h2>
                         <p
                             ref={descriptionRef}
-                            className="mb-10 sm:mb-12 max-w-2xl text-base sm:text-lg md:text-xl leading-relaxed text-primary/80"
+                            className="mb-12 max-w-2xl text-primary/80"
+                            style={{
+                                fontSize: 'clamp(1rem, 1.2vw, 1.25rem)',
+                                lineHeight: 1.6,
+                            }}
                         >
                             <span className="text-pretty">
                                 {t("description") ||
                                     "Join us in creating something extraordinary. Let's collaborate on your next project and bring your ideas to life with innovation and precision."}
                             </span>
                         </p>
-                        <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 sm:gap-5 mb-8 sm:mb-10">
+                        <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 mb-8">
                             <MagneticButton
                                 size="lg"
                                 variant="primary"
                                 onClick={() => scrollToSection?.("contact")}
                                 aria-label={t("primaryAction") || "Schedule a consultation"}
-                                className="group relative"
+                                className="group"
                             >
                                 <span className="flex items-center justify-center gap-2">
                                     {t("primaryAction") || "Get started"}
-                                    <Calendar className="w-4 h-4 transition-transform group-hover:translate-y-0.5" />
+                                    <Calendar className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5" />
                                 </span>
                             </MagneticButton>
                             <Link href="/approach">
@@ -187,29 +189,23 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
                                     <span className="flex items-center justify-center gap-2">
                                         {t("secondaryAction") || "Explore portfolio"}
                                         <svg
-                                            className="w-4 h-4 transition-transform ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
+                                            className="w-4 h-4 transition-transform duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             stroke="currentColor"
+                                            strokeWidth={2}
                                             aria-hidden="true"
                                         >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                         </svg>
                                     </span>
                                 </MagneticButton>
                             </Link>
                         </div>
-                        <p className="text-xs sm:text-sm text-primary/60 font-mono tracking-wide">
+                        <p className="text-xs text-primary/60 font-mono tracking-wide">
                             {t("footnote") || "Typically respond within 24 hours • Available Mon-Fri, 9am-6pm"}
                         </p>
                     </div>
-                    <div
-                        className="absolute -right-20 -bottom-20 w-40 h-40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        style={{
-                            background: "radial-gradient(circle, oklch(0.75 0.18 190)/10 0%, transparent 70%)",
-                        }}
-                        aria-hidden="true"
-                    />
                 </div>
             </Container>
         </section>

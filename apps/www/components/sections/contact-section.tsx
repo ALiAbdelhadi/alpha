@@ -222,37 +222,66 @@ export function ContactSection() {
       id="contact"
       suppressHydrationWarning={true}
       ref={sectionRef}
-      className="flex min-h-screen shrink-0 snap-start items-center py-20 sm:py-24 md:py-32 overflow-x-hidden"
+      className="flex min-h-screen shrink-0 snap-start items-center overflow-x-hidden"
+      style={{ paddingTop: '8rem', paddingBottom: '8rem' }}
     >
       <Container>
-        <div className="grid gap-12 md:grid-cols-2 md:gap-20 lg:gap-28">
+        <div className="grid gap-16 md:grid-cols-2 md:gap-20 lg:gap-24">
+          {/* Contact Info */}
           <div className="flex flex-col justify-center">
-            <div ref={titleRef} className="mb-12 sm:mb-14 md:mb-16">
-              <h2 className="mb-3 font-sans text-4xl font-normal leading-[1.05] tracking-tight text-primary sm:text-5xl md:text-6xl lg:text-7xl">
+            <div ref={titleRef} className="mb-12">
+              <h2 
+                className="mb-4 font-sans font-normal text-primary"
+                style={{
+                  fontSize: 'clamp(3.052rem, 6vw, 3.815rem)',
+                  lineHeight: 1.1,
+                  letterSpacing: '-0.02em',
+                }}
+              >
                 {t("contact.title")}
                 <br />
                 <span className="text-primary/75">{t("contact.title2")}</span>
               </h2>
-              <p className="font-mono text-sm text-primary/60 tracking-wide sm:text-base">{t("contact.subtitle")}</p>
+              <p className="font-mono text-sm text-primary/60 tracking-wide">
+                {t("contact.subtitle")}
+              </p>
             </div>
-            <div className="space-y-8 sm:space-y-9">
+            <div className="space-y-10">
               <Link data-contact-left href={`mailto:${t("contact.emailValue")}`} className="group block">
-                <div className="mb-2 flex items-center gap-2">
+                <div className="mb-3 flex items-center gap-2">
                   <Mail className="h-3.5 w-3.5 text-primary/60" />
-                  <span className="font-mono text-xs text-primary/60 tracking-wide">{t("contact.email")}</span>
+                  <span className="font-mono text-xs text-primary/60 tracking-wider uppercase">
+                    {t("contact.email")}
+                  </span>
                 </div>
-                <p className="text-lg text-primary transition-colors group-hover:text-primary/75 md:text-xl lg:text-2xl">
+                <p 
+                  className="text-primary transition-colors duration-300 group-hover:text-primary/75"
+                  style={{
+                    fontSize: 'clamp(1.25rem, 1.5vw, 1.5rem)',
+                    lineHeight: 1.4,
+                  }}
+                >
                   {t("contact.emailValue")}
                 </p>
               </Link>
               <div data-contact-left>
-                <div className="mb-2 flex items-center gap-2">
+                <div className="mb-3 flex items-center gap-2">
                   <MapPin className="h-3.5 w-3.5 text-primary/60" />
-                  <span className="font-mono text-xs text-primary/60 tracking-wide">{t("contact.location")}</span>
+                  <span className="font-mono text-xs text-primary/60 tracking-wider uppercase">
+                    {t("contact.location")}
+                  </span>
                 </div>
-                <p className="text-lg text-primary md:text-xl lg:text-2xl">{t("contact.locationValue")}</p>
+                <p 
+                  className="text-primary"
+                  style={{
+                    fontSize: 'clamp(1.25rem, 1.5vw, 1.5rem)',
+                    lineHeight: 1.4,
+                  }}
+                >
+                  {t("contact.locationValue")}
+                </p>
               </div>
-              <div data-contact-left className="flex flex-wrap gap-3 pt-2 sm:gap-4">
+              <div data-contact-left className="flex flex-wrap gap-4 pt-4">
                 {[
                   t("contact.social.twitter"),
                   t("contact.social.instagram"),
@@ -262,20 +291,22 @@ export function ContactSection() {
                   <Link
                     key={social}
                     href="#"
-                    className="border-b border-transparent font-mono text-xs text-primary/60 transition-all hover:border-foreground/60 hover:text-primary/85 sm:text-sm"
+                    className="border-b border-transparent font-mono text-xs text-primary/60 transition-all duration-300 hover:border-foreground/60 hover:text-primary/85 tracking-wide"
                   >
                     {social}
                   </Link>
                 ))}
               </div>
-              <div data-contact-left className="pt-6 sm:pt-8">
+              <div data-contact-left className="pt-8">
                 <Link href="/schedule">
-                  <MagneticButton size="lg" className="h-11 w-auto sm:h-9 flex items-center justify-center">
-                    <Calendar className="h-4 w-4 transition-transform group-hover:scale-110" />
+                  <MagneticButton size="lg" className="flex items-center justify-center">
+                    <Calendar className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
                     <span>{t("contact.scheduleMeeting")}</span>
                   </MagneticButton>
                 </Link>
-                <p className="mt-3 text-xs text-primary/60 font-mono">{t("contact.scheduleDescription")}</p>
+                <p className="mt-4 text-xs text-primary/60 font-mono tracking-wide">
+                  {t("contact.scheduleDescription")}
+                </p>
               </div>
             </div>
           </div>

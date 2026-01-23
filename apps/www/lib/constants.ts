@@ -216,16 +216,82 @@ export const SPACING = {
 } as const
 
 // ============================================================================
-// ANIMATION DURATIONS
+// TYPOGRAPHY SYSTEM (1.250 - Major Third Scale)
+// ============================================================================
+
+export const TYPOGRAPHY = {
+  fontSizes: {
+    h1: '4.768rem',    // 76.29px - Hero statements
+    h2: '3.815rem',    // 61.04px - Section titles
+    h3: '3.052rem',    // 48.83px - Subsection titles
+    h4: '2.441rem',    // 39.06px - Card titles
+    bodyLg: '1.25rem', // 20px - Important body text
+    body: '1rem',      // 16px - Standard body text
+    small: '0.8rem',   // 12.8px - Labels, captions
+    mono: '0.875rem',  // 14px - Code, technical text
+  },
+  lineHeights: {
+    tight: 1.1,      // Headings (authoritative)
+    snug: 1.15,      // Tight headings
+    normal: 1.5,     // Mono, technical
+    relaxed: 1.6,    // Body text
+    loose: 1.75,     // Comfortable reading
+  },
+  letterSpacing: {
+    tighter: '-0.03em', // Large headings
+    tight: '-0.02em',   // Standard headings
+    normal: '0',        // Body text
+    wide: '0.05em',     // Mono text
+    wider: '0.1em',    // Uppercase labels
+  },
+} as const
+
+// ============================================================================
+// LAYOUT SYSTEM
+// ============================================================================
+
+export const LAYOUT = {
+  containerMaxWidth: '1280px',
+  containerPadding: {
+    mobile: '1.5rem',  // 24px
+    desktop: '2rem',   // 32px
+  },
+  sectionPadding: {
+    vertical: '8rem',   // 128px - Heroic spacing
+    verticalStandard: '4rem', // 64px - Standard sections
+    verticalTight: '2rem',    // 32px - Dense sections
+  },
+  gridGap: {
+    large: '2rem',      // 32px
+    medium: '1.5rem',  // 24px
+    small: '1rem',     // 16px
+    tight: '0.5rem',   // 8px
+  },
+} as const
+
+// ============================================================================
+// ANIMATION SYSTEM
 // ============================================================================
 
 export const ANIMATION = {
-  instant: 0.15,
-  fast: 0.3,
-  medium: 0.5,     // Reduced for snappier feel
-  slow: 0.8,
-  slower: 1.2,
-  slowest: 1.8,
+  durations: {
+    instant: 0.15,  // Micro-interactions
+    fast: 0.3,     // Hover states
+    medium: 0.5,   // Transitions
+    slow: 0.8,     // Page transitions
+    slower: 1.2,   // Complex animations
+  },
+  easings: {
+    default: 'cubic-bezier(0.4, 0, 0.2, 1)',      // Material Design
+    smooth: 'cubic-bezier(0.25, 0.1, 0.25, 1)',   // Ease
+    snappy: 'cubic-bezier(0.4, 0, 0.6, 1)',        // Ease-in-out
+  },
+  transforms: {
+    hoverScale: 1.02,      // Subtle button hover
+    hoverScaleLarge: 1.05, // Card hover
+    activeScale: 0.98,     // Button active
+    translateReveal: 20,   // Max scroll reveal distance (px)
+  },
 } as const
 
 // ============================================================================

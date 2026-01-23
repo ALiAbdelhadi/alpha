@@ -92,17 +92,28 @@ export function WorkSection() {
       id="work"
       suppressHydrationWarning={true}
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center pt-24 md:pt-32"
+      className="flex min-h-screen w-full items-center"
+      style={{ paddingTop: '8rem', paddingBottom: '8rem' }}
     >
       <Container>
-        <div ref={titleRef} className="mb-16 md:mb-20">
-          <h2 className="mb-3 font-sans text-5xl font-normal tracking-tight text-primary md:text-6xl lg:text-7xl">
+        {/* Section Header - Clear, minimal */}
+        <div ref={titleRef} className="mb-20">
+          <h2 
+            className="mb-4 font-sans font-normal text-primary"
+            style={{
+              fontSize: 'clamp(3.052rem, 6vw, 3.815rem)',
+              lineHeight: 1.1,
+              letterSpacing: '-0.02em',
+            }}
+          >
             {t("work.title")}
           </h2>
-          <p className="font-mono text-sm text-primary/60 tracking-wide md:text-base">
+          <p className="font-mono text-sm text-primary/60 tracking-wide">
             {t("work.subtitle")}
           </p>
         </div>
+
+        {/* Projects - Evidence-based presentation */}
         <div className="space-y-0">
           {projects.map((project) => (
             <ProjectCard key={project.number} project={project} index={0} />
@@ -188,44 +199,51 @@ function ProjectCard({
       <div
         ref={cardRef}
         data-project-card
-        className="group flex items-center justify-between border-b border-foreground/10 py-8 hover:border-foreground/20 transition-colors md:py-10 cursor-pointer"
+        className="group flex items-center justify-between border-b border-foreground/10 py-12 hover:border-foreground/25 transition-colors duration-300 cursor-pointer"
       >
-        <div className="flex items-baseline gap-6 md:gap-10">
+        <div className="flex items-baseline gap-8 md:gap-12">
           <span
             ref={numberRef}
-            className="font-mono text-sm text-primary/60 transition-all md:text-base"
+            className="font-mono text-sm text-primary/50 transition-all duration-300"
           >
             {project.number}
           </span>
           <div>
             <h3
               ref={titleRef}
-              className="mb-2 font-sans text-2xl font-medium text-primary transition-all md:text-3xl lg:text-4xl"
+              className="mb-2 font-sans font-medium text-primary transition-all duration-300"
+              style={{
+                fontSize: 'clamp(2rem, 3vw, 2.441rem)',
+                lineHeight: 1.2,
+              }}
             >
               {project.title}
             </h3>
             <p
               ref={categoryRef}
-              className="font-mono text-xs text-primary/60 transition-all md:text-sm"
+              className="font-mono text-xs text-primary/60 transition-all duration-300 tracking-wide"
             >
               {project.category}
             </p>
           </div>
         </div>
-        <span
-          ref={yearRef}
-          className="hidden font-mono text-sm text-primary/60 transition-all md:block"
-        >
-          {project.year}
-        </span>
-        <svg 
-          className="ml-4 h-5 w-5 text-primary/60 transition-all ltr:group-hover:translate-x-2 rtl:group-hover:-translate-x-2 group-hover:text-primary/70 rtl:-rotate-180" 
-          fill="none" 
-          viewBox="0 0 24 24" 
-          stroke="currentColor"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-        </svg>
+        <div className="flex items-center gap-4">
+          <span
+            ref={yearRef}
+            className="hidden font-mono text-sm text-primary/50 transition-all duration-300 md:block"
+          >
+            {project.year}
+          </span>
+          <svg 
+            className="h-4 w-4 text-primary/50 transition-all duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 group-hover:text-primary/70 rtl:-rotate-180" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </div>
       </div>
     </Link>
   )

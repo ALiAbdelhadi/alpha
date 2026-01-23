@@ -2,7 +2,7 @@
 
 import { ErrorBoundary } from "@/components/error-boundary"
 import { useNavigation } from "@/components/providers/navigation-provider"
-import { NAV_ITEMS } from "@/lib/constants"
+import { NAV_ITEMS } from "@/lib/constants" 
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef } from "react"
 
 const CtaSection = lazy(() => import("@/components/sections/cta-section").then(m => ({ default: m.CtaSectionEnhanced })))

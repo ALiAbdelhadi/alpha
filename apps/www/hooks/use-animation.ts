@@ -98,7 +98,12 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(
 
   useEffect(() => {
     const element = ref.current
-    if (!element || !isInitialLoadComplete) return
+    if (!element) return
+
+    if (!isInitialLoadComplete) {
+      gsap.set(element, { opacity: 1, x: 0, y: 0, scale: 1, clearProps: "transform" })
+      return
+    }
 
     if (prefersReducedMotion()) {
       gsap.set(element, { opacity: 1, x: 0, y: 0, scale: 1 })
@@ -124,9 +129,19 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(
       },
     })
 
+    const safetyTimeout = setTimeout(() => {
+      const computedOpacity = window.getComputedStyle(element).opacity
+      if (computedOpacity === '0' || parseFloat(computedOpacity) < 0.1) {
+        gsap.set(element, { opacity: 1, clearProps: "transform" })
+      }
+    }, duration * 1000 + delay * 1000 + 1000)
+
     return () => {
+      clearTimeout(safetyTimeout)
       animation.scrollTrigger?.kill()
       animation.kill()
+
+      gsap.set(element, { opacity: 1, clearProps: "transform" })
     }
   }, [isInitialLoadComplete, direction, delay, duration, distance, ease, start, end, once, scrub, markers])
 
@@ -155,10 +170,15 @@ export function useBatchReveal<T extends HTMLElement = HTMLDivElement>(
 
   useEffect(() => {
     const container = ref.current
-    if (!container || !isInitialLoadComplete) return
+    if (!container) return
 
     const elements = container.querySelectorAll(targets)
     if (!elements.length) return
+
+    if (!isInitialLoadComplete) {
+      gsap.set(elements, { opacity: 1, x: 0, y: 0, scale: 1, clearProps: "transform" })
+      return
+    }
 
     if (prefersReducedMotion()) {
       gsap.set(elements, { opacity: 1, x: 0, y: 0, scale: 1 })
@@ -195,6 +215,7 @@ export function useBatchReveal<T extends HTMLElement = HTMLDivElement>(
 
     return () => {
       triggers.forEach((trigger) => trigger.kill())
+      gsap.set(elements, { opacity: 1, clearProps: "transform" })
     }
   }, [isInitialLoadComplete, targets, direction, delay, duration, distance, ease, start, once, stagger, alternate, markers])
 

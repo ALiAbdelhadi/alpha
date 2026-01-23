@@ -31,16 +31,13 @@ export default function DevelopmentPage() {
                 }}
                 visual={<DevelopmentVisual />}
             />
-            
             <TechStackSection />
-            
             <ServiceFeatures
                 title={tCommon("whatWeOffer")}
                 subtitle={tCommon("whatWeOfferSubtitle")}
                 features={features}
                 columns={2}
             />
-            
             <ServiceCta
                 title={t("cta.title")}
                 description={t("cta.description")}

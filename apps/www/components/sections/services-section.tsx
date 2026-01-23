@@ -55,18 +55,29 @@ export function ServicesSection() {
       suppressHydrationWarning={true}
       id="services"
       ref={sectionRef}
-      className="flex min-h-screen w-full items-center pt-24 md:pt-32"
+      className="flex min-h-screen w-full items-center"
+      style={{ paddingTop: '8rem', paddingBottom: '8rem' }}
     >
       <Container>
-        <div ref={titleRef} className="mb-16 md:mb-20">
-          <h2 className="mb-3 font-sans text-5xl font-normal tracking-tight text-primary md:text-6xl lg:text-7xl">
+        {/* Section Header */}
+        <div ref={titleRef} className="mb-20">
+          <h2 
+            className="mb-4 font-sans font-normal text-primary"
+            style={{
+              fontSize: 'clamp(3.052rem, 6vw, 3.815rem)',
+              lineHeight: 1.1,
+              letterSpacing: '-0.02em',
+            }}
+          >
             {t("services.title")}
           </h2>
-          <p className="font-mono text-sm text-primary/60 tracking-wide md:text-base">
+          <p className="font-mono text-sm text-primary/60 tracking-wide">
             {t("services.subtitle")}
           </p>
         </div>
-        <div className="grid gap-12 md:grid-cols-2 md:gap-x-20 md:gap-y-16 lg:gap-x-28">
+
+        {/* Services Grid - Systems-focused */}
+        <div className="grid gap-16 md:grid-cols-2 md:gap-x-16 md:gap-y-20">
           {[
             {
               title: t("services.service1.title"),
@@ -152,22 +163,34 @@ function ServiceCard({
       data-service-card
       className="group cursor-default"
     >
-      <div className="mb-4 flex items-center gap-4">
+      <div className="mb-6 flex items-center gap-4">
         <div
           data-service-line
-          className="h-px w-10 bg-foreground/25 transition-colors group-hover:bg-foreground/40"
+          className="h-px w-12 bg-foreground/20 transition-all duration-300 group-hover:bg-foreground/40"
         />
         <span
           data-service-number
-          className="font-mono text-xs text-primary/50 transition-all"
+          className="font-mono text-xs text-primary/50 transition-all duration-300 tracking-wider"
         >
           {String(index + 1).padStart(2, '0')}
         </span>
       </div>
-      <h3 className="mb-3 font-sans text-2xl font-medium text-primary transition-colors group-hover:text-primary/90 md:text-3xl">
+      <h3 
+        className="mb-4 font-sans font-medium text-primary transition-colors duration-300 group-hover:text-primary/90"
+        style={{
+          fontSize: 'clamp(1.953rem, 2.5vw, 2.441rem)',
+          lineHeight: 1.2,
+        }}
+      >
         {service.title}
       </h3>
-      <p className="max-w-md text-base leading-relaxed text-primary/75 md:text-lg">
+      <p 
+        className="max-w-md text-primary/75"
+        style={{
+          fontSize: 'clamp(1rem, 1.2vw, 1.25rem)',
+          lineHeight: 1.6,
+        }}
+      >
         {service.description}
       </p>
     </div>

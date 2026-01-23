@@ -466,7 +466,7 @@
         "aboutAlpha": "About Alpha",
         "privacy": "Privacy",
         "terms": "Terms",
-        "copyright": "© 2025 Alpha. All rights reserved."
+        "copyright": "© {year} Alpha. All rights reserved."
     },
     "servicesPage": {
         "badge": "Web Development Studio",
