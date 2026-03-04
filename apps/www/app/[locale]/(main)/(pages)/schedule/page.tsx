@@ -172,7 +172,7 @@ export default function SchedulePage() {
     }
 
     return (
-        <section className="flex min-h-screen items-center py-16 sm:py-20 md:py-24">
+        <section className="flex min-h-screen items-center section-padding">
             <Container>
                 <div className="mx-auto max-w-2xl">
                     <div ref={backButtonRef}>
@@ -186,16 +186,16 @@ export default function SchedulePage() {
                         </Button>
                     </div>
                     <div className="mb-8" ref={headerRef}>
-                        <h1 className="mb-2 font-sans text-3xl font-light leading-tight tracking-tight text-primary sm:text-4xl md:text-5xl">
+                        <h1 className="mb-2 font-sans font-normal text-primary">
                             {t('title')}
                         </h1>
-                        <p className="font-mono text-xs text-primary/60 sm:text-sm md:text-base">
+                        <p className="mono text-primary/60">
                             {t('subtitle')}
                         </p>
                     </div>
                     <form ref={formRef} onSubmit={onSubmit} className="space-y-6" noValidate>
                         <div className="form-field">
-                            <Label className="mb-1.5 block font-mono text-xs text-primary/60 sm:text-sm md:mb-2">
+                            <Label className="mb-2 block">
                                 {t('form.name.label')} <span className="text-red-500">{t('form.name.required')}</span>
                             </Label>
                             <Input
@@ -203,23 +203,21 @@ export default function SchedulePage() {
                                 value={formData.name}
                                 onChange={(e) => handleInputChange("name", e.target.value)}
                                 className={cn(
-                                    "w-full border-b bg-transparent py-2 text-sm text-primary placeholder:text-primary/60 focus:outline-none sm:text-base md:py-2.5",
-                                    errors.name
-                                        ? "border-red-500 focus:border-red-500"
-                                        : "border-foreground/30 focus:border-foreground/50"
+                                    "w-full text-primary placeholder:text-primary/60",
+                                    errors.name && "border-destructive focus:border-destructive"
                                 )}
                                 placeholder={t('form.name.placeholder')}
                                 aria-invalid={!!errors.name}
                             />
                             {errors.name && (
-                                <p className="mt-1 text-xs text-red-500 flex items-center gap-1">
+                                <p className="mt-1 small text-destructive flex items-center gap-1">
                                     <AlertCircle className="h-3 w-3" />
                                     {errors.name}
                                 </p>
                             )}
                         </div>
                         <div className="form-field">
-                            <Label className="mb-1.5 block font-mono text-xs text-primary/60 sm:text-sm md:mb-2">
+                            <Label className="mb-2 block">
                                 {t('form.email.label')} <span className="text-red-500">{t('form.email.required')}</span>
                             </Label>
                             <Input
@@ -227,35 +225,33 @@ export default function SchedulePage() {
                                 value={formData.email}
                                 onChange={(e) => handleInputChange("email", e.target.value)}
                                 className={cn(
-                                    "w-full border-b bg-transparent py-2 text-sm text-primary placeholder:text-primary/60 focus:outline-none sm:text-base md:py-2.5",
-                                    errors.email
-                                        ? "border-red-500 focus:border-red-500"
-                                        : "border-foreground/30 focus:border-foreground/50"
+                                    "w-full text-primary placeholder:text-primary/60",
+                                    errors.email && "border-destructive focus:border-destructive"
                                 )}
                                 placeholder={t('form.email.placeholder')}
                                 aria-invalid={!!errors.email}
                             />
                             {errors.email && (
-                                <p className="mt-1 text-xs text-red-500 flex items-center gap-1">
+                                <p className="mt-1 small text-destructive flex items-center gap-1">
                                     <AlertCircle className="h-3 w-3" />
                                     {errors.email}
                                 </p>
                             )}
                         </div>
                         <div className="form-field">
-                            <Label className="mb-1.5 block font-mono text-xs text-primary/60 sm:text-sm md:mb-2">
+                            <Label className="mb-2 block">
                                 {t('form.message.label')}
                             </Label>
                             <Textarea
                                 value={formData.message}
                                 onChange={(e) => handleInputChange("message", e.target.value)}
                                 rows={4}
-                                className="w-full border-b bg-transparent py-2 text-sm text-primary placeholder:text-primary/60 focus:outline-none resize-none sm:text-base md:py-2.5"
+                                className="w-full text-primary placeholder:text-primary/60"
                                 placeholder={t('form.message.placeholder')}
                             />
                         </div>
                         <div className="form-field">
-                            <Label className="mb-1.5 block font-mono text-xs text-primary/60 sm:text-sm md:mb-2">
+                            <Label className="mb-2 block">
                                 <Calendar className="inline h-3.5 w-3.5 rtl:ml-1 ltr:mr-1" />
                                 {t('form.date.label')} <span className="text-red-500">{t('form.date.required')}</span>
                             </Label>
@@ -275,14 +271,14 @@ export default function SchedulePage() {
                                 )}
                             />
                             {errors.date && (
-                                <p className="mt-1 text-xs text-red-500 flex items-center gap-1">
+                                <p className="mt-1 small text-destructive flex items-center gap-1">
                                     <AlertCircle className="h-3 w-3" />
                                     {errors.date}
                                 </p>
                             )}
                         </div>
                         <div className="form-field">
-                            <Label className="mb-1.5 block font-mono text-xs text-primary/60 sm:text-sm md:mb-2">
+                            <Label className="mb-2 block">
                                 <Clock className="inline h-3.5 w-3.5 rtl:ml-1 ltr:mr-1" />
                                 {t('form.time.label')} <span className="text-red-500">{t('form.time.required')}</span>
                             </Label>
@@ -291,16 +287,16 @@ export default function SchedulePage() {
                                 onChange={(time) => handleInputChange("time", time)}
                                 disabled={isSubmitting}
                                 className={cn(
-                                    errors.time ? "border-red-500" : ""
+                                    errors.time ? "border-destructive" : ""
                                 )}
                             />
                             {errors.time && (
-                                <p className="mt-1 text-xs text-red-500 flex items-center gap-1">
+                                <p className="mt-1 small text-destructive flex items-center gap-1">
                                     <AlertCircle className="h-3 w-3" />
                                     {errors.time}
                                 </p>
                             )}
-                            <p className="mt-2 text-xs text-muted-foreground">
+                            <p className="mt-2 small text-primary/60">
                                 {t('form.time.availableHours')}
                             </p>
                         </div>
@@ -316,7 +312,7 @@ export default function SchedulePage() {
                             </Button>
                             {submitSuccess && (
                                 <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                                    <p className="text-center font-mono text-xs sm:text-sm text-primary flex items-center justify-center gap-2">
+                                    <p className="text-center mono small text-primary flex items-center justify-center gap-2">
                                         <CheckCircle2 className="h-4 w-4 text-green-500" />
                                         {t('submit.success')}
                                     </p>
@@ -324,7 +320,7 @@ export default function SchedulePage() {
                             )}
                             {submitError && (
                                 <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
-                                    <p className="text-center font-mono text-xs sm:text-sm text-primary flex items-center justify-center gap-2">
+                                    <p className="text-center mono small text-primary flex items-center justify-center gap-2">
                                         <AlertCircle className="h-4 w-4 text-red-500" />
                                         {submitError}
                                     </p>

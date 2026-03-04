@@ -1,14 +1,14 @@
-# Alpha Design System 2026
+# Anthupic Design System 2026
 ## Precision-Driven Web Development
 
 ---
 
 ## Core Design Philosophy
 
-### The Alpha Principle
+### The Anthupic Principle
 **"Systems that outlast trends. Code that serves purpose. Design that earns trust."**
 
-Alpha is not a generic agency. Every design decision must:
+Anthupic is not a generic agency. Every design decision must:
 1. **Serve a clear business goal** - No decorative elements without purpose
 2. **Answer a psychological question** - What does the visitor need to know/feel?
 3. **Build authority through precision** - Not claims, but demonstration
@@ -25,7 +25,7 @@ Alpha is not a generic agency. Every design decision must:
 ## Section Architecture
 
 ### 1. Hero Section
-**Purpose:** Establish Alpha's position in the first 3 seconds
+**Purpose:** Establish Anthupic's position in the first 3 seconds
 **Psychological Question:** "Are these the people who can solve my problem?"
 **Business Goal:** Immediate credibility + clear value proposition
 
@@ -62,7 +62,7 @@ Alpha is not a generic agency. Every design decision must:
 ---
 
 ### 3. Services Section
-**Purpose:** Clarify what Alpha builds (systems, not websites)
+**Purpose:** Clarify what Anthupic builds (systems, not websites)
 **Psychological Question:** "Do they understand my type of project?"
 **Business Goal:** Filter for right-fit clients
 
@@ -100,7 +100,7 @@ Alpha is not a generic agency. Every design decision must:
 ---
 
 ### 5. Approach/Philosophy Section
-**Purpose:** Differentiate Alpha from generic agencies
+**Purpose:** Differentiate Anthupic from generic agencies
 **Psychological Question:** "Are they thinking at the level I need?"
 **Business Goal:** Attract clients who value systems thinking
 
@@ -418,7 +418,7 @@ easings: {
 
 ---
 
-## What Makes Alpha Distinct
+## What Makes Anthupic Distinct
 
 1. **No generic agency clichés** - No "We're passionate about..." or "We create amazing..."
 2. **Systems over features** - Focus on architecture, not checklists
@@ -430,4 +430,4 @@ easings: {
 
 ---
 
-*This design system is a living document. It evolves as Alpha's positioning evolves. Every decision must serve the core principle: Systems that outlast trends.*
+*This design system is a living document. It evolves as Anthupic's positioning evolves. Every decision must serve the core principle: Systems that outlast trends.*

@@ -2,9 +2,9 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
     return {
-        "name": "Alpha Admin",
-        "short_name": "Alpha Admin",
-        "description": "Alpha - Web Development Company specializing in innovative web experiences and cutting-edge applications",
+        "name": "Anthupic Admin",
+        "short_name": "Anthupic Admin",
+        "description": "Anthupic - Web Development Company specializing in innovative web experiences and cutting-edge applications",
         "orientation": "any",
         "dir": "auto",
         "lang": "en-GB",

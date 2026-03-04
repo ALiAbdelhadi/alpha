@@ -1,6 +1,6 @@
 {
     "logo": {
-        "logo": "Alpha"
+        "logo": "Anthupic"
     },
     "nav": {
         "home": "Home",
@@ -28,11 +28,13 @@
         "badge": "Web Development Studio • Cairo, Egypt",
         "title": "We build web solutions",
         "title2": "that convert visitors into clients",
+        "problem": "Most business websites in Egypt look fine but don't convert. We fix that, in Arabic and English.",
         "description": "Custom web development for businesses ready to scale. No templates. No shortcuts. Just clean code and measurable results.",
         "ctaPrimary": "Start Your Project",
         "ctaSecondary": "See Our Work",
         "scrollHint": "Scroll to explore",
-        "clientsLabel": "happy clients"
+        "clientsLabel": "happy clients",
+        "trust": "Free consultation · No pressure · Response within 4 hours"
     },
     "work": {
         "title": "Selected Work",
@@ -88,7 +90,7 @@
         "title": "Small team.",
         "title2": "Focused work.",
         "title3": "Real results.",
-        "description1": "Alpha is a web development studio in Cairo. We specialize in building modern applications for businesses that need quality, not quantity.",
+        "description1": "Anthupic is a web development studio in Cairo. We specialize in building modern applications for businesses that need quality, not quantity.",
         "description2": "Every project gets our full attention. We don't outsource. We don't use templates. We write clean code, meet deadlines, and stay honest throughout.",
         "stat1": {
             "value": "100%",
@@ -120,7 +122,7 @@
         "title2": "something great",
         "subtitle": "Start a conversation",
         "email": "Email",
-        "emailValue": "hello@alpha.com",
+        "emailValue": "hello@anthupic.com",
         "location": "Location",
         "locationValue": "Cairo, Egypt",
         "scheduleMeeting": "Schedule a Meeting",
@@ -150,9 +152,9 @@
         "infoTitle": "Contact",
         "infoTitleHighlight": "Information",
         "infoSubtitle": "Multiple ways to reach us",
-        "emailLabel": "EMAIL",
-        "phoneLabel": "PHONE",
-        "locationLabel": "LOCATION",
+        "emailLabel": "Email",
+        "phoneLabel": "Phone",
+        "locationLabel": "Location",
         "address1": "Cairo, Egypt",
         "address2": "Remote worldwide",
         "scheduleCall": "Schedule a Call",
@@ -171,6 +173,12 @@
             "messageLabel": "Message",
             "messagePlaceholder": "Tell us about your project",
             "submit": "Send Message"
+        },
+        "social": {
+            "twitter": "Twitter",
+            "instagram": "Instagram",
+            "linkedin": "LinkedIn",
+            "dribbble": "Dribbble"
         }
     },
     "schedule": {
@@ -226,19 +234,19 @@
         "contrasts": {
             "label": {
                 "common": "Common",
-                "alpha": "Alpha"
+                "anthupic": "Anthupic"
             },
             "1": {
                 "common": "Build the features users asked for",
-                "alpha": "Understand what problem users are trying to solve"
+                "anthupic": "Understand what problem users are trying to solve"
             },
             "2": {
                 "common": "Get it working, then optimize",
-                "alpha": "Define constraints before opening the editor"
+                "anthupic": "Define constraints before opening the editor"
             },
             "3": {
                 "common": "We'll fix that after launch",
-                "alpha": "Launch is when the system starts working, not when work starts"
+                "anthupic": "Launch is when the system starts working, not when work starts"
             }
         },
         "decisions": {
@@ -282,7 +290,7 @@
         "closing": {
             "title": "If this resonates, let's talk.",
             "description": "Not every project needs this level of thinking. Some need speed. Some need iteration. Some need experimentation. But if you're building something that needs to last—if the system is the product, not just the storefront—then we should have a conversation. No pitch. No pressure. Just a technical discussion about what you're trying to build and whether our approach fits.",
-            "cta": "Start conversation: hello@alpha.com"
+            "cta": "Start conversation: hello@anthupic.com"
         }
     },
     "process": {
@@ -455,7 +463,7 @@
     },
     "footer": {
         "tagline": "Crafting digital excellence",
-        "description": "Alpha is a web development studio dedicated to transforming ideas into stunning digital experiences. We specialize in creating responsive, high-performance websites.",
+        "description": "Anthupic is a web development studio dedicated to transforming ideas into stunning digital experiences. We specialize in creating responsive, high-performance websites.",
         "servicesTitle": "Services",
         "resourcesTitle": "Resources",
         "webDesign": "Web Design",
@@ -463,10 +471,10 @@
         "consulting": "Consulting",
         "maintenance": "Maintenance",
         "contact": "Contact",
-        "aboutAlpha": "About Alpha",
+        "aboutAnthupic": "About Anthupic",
         "privacy": "Privacy",
         "terms": "Terms",
-        "copyright": "© {year} Alpha. All rights reserved."
+        "copyright": "© {year} Anthupic. All rights reserved."
     },
     "servicesPage": {
         "badge": "Web Development Studio",
@@ -601,6 +609,16 @@
             "title": "Consulting",
             "subtitle": "Strategic Guidance",
             "description": "Strategic expertise to navigate digital transformation and optimize your online presence for maximum impact.",
+            "value": {
+                "title": "Strategic guidance, not generic advice.",
+                "body1": "Every recommendation is grounded in your business model, market, and constraints—not a recycled playbook.",
+                "body2": "We help you make better technical decisions today, and build the internal capability to keep making them tomorrow.",
+                "stats": {
+                    "systemsThinking": "Systems Thinking",
+                    "dataDriven": "Data-Driven",
+                    "longTerm": "Long-Term Focus"
+                }
+            },
             "hero": {
                 "ctaPrimary": "Book a Session",
                 "ctaSecondary": "Our Approach"
@@ -663,11 +681,27 @@
             "title": "Maintenance",
             "subtitle": "Continuous Support",
             "description": "Keep your digital assets running at peak performance with our comprehensive maintenance and support services.",
+            "hero": {
+                "systemStatus": "System Status",
+                "operational": "All systems operational",
+                "lastChecked": "Last checked: 2 min ago",
+                "uptimeLabel": "Uptime: 99.99%",
+                "secured": "✓ Secured",
+                "services": {
+                    "website": "Website",
+                    "database": "Database",
+                    "api": "API",
+                    "cdn": "CDN"
+                }
+            },
             "stats": {
                 "uptime": "Uptime Guarantee",
                 "response": "Response Time",
                 "monitoring": "Monitoring",
-                "satisfaction": "Client Satisfaction"
+                "satisfaction": "Client Satisfaction",
+                "title": "Built for long-term stability.",
+                "body1": "Maintenance isn't just about fixing what's broken—it's about preventing the silence of a system that's drifted from its original purpose.",
+                "body2": "We provide the technical layer that allows your business to grow without being anchored by legacy infrastructure or outdated dependencies."
             },
             "features": {
                 "1": {
@@ -702,39 +736,44 @@
                     "essential": {
                         "name": "Essential",
                         "features": [
-                            "Monthly updates",
-                            "Security patches",
-                            "Email support",
-                            "Basic monitoring"
+                            "Monthly security and performance updates",
+                            "Basic monitoring and uptime alerts",
+                            "Email support during business hours",
+                            "Access to core Anthupic Programs (basic QR campaigns, single AnthupicLink profile)"
                         ]
                     },
                     "professional": {
                         "name": "Professional",
                         "features": [
-                            "Weekly updates",
-                            "Priority support",
-                            "24/7 monitoring",
-                            "Performance reports",
-                            "Content updates"
+                            "Weekly updates and priority incident handling",
+                            "24/7 monitoring with detailed performance reports",
+                            "Content and landing page updates included",
+                            "Full access to Anthupic Programs (unlimited QR code generation, AnthupicLink, and marketing tools)"
                         ]
                     },
                     "enterprise": {
                         "name": "Enterprise",
                         "features": [
-                            "Dedicated support",
-                            "SLA guarantee",
-                            "Custom solutions",
-                            "On-call team",
-                            "Strategic reviews"
+                            "Dedicated success manager and custom SLAs",
+                            "Architecture and performance reviews each quarter",
+                            "Custom integrations and advanced security hardening",
+                            "Tailored Anthupic Programs bundle (custom QR flows, AnthupicLink networks, internal tools)"
                         ]
                     }
                 },
                 "getStarted": "Get Started",
-                "recommended": "Recommended"
+                "recommended": "Recommended",
+                "customPrice": "Custom"
             },
             "cta": {
                 "title": "Protect your investment",
-                "description": "Don't wait for issues to arise. Let us take care of your digital assets so you can focus on growing your business."
+                "description": "Don't wait for issues to arise. Let us take care of your digital assets so you can focus on growing your business.",
+                "checks": {
+                    "uptime": "Uptime tracking",
+                    "security": "Security audits",
+                    "backups": "Automated backups",
+                    "monitoring": "Performance monitoring"
+                }
             }
         }
     },
@@ -885,97 +924,6 @@
             "title": "Let's solve your challenges together",
             "description": "Schedule a free consultation to discuss your project and explore how we can help.",
             "button": "Schedule Consultation"
-        }
-    },
-    "maintenance": {
-        "title": "Maintenance",
-        "subtitle": "Continuous Support",
-        "description": "Keep your digital assets running at peak performance with our comprehensive maintenance and support services.",
-        "hero": {
-            "systemStatus": "System Status",
-            "operational": "All systems operational",
-            "lastChecked": "Last checked: 2 min ago",
-            "uptimeLabel": "Uptime: 99.99%",
-            "secured": "✓ Secured",
-            "services": {
-                "website": "Website",
-                "database": "Database",
-                "api": "API",
-                "cdn": "CDN"
-            }
-        },
-        "features": {
-            "1": {
-                "title": "Proactive Monitoring",
-                "description": "24/7 monitoring to detect and resolve issues before they impact your users."
-            },
-            "2": {
-                "title": "Security Updates",
-                "description": "Regular security patches and updates to protect against emerging threats."
-            },
-            "3": {
-                "title": "Performance Optimization",
-                "description": "Continuous improvements to maintain fast load times and smooth interactions."
-            },
-            "4": {
-                "title": "Content Updates",
-                "description": "Quick turnaround on content changes and minor feature additions."
-            },
-            "5": {
-                "title": "Backup & Recovery",
-                "description": "Automated backups and disaster recovery planning for peace of mind."
-            },
-            "6": {
-                "title": "Priority Support",
-                "description": "Dedicated support channel with rapid response times for critical issues."
-            }
-        },
-        "stats": {
-            "uptime": "Uptime Guarantee",
-            "response": "Response Time",
-            "monitoring": "Monitoring",
-            "satisfaction": "Client Satisfaction"
-        },
-        "pricing": {
-            "title": "Maintenance Plans",
-            "subtitle": "Choose a plan that fits your needs",
-            "plans": {
-                "essential": {
-                    "name": "Essential",
-                    "features": [
-                        "Monthly updates",
-                        "Security patches",
-                        "Email support",
-                        "Basic monitoring"
-                    ]
-                },
-                "professional": {
-                    "name": "Professional",
-                    "features": [
-                        "Weekly updates",
-                        "Priority support",
-                        "24/7 monitoring",
-                        "Performance reports",
-                        "Content updates"
-                    ]
-                },
-                "enterprise": {
-                    "name": "Enterprise",
-                    "features": [
-                        "Dedicated support",
-                        "SLA guarantee",
-                        "Custom solutions",
-                        "On-call team",
-                        "Strategic reviews"
-                    ]
-                }
-            },
-            "getStarted": "Get Started",
-            "recommended": "Recommended"
-        },
-        "cta": {
-            "title": "Protect your investment",
-            "description": "Don't wait for issues to arise. Let us take care of your digital assets so you can focus on growing your business."
         }
     },
     "estimator": {

@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { routing } from '@/i18n/routing'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://alpha.com'
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://anthupic.com'
   const currentDate = new Date()
 
   const routes = [

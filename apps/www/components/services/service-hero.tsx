@@ -67,29 +67,29 @@ export function ServiceHero({
     const preset = gradients[gradientPreset]
 
     return (
-        <section className="relative min-h-screen flex items-center overflow-hidden">
+        <section className="relative min-h-screen flex items-center overflow-hidden section-padding">
             <div
                 className="absolute inset-0 pointer-events-none"
                 style={{ background: preset.bg }}
             />
             <Container>
-                <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                     <div>
                         <div className={cn("mb-6 inline-flex items-center gap-2 rounded-full border px-4 py-2 backdrop-blur-sm", preset.pillBorder)}>
                             <div className={cn("h-2 w-2 rounded-full animate-pulse", preset.pill)} />
-                            <p className={cn("font-mono text-xs tracking-wide uppercase", preset.pillText)}>
+                            <p className={cn("mono-uppercase", preset.pillText)}>
                                 {subtitle}
                             </p>
                         </div>
                         <h1
                             ref={titleRef}
-                            className="mb-6 font-sans text-5xl font-normal leading-[1.1] tracking-tight text-primary md:text-6xl lg:text-7xl"
+                            className="mb-6 font-sans font-normal text-primary"
                         >
                             <span className="text-balance">{title}</span>
                         </h1>
                         <p
                             ref={descRef}
-                            className="mb-10 max-w-xl text-lg leading-relaxed text-primary/80 md:text-xl"
+                            className="mb-10 max-w-xl body-lg text-primary/80"
                         >
                             {description}
                         </p>
@@ -98,7 +98,7 @@ export function ServiceHero({
                                 <MagneticButton size="lg" variant="primary" className="group">
                                     <span className="flex items-center gap-2">
                                         {buttons.primary.text}
-                                        <svg className="w-4 h-4 transition-transform ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <svg className="w-4 h-4 transition-transform transition-default ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                         </svg>
                                     </span>

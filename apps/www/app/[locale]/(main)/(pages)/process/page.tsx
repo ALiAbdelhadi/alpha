@@ -26,16 +26,16 @@ function OpeningSection() {
     const descRef = useReveal({ direction: "up", delay: 0.4, duration: 1.2 })
 
     return (
-        <section className="flex min-h-screen items-center pt-24 md:pt-32">
+        <section className="flex min-h-screen items-center section-padding">
             <Container>
                 <div className="max-w-4xl">
                     <div ref={titleRef}>
-                        <h1 className="mb-8 font-sans text-5xl font-normal leading-[1.1] tracking-tight text-primary md:text-6xl lg:text-7xl xl:text-8xl">
+                        <h1 className="mb-8 font-sans font-normal text-primary">
                             {t("title")}
                         </h1>
                     </div>
                     <div ref={descRef}>
-                        <p className="max-w-2xl text-lg leading-relaxed text-primary/85 md:text-xl lg:text-2xl">
+                        <p className="max-w-2xl body-lg text-primary/85">
                             {t("description")}
                         </p>
                     </div>
@@ -87,36 +87,36 @@ function PhasesList() {
     ]
 
     return (
-        <section ref={sectionRef} className="py-24 md:py-32">
+        <section ref={sectionRef} className="section-padding">
             <Container>
-                <div className="space-y-24 md:space-y-32">
+                <div className="space-y-16">
                     {phases.map((phase, i) => (
                         <div
                             key={i}
                             data-phase
-                            className="grid gap-8 md:grid-cols-[200px_1fr] md:gap-16 lg:gap-24"
+                            className="grid gap-8 md:grid-cols-[200px_1fr] md:gap-16"
                         >
                             <div>
                                 <div className="mb-4 font-mono text-5xl font-light text-primary/60 md:text-6xl">
                                     {localizeNumbers(phase.number, locale)}
                                 </div>
 
-                                <div className="font-mono text-sm text-primary/60">
+                                <div className="mono small text-primary/60">
                                     {localizeNumbers(t(`${phase.key}.timeline`), locale)}
                                 </div>
                             </div>
                             <div className="max-w-2xl">
-                                <h3 className="mb-6 font-sans text-3xl font-medium text-primary md:text-4xl">
+                                <h3 className="mb-6 font-sans font-medium text-primary">
                                     {t(`${phase.key}.title`)}
                                 </h3>
-                                <p className="mb-6 text-lg leading-relaxed text-primary/75 md:text-xl">
+                                <p className="mb-6 body-lg text-primary/75">
                                     {t(`${phase.key}.description`)}
                                 </p>
                                 <div className="space-y-2">
-                                    <p className="font-mono text-xs font-medium uppercase tracking-wide text-primary/60">
+                                    <p className="mono-uppercase text-primary/60">
                                         {t("deliverables")}
                                     </p>
-                                    <p className="text-sm text-primary/75">
+                                    <p className="small text-primary/75">
                                         {t(`${phase.key}.deliverables`)}
                                     </p>
                                 </div>
@@ -135,16 +135,16 @@ function ClosingSection() {
     const descRef = useReveal({ direction: "up", delay: 0.15, duration: 0.5 })
 
     return (
-        <section className="py-24 pb-32 md:py-32 md:pb-40">
+        <section className="section-padding">
             <Container>
                 <div className="max-w-3xl">
-                    <div ref={titleRef} className="mb-8 md:mb-12">
-                        <h2 className="mb-3 font-sans text-4xl font-normal tracking-tight text-primary md:text-5xl lg:text-6xl">
+                    <div ref={titleRef} className="mb-12">
+                        <h2 className="mb-3 font-sans font-normal text-primary">
                             {t("title")}
                         </h2>
                     </div>
                     <div ref={descRef}>
-                        <p className="text-lg leading-relaxed text-primary/85 md:text-xl">
+                        <p className="body-lg text-primary/85">
                             {t("description")}
                         </p>
                     </div>

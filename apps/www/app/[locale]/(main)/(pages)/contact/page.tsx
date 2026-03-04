@@ -6,7 +6,6 @@ import { useReveal } from "@/hooks/use-animation"
 import { Link } from "@/i18n/navigation"
 import { useTranslations } from "next-intl"
 import { Mail, MapPin, Phone } from "lucide-react"
-import Footer from "@/components/footer"
 
 export default function ContactPage() {
     const t = useTranslations("contactPage")
@@ -18,7 +17,7 @@ export default function ContactPage() {
     return (
         <>
             <div className="flex flex-col min-h-screen">
-                <section className="flex min-h-screen w-full items-center justify-center pt-24 md:pt-32">
+                <section className="flex min-h-[70vh] w-full items-center justify-center pt-32 md:pt-40">
                     <Container>
                         <div className="max-w-4xl">
                             <div
@@ -41,7 +40,7 @@ export default function ContactPage() {
                         </div>
                     </Container>
                 </section>
-                <section className="flex min-h-screen w-full items-center pt-24 md:pt-32">
+                <section className="flex w-full items-center py-24 md:py-32">
                     <Container>
                         <div className="grid gap-12 md:grid-cols-2 md:gap-20 lg:gap-28">
                             <div ref={leftRef} className="flex flex-col justify-center">
@@ -67,7 +66,7 @@ export default function ContactPage() {
                                             {tContact("emailValue")}
                                         </p>
                                     </a>
-                                    <a href="tel:+201234567890" className="group block">
+                                    <a href={`tel:${t("phoneValue").replace(/\s/g, '')}`} className="group block">
                                         <div className="mb-2 flex items-center gap-2">
                                             <Phone className="h-3.5 w-3.5 text-primary/60" />
                                             <span className="font-mono text-xs text-primary/60 tracking-wide">
@@ -75,7 +74,7 @@ export default function ContactPage() {
                                             </span>
                                         </div>
                                         <p className="text-lg text-primary transition-colors group-hover:text-primary/75 md:text-xl lg:text-2xl">
-                                            +20 123 456 7890
+                                            {t("phoneValue")}
                                         </p>
                                     </a>
                                     <div>
@@ -92,13 +91,13 @@ export default function ContactPage() {
                                         </p>
                                     </div>
                                     <div className="flex flex-wrap gap-3 pt-2 sm:gap-4">
-                                        {["Twitter", "Instagram", "LinkedIn", "Dribbble"].map((social) => (
+                                        {["twitter", "instagram", "linkedin", "dribbble"].map((social) => (
                                             <a
                                                 key={social}
                                                 href="#"
                                                 className="border-b border-transparent font-mono text-xs text-primary/60 transition-all hover:border-foreground/60 hover:text-primary/85 sm:text-sm"
                                             >
-                                                {social}
+                                                {t(`social.${social}`)}
                                             </a>
                                         ))}
                                     </div>
@@ -130,57 +129,59 @@ export default function ContactPage() {
                                 </div>
                             </div>
                             <div ref={rightRef} className="flex flex-col justify-center">
-                                <div className="space-y-6">
-                                    <div>
-                                        <label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
-                                            {t("form.nameLabel")} <span className="text-red-500">*</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            placeholder={t("form.namePlaceholder")}
-                                            className="w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all"
-                                        />
-                                    </div>
+                                <div className="p-8 rounded-2xl border border-foreground/10 bg-foreground/3 backdrop-blur-md">
+                                    <div className="space-y-6">
+                                        <div>
+                                            <label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
+                                                {t("form.nameLabel")} <span className="text-red-500">*</span>
+                                            </label>
+                                            <input
+                                                type="text"
+                                                placeholder={t("form.namePlaceholder")}
+                                                className="w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all"
+                                            />
+                                        </div>
 
-                                    <div>
-                                        <label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
-                                            {t("form.emailLabel")} <span className="text-red-500">*</span>
-                                        </label>
-                                        <input
-                                            type="email"
-                                            placeholder={t("form.emailPlaceholder")}
-                                            className="w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all"
-                                        />
-                                    </div>
+                                        <div>
+                                            <label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
+                                                {t("form.emailLabel")} <span className="text-red-500">*</span>
+                                            </label>
+                                            <input
+                                                type="email"
+                                                placeholder={t("form.emailPlaceholder")}
+                                                className="w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all"
+                                            />
+                                        </div>
 
-                                    <div>
-                                        <label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
-                                            {t("form.serviceLabel")} <span className="text-red-500">*</span>
-                                        </label>
-                                        <select className="w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all">
-                                            <option value="">{t("form.servicePlaceholder")}</option>
-                                            <option value="web-design">{t("form.serviceWebDesign")}</option>
-                                            <option value="development">{t("form.serviceDevelopment")}</option>
-                                            <option value="consulting">{t("form.serviceConsulting")}</option>
-                                            <option value="maintenance">{t("form.serviceMaintenance")}</option>
-                                        </select>
-                                    </div>
+                                        <div>
+                                            <label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
+                                                {t("form.serviceLabel")} <span className="text-red-500">*</span>
+                                            </label>
+                                            <select className="w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all">
+                                                <option value="">{t("form.servicePlaceholder")}</option>
+                                                <option value="web-design">{t("form.serviceWebDesign")}</option>
+                                                <option value="development">{t("form.serviceDevelopment")}</option>
+                                                <option value="consulting">{t("form.serviceConsulting")}</option>
+                                                <option value="maintenance">{t("form.serviceMaintenance")}</option>
+                                            </select>
+                                        </div>
 
-                                    <div>
-                                        <label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
-                                            {t("form.messageLabel")} <span className="text-red-500">*</span>
-                                        </label>
-                                        <textarea
-                                            placeholder={t("form.messagePlaceholder")}
-                                            rows={4}
-                                            className="w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none resize-none border-foreground/25 focus:border-foreground/50 transition-all"
-                                        />
-                                    </div>
+                                        <div>
+                                            <label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
+                                                {t("form.messageLabel")} <span className="text-red-500">*</span>
+                                            </label>
+                                            <textarea
+                                                placeholder={t("form.messagePlaceholder")}
+                                                rows={4}
+                                                className="w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none resize-none border-foreground/25 focus:border-foreground/50 transition-all"
+                                            />
+                                        </div>
 
-                                    <div className="pt-3">
-                                        <MagneticButton type="submit" variant="primary" size="lg" className="w-full text-base">
-                                            {t("form.submit")}
-                                        </MagneticButton>
+                                        <div className="pt-3">
+                                            <MagneticButton type="submit" variant="primary" size="lg" className="w-full text-base">
+                                                {t("form.submit")}
+                                            </MagneticButton>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

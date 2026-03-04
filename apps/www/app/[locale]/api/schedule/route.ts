@@ -7,6 +7,18 @@ export async function POST(request: NextRequest) {
     try {
         const body = await request.json()
 
+        const origin = request.headers.get("origin")
+        const allowedOrigins = [process.env.NEXT_PUBLIC_APP_URL].filter(
+            (value): value is string => !!value
+        )
+
+        if (allowedOrigins.length > 0 && (!origin || !allowedOrigins.includes(origin))) {
+            return NextResponse.json(
+                { success: false, message: "Forbidden" },
+                { status: 403 }
+            )
+        }
+
         if (body.name && body.email && body.scheduledDate && body.scheduledTime) {
             const validatedData = standaloneMeetingSchema.parse(body)
 

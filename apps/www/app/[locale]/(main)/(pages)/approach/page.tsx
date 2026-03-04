@@ -28,16 +28,16 @@ function OpeningSection() {
     const descRef = useReveal({ direction: "up", delay: 0.4, duration: 1.2 })
 
     return (
-        <section className="flex min-h-screen items-center pt-24 md:pt-32">
+        <section className="flex min-h-screen items-center section-padding">
             <Container>
                 <div className="max-w-4xl">
                     <div ref={titleRef}>
-                        <h1 className="mb-8 font-sans text-5xl font-normal leading-[1.1] tracking-tight text-primary md:text-6xl lg:text-7xl xl:text-8xl">
+                        <h1 className="mb-8 font-sans font-normal text-primary">
                             {t("title")}
                         </h1>
                     </div>
                     <div ref={descRef}>
-                        <p className="max-w-2xl text-lg leading-relaxed text-primary/85 md:text-xl lg:text-2xl">
+                        <p className="max-w-2xl body-lg text-primary/85">
                             {t("description")}
                         </p>
                     </div>
@@ -82,37 +82,37 @@ function ProblemSection() {
     }, [])
 
     const contrasts = [
-        { common: t("1.common"), alpha: t("1.alpha") },
-        { common: t("2.common"), alpha: t("2.alpha") },
-        { common: t("3.common"), alpha: t("3.alpha") },
+        { common: t("1.common"), anthupic: t("1.anthupic") },
+        { common: t("2.common"), anthupic: t("2.anthupic") },
+        { common: t("3.common"), anthupic: t("3.anthupic") },
     ]
 
     return (
-        <section ref={sectionRef} className="py-24 md:py-32">
+        <section ref={sectionRef} className="section-padding">
             <Container>
-                <div ref={titleRef} className="mb-16 md:mb-20">
-                    <h2 className="mb-3 font-sans text-4xl font-normal tracking-tight text-primary md:text-5xl lg:text-6xl">
-                        {t("label.common")} vs {t("label.alpha")}
+                <div ref={titleRef} className="mb-16">
+                    <h2 className="mb-3 font-sans font-normal text-primary">
+                        {t("label.common")} vs {t("label.anthupic")}
                     </h2>
                 </div>
-                <div className="space-y-12 md:space-y-16">
+                <div className="space-y-12">
                     {contrasts.map((contrast, i) => (
                         <div
                             key={i}
                             data-contrast-item
-                            className="grid gap-8 md:grid-cols-2 md:gap-12 lg:gap-20"
+                            className="grid gap-8 md:grid-cols-2 md:gap-16"
                         >
                             <div className="flex items-center gap-6">
-                                <div className="h-px flex-1 bg-foreground/10" />
+                                <div className="h-px flex-1 bg-foreground/25" />
                                 <div className="max-w-md">
-                                    <p className="text-lg text-primary/60 md:text-xl">{contrast.common}</p>
+                                    <p className="body-lg text-primary/60">{contrast.common}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-6">
-                                <div className="h-px w-12 bg-foreground/30" />
+                                <div className="h-px w-12 bg-foreground/25" />
                                 <div className="max-w-md">
-                                    <p className="text-lg font-medium text-primary md:text-xl">
-                                        {contrast.alpha}
+                                    <p className="body-lg font-medium text-primary">
+                                        {contrast.anthupic}
                                     </p>
                                 </div>
                             </div>
@@ -166,24 +166,24 @@ function DecisionsSection() {
     ]
 
     return (
-        <section ref={sectionRef} className="py-24 md:py-32">
+        <section ref={sectionRef} className="section-padding">
             <Container>
-                <div ref={titleRef} className="mb-16 md:mb-20">
-                    <h2 className="mb-3 font-sans text-4xl font-normal tracking-tight text-primary md:text-5xl lg:text-6xl">
+                <div ref={titleRef} className="mb-16">
+                    <h2 className="mb-3 font-sans font-normal text-primary">
                         {t("title")}
                     </h2>
                 </div>
-                <div className="grid gap-12 md:gap-16">
+                <div className="grid gap-12">
                     {decisions.map((decision, i) => (
                         <div
                             key={i}
                             data-decision-item
-                            className="ltr:border-l-2 rtl:border-r-2 border-foreground/10 ltr:pl-8 rtl:pr-8"
+                            className="ltr:border-l-2 rtl:border-r-2 border-foreground/25 ltr:pl-8 rtl:pr-8"
                         >
-                            <h3 className="mb-4 font-sans text-2xl font-medium text-primary md:text-3xl">
+                            <h3 className="mb-4 font-sans font-medium text-primary">
                                 {decision.title}
                             </h3>
-                            <p className="max-w-2xl text-base leading-relaxed text-primary/75 md:text-lg">
+                            <p className="max-w-2xl body-lg text-primary/75">
                                 {decision.desc}
                             </p>
                         </div>
@@ -200,16 +200,16 @@ function ConstraintsSection() {
     const descRef = useReveal({ direction: "up", delay: 0.15, duration: 0.5 })
 
     return (
-        <section className="py-24 md:py-32">
+        <section className="section-padding">
             <Container>
-                <div ref={titleRef} className="mb-8 md:mb-12">
-                    <h2 className="mb-3 font-sans text-4xl font-normal tracking-tight text-primary md:text-5xl lg:text-6xl">
+                <div ref={titleRef} className="mb-12">
+                    <h2 className="mb-3 font-sans font-normal text-primary">
                         {t("title")}
                     </h2>
                 </div>
                 <div ref={descRef} className="max-w-3xl space-y-6">
                     {t("paragraphs").split("\n\n").map((paragraph: string, i: number) => (
-                        <p key={i} className="text-lg leading-relaxed text-primary/85 md:text-xl">
+                        <p key={i} className="body-lg text-primary/85">
                             {paragraph}
                         </p>
                     ))}
@@ -227,38 +227,38 @@ function BilingualSection() {
     const demoRef = useReveal({ direction: "up", delay: 0.25, duration: 0.5 })
 
     return (
-        <section className="py-24 md:py-32">
+        <section className="section-padding">
             <Container>
-                <div ref={titleRef} className="mb-8 md:mb-12">
-                    <h2 className="mb-3 font-sans text-4xl font-normal tracking-tight text-primary md:text-5xl lg:text-6xl">
+                <div ref={titleRef} className="mb-12">
+                    <h2 className="mb-3 font-sans font-normal text-primary">
                         {t("title")}
                     </h2>
                 </div>
-                <div ref={descRef} className="mb-12 max-w-3xl space-y-6 md:mb-16">
+                <div ref={descRef} className="mb-16 max-w-3xl space-y-6">
                     {t("paragraphs").split("\n\n").map((paragraph: string, i: number) => (
-                        <p key={i} className="text-lg leading-relaxed text-primary/85 md:text-xl">
+                        <p key={i} className="body-lg text-primary/85">
                             {paragraph}
                         </p>
                     ))}
                 </div>
-                <div ref={demoRef} className="rounded-lg border border-foreground/10 p-8 md:p-12">
+                <div ref={demoRef} className="rounded-lg border border-foreground/25 p-8 md:p-12">
                     <div className="mb-8 flex items-center justify-between">
-                        <p className="font-mono text-sm text-primary/60">Interactive Demo</p>
+                        <p className="mono text-primary/60">Interactive Demo</p>
                         <button
                             onClick={() => setIsRTL(!isRTL)}
-                            className="rounded-full border border-foreground/20 bg-foreground/5 px-4 py-2 font-mono text-sm text-primary transition-colors hover:bg-foreground/10"
+                            className="rounded-full border border-foreground/25 bg-foreground/5 px-4 py-2 mono small text-primary transition-colors transition-default hover:bg-foreground/10"
                         >
                             {isRTL ? "EN" : "AR"}
                         </button>
                     </div>
                     <div
                         dir={isRTL ? "rtl" : "ltr"}
-                        className="space-y-4 transition-all duration-300"
+                        className="space-y-4 transition-all duration-300 transition-default"
                     >
-                        <h3 className="font-sans text-2xl font-medium text-primary">
+                        <h3 className="font-sans font-medium text-primary">
                             {isRTL ? "مثال على العنوان" : "Example Heading"}
                         </h3>
-                        <p className="text-base leading-relaxed text-primary/75">
+                        <p className="body text-primary/75">
                             {isRTL
                                 ? "هذا نص توضيحي يظهر كيف يتكيف التصميم تماماً مع اتجاه الكتابة من اليمين إلى اليسار. كل عنصر يُعاد تصميمه، وليس مجرد انعكاس."
                                 : "This is example text showing how the design adapts completely to right-to-left direction. Every element is reconsidered, not just mirrored."}
@@ -307,20 +307,20 @@ function BoundariesSection() {
     const boundaries = ["1", "2", "3", "4", "5"]
 
     return (
-        <section ref={sectionRef} className="py-24 md:py-32">
+        <section ref={sectionRef} className="section-padding">
             <Container>
-                <div ref={titleRef} className="mb-12 md:mb-16">
-                    <h2 className="mb-6 font-sans text-4xl font-normal tracking-tight text-primary md:text-5xl lg:text-6xl">
+                <div ref={titleRef} className="mb-12">
+                    <h2 className="mb-6 font-sans font-normal text-primary">
                         {t("title")}
                     </h2>
-                    <p className="text-lg text-primary/75">{t("intro")}</p>
+                    <p className="body-lg text-primary/75">{t("intro")}</p>
                 </div>
                 <div className="max-w-3xl space-y-4">
                     {boundaries.map((num) => (
                         <div
                             key={num}
                             data-boundary-item
-                            className="flex items-start gap-4 text-base text-primary/85 md:text-lg"
+                            className="flex items-start gap-4 body-lg text-primary/85"
                         >
                             <span className="mt-1 text-primary/60">-</span>
                             <p>{t(`items.${num}`)}</p>
@@ -339,23 +339,23 @@ function ClosingSection() {
     const ctaRef = useReveal({ direction: "up", delay: 0.25, duration: 0.5 })
 
     return (
-        <section className="py-24 pb-32 md:py-32 md:pb-40">
+        <section className="section-padding">
             <Container>
                 <div className="max-w-3xl">
-                    <div ref={titleRef} className="mb-8 md:mb-12">
-                        <h2 className="mb-3 font-sans text-4xl font-normal tracking-tight text-primary md:text-5xl lg:text-6xl">
+                    <div ref={titleRef} className="mb-12">
+                        <h2 className="mb-3 font-sans font-normal text-primary">
                             {t("title")}
                         </h2>
                     </div>
                     <div ref={descRef} className="mb-12 space-y-6">
-                        <p className="text-lg leading-relaxed text-primary/85 md:text-xl">
+                        <p className="body-lg text-primary/85">
                             {t("description")}
                         </p>
                     </div>
                     <div ref={ctaRef}>
                         <a
-                            href="mailto:hello@alpha.com"
-                            className="inline-flex items-center gap-2 font-mono text-base text-primary transition-colors hover:text-primary/70 md:text-lg"
+                            href="mailto:hello@anthupic.com"
+                            className="inline-flex items-center gap-2 mono body-lg text-primary transition-colors transition-default hover:text-primary/70"
                         >
                             {t("cta")}
                             <svg className="h-4 w-4 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">

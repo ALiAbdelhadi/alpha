@@ -43,9 +43,9 @@ export default function EstimatorPage() {
     }, [step])
 
     const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat(locale === "ar" ? "ar-EG" : "en-US", {
+        return new Intl.NumberFormat(locale === "ar" ? "ar-EG" : "en-EG", {
             style: "currency",
-            currency: "USD",
+            currency: "EGP",
             maximumFractionDigits: 0,
         }).format(amount)
     }
@@ -55,20 +55,18 @@ export default function EstimatorPage() {
     return (
         <>
             <div className="relative min-h-screen w-full">
-                <section className="min-h-screen flex items-center pt-24 md:pt-32 pb-24">
+                <section className="min-h-screen flex items-center section-padding">
                     <Container>
                         <div className="max-w-3xl mx-auto">
-                            {/* Header */}
                             <div className="text-center mb-12">
-                                <h1 className="font-sans text-4xl font-normal tracking-tight text-primary md:text-5xl lg:text-6xl mb-4">
+                                <h1 className="font-sans font-normal text-primary mb-4">
                                     {t("title")}
                                 </h1>
-                                <p className="text-primary/70 text-lg">
+                                <p className="body-lg text-primary/70">
                                     {t("subtitle")}
                                 </p>
                             </div>
 
-                            {/* Progress */}
                             <div className="flex items-center justify-center gap-2 mb-12">
                                 {[1, 2, 3, 4].map((i) => (
                                     <div
@@ -81,7 +79,7 @@ export default function EstimatorPage() {
                                 ))}
                             </div>
 
-                            {/* Step Content */}
+                   
                             <div ref={containerRef} className="mb-12">
                                 {step === 1 && (
                                     <StepProjectType
@@ -141,7 +139,7 @@ export default function EstimatorPage() {
                                         <MagneticButton variant="primary" className="group">
                                             <span className="flex items-center gap-2">
                                                 {t("results.cta")}
-                                                <svg className="w-4 h-4 transition-transform ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <svg className="w-4 h-4 transition-transform transition-default ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                                 </svg>
                                             </span>
@@ -213,22 +211,22 @@ function StepProjectType({ selected, onSelect, t }: StepProjectTypeProps) {
                         key={option.key}
                         onClick={() => onSelect(option.key)}
                         className={cn(
-                            "p-6 rounded-2xl border text-start transition-all",
+                            "p-6 rounded-2xl border text-start transition-all transition-default",
                             selected === option.key
-                                ? "border-teal-500 bg-teal-500/10"
-                                : "border-foreground/10 hover:border-foreground/20 hover:bg-foreground/5"
+                                ? "border-foreground/50 bg-foreground/10"
+                                : "border-foreground/25 hover:border-foreground/50 hover:bg-foreground/5"
                         )}
                     >
                         <div className={cn(
-                            "w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors",
-                            selected === option.key ? "bg-teal-500/20 text-teal-500" : "bg-foreground/10 text-primary/70"
+                            "w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors transition-default",
+                            selected === option.key ? "bg-foreground/20 text-primary" : "bg-foreground/10 text-primary/70"
                         )}>
                             {option.icon}
                         </div>
                         <h3 className="font-medium text-primary mb-1">
                             {t(`steps.projectType.options.${option.key}.title`)}
                         </h3>
-                        <p className="text-sm text-primary/60">
+                        <p className="small text-primary/60">
                             {t(`steps.projectType.options.${option.key}.description`)}
                         </p>
                     </button>
@@ -257,15 +255,15 @@ function StepComplexity({ selected, onSelect, t }: StepComplexityProps) {
                         key={option}
                         onClick={() => onSelect(option)}
                         className={cn(
-                            "w-full p-6 rounded-2xl border text-start transition-all flex items-center gap-6",
+                            "w-full p-6 rounded-2xl border text-start transition-all transition-default flex items-center gap-6",
                             selected === option
-                                ? "border-teal-500 bg-teal-500/10"
-                                : "border-foreground/10 hover:border-foreground/20 hover:bg-foreground/5"
+                                ? "border-foreground/50 bg-foreground/10"
+                                : "border-foreground/25 hover:border-foreground/50 hover:bg-foreground/5"
                         )}
                     >
                         <div className={cn(
-                            "w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors",
-                            selected === option ? "bg-teal-500 text-white" : "bg-foreground/10 text-primary/70"
+                            "w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-colors transition-default",
+                            selected === option ? "bg-foreground/20 text-primary" : "bg-foreground/10 text-primary/70"
                         )}>
                             {i + 1}
                         </div>
@@ -273,7 +271,7 @@ function StepComplexity({ selected, onSelect, t }: StepComplexityProps) {
                             <h3 className="font-medium text-primary mb-1">
                                 {t(`steps.complexity.options.${option}.title`)}
                             </h3>
-                            <p className="text-sm text-primary/60">
+                            <p className="small text-primary/60">
                                 {t(`steps.complexity.options.${option}.description`)}
                             </p>
                         </div>
@@ -303,16 +301,16 @@ function StepTimeline({ selected, onSelect, t }: StepTimelineProps) {
                         key={option}
                         onClick={() => onSelect(option)}
                         className={cn(
-                            "p-6 rounded-2xl border text-center transition-all",
+                            "p-6 rounded-2xl border text-center transition-all transition-default",
                             selected === option
-                                ? "border-teal-500 bg-teal-500/10"
-                                : "border-foreground/10 hover:border-foreground/20 hover:bg-foreground/5"
+                                ? "border-foreground/50 bg-foreground/10"
+                                : "border-foreground/25 hover:border-foreground/50 hover:bg-foreground/5"
                         )}
                     >
                         <h3 className="font-medium text-primary mb-2">
                             {t(`steps.timeline.options.${option}.title`)}
                         </h3>
-                        <p className="text-sm text-primary/60">
+                        <p className="small text-primary/60">
                             {t(`steps.timeline.options.${option}.description`)}
                         </p>
                     </button>
@@ -341,24 +339,24 @@ function StepResults({ estimate, formatCurrency, t }: StepResultsProps) {
                 {t("results.title")}
             </h2>
             <div className="grid sm:grid-cols-2 gap-6 mb-8">
-                <div className="p-8 rounded-2xl border border-foreground/10 bg-foreground/[0.02]">
-                    <p className="text-sm text-primary/60 mb-2">{t("results.timeline")}</p>
+                <div className="p-8 rounded-2xl border border-foreground/25 bg-foreground/5">
+                    <p className="small text-primary/60 mb-2">{t("results.timeline")}</p>
                     <p className="text-3xl font-light text-primary">
                         {estimate.minWeeks}–{estimate.maxWeeks}{" "}
-                        <span className="text-lg text-primary/60">{t("results.weeks")}</span>
+                        <span className="body text-primary/60">{t("results.weeks")}</span>
                     </p>
                 </div>
-                <div className="p-8 rounded-2xl border border-teal-500/30 bg-teal-500/5">
-                    <p className="text-sm text-primary/60 mb-2">{t("results.investment")}</p>
-                    <p className="text-3xl font-light text-teal-600 dark:text-teal-400">
+                <div className="p-8 rounded-2xl border border-foreground/50 bg-foreground/10">
+                    <p className="small text-primary/60 mb-2">{t("results.investment")}</p>
+                    <p className="text-3xl font-light text-primary">
                         {formatCurrency(estimate.minPrice)}–{formatCurrency(estimate.maxPrice)}
                     </p>
                 </div>
             </div>
-            <p className="text-sm text-primary/50 mb-6">
+            <p className="small text-primary/50 mb-6">
                 {t("results.disclaimer")}
             </p>
-            <p className="text-primary/70">
+            <p className="body text-primary/70">
                 {t("results.ctaDescription")}
             </p>
         </div>

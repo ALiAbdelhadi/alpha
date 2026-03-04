@@ -102,26 +102,14 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
       suppressHydrationWarning={true}
       id="about"
       ref={sectionRef}
-      className="flex w-full items-center"
-      style={{ 
-        minHeight: '100vh',
-        paddingTop: 'clamp(6rem, 10vh, 8rem)',
-        paddingBottom: 'clamp(6rem, 10vh, 8rem)'
-      }}
+      className="flex w-full items-center section-padding"
+      style={{ minHeight: '100vh' }}
     >
       <Container>
-        <div className="grid gap-12 md:grid-cols-2 md:gap-20 lg:gap-24">
-          {/* Content - Facts over claims */}
+        <div className="grid gap-12 md:grid-cols-2 md:gap-16">
           <div>
-            <div ref={titleRef} className="mb-8 md:mb-12">
-              <h2 
-                className="mb-6 font-sans font-normal text-primary"
-                style={{
-                  fontSize: 'clamp(2.5rem, 6vw, 3.815rem)',
-                  lineHeight: 1.1,
-                  letterSpacing: '-0.02em',
-                }}
-              >
+            <div ref={titleRef} className="mb-12">
+              <h2 className="mb-6 font-sans font-normal text-primary">
                 {t("about.title")}
                 <br />
                 {t("about.title2")}
@@ -130,31 +118,15 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
               </h2>
             </div>
             <div ref={descriptionRef} className="space-y-6">
-              <p 
-                className="text-primary/85"
-                style={{
-                  fontSize: 'clamp(1rem, 1.2vw, 1.25rem)',
-                  lineHeight: 1.6,
-                  maxWidth: '42ch'
-                }}
-              >
+              <p className="body-lg text-primary/85 max-w-[42ch]">
                 {t("about.description1")}
               </p>
-              <p 
-                className="text-primary/85"
-                style={{
-                  fontSize: 'clamp(1rem, 1.2vw, 1.25rem)',
-                  lineHeight: 1.6,
-                  maxWidth: '42ch'
-                }}
-              >
+              <p className="body-lg text-primary/85 max-w-[42ch]">
                 {t("about.description2")}
               </p>
             </div>
           </div>
-
-          {/* Stats - Evidence */}
-          <div className="flex flex-col justify-center space-y-10 md:space-y-12">
+          <div className="flex flex-col justify-center space-y-12">
             {[
               {
                 value: t("about.stat1.value"),
@@ -179,7 +151,7 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
               >
                 <div
                   data-stat-border
-                  className="absolute ltr:left-0 rtl:right-0 top-0 bottom-0 w-px bg-foreground/20 origin-bottom"
+                  className="absolute ltr:left-0 rtl:right-0 top-0 bottom-0 w-px bg-foreground/25 origin-bottom"
                 />
                 <div
                   data-stat-value
@@ -192,16 +164,10 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
                   {stat.value}
                 </div>
                 <div>
-                  <div 
-                    className="font-sans font-medium text-primary"
-                    style={{
-                      fontSize: 'clamp(1.125rem, 1.5vw, 1.5rem)',
-                      lineHeight: 1.3,
-                    }}
-                  >
+                  <div className="font-sans font-medium text-primary body-lg">
                     {stat.label}
                   </div>
-                  <div className="font-mono text-xs text-primary/60 tracking-wide mt-1">
+                  <div className="mono small text-primary/60 mt-1">
                     {stat.sublabel}
                   </div>
                 </div>
@@ -209,9 +175,7 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
             ))}
           </div>
         </div>
-
-        {/* Actions - Natural conversion */}
-        <div ref={buttonsRef} className="mt-12 md:mt-16 flex flex-wrap gap-4">
+        <div ref={buttonsRef} className="mt-16 flex flex-wrap gap-4">
           <MagneticButton
             size="lg"
             variant="primary"

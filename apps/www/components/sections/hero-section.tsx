@@ -35,6 +35,13 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
     delay: isInitialLoadComplete ? 0.25 : 9999,
   })
 
+  const problemRef = useReveal<HTMLParagraphElement>({
+    direction: "up",
+    duration: 0.9,
+    distance: 18,
+    delay: isInitialLoadComplete ? 0.2 : 9999,
+  })
+
   const buttonsRef = useReveal<HTMLDivElement>({
     direction: "up",
     duration: 0.7,
@@ -51,36 +58,25 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
   return (
     <section
       id="home"
-      className="relative flex w-full flex-col items-center justify-center"
-      style={{ 
-        minHeight: '100vh',
-        paddingTop: 'clamp(6rem, 10vh, 8rem)',
-        paddingBottom: 'clamp(6rem, 10vh, 8rem)'
-      }}
+      className="relative flex w-full flex-col items-center justify-center section-padding"
+      style={{ minHeight: '100vh' }}
       aria-label="Hero section"
     >
       <Container>
-          {/* Badge - Minimal, purposeful */}
           <div
           ref={badgeRef}
-          className="mb-6 md:mb-8 inline-flex items-center gap-2"
+          className="mb-8 inline-flex items-center gap-2"
           role="status"
           aria-live="polite"
         >
-          <div className="h-1 w-1 rounded-full bg-teal-400" />
-          <p className="font-mono text-xs text-primary/60 tracking-wider uppercase">
+          <div className="h-1 w-1 rounded-full bg-foreground/40" />
+          <p className="mono-uppercase text-primary/60">
             {t("hero.badge")}
           </p>
         </div>
-          {/* Hero Statement - Single, powerful message */}
           <h1
             ref={titleRef}
             className="mb-12 font-sans font-normal text-primary"
-            style={{
-              fontSize: 'clamp(3.815rem, 8vw, 4.768rem)',
-              lineHeight: 1.1,
-              letterSpacing: '-0.02em',
-            }}
           >
             <span className="text-balance block">
               {t("hero.title")}
@@ -88,20 +84,18 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
               <span className="text-primary/70">{t("hero.title2")}</span>
             </span>
           </h1>
-
-          {/* Description - Clear value proposition */}
+          <p
+            ref={problemRef}
+            className="mb-4 max-w-3xl body text-primary/80"
+          >
+            <span className="text-pretty">{t("hero.problem")}</span>
+          </p>
           <p
             ref={descriptionRef}
-            className="mb-16 max-w-3xl text-primary/85"
-            style={{
-              fontSize: 'clamp(1.25rem, 2vw, 1.5rem)',
-              lineHeight: 1.6,
-            }}
+            className="mb-12 max-w-3xl body-lg text-primary/85"
           >
             <span className="text-pretty">{t("hero.description")}</span>
           </p>
-
-          {/* Actions - Clear, not aggressive */}
           <div ref={buttonsRef} className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <MagneticButton
               size="lg"
@@ -113,7 +107,7 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
               <span className="flex items-center gap-2">
                 {t("hero.ctaPrimary")}
                 <svg
-                  className="h-4 w-4 transition-transform duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
+                  className="h-4 w-4 transition-transform duration-300 transition-default ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -123,7 +117,6 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
                 </svg>
               </span>
             </MagneticButton>
-
             <MagneticButton
               size="lg"
               variant="secondary"
@@ -133,15 +126,16 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
               {t("hero.ctaSecondary")}
             </MagneticButton>
           </div>
-
-        {/* Scroll Hint - Subtle, non-intrusive */}
+          <p className="mt-4 mono small text-primary/60">
+            {t("hero.trust")}
+          </p>
         <div
           ref={scrollHintRef}
           className="absolute bottom-12 left-1/2 -translate-x-1/2 hidden md:block"
           aria-hidden="true"
         >
           <div className="flex flex-col items-center gap-2">
-            <p className="font-mono text-xs text-primary/50 tracking-wider uppercase">
+            <p className="mono-uppercase text-primary/50">
               {t("hero.scrollHint")}
             </p>
             <div className="h-8 w-px bg-primary/20" />

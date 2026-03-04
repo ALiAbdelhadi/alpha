@@ -8,6 +8,18 @@ export async function POST(request: NextRequest) {
     try {
         const body = await request.json()
 
+        const origin = request.headers.get("origin")
+        const allowedOrigins = [process.env.NEXT_PUBLIC_APP_URL].filter(
+            (value): value is string => !!value
+        )
+
+        if (allowedOrigins.length > 0 && (!origin || !allowedOrigins.includes(origin))) {
+            return NextResponse.json(
+                { success: false, message: "Forbidden" },
+                { status: 403 }
+            )
+        }
+
         const validatedData = contactFormSchema.parse(body)
 
         if (validatedData.website && validatedData.website.length > 0) {
@@ -22,6 +34,16 @@ export async function POST(request: NextRequest) {
         const forwardedFor = request.headers.get("x-forwarded-for")
         const ipAddress = forwardedFor ? forwardedFor.split(",")[0].trim() : undefined
         const referer = request.headers.get("referer") || undefined
+
+        if (ipAddress && !checkRateLimit(ipAddress)) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: "Too many requests. Please wait a minute and try again.",
+                },
+                { status: 429 }
+            )
+        }
 
         const submission = await prisma.contactSubmission.create({
             data: {

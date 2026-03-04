@@ -89,26 +89,15 @@ export function WorkSection() {
       id="work"
       suppressHydrationWarning={true}
       ref={sectionRef}
-      className="flex w-full items-center"
-      style={{
-        minHeight: '100vh',
-        paddingTop: 'clamp(6rem, 10vh, 8rem)',
-        paddingBottom: 'clamp(6rem, 10vh, 8rem)'
-      }}
+      className="flex w-full items-center section-padding"
+      style={{ minHeight: '100vh' }}
     >
       <Container>
-        <div ref={titleRef} className="mb-16 md:mb-20">
-          <h2
-            className="mb-4 font-sans font-normal text-primary"
-            style={{
-              fontSize: 'clamp(2.5rem, 6vw, 3.815rem)',
-              lineHeight: 1.1,
-              letterSpacing: '-0.02em',
-            }}
-          >
+        <div ref={titleRef} className="mb-16">
+          <h2 className="mb-4 font-sans font-normal text-primary">
             {t("work.title")}
           </h2>
-          <p className="font-mono text-sm text-primary/60 tracking-wide">
+          <p className="mono text-primary/60">
             {t("work.subtitle")}
           </p>
         </div>
@@ -179,33 +168,25 @@ function ProjectCard({
       <div
         ref={cardRef}
         data-project-card
-        className="group flex items-center justify-between border-b border-foreground/10 transition-colors duration-300 cursor-pointer"
-        style={{
-          paddingTop: 'clamp(2rem, 4vh, 3rem)',
-          paddingBottom: 'clamp(2rem, 4vh, 3rem)'
-        }}
+        className="group flex items-center justify-between border-b border-foreground/25 transition-colors duration-300 transition-default cursor-pointer py-8 hover:border-foreground/50"
       >
         <div className="flex items-baseline gap-6 md:gap-12">
           <span
             ref={numberRef}
-            className="font-mono text-sm text-primary/40 transition-all duration-300"
+            className="mono text-primary/40 transition-all duration-300 transition-default"
           >
             {project.number}
           </span>
           <div>
             <h3
               ref={titleRef}
-              className="mb-2 font-sans font-medium text-primary transition-all duration-300"
-              style={{
-                fontSize: 'clamp(1.5rem, 3vw, 2.441rem)',
-                lineHeight: 1.2,
-              }}
+              className="mb-2 font-sans font-medium text-primary transition-all duration-300 transition-default"
             >
               {project.title}
             </h3>
             <p
               ref={categoryRef}
-              className="font-mono text-xs text-primary/60 transition-all duration-300 tracking-wide"
+              className="mono small text-primary/60 transition-all duration-300 transition-default"
             >
               {project.category}
             </p>
@@ -214,12 +195,12 @@ function ProjectCard({
         <div className="flex items-center gap-4">
           <span
             ref={yearRef}
-            className="hidden font-mono text-sm text-primary/50 transition-all duration-300 md:block"
+            className="hidden mono small text-primary/50 transition-all duration-300 transition-default md:block"
           >
             {project.year}
           </span>
           <svg
-            className="h-4 w-4 text-primary/50 transition-all duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 group-hover:text-primary/70 rtl:-rotate-180"
+            className="h-4 w-4 text-primary/50 transition-all duration-300 transition-default ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 group-hover:text-primary/70 rtl:-rotate-180"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

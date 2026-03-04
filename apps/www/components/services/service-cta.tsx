@@ -41,27 +41,27 @@ export function ServiceCta({
     }
 
     return (
-        <section className="py-24 md:py-32">
+        <section className="section-padding">
             <Container>
                 <div
                     ref={contentRef}
                     className={cn(
-                        "relative overflow-hidden rounded-3xl border border-foreground/10 p-8 md:p-12 lg:p-16 bg-gradient-to-br",
+                        "relative overflow-hidden rounded-3xl border border-foreground/25 p-8 md:p-12 lg:p-16 bg-gradient-to-br",
                         gradients[gradientPreset]
                     )}
                 >
                     <div className="max-w-2xl relative z-10">
-                        <h2 className="mb-6 font-sans text-3xl font-normal tracking-tight text-primary md:text-4xl lg:text-5xl">
+                        <h2 className="mb-6 font-sans font-normal text-primary">
                             {title}
                         </h2>
-                        <p className="mb-8 text-lg text-primary/80">
+                        <p className="mb-8 body-lg text-primary/80">
                             {description}
                         </p>
                         <Link href={buttons.primary.href}>
                             <MagneticButton size="lg" variant="primary" className="group">
                                 <span className="flex items-center gap-2">
                                     {buttons.primary.text}
-                                    <svg className="w-4 h-4 transition-transform ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg className="w-4 h-4 transition-transform transition-default ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                     </svg>
                                 </span>

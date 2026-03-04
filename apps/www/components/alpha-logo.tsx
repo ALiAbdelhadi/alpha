@@ -1,13 +1,13 @@
 import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
 
-interface AlphaLogoProps {
+interface AnthupicLogoProps {
     className?: string
     size?: "sm" | "md" | "lg"
     variant?: "full" | "icon"
 }
 
-export function AlphaLogo({ className, size = "md", variant = "full" }: AlphaLogoProps) {
+export function AnthupicLogo({ className, size = "md", variant = "full" }: AnthupicLogoProps) {
     const t = useTranslations("logo")
     const sizeClasses = {
         sm: "text-2xl",

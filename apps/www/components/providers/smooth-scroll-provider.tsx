@@ -1,7 +1,8 @@
-'use client'
+"use client"
 
 import Lenis from '@studio-freight/lenis'
 import { useEffect } from 'react'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
 
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
@@ -11,15 +12,23 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
             smoothWheel: true,
         })
 
-        function raf(time: number) {
-            lenis.raf(time)
-            requestAnimationFrame(raf)
+        lenis.on('scroll', () => {
+            ScrollTrigger.update()
+        })
+
+        const updateLenis = (time: number) => {
+            lenis.raf(time * 1000)
         }
 
-        requestAnimationFrame(raf)
+        gsap.ticker.add(updateLenis)
+        gsap.ticker.lagSmoothing(0)
 
-        return () => lenis.destroy()
+        return () => {
+            gsap.ticker.remove(updateLenis)
+            lenis.destroy()
+        }
     }, [])
 
     return <>{children}</>
 }
+

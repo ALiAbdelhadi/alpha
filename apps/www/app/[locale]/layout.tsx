@@ -1,6 +1,7 @@
 import CustomCursor from "@/components/custom-cursor";
 import { InitialLoader } from "@/components/initial-loader";
 import { Providers } from "@/components/providers";
+import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeScript } from "@/components/theme-script";
 import { routing } from "@/i18n/routing";
@@ -9,7 +10,6 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import "../globals.css";
-import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
 
 type Props = {
   children: React.ReactNode;

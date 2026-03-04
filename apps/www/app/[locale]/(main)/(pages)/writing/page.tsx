@@ -25,12 +25,12 @@ function OpeningSection() {
     const descRef = useReveal({ direction: "up", delay: 0.2, duration: 0.6 })
 
     return (
-        <section className="flex min-h-screen items-center pt-24 md:pt-32">
+        <section className="flex min-h-screen items-center section-padding">
             <Container>
-                <h1 ref={titleRef} className="mb-6 font-sans text-5xl font-normal leading-[1.1] tracking-tight text-primary md:text-6xl lg:text-7xl">
+                <h1 ref={titleRef} className="mb-6 font-sans font-normal text-primary">
                     {t("hero.title")}
                 </h1>
-                <p ref={descRef} className="max-w-2xl text-lg leading-relaxed text-primary/85 md:text-xl">
+                <p ref={descRef} className="max-w-2xl body-lg text-primary/85">
                     {t("hero.description")}
                 </p>
             </Container>
@@ -90,25 +90,25 @@ function ListSection() {
     ]
 
     return (
-        <section className="flex items-center pt-24 md:pt-32 pb-24 pd:mb-32">
+        <section className="flex items-center section-padding">
             <Container>
                 {articles.map((article) => (
                     <Link
                         key={article.slug}
                         href={`/writing/${article.slug}`}
                         data-article
-                        className="group block border-t border-foreground/10 py-8 transition-colors hover:bg-foreground/5 -mx-6 px-6 md:-mx-12 md:px-12"
+                        className="group block border-t border-foreground/25 py-8 transition-colors transition-default hover:bg-foreground/5"
                     >
                         <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                             <div className="flex-1">
-                                <h2 className="mb-2 font-sans text-2xl font-medium text-primary transition-colors group-hover:text-primary/70 md:text-3xl">
+                                <h2 className="mb-2 font-sans font-medium text-primary transition-colors transition-default group-hover:text-primary/70">
                                     {tArticles(`${article.slug}.title`)}
                                 </h2>
-                                <p className="text-base text-primary/75">
+                                <p className="body text-primary/75">
                                     {tArticles(`${article.slug}.excerpt`)}
                                 </p>
                             </div>
-                            <div className="flex items-center gap-4 font-mono text-xs text-primary/60 md:text-sm">
+                            <div className="flex items-center gap-4 mono small text-primary/60">
                                 <span>{article.date}</span>
                                 <span>·</span>
                                 <span>{article.readTime}</span>

@@ -1,130 +1,108 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
-import { ServiceCta } from "@/components/services/service-cta"
-import { ServiceFeatures } from "@/components/services/service-features"
-import { ServiceHero } from "@/components/services/service-hero"
+import { useReveal } from "@/hooks/use-animation"
 import { Link } from "@/i18n/navigation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
-import { useReveal } from "@/hooks/use-animation"
 import { cn } from "@/lib/utils"
 
 export default function MaintenancePage() {
-    const t = useTranslations("serviceDetails.maintenance")
-    const tCommon = useTranslations("serviceDetails")
-
-    const features = ["1", "2", "3", "4", "5", "6"].map(num => ({
-        title: t(`features.${num}.title`),
-        description: t(`features.${num}.description`),
-        icon: (
-            <svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
-        )
-    }))
-
     return (
-        <div className="relative min-h-screen w-full">
-            <ServiceHero
-                subtitle={t("subtitle")}
-                title={t("title")}
-                description={t("description")}
-                gradientPreset="emerald-cyan"
-                buttons={{
-                    primary: { text: tCommon("ctaPrimary"), href: "/contact" },
-                    secondary: { text: tCommon("ctaSecondary"), href: "#pricing" }
-                }}
-                visual={<MaintenanceVisual />}
-            />
-            
+        <div className="relative min-h-screen w-full overflow-x-hidden">
+            <div className="pointer-events-none fixed inset-0 z-0">
+                <div className="absolute -top-40 ltr:-right-40 rtl:-left-40 h-[600px] w-[600px] rounded-full bg-foreground/3 blur-3xl" />
+                <div className="absolute top-1/2 ltr:-left-60 rtl:-right-60 h-[500px] w-[500px] rounded-full bg-foreground/2 blur-3xl" />
+            </div>
+            <HeroSection />
             <StatsSection />
-            
-            <ServiceFeatures
-                title={tCommon("whatWeOffer")}
-                subtitle={tCommon("whatWeOfferSubtitle")}
-                features={features}
-                columns={3}
-            />
-            
+            <FeaturesSection />
             <PricingSection />
-            
-            <ServiceCta
-                title={t("cta.title")}
-                description={t("cta.description")}
-                gradientPreset="emerald-cyan"
-                buttons={{
-                    primary: { text: tCommon("ctaPrimary"), href: "/contact" }
-                }}
-            />
+            <MaintenanceCtaSection />
         </div>
     )
 }
 
-function MaintenanceVisual() {
+function HeroSection() {
     const t = useTranslations("serviceDetails.maintenance")
+    const tCommon = useTranslations("serviceDetails")
+    const badgeRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.1, duration: 0.5 })
+    const titleRef = useReveal<HTMLHeadingElement>({ direction: "up", delay: 0, duration: 0.8 })
+    const descRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0.2, duration: 0.6 })
+    const ctaRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.35, duration: 0.5 })
+
     return (
-        <div className="rounded-2xl border border-foreground/10 bg-foreground/3 backdrop-blur-sm p-6 space-y-4">
-            <div className="flex items-center justify-between">
-                <span className="font-mono text-sm text-primary/60">{t("hero.systemStatus")}</span>
-                <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="font-mono text-xs text-emerald-500">{t("hero.operational")}</span>
-                </div>
+        <section className="relative min-h-screen flex items-center section-padding">
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div className="absolute top-0 ltr:left-1/4 rtl:right-1/4 h-full w-px bg-foreground/6" />
+                <div className="absolute top-0 ltr:right-1/4 rtl:left-1/4 h-full w-px bg-foreground/6" />
+                <div className="absolute top-1/3 left-0 right-0 h-px bg-foreground/5" />
             </div>
-            <div className="space-y-3">
-                {["website", "database", "api", "cdn"].map((service, i) => (
-                    <div key={service} className="flex items-center justify-between p-3 rounded-lg bg-foreground/5">
-                        <span className="text-sm text-primary">{t(`hero.services.${service}`)}</span>
-                        <div className="flex items-center gap-2">
-                            <div className="w-16 h-1.5 rounded-full bg-foreground/10 overflow-hidden">
-                                <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${98 - i * 2}%` }} />
-                            </div>
-                            <span className="font-mono text-xs text-primary/60">{98 - i * 2}%</span>
+            <Container>
+                <div className="relative max-w-5xl">
+                    <div ref={badgeRef} className="mb-8 inline-flex items-center gap-3">
+                        <div className="relative flex h-2 w-2">
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-foreground/40 opacity-75" />
+                            <span className="relative inline-flex h-2 w-2 rounded-full bg-foreground/60" />
                         </div>
+                        <span className="mono-uppercase text-primary/50 tracking-widest">{t("subtitle")}</span>
                     </div>
-                ))}
-            </div>
-            <div className="pt-4 border-t border-foreground/10 flex justify-between text-xs text-primary/50">
-                <span>{t("hero.lastChecked")}</span>
-                <span>{t("hero.uptimeLabel")}</span>
-            </div>
-            {/* Floating elements */}
-            <div className="absolute -top-3 -right-3 px-3 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                <span className="font-mono text-xs text-emerald-500">{t("hero.secured")}</span>
-            </div>
-        </div>
+
+                    <h1 ref={titleRef} className="mb-8 font-sans font-normal text-primary">
+                        <span className="text-balance block">{t("title")}</span>
+                    </h1>
+
+                    <p ref={descRef} className="mb-12 body-lg text-primary/70 max-w-2xl">
+                        {t("description")}
+                    </p>
+
+                    <div ref={ctaRef} className="flex flex-wrap items-center gap-4">
+                        <Link href="/contact">
+                            <MagneticButton size="lg" variant="primary" className="group">
+                                <span className="flex items-center gap-2">
+                                    {tCommon("ctaPrimary")}
+                                    <svg className="w-4 h-4 transition-transform transition-default ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </span>
+                            </MagneticButton>
+                        </Link>
+                        <Link href="#pricing">
+                            <MagneticButton size="lg" variant="secondary">{tCommon("ctaSecondary")}</MagneticButton>
+                        </Link>
+                    </div>
+                </div>
+
+                <div className="pointer-events-none absolute ltr:right-0 rtl:left-0 bottom-16 select-none" aria-hidden="true">
+                    <span className="text-[clamp(8rem,20vw,18rem)] font-light leading-none text-foreground/4 tracking-tighter">
+                        04
+                    </span>
+                </div>
+            </Container>
+        </section>
     )
 }
 
 function StatsSection() {
     const t = useTranslations("serviceDetails.maintenance")
     const sectionRef = useRef<HTMLElement>(null)
+    const leftRef = useReveal({ direction: "right", delay: 0, duration: 0.6 })
+    const rightRef = useReveal({ direction: "left", delay: 0.2, duration: 0.6 })
 
     useEffect(() => {
         if (!sectionRef.current) return
-
         const items = sectionRef.current.querySelectorAll("[data-stat-item]")
         const triggers: ScrollTrigger[] = []
 
         items.forEach((item, index) => {
             gsap.set(item, { opacity: 0, y: 20 })
-
             const tween = gsap.to(item, {
-                opacity: 1,
-                y: 0,
-                duration: 0.5,
-                delay: index * 0.1,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: item,
-                    start: "top 90%",
-                    once: true,
-                },
+                opacity: 1, y: 0, duration: 0.6, delay: index * 0.12, ease: "power3.out",
+                scrollTrigger: { trigger: item, start: "top 90%", once: true },
             })
-
             if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
         })
 
@@ -132,22 +110,115 @@ function StatsSection() {
     }, [])
 
     const stats = [
-        { value: "99.9%", label: "stats.uptime" },
-        { value: "< 1hr", label: "stats.response" },
-        { value: "24/7", label: "stats.monitoring" },
-        { value: "100%", label: "stats.satisfaction" },
+        { value: "99.9%", labelKey: "stats.uptime" },
+        { value: "< 1hr", labelKey: "stats.response" },
+        { value: "24/7", labelKey: "stats.monitoring" },
+        { value: "100%", labelKey: "stats.satisfaction" },
     ]
 
     return (
-        <section ref={sectionRef} className="py-16 md:py-24 border-y border-foreground/5">
+        <section ref={sectionRef} className="section-padding">
             <Container>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                    {stats.map((stat, i) => (
-                        <div key={i} data-stat-item className="text-center">
-                            <div className="text-3xl md:text-4xl lg:text-5xl font-light text-emerald-500 mb-2">
-                                {stat.value}
+                <div className="grid md:grid-cols-12 gap-4">
+                    <div
+                        ref={leftRef}
+                        className="md:col-span-7 rounded-2xl border border-foreground/10 bg-foreground/3 p-10 md:p-14 backdrop-blur-sm"
+                    >
+                        <div className="mb-3 inline-flex items-center gap-2">
+                            <div className="h-px w-6 bg-foreground/30" />
+                            <span className="mono-uppercase text-xs text-primary/40">uptime</span>
+                        </div>
+                        <h2 className="mb-8 font-sans font-normal text-primary">
+                            {t("stats.title")}
+                        </h2>
+                        <div className="space-y-6">
+                            <p className="body-lg text-primary/70 leading-relaxed">{t("stats.body1")}</p>
+                            <p className="body-lg text-primary/70 leading-relaxed">{t("stats.body2")}</p>
+                        </div>
+                    </div>
+                    <div ref={rightRef} className="md:col-span-5 flex flex-col gap-4">
+                        {stats.map((stat, i) => (
+                            <div
+                                key={i}
+                                data-stat-item
+                                className="flex-1 rounded-2xl border border-foreground/10 bg-foreground/3 p-6 md:p-8 flex flex-col justify-between group hover:bg-foreground/6 transition-colors duration-300 backdrop-blur-sm"
+                            >
+                                <span className="body text-primary/55 mb-4 block">{t(stat.labelKey)}</span>
+                                <span className="font-sans font-light text-primary text-4xl">{stat.value}</span>
                             </div>
-                            <p className="text-sm text-primary/60">{t(stat.label)}</p>
+                        ))}
+                    </div>
+                </div>
+            </Container>
+        </section>
+    )
+}
+
+function FeaturesSection() {
+    const t = useTranslations("serviceDetails.maintenance")
+    const tCommon = useTranslations("serviceDetails")
+    const sectionRef = useRef<HTMLElement>(null)
+    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.5 })
+
+    useEffect(() => {
+        if (!sectionRef.current) return
+        const cards = sectionRef.current.querySelectorAll("[data-feature-card]")
+        const triggers: ScrollTrigger[] = []
+
+        cards.forEach((card, index) => {
+            gsap.set(card, { opacity: 0, y: 24 })
+            const tween = gsap.to(card, {
+                opacity: 1, y: 0, duration: 0.6, delay: index * 0.08, ease: "power2.out",
+                scrollTrigger: { trigger: card, start: "top 90%", once: true },
+            })
+            if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
+        })
+
+        return () => triggers.forEach((t) => t.kill())
+    }, [])
+
+    const features = ["1", "2", "3", "4", "5", "6"].map((num, i) => ({
+        num,
+        title: t(`features.${num}.title`),
+        description: t(`features.${num}.description`),
+        wide: i === 0 || i === 5,
+    }))
+
+    return (
+        <section ref={sectionRef} className="section-padding bg-foreground/2.5">
+            <Container>
+                <div ref={titleRef} className="mb-16 flex items-end justify-between flex-wrap gap-6">
+                    <div className="max-w-xl">
+                        <h2 className="font-sans font-normal text-primary mb-4">{tCommon("whatWeOffer")}</h2>
+                        <p className="mono text-primary/50">{tCommon("whatWeOfferSubtitle")}</p>
+                    </div>
+                </div>
+
+                <div className="grid md:grid-cols-6 gap-4">
+                    {features.map((feature, i) => (
+                        <div
+                            key={i}
+                            data-feature-card
+                            className={[
+                                "group relative rounded-2xl border border-foreground/10 bg-background p-7 overflow-hidden",
+                                "hover:border-foreground/25 hover:bg-foreground/3 transition-all duration-300",
+                                feature.wide ? "md:col-span-3" : "md:col-span-2",
+                            ].join(" ")}
+                        >
+                            <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-linear-to-br from-foreground/4 to-transparent" />
+                            <div className="relative">
+                                <div className="mb-5 flex items-center justify-between">
+                                    <span className="mono text-xs text-primary/30">{String(i + 1).padStart(2, "0")}</span>
+                                    <svg
+                                        className="w-4 h-4 text-primary/0 group-hover:text-primary/40 transition-all duration-300 ltr:translate-x-2 rtl:-translate-x-2 group-hover:translate-x-0 rtl:group-hover:translate-x-0 rtl:-rotate-180"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </div>
+                                <h3 className="mb-3 font-sans font-medium text-primary">{feature.title}</h3>
+                                <p className="body text-primary/55 leading-relaxed">{feature.description}</p>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -163,94 +234,179 @@ function PricingSection() {
 
     useEffect(() => {
         if (!sectionRef.current) return
-
         const cards = sectionRef.current.querySelectorAll("[data-pricing-card]")
         const triggers: ScrollTrigger[] = []
 
         cards.forEach((card, index) => {
             gsap.set(card, { opacity: 0, y: 30 })
-
             const tween = gsap.to(card, {
-                opacity: 1,
-                y: 0,
-                duration: 0.6,
-                delay: index * 0.15,
-                ease: "power2.out",
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top 85%",
-                    once: true,
-                },
+                opacity: 1, y: 0, duration: 0.7, delay: index * 0.12, ease: "power3.out",
+                scrollTrigger: { trigger: card, start: "top 85%", once: true },
             })
-
             if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
         })
 
         return () => triggers.forEach((t) => t.kill())
     }, [])
 
-    const plans = ["essential", "professional", "enterprise"]
+    const plans = [
+        { key: "essential", price: "7,500 EGP", featured: false },
+        { key: "professional", price: "15,000 EGP", featured: true },
+        { key: "enterprise", price: null, featured: false },
+    ]
 
     return (
-        <section id="pricing" ref={sectionRef} className="py-24 md:py-32 bg-foreground/2">
+        <section id="pricing" ref={sectionRef} className="section-padding">
             <Container>
-                <div ref={titleRef} className="text-center mb-16">
-                    <h2 className="font-sans text-3xl font-normal tracking-tight text-primary md:text-4xl lg:text-5xl mb-4">
-                        {t("pricing.title")}
-                    </h2>
-                    <p className="text-primary/60 max-w-xl mx-auto">
-                        {t("pricing.subtitle")}
-                    </p>
+                <div ref={titleRef} className="mb-20 flex items-end justify-between flex-wrap gap-8">
+                    <div>
+                        <h2 className="font-sans font-normal text-primary mb-4">{t("pricing.title")}</h2>
+                        <p className="body-lg text-primary/50 max-w-xl">{t("pricing.subtitle")}</p>
+                    </div>
+                    <div className="hidden lg:flex items-center gap-3">
+                        <div className="w-16 h-px bg-foreground/20" />
+                        <span className="mono-uppercase text-xs text-primary/30">plans</span>
+                    </div>
                 </div>
-                <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                    {plans.map((planKey) => (
+
+                <div className="grid md:grid-cols-3 gap-4">
+                    {plans.map(({ key, price, featured }) => (
                         <div
-                            key={planKey}
+                            key={key}
                             data-pricing-card
-                            className={`relative p-8 rounded-2xl border transition-all ${planKey === "professional"
-                                ? "border-emerald-500/50 bg-emerald-500/5 scale-105 z-10"
-                                : "border-foreground/10 bg-background hover:border-foreground/20"
-                                }`}
-                        >
-                            {planKey === "professional" && (
-                                <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-emerald-500 text-white text-xs font-medium">
-                                    {t("pricing.recommended")}
-                                </div>
+                            className={cn(
+                                "group relative rounded-2xl border bg-foreground/3 p-8 overflow-hidden",
+                                "hover:bg-foreground/6 transition-all duration-300",
+                                featured
+                                    ? "border-foreground/25 md:scale-[1.02] z-10"
+                                    : "border-foreground/10 hover:border-foreground/20"
                             )}
-                            <h3 className="font-sans text-xl font-medium text-primary mb-2">{t(`pricing.plans.${planKey}.name`)}</h3>
-                            <div className="mb-6">
-                                <span className="text-4xl font-light text-primary">{planKey === "essential" ? "$299" : planKey === "professional" ? "$599" : "Custom"}</span>
-                                <span className="text-primary/60">{planKey !== "enterprise" ? "/month" : ""}</span>
-                            </div>
-                            <ul className="space-y-3 mb-8">
-                                {[0, 1, 2, 3, 4].map((i) => {
-                                    // Use type assertion to avoid TS errors with raw
-                                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                                    const feature = (t.raw(`pricing.plans.${planKey}.features`) as any)[i];
-                                    if (!feature) return null;
-                                    return (
-                                        <li key={i} className="flex items-center gap-2 text-sm text-primary/70">
-                                            <svg className="w-4 h-4 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                            </svg>
-                                            {feature}
-                                        </li>
-                                    )
-                                })}
-                            </ul>
-                            <Link href="/contact" className="block">
-                                <MagneticButton
-                                    variant={planKey === "professional" ? "primary" : "secondary"}
-                                    className={cn(
-                                        "w-full justify-center",
-                                        planKey === "professional" && "bg-emerald-500 hover:bg-emerald-600 border-emerald-500 text-white"
+                        >
+                            <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-linear-to-br bg-foreground/4 to-transparent" />
+                            <div className="relative">
+                                {featured && (
+                                    <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-foreground/15 bg-foreground/5 px-4 py-1.5">
+                                        <div className="h-1.5 w-1.5 rounded-full bg-foreground/50" />
+                                        <span className="mono-uppercase text-xs text-primary/50">{t("pricing.recommended")}</span>
+                                    </div>
+                                )}
+                                {!featured && (
+                                    <div className="mb-5 mono text-xs text-primary/30">
+                                        {String(plans.findIndex(p => p.key === key) + 1).padStart(2, "0")}
+                                    </div>
+                                )}
+                                <h3 className="font-sans font-medium text-primary mb-6">
+                                    {t(`pricing.plans.${key}.name`)}
+                                </h3>
+                                <div className="mb-8 pb-8 border-b border-foreground/10">
+                                    <span className="font-sans font-light text-primary text-4xl">
+                                        {price ?? t("pricing.customPrice")}
+                                    </span>
+                                    {price && (
+                                        <span className="mono text-sm text-primary/40 ml-2">/month</span>
                                     )}
-                                >
-                                    {t("pricing.getStarted")}
-                                </MagneticButton>
-                            </Link>
+                                </div>
+                                <ul className="space-y-3 mb-8">
+                                    {[0, 1, 2, 3, 4].map((i) => {
+                                        const feature = (t.raw(`pricing.plans.${key}.features`) as any)[i]
+                                        if (!feature) return null
+                                        return (
+                                            <li key={i} className="flex items-start gap-3 body text-primary/55">
+                                                <svg className="w-4 h-4 text-primary/30 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                {feature}
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                                <Link href="/contact" className="block">
+                                    <MagneticButton
+                                        variant={featured ? "primary" : "secondary"}
+                                        className="w-full justify-center group"
+                                    >
+                                        <span className="flex items-center gap-2">
+                                            {t("pricing.getStarted")}
+                                            <svg className="w-4 h-4 transition-transform transition-default ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                            </svg>
+                                        </span>
+                                    </MagneticButton>
+                                </Link>
+                            </div>
                         </div>
                     ))}
+                </div>
+            </Container>
+        </section>
+    )
+}
+
+function MaintenanceCtaSection() {
+    const t = useTranslations("serviceDetails.maintenance")
+    const tCommon = useTranslations("serviceDetails")
+    const leftRef = useReveal({ direction: "right", delay: 0, duration: 0.6 })
+    const rightRef = useReveal({ direction: "left", delay: 0.2, duration: 0.6 })
+
+    const checks = [
+        { label: t("cta.checks.uptime"), done: true },
+        { label: t("cta.checks.security"), done: true },
+        { label: t("cta.checks.backups"), done: true },
+        { label: t("cta.checks.monitoring"), done: true },
+    ]
+
+    return (
+        <section className="section-padding overflow-hidden">
+            <Container>
+                <div className="grid md:grid-cols-12 gap-4">
+                    <div
+                        ref={leftRef}
+                        className="md:col-span-5 rounded-2xl border border-foreground/10 bg-foreground/3 p-8 md:p-10"
+                    >
+                        <div className="flex items-center justify-between mb-8">
+                            <span className="mono-uppercase text-xs text-primary/40">system ready</span>
+                            <div className="flex items-center gap-2">
+                                <div className="relative flex h-2 w-2">
+                                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-foreground/40 opacity-75" />
+                                    <span className="relative inline-flex h-2 w-2 rounded-full bg-foreground/60" />
+                                </div>
+                                <span className="mono text-xs text-primary/50">all systems go</span>
+                            </div>
+                        </div>
+                        <div className="space-y-3">
+                            {checks.map((check, i) => (
+                                <div key={i} className="flex items-center justify-between p-4 rounded-xl bg-foreground/4 border border-foreground/6">
+                                    <span className="body text-sm text-primary/70">{check.label}</span>
+                                    <div className="flex items-center gap-2">
+                                        <svg className="w-4 h-4 text-primary/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        <span className="mono text-xs text-primary/35">active</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div
+                        ref={rightRef}
+                        className="md:col-span-7 rounded-2xl border border-foreground/10 bg-foreground/3 p-8 md:p-12 flex flex-col justify-between"
+                    >
+                        <div>
+                            <p className="mono-uppercase text-xs text-primary/35 mb-8 tracking-widest">protect your site</p>
+                            <h2 className="font-sans font-normal text-primary mb-6">{t("cta.title")}</h2>
+                            <p className="body-lg text-primary/55 mb-10">{t("cta.description")}</p>
+                        </div>
+                        <Link href="/contact" className="w-fit">
+                            <MagneticButton size="lg" variant="primary" className="group">
+                                <span className="flex items-center gap-2">
+                                    {tCommon("ctaPrimary")}
+                                    <svg className="w-4 h-4 transition-transform transition-default ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </span>
+                            </MagneticButton>
+                        </Link>
+                    </div>
                 </div>
             </Container>
         </section>

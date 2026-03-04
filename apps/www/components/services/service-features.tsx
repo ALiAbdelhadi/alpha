@@ -52,13 +52,13 @@ export function ServiceFeatures({ title, subtitle, features, columns = 3 }: Serv
     }, [])
 
     return (
-        <section ref={sectionRef} className="py-24 md:py-32 relative">
+        <section ref={sectionRef} className="section-padding relative">
             <Container>
-                <div ref={headerRef} className="mb-16 md:mb-20 max-w-2xl">
-                    <h2 className="mb-4 font-sans text-4xl font-normal tracking-tight text-primary md:text-5xl lg:text-6xl">
+                <div ref={headerRef} className="mb-16 max-w-2xl">
+                    <h2 className="mb-4 font-sans font-normal text-primary">
                         {title}
                     </h2>
-                    <p className="font-mono text-sm text-primary/60 tracking-wide md:text-base">
+                    <p className="mono text-primary/60">
                         {subtitle}
                     </p>
                 </div>
@@ -71,26 +71,26 @@ export function ServiceFeatures({ title, subtitle, features, columns = 3 }: Serv
                         <div
                             key={i}
                             data-feature-card
-                            className="group relative p-6 md:p-8 rounded-2xl border border-foreground/10 bg-background hover:bg-foreground/[0.02] transition-colors overflow-hidden"
+                            className="group relative p-6 md:p-8 rounded-2xl border border-foreground/25 bg-background hover:bg-foreground/5 hover:border-foreground/50 transition-colors transition-default overflow-hidden"
                         >
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 transition-default pointer-events-none">
                                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent" />
                             </div>
                             
                             <div className="relative z-10">
-                                <div className="mb-6 w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                <div className="mb-6 w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 transition-default">
                                     {feature.icon ? (
                                         feature.icon
                                     ) : (
-                                        <span className="font-mono text-sm text-primary/40">
+                                        <span className="mono small text-primary/40">
                                             {String(i + 1).padStart(2, "0")}
                                         </span>
                                     )}
                                 </div>
-                                <h3 className="mb-3 font-sans text-xl font-medium text-primary md:text-2xl">
+                                <h3 className="mb-3 font-sans font-medium text-primary">
                                     {feature.title}
                                 </h3>
-                                <p className="text-base leading-relaxed text-primary/70">
+                                <p className="body text-primary/70">
                                     {feature.description}
                                 </p>
                             </div>

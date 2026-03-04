@@ -1,5 +1,5 @@
 // ============================================================================
-// Alpha BRAND COLORS - TEAL + NAVY HYBRID SYSTEM
+// Anthupic BRAND COLORS - TEAL + NAVY HYBRID SYSTEM
 // ============================================================================
 // Strategic Approach: Monochromatic Teal (70%) + Deep Navy (30%)
 // Primary: Teal/Cyan gradient (Clean, Modern, Tech)
@@ -346,7 +346,7 @@ export const SHADER_CONFIG = {
     intensity: 1.0,
     radius: 2.0,
     momentum: 30,
-    maskType: 'alpha' as const,
+    maskType: 'anthupic' as const,
     opacity: 0.92,
   },
 

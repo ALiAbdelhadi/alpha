@@ -46,7 +46,6 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
                 },
             )
 
-            // Staggered animations for child elements
             if (headingRef.current) {
                 gsap.fromTo(
                     headingRef.current,
@@ -104,7 +103,6 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
                 )
             }
 
-            // Decorative line animation
             if (decorativeLineRef.current) {
                 gsap.fromTo(
                     decorativeLineRef.current,
@@ -131,28 +129,19 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
         <section
             ref={sectionRef}
             id="cta"
-            className="relative overflow-hidden"
-            style={{
-                minHeight: '100vh',
-                paddingTop: 'clamp(6rem, 10vh, 8rem)',
-                paddingBottom: 'clamp(6rem, 10vh, 8rem)'
-            }}
+            className="relative overflow-hidden section-padding"
+            style={{ minHeight: '100vh' }}
             aria-label="Call to action section"
         >
             <Container>
                 <div
                     ref={contentRef}
-                    className="relative border-b border-foreground/10 pb-16"
+                    className="relative border-b border-foreground/25 pb-16"
                 >
                     <div className="relative z-10 max-w-4xl">
                         <h2
                             ref={headingRef}
                             className="mb-8 font-sans font-normal text-primary"
-                            style={{
-                                fontSize: 'clamp(2.5rem, 6vw, 3.815rem)',
-                                lineHeight: 1.1,
-                                letterSpacing: '-0.02em',
-                            }}
                         >
                             <span className="text-balance">
                                 {t("title") || "Ready to transform your vision?"}
@@ -160,11 +149,7 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
                         </h2>
                         <p
                             ref={descriptionRef}
-                            className="mb-12 max-w-2xl text-primary/80"
-                            style={{
-                                fontSize: 'clamp(1rem, 1.2vw, 1.25rem)',
-                                lineHeight: 1.6,
-                            }}
+                            className="mb-12 max-w-2xl body-lg text-primary/80"
                         >
                             <span className="text-pretty">
                                 {t("description") ||
@@ -181,7 +166,7 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
                             >
                                 <span className="flex items-center justify-center gap-2">
                                     {t("primaryAction") || "Get started"}
-                                    <Calendar className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5" />
+                                    <Calendar className="w-4 h-4 transition-transform duration-300 transition-default group-hover:translate-y-0.5" />
                                 </span>
                             </MagneticButton>
                             <Link href="/approach">
@@ -193,7 +178,7 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
                                     <span className="flex items-center justify-center gap-2">
                                         {t("secondaryAction") || "Explore portfolio"}
                                         <svg
-                                            className="w-4 h-4 transition-transform duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
+                                            className="w-4 h-4 transition-transform duration-300 transition-default ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
                                             fill="none"
                                             viewBox="0 0 24 24"
                                             stroke="currentColor"
@@ -206,7 +191,7 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
                                 </MagneticButton>
                             </Link>
                         </div>
-                        <p className="text-xs text-primary/60 font-mono tracking-wide">
+                        <p className="mono small text-primary/60">
                             {t("footnote") || "Typically respond within 24 hours • Available Mon-Fri, 9am-6pm"}
                         </p>
                     </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { AlphaLogo } from "@/components/alpha-logo"
+import { AnthupicLogo } from "@/components/anthupic-logo"
 import { LanguageChanger } from "@/components/language-switcher"
 import { MagneticButton } from "@/components/magnetic-button"
 import { gsap } from "@/lib/gsap"
@@ -92,7 +92,7 @@ export function MobileNav({ currentSection, navItems, scrollToSection, onClose }
       >
         <div className="flex h-full flex-col p-6">
           <div className="mb-8 flex items-center justify-between">
-            <AlphaLogo size="md" variant="full" />
+            <AnthupicLogo size="md" variant="full" />
             <button
               onClick={() => setIsOpen(false)}
               className="p-2 text-primary focus:outline-none focus:ring-2 focus:ring-foreground/50 rounded-lg"

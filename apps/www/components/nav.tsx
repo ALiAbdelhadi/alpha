@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
 import { Calendar } from "lucide-react"
 import { useLocale, useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from "react"
-import { AlphaLogo } from "./alpha-logo"
+import { AnthupicLogo } from "./anthupic-logo"
 import { MagneticButton } from "./magnetic-button"
 import { useLoading } from "./providers/loading-provider"
 
@@ -187,17 +187,17 @@ export function Nav() {
                                     href="/"
                                     className="flex items-baseline gap-1 group relative"
                                 >
-                                    <AlphaLogo size="md" variant="full" />
+                                    <AnthupicLogo size="md" variant="full" />
                                 </Link>
                             </div>
                             <nav ref={navItemsRef} className="flex items-center justify-center gap-1 order-2">
                                 {navItems.map((item) => (
                                     <Link key={item.key} href={item.href}>
                                         <button
-                                            className="group relative font-sans text-sm font-medium transition-colors rounded px-3 py-1.5 text-nowrap"
+                                            className="group relative font-sans text-sm font-medium transition-colors transition-default rounded px-3 py-1.5 text-nowrap"
                                         >
                                             {t(item.key)}
-                                            <span className="absolute -bottom-1 left-0 right-0 h-px bg-transparent group-hover:bg-foreground transition-all duration-300" />
+                                            <span className="absolute -bottom-1 left-0 right-0 h-px bg-transparent group-hover:bg-foreground/50 transition-all duration-300 transition-default" />
                                         </button>
                                     </Link>
                                 ))}
@@ -221,7 +221,7 @@ export function Nav() {
                                 href="/"
                                 className="flex items-baseline gap-1 group relative z-50"
                             >
-                                <AlphaLogo size="md" variant="full" />
+                                <AnthupicLogo size="md" variant="full" />
                             </Link>
                             <button
                                 onClick={toggleMobileMenu}

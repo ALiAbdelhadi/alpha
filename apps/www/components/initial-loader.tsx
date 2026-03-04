@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { useLocale } from "next-intl"
 import { startTransition, useEffect, useMemo, useRef, useState } from "react"
 
-const INITIAL_LOAD_KEY = 'alpha_initial_load_complete'
+const INITIAL_LOAD_KEY = 'Anthupic_initial_load_complete'
 
 function splitIntoSegments(text: string): string[] {
     if (typeof Intl !== 'undefined' && 'Segmenter' in Intl) {
@@ -20,7 +20,7 @@ function splitIntoSegments(text: string): string[] {
 export function InitialLoader() {
     const locale = useLocale()
     const isRTL = locale === "ar"
-    const greeting = isRTL ? "ألفا" : "ALPHA"
+    const greeting = isRTL ? "ألفا" : "Anthupic"
 
     const segments = useMemo(() => {
         if (isRTL) {

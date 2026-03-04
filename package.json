@@ -1,5 +1,5 @@
 {
-  "name": "alpha-main",
+  "name": "anthupic-main",
   "private": true,
   "scripts": {
     "build": "turbo run build",
