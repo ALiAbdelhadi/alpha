@@ -3,27 +3,18 @@
 import { Container } from "@/components/container"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { useReveal } from "@/hooks/use-animation"
+import { TESTIMONIALS, type Testimonial } from "@/lib/testimonials"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 
-interface Testimonial {
-    quote: string
-    author: string
-    role: string
-    company: string
-    avatar?: string
-}
-
-const hasTestimonials = false
-
 export function SocialProofSection() {
-    if (!hasTestimonials) return null
-
     const t = useTranslations("socialProof")
     const sectionRef = useRef<HTMLElement>(null)
     const titleRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.5 })
 
-    const testimonials: Testimonial[] = []
+    const testimonials: Testimonial[] = TESTIMONIALS
+
+    if (testimonials.length === 0) return null
 
     useEffect(() => {
         if (!sectionRef.current) return
@@ -71,8 +62,8 @@ export function SocialProofSection() {
                     </p>
                 </div>
                 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    {testimonials.map((testimonial, i) => (
-                        <TestimonialCard key={i} testimonial={testimonial} />
+                    {testimonials.map((testimonial) => (
+                        <TestimonialCard key={testimonial.id} testimonial={testimonial} />
                     ))}
                 </div>
             </Container>
@@ -102,6 +93,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
                     aria-hidden
                 >
                     {testimonial.avatar ? (
+                        // eslint-disable-next-line @next/next/no-img-element
                         <img
                             src={testimonial.avatar}
                             alt=""

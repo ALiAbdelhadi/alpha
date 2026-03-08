@@ -38,6 +38,38 @@ function OpeningSection() {
                             {t("description")}
                         </p>
                     </div>
+                    <div className="mt-10 grid gap-4 md:grid-cols-3">
+                        <div className="rounded-lg border border-foreground/15 bg-foreground/5 px-4 py-3">
+                            <p className="mono text-xs uppercase tracking-[0.16em] text-primary/60 mb-1">
+                                Performance target
+                            </p>
+                            <p className="text-xl font-sans font-medium text-primary">
+                                90+
+                                <span className="mono small text-primary/60 ml-1">
+                                    Lighthouse
+                                </span>
+                            </p>
+                        </div>
+                        <div className="rounded-lg border border-foreground/15 bg-foreground/5 px-4 py-3">
+                            <p className="mono text-xs uppercase tracking-[0.16em] text-primary/60 mb-1">
+                                Accessibility
+                            </p>
+                            <p className="text-xl font-sans font-medium text-primary">
+                                95+
+                                <span className="mono small text-primary/60 ml-1">
+                                    Audit score
+                                </span>
+                            </p>
+                        </div>
+                        <div className="rounded-lg border border-foreground/15 bg-foreground/5 px-4 py-3">
+                            <p className="mono text-xs uppercase tracking-[0.16em] text-primary/60 mb-1">
+                                Core Web Vitals
+                            </p>
+                            <p className="text-sm text-primary/75">
+                                FCP &lt; 1.5s · TTI &lt; 3.5s · CLS &lt; 0.1 on primary pages.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </Container>
         </section>

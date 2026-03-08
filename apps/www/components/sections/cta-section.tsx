@@ -170,7 +170,7 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
                                     <Calendar className="w-4 h-4 transition-transform duration-300 transition-default group-hover:translate-y-0.5" />
                                 </span>
                             </MagneticButton>
-                            <Link href="/approach">
+                            <Link href="/how-we-work">
                                 <MagneticButton
                                     size="lg"
                                     variant="secondary"

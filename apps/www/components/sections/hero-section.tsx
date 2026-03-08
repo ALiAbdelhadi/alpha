@@ -5,6 +5,7 @@ import { useLoading } from "@/components/providers/loading-provider"
 import { useReveal } from "@/hooks/use-animation"
 import { useTranslations } from "next-intl"
 import { Container } from "../container"
+import { CASE_STUDIES } from "@/lib/case-studies"
 
 interface HeroSectionProps {
   scrollToSection: (sectionId: string) => void
@@ -13,6 +14,10 @@ interface HeroSectionProps {
 export function HeroSection({ scrollToSection }: HeroSectionProps) {
   const t = useTranslations()
   const { isInitialLoadComplete } = useLoading()
+
+  const logoClients = Array.from(
+    new Map(CASE_STUDIES.map((cs) => [cs.client, cs.client])).values()
+  ).slice(0, 3)
 
   const badgeRef = useReveal<HTMLDivElement>({
     direction: "up",
@@ -137,6 +142,23 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
           <p className="mt-4 mono small text-primary/60">
             {t("hero.trust")}
           </p>
+          {logoClients.length > 0 && (
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <span className="mono small text-primary/50">
+                Trusted by
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {logoClients.map((name) => (
+                  <span
+                    key={name}
+                    className="mono text-[11px] uppercase tracking-[0.16em] text-primary/60 rounded-full border border-foreground/15 bg-foreground/3 px-3 py-1"
+                  >
+                    {name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         <div
           ref={scrollHintRef}
           className="absolute bottom-12 left-1/2 -translate-x-1/2 hidden md:block"

@@ -152,10 +152,12 @@ export function MagneticButton({
   }
 
   const variants: Record<ButtonVariant, string> = {
-    primary: "bg-foreground/95 text-background hover:bg-foreground backdrop-blur-md",
+    primary:
+      "bg-foreground/95 text-background hover:bg-foreground backdrop-blur-md",
     secondary:
-      "bg-foreground/5 text-primary hover:bg-foreground/10 backdrop-blur-xl border border-foreground/10 hover:border-foreground/20",
-    ghost: "bg-transparent text-primary hover:bg-foreground/5 backdrop-blur-sm",
+      "bg-transparent text-primary/85 border border-foreground/40 hover:bg-foreground/5 hover:border-foreground/60",
+    ghost:
+      "bg-transparent text-primary/75 hover:bg-foreground/5 border border-transparent",
   }
 
   const sizes: Record<ButtonSize, string> = {

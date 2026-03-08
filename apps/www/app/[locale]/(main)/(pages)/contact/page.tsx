@@ -1,11 +1,16 @@
 "use client"
 
+import { useState } from "react"
+
 import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
 import { useReveal } from "@/hooks/use-animation"
 import { Link } from "@/i18n/navigation"
+import { contactFormSchema } from "@/lib/validations/contact"
 import { useTranslations } from "next-intl"
-import { Mail, MapPin, Phone } from "lucide-react"
+import { AlertCircle, CheckCircle2, Mail, MapPin, Phone } from "lucide-react"
+
+type FormErrors = Record<string, string>
 
 export default function ContactPage() {
     const t = useTranslations("contactPage")
@@ -13,6 +18,81 @@ export default function ContactPage() {
     const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.5 })
     const leftRef = useReveal({ direction: "left", delay: 0.1, duration: 0.5 })
     const rightRef = useReveal({ direction: "right", delay: 0.15, duration: 0.5 })
+
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [service, setService] = useState("")
+    const [message, setMessage] = useState("")
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [submitSuccess, setSubmitSuccess] = useState(false)
+    const [submitError, setSubmitError] = useState<string | null>(null)
+    const [formErrors, setFormErrors] = useState<FormErrors>({})
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        setIsSubmitting(true)
+        setSubmitSuccess(false)
+        setSubmitError(null)
+        setFormErrors({})
+
+        try {
+            const payload = {
+                name,
+                email,
+                message,
+                // Map the local service select to optional schema values where possible
+                serviceInterest:
+                    service === "development"
+                        ? "web-development"
+                        : service === "web-design"
+                        ? "ui-ux"
+                        : service
+                            ? "other"
+                            : undefined,
+                website: "",
+            }
+
+            const validatedData = contactFormSchema.parse(payload)
+
+            const locale =
+                typeof window !== "undefined"
+                    ? window.location.pathname.split("/")[1] || document.documentElement.lang || "en"
+                    : "en"
+
+            const response = await fetch(`/${locale}/api/contact`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    ...validatedData,
+                    locale,
+                }),
+            })
+
+            const result = await response.json()
+
+            if (response.ok && result.success) {
+                setSubmitSuccess(true)
+                setName("")
+                setEmail("")
+                setService("")
+                setMessage("")
+                setTimeout(() => setSubmitSuccess(false), 7000)
+            } else {
+                if (result.errors && typeof result.errors === "object") {
+                    setFormErrors(result.errors as FormErrors)
+                    const firstError = Object.values(result.errors as FormErrors)[0]
+                    setSubmitError(firstError || result.message || t("form.errorGeneric"))
+                } else {
+                    setSubmitError(result.message || t("form.errorGeneric"))
+                }
+            }
+        } catch (error: unknown) {
+            console.error("Contact form submission error:", error)
+            setSubmitError(t("form.errorNetwork"))
+        } finally {
+            setIsSubmitting(false)
+        }
+    }
 
     return (
         <>
@@ -66,7 +146,7 @@ export default function ContactPage() {
                                             {tContact("emailValue")}
                                         </p>
                                     </a>
-                                    <a href={`tel:${t("phoneValue").replace(/\s/g, '')}`} className="group block">
+                                    <a href={`tel:${t("phoneValue").replace(/\s/g, "")}`} className="group block">
                                         <div className="mb-2 flex items-center gap-2">
                                             <Phone className="h-3.5 w-3.5 text-primary/60" />
                                             <span className="font-mono text-xs text-primary/60 tracking-wide">
@@ -130,16 +210,32 @@ export default function ContactPage() {
                             </div>
                             <div ref={rightRef} className="flex flex-col justify-center">
                                 <div className="p-8 rounded-2xl border border-foreground/10 bg-foreground/3 backdrop-blur-md">
-                                    <div className="space-y-6">
+                                    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                                         <div>
                                             <label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
                                                 {t("form.nameLabel")} <span className="text-red-500">*</span>
                                             </label>
                                             <input
                                                 type="text"
+                                                value={name}
+                                                onChange={(e) => setName(e.target.value)}
                                                 placeholder={t("form.namePlaceholder")}
-                                                className="w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all"
+                                                className={`w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all ${
+                                                    formErrors.name ? "border-red-500 focus:border-red-500" : ""
+                                                }`}
+                                                aria-invalid={!!formErrors.name}
+                                                aria-describedby={formErrors.name ? "contact-name-error" : undefined}
+                                                disabled={isSubmitting}
                                             />
+                                            {formErrors.name && (
+                                                <p
+                                                    id="contact-name-error"
+                                                    className="mt-1.5 flex items-center gap-1 font-mono text-xs text-red-500"
+                                                >
+                                                    <AlertCircle className="h-3 w-3" aria-hidden="true" />
+                                                    {formErrors.name}
+                                                </p>
+                                            )}
                                         </div>
 
                                         <div>
@@ -148,16 +244,38 @@ export default function ContactPage() {
                                             </label>
                                             <input
                                                 type="email"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
                                                 placeholder={t("form.emailPlaceholder")}
-                                                className="w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all"
+                                                className={`w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all ${
+                                                    formErrors.email ? "border-red-500 focus:border-red-500" : ""
+                                                }`}
+                                                aria-invalid={!!formErrors.email}
+                                                aria-describedby={formErrors.email ? "contact-email-error" : undefined}
+                                                autoComplete="email"
+                                                disabled={isSubmitting}
                                             />
+                                            {formErrors.email && (
+                                                <p
+                                                    id="contact-email-error"
+                                                    className="mt-1.5 flex items-center gap-1 font-mono text-xs text-red-500"
+                                                >
+                                                    <AlertCircle className="h-3 w-3" aria-hidden="true" />
+                                                    {formErrors.email}
+                                                </p>
+                                            )}
                                         </div>
 
                                         <div>
                                             <label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
-                                                {t("form.serviceLabel")} <span className="text-red-500">*</span>
+                                                {t("form.serviceLabel")}
                                             </label>
-                                            <select className="w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all">
+                                            <select
+                                                value={service}
+                                                onChange={(e) => setService(e.target.value)}
+                                                className="w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all"
+                                                disabled={isSubmitting}
+                                            >
                                                 <option value="">{t("form.servicePlaceholder")}</option>
                                                 <option value="web-design">{t("form.serviceWebDesign")}</option>
                                                 <option value="development">{t("form.serviceDevelopment")}</option>
@@ -171,18 +289,68 @@ export default function ContactPage() {
                                                 {t("form.messageLabel")} <span className="text-red-500">*</span>
                                             </label>
                                             <textarea
+                                                value={message}
+                                                onChange={(e) => setMessage(e.target.value)}
                                                 placeholder={t("form.messagePlaceholder")}
                                                 rows={4}
-                                                className="w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none resize-none border-foreground/25 focus:border-foreground/50 transition-all"
+                                                className={`w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none resize-none border-foreground/25 focus:border-foreground/50 transition-all ${
+                                                    formErrors.message ? "border-red-500 focus:border-red-500" : ""
+                                                }`}
+                                                aria-invalid={!!formErrors.message}
+                                                aria-describedby={formErrors.message ? "contact-message-error" : undefined}
+                                                disabled={isSubmitting}
                                             />
+                                            {formErrors.message && (
+                                                <p
+                                                    id="contact-message-error"
+                                                    className="mt-1.5 flex items-center gap-1 font-mono text-xs text-red-500"
+                                                >
+                                                    <AlertCircle className="h-3 w-3" aria-hidden="true" />
+                                                    {formErrors.message}
+                                                </p>
+                                            )}
                                         </div>
 
-                                        <div className="pt-3">
-                                            <MagneticButton type="submit" variant="primary" size="lg" className="w-full text-base">
-                                                {t("form.submit")}
+                                        {/* Honeypot */}
+                                        <input
+                                            type="text"
+                                            className="hidden"
+                                            tabIndex={-1}
+                                            autoComplete="off"
+                                            aria-hidden="true"
+                                        />
+
+                                        <div className="pt-3 space-y-3">
+                                            <MagneticButton
+                                                type="submit"
+                                                variant="primary"
+                                                size="lg"
+                                                className="w-full text-base"
+                                                disabled={isSubmitting}
+                                            >
+                                                {isSubmitting ? t("form.submitting") : t("form.submit")}
                                             </MagneticButton>
+                                            <p className="text-center font-mono text-xs text-primary/60">
+                                                {t("form.riskReversal")}
+                                            </p>
+                                            {submitSuccess && (
+                                                <div className="mt-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2.5 text-center">
+                                                    <p className="flex items-center justify-center gap-2 font-mono text-xs text-primary">
+                                                        <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+                                                        {t("form.success")}
+                                                    </p>
+                                                </div>
+                                            )}
+                                            {submitError && (
+                                                <div className="mt-2 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2.5 text-center">
+                                                    <p className="flex items-center justify-center gap-2 font-mono text-xs text-primary">
+                                                        <AlertCircle className="h-3.5 w-3.5 text-red-500" />
+                                                        {submitError}
+                                                    </p>
+                                                </div>
+                                            )}
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
