@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
 import { Calendar } from "lucide-react"
 import { useLocale, useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from "react"
-import { AnthupicLogo } from "./anthupic-logo"
+import { AnthupicLogo } from "./alpha-logo"
 import { MagneticButton } from "./magnetic-button"
 import { useLoading } from "./providers/loading-provider"
 

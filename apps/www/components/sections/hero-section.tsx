@@ -96,7 +96,14 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
           >
             <span className="text-pretty">{t("hero.description")}</span>
           </p>
-          <div ref={buttonsRef} className="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <div ref={buttonsRef} className="flex flex-col gap-4">
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-foreground/10 bg-foreground/5 px-3 py-1.5 backdrop-blur-sm">
+              <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="font-mono text-xs text-primary/70">
+                {t("hero.availability")}
+              </span>
+            </div>
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <MagneticButton
               size="lg"
               variant="primary"
@@ -125,6 +132,7 @@ export function HeroSection({ scrollToSection }: HeroSectionProps) {
             >
               {t("hero.ctaSecondary")}
             </MagneticButton>
+            </div>
           </div>
           <p className="mt-4 mono small text-primary/60">
             {t("hero.trust")}

@@ -1,6 +1,6 @@
 "use client"
 
-import { AnthupicLogo } from "@/components/anthupic-logo"
+import { AnthupicLogo } from "@/components/alpha-logo"
 import { LanguageChanger } from "@/components/language-switcher"
 import { MagneticButton } from "@/components/magnetic-button"
 import { gsap } from "@/lib/gsap"

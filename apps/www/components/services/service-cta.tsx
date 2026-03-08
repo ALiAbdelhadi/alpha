@@ -15,30 +15,19 @@ interface ServiceCtaProps {
             href: string
         }
     }
-    gradientPreset?: "blue-purple" | "emerald-cyan" | "rose-pink" | "amber-orange"
+    gradientPreset?: "emerald-cyan"
 }
+
+const EMERALD_GRADIENT = "from-emerald-500/10 via-teal-500/5 to-transparent"
+const EMERALD_BLUR = "from-emerald-500/20 to-teal-500/10"
 
 export function ServiceCta({ 
     title, 
     description, 
     buttons, 
-    gradientPreset = "blue-purple" 
+    gradientPreset = "emerald-cyan" 
 }: ServiceCtaProps) {
     const contentRef = useReveal({ direction: "up", delay: 0, duration: 0.6 })
-
-    const gradients = {
-        "blue-purple": "from-violet-500/10 via-purple-500/5 to-transparent",
-        "emerald-cyan": "from-emerald-500/10 via-teal-500/5 to-transparent",
-        "rose-pink": "from-rose-500/10 via-pink-500/5 to-transparent",
-        "amber-orange": "from-amber-500/10 via-orange-500/5 to-transparent",
-    }
-    
-    const blurs = {
-        "blue-purple": "from-violet-500/20 to-purple-500/10",
-        "emerald-cyan": "from-emerald-500/20 to-teal-500/10",
-        "rose-pink": "from-rose-500/20 to-pink-500/10",
-        "amber-orange": "from-amber-500/20 to-orange-500/10",
-    }
 
     return (
         <section className="section-padding">
@@ -47,7 +36,7 @@ export function ServiceCta({
                     ref={contentRef}
                     className={cn(
                         "relative overflow-hidden rounded-3xl border border-foreground/25 p-8 md:p-12 lg:p-16 bg-gradient-to-br",
-                        gradients[gradientPreset]
+                        EMERALD_GRADIENT
                     )}
                 >
                     <div className="max-w-2xl relative z-10">
@@ -70,7 +59,7 @@ export function ServiceCta({
                     </div>
                     <div className={cn(
                         "absolute -right-20 -top-20 w-80 h-80 rounded-full bg-gradient-to-br blur-3xl opacity-60",
-                        blurs[gradientPreset]
+                        EMERALD_BLUR
                     )} />
                 </div>
             </Container>

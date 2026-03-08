@@ -22,7 +22,14 @@ interface ServiceHeroProps {
             href: string
         }
     }
-    gradientPreset?: "blue-purple" | "emerald-cyan" | "rose-pink" | "amber-orange"
+    gradientPreset?: "emerald-cyan"
+}
+
+const EMERALD_PRESET = {
+    bg: "radial-gradient(ellipse 80% 50% at 50% -20%, oklch(0.7 0.15 160 / 0.15), transparent), radial-gradient(ellipse 60% 40% at 100% 50%, oklch(0.65 0.12 180 / 0.1), transparent)",
+    pill: "bg-emerald-500",
+    pillBorder: "border-emerald-500/30 bg-emerald-500/10",
+    pillText: "text-emerald-600 dark:text-emerald-400",
 }
 
 export function ServiceHero({
@@ -31,40 +38,13 @@ export function ServiceHero({
     description,
     visual,
     buttons,
-    gradientPreset = "blue-purple",
+    gradientPreset = "emerald-cyan",
 }: ServiceHeroProps) {
     const titleRef = useReveal<HTMLHeadingElement>({ direction: "up", delay: 0, duration: 0.8 })
     const descRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0.2, duration: 0.6 })
     const buttonsRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.35, duration: 0.5 })
 
-    const gradients = {
-        "blue-purple": {
-            bg: "radial-gradient(ellipse 80% 50% at 50% -20%, oklch(0.7 0.15 280 / 0.15), transparent), radial-gradient(ellipse 60% 40% at 100% 50%, oklch(0.65 0.12 260 / 0.1), transparent)",
-            pill: "bg-blue-500",
-            pillBorder: "border-blue-500/30 bg-blue-500/10",
-            pillText: "text-blue-600 dark:text-blue-400",
-        },
-        "emerald-cyan": {
-            bg: "radial-gradient(ellipse 80% 50% at 50% -20%, oklch(0.7 0.15 160 / 0.15), transparent), radial-gradient(ellipse 60% 40% at 100% 50%, oklch(0.65 0.12 180 / 0.1), transparent)",
-            pill: "bg-emerald-500",
-            pillBorder: "border-emerald-500/30 bg-emerald-500/10",
-            pillText: "text-emerald-600 dark:text-emerald-400",
-        },
-        "rose-pink": {
-            bg: "radial-gradient(ellipse 80% 50% at 50% -20%, oklch(0.7 0.15 340 / 0.15), transparent), radial-gradient(ellipse 60% 40% at 100% 50%, oklch(0.65 0.12 320 / 0.1), transparent)",
-            pill: "bg-rose-500",
-            pillBorder: "border-rose-500/30 bg-rose-500/10",
-            pillText: "text-rose-600 dark:text-rose-400",
-        },
-        "amber-orange": {
-            bg: "radial-gradient(ellipse 80% 50% at 50% -20%, oklch(0.7 0.15 80 / 0.15), transparent), radial-gradient(ellipse 60% 40% at 100% 50%, oklch(0.65 0.12 50 / 0.1), transparent)",
-            pill: "bg-amber-500",
-            pillBorder: "border-amber-500/30 bg-amber-500/10",
-            pillText: "text-amber-600 dark:text-amber-400",
-        },
-    }
-
-    const preset = gradients[gradientPreset]
+    const preset = EMERALD_PRESET
 
     return (
         <section className="relative min-h-screen flex items-center overflow-hidden section-padding">

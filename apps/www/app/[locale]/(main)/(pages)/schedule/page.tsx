@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { TimePicker } from "@/components/ui/time-picker"
 import { usePathname, useRouter } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
-import { gsap } from "gsap"
+import { gsap } from "@/lib/gsap"
 import { AlertCircle, ArrowLeft, Calendar, CheckCircle2, Clock } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
@@ -310,6 +310,9 @@ export default function SchedulePage() {
                             >
                                 {isSubmitting ? t('submit.submitting') : t('submit.button')}
                             </Button>
+                            <p className="mt-3 text-center font-mono text-xs text-primary/50">
+                                {t('form.riskReversal')}
+                            </p>
                             {submitSuccess && (
                                 <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
                                     <p className="text-center mono small text-primary flex items-center justify-center gap-2">

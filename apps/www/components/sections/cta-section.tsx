@@ -1,17 +1,12 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import gsap from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { Calendar } from "lucide-react"
 import { MagneticButton } from "@/components/magnetic-button"
 import { Container } from "@/components/container"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/navigation"
-
-if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger)
-}
 
 interface CtaSectionProps {
     scrollToSection?: (sectionId: string) => void
@@ -156,6 +151,12 @@ export function CtaSectionEnhanced({ scrollToSection }: CtaSectionProps) {
                                     "Join us in creating something extraordinary. Let's collaborate on your next project and bring your ideas to life with innovation and precision."}
                             </span>
                         </p>
+                        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/5 px-3 py-1.5 backdrop-blur-sm">
+                            <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                            <span className="font-mono text-xs text-primary/70">
+                                {t("availability")}
+                            </span>
+                        </div>
                         <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 mb-8">
                             <MagneticButton
                                 size="lg"

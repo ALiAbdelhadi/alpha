@@ -8,10 +8,6 @@ import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 
-if (typeof window !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger)
-}
-
 interface ServicePageTemplateProps {
     serviceKey: "webDesign" | "development" | "consulting" | "maintenance"
 }

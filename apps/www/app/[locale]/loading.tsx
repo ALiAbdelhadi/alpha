@@ -3,23 +3,22 @@
 import { LoadingIcon } from '@/components/icons/loading-icon'
 import { useEffect, useState } from 'react'
 
+const messages = [
+    'Loading your content...',
+    'Getting everything ready...',
+    'Almost there...',
+    'Preparing your page...',
+    'Just a moment...',
+]
+
 export default function LoadingPage() {
     const [mounted, setMounted] = useState(false)
+    const [message, setMessage] = useState(messages[0])
 
     useEffect(() => {
         setMounted(true)
+        setMessage(messages[Math.floor(Math.random() * messages.length)])
     }, [])
-
-    const messages = [
-        'Loading your content...',
-        'Getting everything ready...',
-        'Almost there...',
-        'Preparing your page...',
-        'Just a moment...',
-    ]
-
-    // eslint-disable-next-line react-hooks/purity
-    const randomMessage = messages[Math.floor(Math.random() * messages.length)]
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-background px-4 sm:px-6 lg:px-8">
@@ -62,7 +61,7 @@ export default function LoadingPage() {
                             }`}
                     >
                         <p className="max-w-xl text-base leading-relaxed text-foreground/70 md:text-lg">
-                            <span className="inline-block animate-pulse">{randomMessage}</span>
+                            <span className="inline-block animate-pulse">{message}</span>
                         </p>
                     </div>
                 </div>

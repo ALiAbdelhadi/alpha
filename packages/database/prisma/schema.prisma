@@ -257,3 +257,25 @@ model Notification {
     @@index([createdAt])
     @@map("notifications")
 }
+
+// ============================================================================
+// ESTIMATOR LEADS (from scoping tool email capture)
+// ============================================================================
+
+model EstimatorLead {
+    id          String    @id @default(uuid())
+    email       String
+    projectType String
+    complexity  String
+    timeline    String
+    priceMin    Int
+    priceMax    Int
+    weeksMin    Int
+    weeksMax    Int
+    convertedAt DateTime?
+    createdAt   DateTime  @default(now())
+
+    @@index([email])
+    @@index([createdAt])
+    @@map("estimator_leads")
+}

@@ -25,16 +25,104 @@
         "theme": "Theme"
     },
     "hero": {
-        "badge": "Web Development Studio • Cairo, Egypt",
-        "title": "We build web solutions",
-        "title2": "that convert visitors into clients",
-        "problem": "Most business websites in Egypt look fine but don't convert. We fix that, in Arabic and English.",
-        "description": "Custom web development for businesses ready to scale. No templates. No shortcuts. Just clean code and measurable results.",
-        "ctaPrimary": "Start Your Project",
+        "badge": "Custom Web Engineering • Cairo",
+        "title": "We engineer digital products",
+        "title2": "that scale revenue.",
+        "problem": "Stop losing leads to bad UX. We build custom web apps and high-performance sites that convert traffic into revenue.",
+        "description": "Premium React/Next.js development for businesses ready to scale. No templates, no bloat. Just speed, strategy, and seamless execution.",
+        "ctaPrimary": "Get Your Estimate",
         "ctaSecondary": "See Our Work",
         "scrollHint": "Scroll to explore",
         "clientsLabel": "happy clients",
-        "trust": "Free consultation · No pressure · Response within 4 hours"
+        "trust": "Top 1% Performance • Seamless RTL/LTR • Custom Animations",
+        "availability": "Accepting 2 new projects this month"
+    },
+    "processHomePage": {
+        "badge": "How It Works",
+        "title": "A Transparent Process",
+        "description": "We don’t believe in black boxes. Here is exactly how we take your project from the initial conversation to a high-converting launch.",
+        "deliverables": "Deliverables",
+        "timeline": "Timeline",
+        "steps": {
+            "1": {
+                "title": "Discovery & Architecture",
+                "description": "We start by understanding your business goals and why your current solution isn't working. We map out the technical architecture and define exactly what success looks like.",
+                "deliverables": "Technical Blueprint, Strategy Document",
+                "timeline": "Week 1"
+            },
+            "2": {
+                "title": "Wireframing & UX Design",
+                "description": "Before adding colors or fonts, we design the flow. We focus purely on information hierarchy and conversion paths to ensure the foundation drives action.",
+                "deliverables": "Interactive Wireframes, Flow Diagrams",
+                "timeline": "Week 2-3"
+            },
+            "3": {
+                "title": "High-Fidelity Development",
+                "description": "We build the system using Modern React and Next.js. We don't use templates. Everything is custom-coded for maximum performance and buttery-smooth animations.",
+                "deliverables": "Staging Links, Performance Audits",
+                "timeline": "Week 4-7"
+            },
+            "4": {
+                "title": "Testing & Launch",
+                "description": "We rigorously test across devices and browsers, ensuring flawless RTL support. Once you approve, we deploy to production and hand over the keys.",
+                "deliverables": "Source Code, Live Site, Documentation",
+                "timeline": "Week 8"
+            }
+        }
+    },
+    "comparisonDemo": {
+        "title": "See the difference",
+        "subtitle": "The same page, built two ways. Toggle to compare.",
+        "toggleLabel": "Switch between typical and Alpha-built",
+        "genericLabel": "What most agencies deliver",
+        "optimizedLabel": "What Alpha delivers",
+        "footer": "Design and copy matter. So does clarity.",
+        "generic": {
+            "headline": "Welcome to our website",
+            "subtext": "We offer great services. Contact us to learn more.",
+            "cta": "Learn More",
+            "metric": "Avg. bounce rate: 74%"
+        },
+        "optimized": {
+            "headline": "We build web solutions that convert visitors into clients",
+            "subtext": "Custom development in Arabic and English. No templates. Measurable results.",
+            "cta": "Book a free 30-min call",
+            "badge": "Accepting 2 new clients this month",
+            "metric": "Avg. bounce rate: 41%"
+        }
+    },
+    "socialProof": {
+        "title": "What clients say",
+        "subtitle": "Honest feedback from teams we've worked with"
+    },
+    "problem": {
+        "badge": "The Reality",
+        "title": {
+            "pre": "Your website isn't",
+            "crossed": "an expense",
+            "gradient": "converting."
+        },
+        "subtitle": "Most businesses lose leads before they even speak to them. Here is why:",
+        "issues": {
+            "templates": {
+                "title": "Template Fatigue",
+                "description": "Your site looks like your competitor's site because it uses the same $60 theme."
+            },
+            "speed": {
+                "title": "Sluggish Load Times",
+                "description": "If your site takes longer than 3 seconds to load, 53% of mobile users will leave."
+            },
+            "confusion": {
+                "title": "Unclear Value",
+                "description": "Visitors land on your page and still don't understand exactly what you do or who you do it for."
+            },
+            "amateurs": {
+                "title": "Amateur Engineering",
+                "description": "Broken links, janky scrolling, and forms that quietly fail to send you the lead."
+            }
+        },
+        "quote": "A website that doesn't clearly articulate your value and guide the user is just a digital brochure.",
+        "author": "ANTHUPIC STRATEGY"
     },
     "work": {
         "title": "Selected Work",
@@ -68,22 +156,22 @@
     },
     "services": {
         "title": "What We Build",
-        "subtitle": "Core capabilities",
+        "subtitle": "Outcome-driven engineering",
         "service1": {
-            "title": "Modern Web Apps",
-            "description": "React, Next.js, TypeScript. Fast, accessible, maintainable. Built for growth, not just launch."
+            "title": "Conversion-Optimized Web Apps",
+            "description": "We don’t just build apps; we build scalable software designed to onboard users, reduce churn, and drive revenue using React and Next.js."
         },
         "service2": {
-            "title": "E-Commerce That Converts",
-            "description": "Complete stores with payments, inventory, and responsive design. We focus on the checkout, not just the catalog."
+            "title": "High-Volume E-Commerce",
+            "description": "Custom headless storefronts that load in milliseconds. We optimize the checkout flow to reduce cart abandonment and increase AOV."
         },
         "service3": {
-            "title": "Arabic + English Done Right",
-            "description": "True RTL support, culturally adapted content. Not just translated—reimagined for each audience."
+            "title": "Bilingual Business Portals",
+            "description": "Flawless Arabic (RTL) and English (LTR) experiences. We don't just translate text; we adapt the UX to local cultural expectations."
         },
         "service4": {
-            "title": "Design Implementation",
-            "description": "Your designs, executed precisely. Smooth animations, intuitive interactions, pixel-perfect delivery."
+            "title": "Performance Rescues",
+            "description": "Is your current site slow, buggy, or failing to convert? We audit, refactor, and rebuild existing platforms to meet enterprise standards."
         }
     },
     "about": {
@@ -108,9 +196,24 @@
             "sublabel": "Satisfaction"
         },
         "ctaPrimary": "Discuss Your Project",
-        "ctaSecondary": "View Our Work"
+        "ctaSecondary": "View Our Work",
+        "values": {
+            "bilingual": {
+                "label": "Bilingual-first",
+                "sublabel": "Arabic & English, equally"
+            },
+            "noTemplate": {
+                "label": "No-template policy",
+                "sublabel": "Every project is custom"
+            },
+            "outcome": {
+                "label": "Outcome-focused",
+                "sublabel": "We measure success by yours"
+            }
+        }
     },
     "cta": {
+        "availability": "Accepting 2 new clients this month",
         "title": "Let's evaluate your idea - before you build it.",
         "description": "We help teams clarify technical direction, reduce risk, and design systems that scale - before a single line of code is wasted.",
         "primaryAction": "Schedule a technical review",
@@ -136,7 +239,8 @@
             "messagePlaceholder": "Tell us about your project. What do you need? What's your timeline?",
             "submit": "Send Message",
             "submitting": "Sending...",
-            "success": "Thanks. We'll reply within 24 hours."
+            "success": "Thanks. We'll reply within 24 hours.",
+            "riskReversal": "Free 30-min consultation · No commitment · Response within 2 business hours"
         },
         "social": {
             "twitter": "Twitter",
@@ -179,7 +283,8 @@
             "instagram": "Instagram",
             "linkedin": "LinkedIn",
             "dribbble": "Dribbble"
-        }
+        },
+        "phoneValue": "+1 234 567 8900"
     },
     "schedule": {
         "back": "Back",
@@ -216,7 +321,8 @@
                 "required": "*",
                 "error": "Please select a time",
                 "availableHours": "Available hours: 9:00 AM - 6:00 PM (15-minute intervals)"
-            }
+            },
+            "riskReversal": "Free 30-min consultation · No commitment · Response within 2 business hours"
         },
         "submit": {
             "button": "Schedule Meeting",
@@ -232,10 +338,6 @@
             "description": "Most web projects are built to launch. We build to last. The difference isn't in the framework—it's in the questions asked before the first commit."
         },
         "contrasts": {
-            "label": {
-                "common": "Common",
-                "anthupic": "Anthupic"
-            },
             "1": {
                 "common": "Build the features users asked for",
                 "anthupic": "Understand what problem users are trying to solve"
@@ -247,6 +349,10 @@
             "3": {
                 "common": "We'll fix that after launch",
                 "anthupic": "Launch is when the system starts working, not when work starts"
+            },
+            "label": {
+                "common": "Common",
+                "anthupic": "Anthupic"
             }
         },
         "decisions": {
@@ -303,34 +409,42 @@
             "timeline": "Timeline",
             "discovery": {
                 "title": "Discovery",
-                "description": "Before committing to solutions, we map the territory. Technical requirements. User needs. Business constraints. The gaps between what's asked for and what's actually needed.",
-                "deliverables": "Requirements document | Technical audit | Risk assessment | Architecture proposal",
-                "timeline": "1-2 weeks, depending on complexity"
+                "description": "We listen before we build. 1 session, 60 mins.",
+                "yourRole": "Listen / Share",
+                "deliverables": "Requirements summary | Technical audit | Project roadmap",
+                "timeline": "1 session"
             },
-            "architecture": {
-                "title": "Architecture",
-                "description": "The foundation determines everything that follows. We define data structures, system boundaries, integration points, and performance targets. This phase is complete when we can explain every technical decision.",
-                "deliverables": "System architecture | Database schema | API design | Technology stack documentation",
-                "timeline": "2-3 weeks"
+            "wireframe": {
+                "title": "Wireframe",
+                "description": "You approve the skeleton before any pixel is designed.",
+                "yourRole": "Approve",
+                "deliverables": "Sitemap | Page structure | Key flows",
+                "timeline": "1 week"
+            },
+            "design": {
+                "title": "Design",
+                "description": "You see it before we code it. Revisions included.",
+                "yourRole": "Review",
+                "deliverables": "Visual mockups | Responsive layouts | Brand alignment",
+                "timeline": "2–3 weeks"
             },
             "development": {
                 "title": "Development",
-                "description": "Iterative, not waterfall. We build in vertical slices—complete features that work end-to-end. You see progress in days, not months. Feedback shapes direction without derailing momentum.",
-                "deliverables": "Working software | Weekly demos | Code documentation | Test coverage reports",
-                "timeline": "8-16 weeks, project-dependent"
+                "description": "We build. You watch progress via a live preview link.",
+                "yourRole": "Relax / Review",
+                "deliverables": "Working site | Live preview link | Weekly updates",
+                "timeline": "4–12 weeks"
             },
             "launch": {
                 "title": "Launch",
-                "description": "Launch isn't an event—it's a transition. We monitor, measure, and respond. The first week post-launch teaches more than the last month of development. We stay close until the system proves itself.",
-                "deliverables": "Production deployment | Performance monitoring | Documentation | Team training",
-                "timeline": "2-4 weeks"
-            },
-            "support": {
-                "title": "Support",
-                "description": "Code doesn't age well without care. Dependencies update. Browsers change. Security vulnerabilities emerge. We provide ongoing maintenance or transfer knowledge for internal teams.",
-                "deliverables": "Security patches | Dependency updates | Performance optimization | Priority bug fixes",
-                "timeline": "Ongoing, as needed"
+                "description": "You own everything. Full handover, zero lock-in.",
+                "yourRole": "Launch",
+                "deliverables": "Source code | Hosting setup | Documentation",
+                "timeline": "1 week"
             }
+        },
+        "closing": {
+            "cta": "Ready to start? Book a Discovery Call"
         },
         "flexibility": {
             "title": "Process serves the project.",
@@ -777,229 +891,195 @@
             }
         }
     },
-    "whatWeOffer": "What We Offer",
-    "whatWeOfferSubtitle": "Comprehensive solutions tailored to your needs",
-    "ctaPrimary": "Start Your Project",
-    "ctaSecondary": "View Our Work",
-    "webDesign": {
-        "title": "Web Design",
-        "subtitle": "Premium Design Services",
-        "description": "We create stunning, user-centric web designs that captivate your audience and drive business results.",
-        "showcaseTitle": "Design Excellence",
-        "showcaseSubtitle": "Every design is crafted with attention to detail, focused on creating memorable experiences",
-        "showcaseEcommerce": "E-Commerce",
-        "showcaseCorporate": "Corporate",
-        "showcasePortfolio": "Portfolio",
-        "showcaseLanding": "Landing",
-        "ctaTitle": "Ready to create something beautiful?",
-        "ctaDescription": "Let's discuss your vision and craft a design that truly represents your brand.",
-        "features": {
-            "1": {
-                "title": "Responsive Design",
-                "description": "Beautiful designs that look perfect on all devices, from smartphones to desktops."
-            },
-            "2": {
-                "title": "User-Centric Approach",
-                "description": "We prioritize user experience and interface design to create intuitive digital products."
-            },
-            "3": {
-                "title": "Modern Aesthetics",
-                "description": "Contemporary design trends combined with timeless principles for lasting appeal."
-            },
-            "4": {
-                "title": "Brand Alignment",
-                "description": "Every design reflects your brand identity and communicates your unique value proposition."
-            },
-            "5": {
-                "title": "Performance Optimized",
-                "description": "Fast-loading, optimized designs that engage users and improve conversion rates."
-            },
-            "6": {
-                "title": "Accessibility First",
-                "description": "WCAG-compliant designs ensuring your website is accessible to all users."
-            }
-        },
-        "cta": {
-            "title": "Ready to create something beautiful?",
-            "description": "Let's discuss your vision and craft a design that truly represents your brand."
-        }
-    },
-    "development": {
-        "title": "Development",
-        "subtitle": "Full-Stack Solutions",
-        "description": "We build robust, scalable applications with cutting-edge technologies, delivering solutions that power modern businesses.",
-        "features": {
-            "1": {
-                "title": "Full-Stack Development",
-                "description": "From frontend to backend, we build complete solutions using modern technologies."
-            },
-            "2": {
-                "title": "Scalable Architecture",
-                "description": "Future-proof applications designed to grow with your business needs."
-            },
-            "3": {
-                "title": "API Development",
-                "description": "Robust RESTful and GraphQL APIs that power your applications and integrations."
-            },
-            "4": {
-                "title": "Database Design",
-                "description": "Optimized database structures ensuring data integrity and peak performance."
-            },
-            "5": {
-                "title": "Quality Assurance",
-                "description": "Comprehensive testing and debugging ensuring reliable, production-ready code."
-            },
-            "6": {
-                "title": "Maintenance & Support",
-                "description": "Ongoing technical support and updates to keep your applications running smoothly."
-            }
-        },
-        "techStack": {
-            "title": "Modern Tech Stack",
-            "subtitle": "Built with the latest technologies"
-        },
-        "cta": {
-            "preTitle": "// Let's build together",
-            "title": "Ready to start your project?",
-            "description": "From concept to deployment, we'll bring your ideas to life with clean, maintainable code."
-        }
-    },
-    "consulting": {
-        "title": "Consulting",
-        "subtitle": "Strategic Guidance",
-        "description": "Strategic expertise to navigate digital transformation and optimize your online presence for maximum impact.",
-        "features": {
-            "1": {
-                "title": "Technical Strategy",
-                "description": "Expert guidance on technology choices, architecture decisions, and roadmap planning."
-            },
-            "2": {
-                "title": "Performance Audit",
-                "description": "Comprehensive analysis of your current systems with actionable improvement recommendations."
-            },
-            "3": {
-                "title": "Digital Transformation",
-                "description": "End-to-end support in modernizing your digital infrastructure and workflows."
-            },
-            "4": {
-                "title": "Code Review",
-                "description": "In-depth evaluation of your codebase with recommendations for quality and maintainability."
-            },
-            "5": {
-                "title": "Security Assessment",
-                "description": "Thorough security audits to identify vulnerabilities and implement protective measures."
-            },
-            "6": {
-                "title": "Training & Workshops",
-                "description": "Knowledge transfer sessions to upskill your team on modern development practices."
-            }
-        },
-        "hero": {
-            "ctaPrimary": "Book a Session",
-            "ctaSecondary": "Our Approach"
-        },
-        "approach": {
-            "title": "How We Work",
-            "subtitle": "A structured approach to solving complex technical challenges",
-            "steps": {
-                "1": {
-                    "title": "Understand",
-                    "description": "Deep dive into your current challenges and goals"
-                },
-                "2": {
-                    "title": "Analyze",
-                    "description": "Thorough assessment of systems and processes"
-                },
-                "3": {
-                    "title": "Strategize",
-                    "description": "Develop actionable recommendations"
-                },
-                "4": {
-                    "title": "Execute",
-                    "description": "Guide implementation with ongoing support"
-                }
-            }
-        },
-        "cta": {
-            "title": "Let's solve your challenges together",
-            "description": "Schedule a free consultation to discuss your project and explore how we can help.",
-            "button": "Schedule Consultation"
-        }
-    },
     "estimator": {
-        "title": "Project Estimator",
-        "subtitle": "Get an instant estimate for your project",
-        "back": "Back",
-        "next": "Next",
-        "getEstimate": "Get My Estimate",
-        "startOver": "Start Over",
-        "step": "Step",
-        "of": "of",
+        "badge": "Project Estimator",
+        "title": "Get an instant project estimate",
+        "subtitle": "Answer a few questions to help us understand your needs and provide a tailored investment roadmap.",
+        "description": "Answer 3 quick questions to get a rough idea of timeline and investment.",
         "steps": {
+            "brand": {
+                "title": "Do you have an existing brand identity?",
+                "options": {
+                    "complete": {
+                        "title": "Complete",
+                        "description": "Guidelines, logo, and assets ready"
+                    },
+                    "partial": {
+                        "title": "Partial",
+                        "description": "Logo only or needs refinement"
+                    },
+                    "scratch": {
+                        "title": "From Scratch",
+                        "description": "Need full identity system"
+                    }
+                }
+            },
+            "content": {
+                "title": "How ready is your website content?",
+                "options": {
+                    "provide": {
+                        "title": "Ready to Provide",
+                        "description": "Copy and images are organized"
+                    },
+                    "need-help": {
+                        "title": "Need Help",
+                        "description": "Need strategy and copywriting"
+                    },
+                    "unsure": {
+                        "title": "Unsure",
+                        "description": "Still in the planning phase"
+                    }
+                }
+            },
+            "deadline": {
+                "title": "What is your target launch date?",
+                "options": {
+                    "flexible": {
+                        "title": "Flexible",
+                        "description": "3+ months is fine"
+                    },
+                    "2months": {
+                        "title": "2 Months",
+                        "description": "Focusing on quality"
+                    },
+                    "1month": {
+                        "title": "1 Month",
+                        "description": "Tight but manageable"
+                    },
+                    "urgent": {
+                        "title": "ASAP",
+                        "description": "Need it within 4 weeks"
+                    }
+                }
+            },
             "projectType": {
-                "title": "What type of project do you need?",
+                "title": "What are we building?",
                 "options": {
                     "website": {
-                        "title": "Website",
-                        "description": "Corporate site, landing page, or portfolio"
+                        "title": "Corporate Website",
+                        "description": "Professional brand presence"
                     },
                     "webapp": {
-                        "title": "Web Application",
-                        "description": "Interactive app with user accounts and features"
+                        "title": "Custom Web App",
+                        "description": "SaaS or internal tooling"
                     },
                     "ecommerce": {
                         "title": "E-Commerce",
-                        "description": "Online store with payments and inventory"
+                        "description": "Digital storefront & payments"
                     },
                     "pwa": {
                         "title": "Progressive Web App",
-                        "description": "App-like experience that works offline"
+                        "description": "Native-like mobile experience"
                     }
                 }
             },
             "complexity": {
-                "title": "What level of complexity?",
+                "title": "Define project scope",
                 "options": {
                     "basic": {
                         "title": "Basic",
-                        "description": "Up to 5 pages, simple design"
+                        "description": "Standard features, clean logic"
                     },
                     "standard": {
                         "title": "Standard",
-                        "description": "5-15 pages, custom design, integrations"
+                        "description": "Custom integrations, richer UI"
                     },
                     "premium": {
                         "title": "Premium",
-                        "description": "Complex features, animations, multi-language"
+                        "description": "Complex backend, bespoke animations"
                     }
                 }
             },
             "timeline": {
-                "title": "When do you need it?",
+                "title": "Expected pace",
                 "options": {
                     "urgent": {
-                        "title": "Urgent",
-                        "description": "Within 2-4 weeks"
+                        "title": "Sprint",
+                        "description": "High-velocity development"
                     },
                     "standard": {
-                        "title": "Standard",
-                        "description": "1-2 months"
+                        "title": "Balanced",
+                        "description": "Standard discovery & dev cycle"
                     },
                     "flexible": {
-                        "title": "Flexible",
-                        "description": "3+ months, no rush"
+                        "title": "Steady",
+                        "description": "Extended testing & refinement"
                     }
+                }
+            }
+        },
+        "emailCapture": {
+            "button": "Deliver Estimate",
+            "sending": "Sending...",
+            "success": "Check your inbox. We've sent your detailed estimate.",
+            "placeholder": "your@email.com",
+            "invalid": "Please enter a valid email address.",
+            "error": "Something went wrong. Please try again.",
+            "hint": "We'll send the full roadmap to this address."
+        },
+        "step1": {
+            "question": "What type of project are you looking to build?",
+            "options": {
+                "ecommerce": {
+                    "title": "E-Commerce Platform",
+                    "desc": "Online store, payments, inventory management"
+                },
+                "corporate": {
+                    "title": "Corporate Website",
+                    "desc": "High-end company profile, lead generation"
+                },
+                "custom": {
+                    "title": "Custom Web App",
+                    "desc": "SaaS, portals, complex interactive features"
+                },
+                "performance": {
+                    "title": "Performance/UX Audit",
+                    "desc": "Speed up and optimize an existing site"
+                }
+            }
+        },
+        "step2": {
+            "question": "What is your allocated budget range?",
+            "options": {
+                "small": "50,000 - 250,000 EGP",
+                "medium": "250,000 - 750,000 EGP",
+                "large": "750,000 - 2,000,000 EGP",
+                "enterprise": "2,000,000+ EGP"
+            }
+        },
+        "step3": {
+            "question": "What is your target launch timeline?",
+            "options": {
+                "urgent": {
+                    "title": "ASAP",
+                    "desc": "Need it live within 4 weeks"
+                },
+                "soon": {
+                    "title": "Soon",
+                    "desc": "Aiming for 1-3 months"
+                },
+                "flexible": {
+                    "title": "Flexible",
+                    "desc": "No rush, 3+ months is fine"
                 }
             }
         },
         "results": {
             "title": "Your Project Estimate",
+            "rangeCopy": "Projects like yours typically range between {min} – {max}, taking {weeksMin}–{weeksMax} weeks to complete.",
             "timeline": "Estimated Timeline",
             "weeks": "weeks",
             "investment": "Investment Range",
-            "disclaimer": "This is a preliminary estimate. Final pricing depends on detailed requirements.",
-            "cta": "Schedule a Consultation",
-            "ctaDescription": "Let's discuss your project in detail"
-        }
+            "consultationGate": "Want an exact quote? Book a free 30-min scoping call.",
+            "ctaPrimary": "Book Scoping Call",
+            "or": "Or",
+            "cta": "Schedule Consultation",
+            "ctaDescription": "Discuss your project.",
+            "disclaimer": "This is a preliminary estimate. Final pricing depends on detailed requirements."
+        },
+        "back": "Back",
+        "startOver": "Start Over",
+        "getEstimate": "See Estimation",
+        "next": "Next Step"
     }
 }

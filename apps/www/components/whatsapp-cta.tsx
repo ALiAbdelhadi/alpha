@@ -3,7 +3,7 @@
 import { useLocale } from "next-intl"
 import { MessageCircle } from "lucide-react"
 
-const WHATSAPP_NUMBER = "016234315"
+const WHATSAPP_NUMBER = "01016234315"
 
 export function WhatsAppFloat() {
   const locale = useLocale()

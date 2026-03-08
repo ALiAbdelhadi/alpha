@@ -5,12 +5,19 @@ import { useNavigation } from "@/components/providers/navigation-provider"
 import { NAV_ITEMS } from "@/lib/constants" 
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef } from "react"
 
+const ProblemSection = lazy(() => import("@/components/sections/problem-section").then(m => ({ default: m.ProblemSection })))
+const ProcessSection = lazy(() => import("@/components/sections/process-section").then(m => ({ default: m.ProcessSection })))
+const EstimatorSection = lazy(() => import("@/components/sections/estimator-section").then(m => ({ default: m.EstimatorSection })))
+
 const CtaSection = lazy(() => import("@/components/sections/cta-section").then(m => ({ default: m.CtaSectionEnhanced })))
+const ComparisonDemo = lazy(() => import("@/components/sections/comparison-demo").then(m => ({ default: m.ComparisonDemo })))
 const HeroSection = lazy(() => import("@/components/sections/hero-section").then(m => ({ default: m.HeroSection })))
 const WorkSection = lazy(() => import("@/components/sections/work-section").then(m => ({ default: m.WorkSection })))
+const SocialProofSection = lazy(() => import("@/components/sections/social-proof-section").then(m => ({ default: m.SocialProofSection })))
 const ServicesSection = lazy(() => import("@/components/sections/services-section").then(m => ({ default: m.ServicesSection })))
 const AboutSection = lazy(() => import("@/components/sections/about-section").then(m => ({ default: m.AboutSection })))
-const ContactSection = lazy(() => import("@/components/sections/contact-section").then(m => ({ default: m.ContactSection })))
+// Removing default contact section to replace with our new estimator
+// const ContactSection = lazy(() => import("@/components/sections/contact-section").then(m => ({ default: m.ContactSection })))
 
 function SectionSkeleton() {
     return (
@@ -114,13 +121,37 @@ export default function Home() {
 
             <ErrorBoundary>
                 <Suspense fallback={<SectionSkeleton />}>
-                    <WorkSection />
+                    <ProblemSection />
+                </Suspense>
+            </ErrorBoundary>
+
+            <ErrorBoundary>
+                <Suspense fallback={<SectionSkeleton />}>
+                    <ComparisonDemo />
                 </Suspense>
             </ErrorBoundary>
 
             <ErrorBoundary>
                 <Suspense fallback={<SectionSkeleton />}>
                     <ServicesSection />
+                </Suspense>
+            </ErrorBoundary>
+
+            <ErrorBoundary>
+                <Suspense fallback={<SectionSkeleton />}>
+                    <ProcessSection />
+                </Suspense>
+            </ErrorBoundary>
+
+            <ErrorBoundary>
+                <Suspense fallback={<SectionSkeleton />}>
+                    <WorkSection />
+                </Suspense>
+            </ErrorBoundary>
+
+            <ErrorBoundary>
+                <Suspense fallback={<SectionSkeleton />}>
+                    <SocialProofSection />
                 </Suspense>
             </ErrorBoundary>
 
@@ -138,7 +169,7 @@ export default function Home() {
 
             <ErrorBoundary>
                 <Suspense fallback={<SectionSkeleton />}>
-                    <ContactSection />
+                    <EstimatorSection />
                 </Suspense>
             </ErrorBoundary>
         </>

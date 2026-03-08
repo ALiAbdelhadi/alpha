@@ -9,8 +9,8 @@
   --font-mono: "Geist Mono", "Geist Mono Fallback"; */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-inter);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -125,6 +125,18 @@
     @apply border-border outline-ring/50;
   }
 
+  /* Only hide cursor on pointer devices when custom cursor is active; preserve default on touch */
+  @media (pointer: fine) {
+    .custom-cursor-active * {
+      cursor: none;
+    }
+  }
+  @media (pointer: coarse) {
+    * {
+      cursor: auto;
+    }
+  }
+
   *:focus-visible {
     @apply outline-2 outline-offset-2 outline-ring;
   }
@@ -132,6 +144,7 @@
   body {
     @apply bg-background text-primary;
     scroll-behavior: smooth;
+    font-family: var(--font-inter), sans-serif;
   }
 
   section {
@@ -143,32 +156,36 @@
     backface-visibility: hidden;
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-outfit), sans-serif;
+  }
+
   h1 {
     font-size: clamp(3.815rem, 8vw, 4.768rem);
     line-height: 1.1;
     letter-spacing: -0.02em;
-    font-weight: 400;
+    font-weight: 700;
   }
 
   h2 {
     font-size: clamp(2.5rem, 6vw, 3.815rem);
     line-height: 1.1;
     letter-spacing: -0.02em;
-    font-weight: 400;
+    font-weight: 700;
   }
 
   h3 {
     font-size: clamp(1.953rem, 2.5vw, 3.052rem);
     line-height: 1.2;
     letter-spacing: -0.02em;
-    font-weight: 400;
+    font-weight: 600;
   }
 
   h4 {
     font-size: clamp(1.5rem, 3vw, 2.441rem);
     line-height: 1.2;
     letter-spacing: -0.02em;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .body-lg {

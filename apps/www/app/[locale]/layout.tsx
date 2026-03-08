@@ -9,7 +9,19 @@ import { cn } from "@/lib/utils";
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+import { Inter, Outfit } from "next/font/google";
 import "../globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+});
+
 
 type Props = {
   children: React.ReactNode;
@@ -34,7 +46,7 @@ export default async function RootLayout({
     >
       <body
         suppressHydrationWarning
-        className={cn("min-h-screen flex flex-col antialiased")}
+        className={cn("min-h-screen flex flex-col antialiased", inter.variable, outfit.variable)}
       >
         <NextIntlClientProvider>
           <Providers>

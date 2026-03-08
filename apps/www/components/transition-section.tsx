@@ -1,10 +1,7 @@
 "use client"
 
 import { gsap } from "@/lib/gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { useEffect, useRef } from "react"
-
-gsap.registerPlugin(ScrollTrigger)
 
 type TransitionVariant = "fade" | "slide" | "scale" | "reveal" | "split"
 
@@ -209,23 +206,18 @@ export function TransitionSection({
             ref={sectionRef}
             className={`relative min-h-screen flex items-center justify-center py-20 px-4 ${className}`}
         >
-            {/* Background Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-foreground/[0.02] to-transparent pointer-events-none" />
-
+            <div className="absolute inset-0 bg-linear-to-b from-transparent via-foreground/2 to-transparent pointer-events-none" />
             <div className="relative z-10 max-w-5xl mx-auto w-full">
                 <div className="flex flex-col items-center gap-8 md:gap-12">
-                    {/* From Section */}
                     <div ref={fromRef} className="text-center">
                         <h2 className="text-5xl md:text-7xl lg:text-8xl font-light tracking-tight">
                             {from}
                         </h2>
                     </div>
-
-                    {/* Connecting Line with Dot */}
                     <div className="relative w-full max-w-md">
                         <div
                             ref={lineRef}
-                            className="h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent"
+                            className="h-px bg-linear-to-r from-transparent via-foreground/20 to-transparent"
                             style={{
                                 background: `linear-gradient(to right, transparent, ${accentColor}20, transparent)`,
                             }}
@@ -240,8 +232,6 @@ export function TransitionSection({
                             />
                         </div>
                     </div>
-
-                    {/* To Section */}
                     <div ref={toRef} className="text-center">
                         <h2
                             className="text-5xl md:text-7xl lg:text-8xl font-light tracking-tight"
@@ -250,8 +240,6 @@ export function TransitionSection({
                             {to}
                         </h2>
                     </div>
-
-                    {/* Description (Optional) */}
                     {description && (
                         <p
                             ref={descRef}
@@ -262,8 +250,6 @@ export function TransitionSection({
                     )}
                 </div>
             </div>
-
-            {/* Decorative Elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-1/4 left-10 w-32 h-32 bg-foreground/5 rounded-full blur-3xl" />
                 <div className="absolute bottom-1/4 right-10 w-40 h-40 bg-foreground/5 rounded-full blur-3xl" />

@@ -127,23 +127,48 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
             </div>
           </div>
           <div className="flex flex-col justify-center space-y-12">
-            {[
-              {
-                value: t("about.stat1.value"),
-                label: t("about.stat1.label"),
-                sublabel: t("about.stat1.sublabel")
-              },
-              {
-                value: t("about.stat2.value"),
-                label: t("about.stat2.label"),
-                sublabel: t("about.stat2.sublabel")
-              },
-              {
-                value: t("about.stat3.value"),
-                label: t("about.stat3.label"),
-                sublabel: t("about.stat3.sublabel")
-              },
-            ].map((stat, i) => (
+            {(typeof process !== "undefined" && process.env.NEXT_PUBLIC_STATS_ENABLED === "true"
+              ? [
+                  {
+                    value: t("about.stat1.value"),
+                    label: t("about.stat1.label"),
+                    sublabel: t("about.stat1.sublabel"),
+                    isStat: true,
+                  },
+                  {
+                    value: t("about.stat2.value"),
+                    label: t("about.stat2.label"),
+                    sublabel: t("about.stat2.sublabel"),
+                    isStat: true,
+                  },
+                  {
+                    value: t("about.stat3.value"),
+                    label: t("about.stat3.label"),
+                    sublabel: t("about.stat3.sublabel"),
+                    isStat: true,
+                  },
+                ]
+              : [
+                  {
+                    value: "→",
+                    label: t("about.values.bilingual.label"),
+                    sublabel: t("about.values.bilingual.sublabel"),
+                    isStat: false,
+                  },
+                  {
+                    value: "→",
+                    label: t("about.values.noTemplate.label"),
+                    sublabel: t("about.values.noTemplate.sublabel"),
+                    isStat: false,
+                  },
+                  {
+                    value: "→",
+                    label: t("about.values.outcome.label"),
+                    sublabel: t("about.values.outcome.sublabel"),
+                    isStat: false,
+                  },
+                ]
+            ).map((stat, i) => (
               <div
                 key={i}
                 data-stat
@@ -154,10 +179,10 @@ export function AboutSection({ scrollToSection }: { scrollToSection?: (sectionId
                   className="absolute ltr:left-0 rtl:right-0 top-0 bottom-0 w-px bg-foreground/25 origin-bottom"
                 />
                 <div
-                  data-stat-value
+                  data-stat-value={stat.isStat ? "" : undefined}
                   className="font-normal text-primary tabular-nums"
                   style={{
-                    fontSize: 'clamp(2rem, 4vw, 3.052rem)',
+                    fontSize: stat.isStat ? 'clamp(2rem, 4vw, 3.052rem)' : '1.5rem',
                     lineHeight: 1.1,
                   }}
                 >

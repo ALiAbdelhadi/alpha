@@ -23,9 +23,6 @@ const withPWA = require("next-pwa")({
 
 const nextConfig: NextConfig = {
     pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
-    typescript: {
-        ignoreBuildErrors: true,
-    },
     reactStrictMode: true,
     transpilePackages: ["@repo/database"],
     compiler: {

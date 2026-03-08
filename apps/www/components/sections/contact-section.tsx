@@ -16,10 +16,6 @@ import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Textarea } from "../ui/textarea"
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger)
-}
-
 export function ContactSection() {
   const t = useTranslations()
   const sectionRef = useRef<HTMLElement>(null)
@@ -390,6 +386,9 @@ export function ContactSection() {
                 >
                   {isSubmitting ? t("contact.form.submitting") : t("contact.form.submit")}
                 </MagneticButton>
+                <p className="mt-3 text-center font-mono text-xs text-primary/50">
+                  {t("contact.form.riskReversal")}
+                </p>
                 {submitSuccess && (
                   <div className="mt-4 p-4 rounded-lg bg-green-500/10 border border-green-500/20 animate-in fade-in slide-in-from-bottom-2 duration-300">
                     <p className="text-center mono small text-primary flex items-center justify-center gap-2">

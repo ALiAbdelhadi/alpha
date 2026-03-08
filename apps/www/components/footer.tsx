@@ -4,7 +4,7 @@ import { Link } from "@/i18n/navigation"
 import { useTranslations } from "next-intl"
 import { useReveal } from "@/hooks/use-animation"
 import { Container } from "./container"
-import { AnthupicLogo } from "./anthupic-logo"
+import { AnthupicLogo } from "./alpha-logo"
 
 export default function Footer() {
     const t = useTranslations("footer")

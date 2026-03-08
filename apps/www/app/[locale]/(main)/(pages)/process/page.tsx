@@ -1,15 +1,17 @@
 "use client"
 
 import { Container } from "@/components/container"
+import { MagneticButton } from "@/components/magnetic-button"
 import { useReveal } from "@/hooks/use-animation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
-import { useLocale, useTranslations } from "next-intl"
+import { Link } from "@/i18n/navigation"
 import { localizeNumbers } from "@/lib/number"
+import { useLocale, useTranslations } from "next-intl"
 
 import { useEffect, useRef } from "react"
 
 export default function ProcessPage() {
-    const sectionRef = useRef<HTMLElement>(null)
+    const sectionRef = useRef<HTMLDivElement>(null)
 
     return (
         <div ref={sectionRef} className="relative min-h-screen w-full">
@@ -80,10 +82,10 @@ function PhasesList() {
 
     const phases = [
         { number: "1", key: "discovery" },
-        { number: "2", key: "architecture" },
-        { number: "3", key: "development" },
-        { number: "4", key: "launch" },
-        { number: "5", key: "support" },
+        { number: "2", key: "wireframe" },
+        { number: "3", key: "design" },
+        { number: "4", key: "development" },
+        { number: "5", key: "launch" },
     ]
 
     return (
@@ -112,6 +114,9 @@ function PhasesList() {
                                 <p className="mb-6 body-lg text-primary/75">
                                     {t(`${phase.key}.description`)}
                                 </p>
+                                <p className="mb-4 mono-uppercase text-primary/50">
+                                    {t(`${phase.key}.yourRole`)}
+                                </p>
                                 <div className="space-y-2">
                                     <p className="mono-uppercase text-primary/60">
                                         {t("deliverables")}
@@ -130,9 +135,10 @@ function PhasesList() {
 }
 
 function ClosingSection() {
-    const t = useTranslations("process.flexibility")
+    const t = useTranslations("process")
     const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.5 })
     const descRef = useReveal({ direction: "up", delay: 0.15, duration: 0.5 })
+    const ctaRef = useReveal({ direction: "up", delay: 0.25, duration: 0.5 })
 
     return (
         <section className="section-padding">
@@ -140,13 +146,25 @@ function ClosingSection() {
                 <div className="max-w-3xl">
                     <div ref={titleRef} className="mb-12">
                         <h2 className="mb-3 font-sans font-normal text-primary">
-                            {t("title")}
+                            {t("flexibility.title")}
                         </h2>
                     </div>
-                    <div ref={descRef}>
+                    <div ref={descRef} className="mb-12">
                         <p className="body-lg text-primary/85">
-                            {t("description")}
+                            {t("flexibility.description")}
                         </p>
+                    </div>
+                    <div ref={ctaRef}>
+                        <Link href="/schedule">
+                            <MagneticButton variant="primary" size="lg" className="group">
+                                <span className="flex items-center gap-2">
+                                    {t("closing.cta")}
+                                    <svg className="w-4 h-4 transition-transform transition-default ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </span>
+                            </MagneticButton>
+                        </Link>
                     </div>
                 </div>
             </Container>

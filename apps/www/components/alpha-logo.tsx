@@ -29,7 +29,7 @@ export function AnthupicLogo({ className, size = "md", variant = "full" }: Anthu
                     iconSizeClasses[size]
                 )}
             >
-                <span className="font-sans text-xl font-bold bg-linear-to-r from-teal-700 via-teal-500 via-cyan-400 to-cyan-300 bg-clip-text text-transparent">
+                <span className="font-sans text-xl font-bold text-teal-600 dark:text-teal-400">
                     A
                 </span>
             </div>
@@ -40,7 +40,7 @@ export function AnthupicLogo({ className, size = "md", variant = "full" }: Anthu
         <div className={cn("flex items-center gap-2", className)}>
             <span
                 className={cn(
-                    "font-sans uppercase font-semibold tracking-tight bg-linear-to-r from-teal-700 via-teal-500 via-cyan-400 to-cyan-300 bg-clip-text text-transparent",
+                    "font-sans uppercase font-semibold tracking-tight text-teal-600 dark:text-teal-400",
                     sizeClasses[size]
                 )}
             >

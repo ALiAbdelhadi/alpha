@@ -1,15 +1,15 @@
 "use client"
 
 import { Container } from "@/components/container"
+import { Input } from "@/components/ui/input"
 import { MagneticButton } from "@/components/magnetic-button"
 import { useReveal } from "@/hooks/use-animation"
-import { useEstimator, ProjectType, Complexity, Timeline } from "@/hooks/use-estimator"
+import { useEstimator, ProjectType, Complexity, Timeline, BrandIdentity, ContentReadiness, DeadlineUrgency } from "@/hooks/use-estimator"
 import { Link } from "@/i18n/navigation"
 import { gsap } from "@/lib/gsap"
 import { cn } from "@/lib/utils"
 import { useTranslations, useLocale } from "next-intl"
-import { JSX, useEffect, useRef } from "react"
-import Footer from "@/components/footer"
+import { JSX, useEffect, useRef, useState } from "react"
 
 export default function EstimatorPage() {
     const t = useTranslations("estimator")
@@ -17,9 +17,15 @@ export default function EstimatorPage() {
 
     const {
         step,
+        brandIdentity,
+        contentReadiness,
+        deadlineUrgency,
         projectType,
         complexity,
         timeline,
+        setBrandIdentity,
+        setContentReadiness,
+        setDeadlineUrgency,
         setProjectType,
         setComplexity,
         setTimeline,
@@ -30,7 +36,13 @@ export default function EstimatorPage() {
         getEstimate,
     } = useEstimator()
 
+    const TOTAL_STEPS = 7
+
     const containerRef = useRef<HTMLDivElement>(null)
+    const [email, setEmail] = useState("")
+    const [emailSubmitted, setEmailSubmitted] = useState(false)
+    const [emailSubmitting, setEmailSubmitting] = useState(false)
+    const [emailError, setEmailError] = useState<string | null>(null)
 
     useEffect(() => {
         if (!containerRef.current) return
@@ -67,13 +79,13 @@ export default function EstimatorPage() {
                                 </p>
                             </div>
 
-                            <div className="flex items-center justify-center gap-2 mb-12">
-                                {[1, 2, 3, 4].map((i) => (
+                            <div className="flex items-center justify-center gap-1 mb-12">
+                                {Array.from({ length: TOTAL_STEPS }, (_, i) => i + 1).map((i) => (
                                     <div
                                         key={i}
                                         className={cn(
                                             "h-1.5 rounded-full transition-all",
-                                            i <= step ? "w-12 bg-teal-500" : "w-8 bg-foreground/10"
+                                            i <= step ? "w-8 bg-teal-500" : "w-6 bg-foreground/10"
                                         )}
                                     />
                                 ))}
@@ -82,32 +94,71 @@ export default function EstimatorPage() {
                    
                             <div ref={containerRef} className="mb-12">
                                 {step === 1 && (
+                                    <StepBrandIdentity
+                                        selected={brandIdentity}
+                                        onSelect={setBrandIdentity}
+                                        t={t}
+                                    />
+                                )}
+                                {step === 2 && (
+                                    <StepContentReadiness
+                                        selected={contentReadiness}
+                                        onSelect={setContentReadiness}
+                                        t={t}
+                                    />
+                                )}
+                                {step === 3 && (
+                                    <StepDeadlineUrgency
+                                        selected={deadlineUrgency}
+                                        onSelect={setDeadlineUrgency}
+                                        t={t}
+                                    />
+                                )}
+                                {step === 4 && (
                                     <StepProjectType
                                         selected={projectType}
                                         onSelect={setProjectType}
                                         t={t}
                                     />
                                 )}
-                                {step === 2 && (
+                                {step === 5 && (
                                     <StepComplexity
                                         selected={complexity}
                                         onSelect={setComplexity}
                                         t={t}
                                     />
                                 )}
-                                {step === 3 && (
+                                {step === 6 && (
                                     <StepTimeline
                                         selected={timeline}
                                         onSelect={setTimeline}
                                         t={t}
                                     />
                                 )}
-                                {step === 4 && estimate && (
-                                    <StepResults
-                                        estimate={estimate}
-                                        formatCurrency={formatCurrency}
-                                        t={t}
-                                    />
+                                {step === 7 && estimate && (
+                                    <>
+                                        <StepResults
+                                            estimate={estimate}
+                                            formatCurrency={formatCurrency}
+                                            t={t}
+                                        />
+                                        <EstimatorEmailCapture
+                                            email={email}
+                                            setEmail={setEmail}
+                                            emailSubmitted={emailSubmitted}
+                                            emailSubmitting={emailSubmitting}
+                                            emailError={emailError}
+                                            setEmailError={setEmailError}
+                                            onSuccess={() => setEmailSubmitted(true)}
+                                            onSubmitting={(v) => setEmailSubmitting(v)}
+                                            estimate={estimate}
+                                            projectType={projectType!}
+                                            complexity={complexity!}
+                                            timeline={timeline!}
+                                            locale={locale}
+                                            t={t}
+                                        />
+                                    </>
                                 )}
                             </div>
 
@@ -116,29 +167,29 @@ export default function EstimatorPage() {
                                 {step > 1 ? (
                                     <MagneticButton
                                         variant="secondary"
-                                        onClick={step === 4 ? reset : prevStep}
+                                        onClick={step === 7 ? reset : prevStep}
                                     >
-                                        {step === 4 ? t("startOver") : t("back")}
+                                        {step === 7 ? t("startOver") : t("back")}
                                     </MagneticButton>
                                 ) : (
                                     <div />
                                 )}
 
-                                {step < 4 && (
+                                {step < 7 && (
                                     <MagneticButton
                                         variant="primary"
                                         onClick={nextStep}
                                         className={cn(!canProceed() && "opacity-50 pointer-events-none")}
                                     >
-                                        {step === 3 ? t("getEstimate") : t("next")}
+                                        {step === 6 ? t("getEstimate") : t("next")}
                                     </MagneticButton>
                                 )}
 
-                                {step === 4 && (
+                                {step === 7 && (
                                     <Link href="/schedule">
                                         <MagneticButton variant="primary" className="group">
                                             <span className="flex items-center gap-2">
-                                                {t("results.cta")}
+                                                {t("results.ctaPrimary")}
                                                 <svg className="w-4 h-4 transition-transform transition-default ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                                                 </svg>
@@ -157,6 +208,108 @@ export default function EstimatorPage() {
 
 interface StepProps {
     t: (key: string) => string
+}
+
+function StepBrandIdentity({
+    selected,
+    onSelect,
+    t,
+}: StepProps & { selected: BrandIdentity; onSelect: (v: BrandIdentity) => void }) {
+    const options: BrandIdentity[] = ["complete", "partial", "scratch"]
+    return (
+        <div>
+            <h2 className="text-2xl font-normal text-primary text-center mb-8">
+                {t("steps.brand.title")}
+            </h2>
+            <div className="grid sm:grid-cols-3 gap-4">
+                {options.map((opt) => (
+                    <button
+                        key={opt}
+                        onClick={() => onSelect(opt)}
+                        className={cn(
+                            "p-6 rounded-2xl border text-center transition-all transition-default",
+                            selected === opt
+                                ? "border-foreground/50 bg-foreground/10"
+                                : "border-foreground/25 hover:border-foreground/50 hover:bg-foreground/5"
+                        )}
+                    >
+                        <h3 className="font-medium text-primary mb-2">
+                            {t(`steps.brand.options.${opt}.title`)}
+                        </h3>
+                        <p className="small text-primary/60">{t(`steps.brand.options.${opt}.description`)}</p>
+                    </button>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+function StepContentReadiness({
+    selected,
+    onSelect,
+    t,
+}: StepProps & { selected: ContentReadiness; onSelect: (v: ContentReadiness) => void }) {
+    const options: ContentReadiness[] = ["provide", "need-help", "unsure"]
+    return (
+        <div>
+            <h2 className="text-2xl font-normal text-primary text-center mb-8">
+                {t("steps.content.title")}
+            </h2>
+            <div className="grid sm:grid-cols-3 gap-4">
+                {options.map((opt) => (
+                    <button
+                        key={opt}
+                        onClick={() => onSelect(opt)}
+                        className={cn(
+                            "p-6 rounded-2xl border text-center transition-all transition-default",
+                            selected === opt
+                                ? "border-foreground/50 bg-foreground/10"
+                                : "border-foreground/25 hover:border-foreground/50 hover:bg-foreground/5"
+                        )}
+                    >
+                        <h3 className="font-medium text-primary mb-2">
+                            {t(`steps.content.options.${opt}.title`)}
+                        </h3>
+                        <p className="small text-primary/60">{t(`steps.content.options.${opt}.description`)}</p>
+                    </button>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+function StepDeadlineUrgency({
+    selected,
+    onSelect,
+    t,
+}: StepProps & { selected: DeadlineUrgency; onSelect: (v: DeadlineUrgency) => void }) {
+    const options: DeadlineUrgency[] = ["flexible", "2months", "1month", "urgent"]
+    return (
+        <div>
+            <h2 className="text-2xl font-normal text-primary text-center mb-8">
+                {t("steps.deadline.title")}
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-4">
+                {options.map((opt) => (
+                    <button
+                        key={opt}
+                        onClick={() => onSelect(opt)}
+                        className={cn(
+                            "p-6 rounded-2xl border text-center transition-all transition-default",
+                            selected === opt
+                                ? "border-foreground/50 bg-foreground/10"
+                                : "border-foreground/25 hover:border-foreground/50 hover:bg-foreground/5"
+                        )}
+                    >
+                        <h3 className="font-medium text-primary mb-2">
+                            {t(`steps.deadline.options.${opt}.title`)}
+                        </h3>
+                        <p className="small text-primary/60">{t(`steps.deadline.options.${opt}.description`)}</p>
+                    </button>
+                ))}
+            </div>
+        </div>
+    )
 }
 
 interface StepProjectTypeProps extends StepProps {
@@ -335,9 +488,16 @@ function StepResults({ estimate, formatCurrency, t }: StepResultsProps) {
 
     return (
         <div ref={contentRef} className="text-center">
-            <h2 className="text-2xl font-normal text-primary mb-8">
+            <h2 className="text-2xl font-normal text-primary mb-6">
                 {t("results.title")}
             </h2>
+            <p className="body-lg text-primary/90 mb-8">
+                {t("results.rangeCopy")
+                    .replace("{min}", formatCurrency(estimate.minPrice))
+                    .replace("{max}", formatCurrency(estimate.maxPrice))
+                    .replace("{weeksMin}", String(estimate.minWeeks))
+                    .replace("{weeksMax}", String(estimate.maxWeeks))}
+            </p>
             <div className="grid sm:grid-cols-2 gap-6 mb-8">
                 <div className="p-8 rounded-2xl border border-foreground/25 bg-foreground/5">
                     <p className="small text-primary/60 mb-2">{t("results.timeline")}</p>
@@ -353,12 +513,126 @@ function StepResults({ estimate, formatCurrency, t }: StepResultsProps) {
                     </p>
                 </div>
             </div>
-            <p className="small text-primary/50 mb-6">
-                {t("results.disclaimer")}
+            <p className="small text-primary/50 mb-8">
+                {t("results.consultationGate")}
             </p>
-            <p className="body text-primary/70">
-                {t("results.ctaDescription")}
-            </p>
+            <div className="flex flex-col gap-4 justify-center items-center mb-6">
+                <Link href="/schedule">
+                    <MagneticButton variant="primary" size="lg" className="group">
+                        <span className="flex items-center gap-2">
+                            {t("results.ctaPrimary")}
+                            <svg className="w-4 h-4 transition-transform transition-default ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </span>
+                    </MagneticButton>
+                </Link>
+                <p className="mono text-primary/50">{t("results.or")}</p>
+            </div>
         </div>
+    )
+}
+
+interface EstimatorEmailCaptureProps {
+    email: string
+    setEmail: (v: string) => void
+    emailSubmitted: boolean
+    emailSubmitting: boolean
+    emailError: string | null
+    setEmailError: (v: string | null) => void
+    onSuccess: () => void
+    onSubmitting: (v: boolean) => void
+    estimate: { minWeeks: number; maxWeeks: number; minPrice: number; maxPrice: number }
+    projectType: string
+    complexity: string
+    timeline: string
+    locale: string
+    t: (key: string) => string
+}
+
+function EstimatorEmailCapture({
+    email,
+    setEmail,
+    emailSubmitted,
+    emailSubmitting,
+    emailError,
+    setEmailError,
+    onSuccess,
+    onSubmitting,
+    estimate,
+    projectType,
+    complexity,
+    timeline,
+    locale,
+    t,
+}: EstimatorEmailCaptureProps) {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setEmailError(null)
+        if (!email.trim()) {
+            setEmailError(t("emailCapture.invalid"))
+            return
+        }
+        onSubmitting(true)
+        try {
+            const res = await fetch(`/${locale}/api/estimator-lead`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: email.trim().toLowerCase(),
+                    projectType,
+                    complexity,
+                    timeline,
+                    priceMin: estimate.minPrice,
+                    priceMax: estimate.maxPrice,
+                    weeksMin: estimate.minWeeks,
+                    weeksMax: estimate.maxWeeks,
+                }),
+            })
+            const data = await res.json()
+            if (!res.ok) {
+                setEmailError(data.message || t("emailCapture.error"))
+                return
+            }
+            onSuccess()
+        } catch {
+            setEmailError(t("emailCapture.error"))
+        } finally {
+            onSubmitting(false)
+        }
+    }
+
+    if (emailSubmitted) {
+        return (
+            <div className="mt-8 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-6 text-center">
+                <p className="font-medium text-primary">{t("emailCapture.success")}</p>
+            </div>
+        )
+    }
+
+    return (
+        <form onSubmit={handleSubmit} className="mt-8 rounded-2xl border border-foreground/25 bg-foreground/5 p-6">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+                <div className="flex-1">
+                    <Input
+                        type="email"
+                        placeholder={t("emailCapture.placeholder")}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full"
+                        disabled={emailSubmitting}
+                    />
+                </div>
+                <MagneticButton type="submit" variant="secondary" disabled={emailSubmitting}>
+                    {emailSubmitting ? t("emailCapture.sending") : t("emailCapture.button")}
+                </MagneticButton>
+            </div>
+            <p className="mt-3 text-center font-mono text-xs text-primary/50">
+                {t("emailCapture.hint")}
+            </p>
+            {emailError && (
+                <p className="mt-2 text-center text-sm text-destructive">{emailError}</p>
+            )}
+        </form>
     )
 }

@@ -8,7 +8,7 @@ import { useEffect, useRef } from "react"
 
 export default function StandardsPage() {
     const t = useTranslations("standards")
-    const sectionRef = useRef<HTMLElement>(null)
+    const sectionRef = useRef<HTMLDivElement>(null)
 
     return (
         <div ref={sectionRef} className="relative min-h-screen w-full">

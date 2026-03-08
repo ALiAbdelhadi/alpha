@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 
 export default function WritingPage() {
-    const sectionRef = useRef<HTMLElement>(null)
+    const sectionRef = useRef<HTMLDivElement>(null)
     return (
         <div ref={sectionRef} className="relative min-h-screen w-full">
             <OpeningSection />

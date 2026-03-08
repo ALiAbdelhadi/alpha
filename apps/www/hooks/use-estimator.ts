@@ -3,13 +3,21 @@ import { useState, useCallback } from "react"
 export type ProjectType = "website" | "webapp" | "ecommerce" | "pwa" | null
 export type Complexity = "basic" | "standard" | "premium" | null
 export type Timeline = "urgent" | "standard" | "flexible" | null
+export type BrandIdentity = "complete" | "partial" | "scratch" | null
+export type ContentReadiness = "provide" | "need-help" | "unsure" | null
+export type DeadlineUrgency = "flexible" | "2months" | "1month" | "urgent" | null
 
 interface EstimatorState {
     step: number
+    brandIdentity: BrandIdentity
+    contentReadiness: ContentReadiness
+    deadlineUrgency: DeadlineUrgency
     projectType: ProjectType
     complexity: Complexity
     timeline: Timeline
 }
+
+const TOTAL_STEPS = 7
 
 interface EstimateResult {
     minWeeks: number
@@ -41,25 +49,35 @@ const TIMELINE_MULTIPLIERS = {
 export function useEstimator() {
     const [state, setState] = useState<EstimatorState>({
         step: 1,
+        brandIdentity: null,
+        contentReadiness: null,
+        deadlineUrgency: null,
         projectType: null,
         complexity: null,
         timeline: null,
     })
 
+    const setBrandIdentity = useCallback((v: BrandIdentity) => {
+        setState((prev) => ({ ...prev, brandIdentity: v }))
+    }, [])
+    const setContentReadiness = useCallback((v: ContentReadiness) => {
+        setState((prev) => ({ ...prev, contentReadiness: v }))
+    }, [])
+    const setDeadlineUrgency = useCallback((v: DeadlineUrgency) => {
+        setState((prev) => ({ ...prev, deadlineUrgency: v }))
+    }, [])
     const setProjectType = useCallback((type: ProjectType) => {
         setState((prev) => ({ ...prev, projectType: type }))
     }, [])
-
     const setComplexity = useCallback((complexity: Complexity) => {
         setState((prev) => ({ ...prev, complexity }))
     }, [])
-
     const setTimeline = useCallback((timeline: Timeline) => {
         setState((prev) => ({ ...prev, timeline }))
     }, [])
 
     const nextStep = useCallback(() => {
-        setState((prev) => ({ ...prev, step: Math.min(prev.step + 1, 4) }))
+        setState((prev) => ({ ...prev, step: Math.min(prev.step + 1, TOTAL_STEPS) }))
     }, [])
 
     const prevStep = useCallback(() => {
@@ -69,6 +87,9 @@ export function useEstimator() {
     const reset = useCallback(() => {
         setState({
             step: 1,
+            brandIdentity: null,
+            contentReadiness: null,
+            deadlineUrgency: null,
             projectType: null,
             complexity: null,
             timeline: null,
@@ -78,10 +99,16 @@ export function useEstimator() {
     const canProceed = useCallback((): boolean => {
         switch (state.step) {
             case 1:
-                return state.projectType !== null
+                return state.brandIdentity !== null
             case 2:
-                return state.complexity !== null
+                return state.contentReadiness !== null
             case 3:
+                return state.deadlineUrgency !== null
+            case 4:
+                return state.projectType !== null
+            case 5:
+                return state.complexity !== null
+            case 6:
                 return state.timeline !== null
             default:
                 return false
@@ -107,9 +134,15 @@ export function useEstimator() {
 
     return {
         step: state.step,
+        brandIdentity: state.brandIdentity,
+        contentReadiness: state.contentReadiness,
+        deadlineUrgency: state.deadlineUrgency,
         projectType: state.projectType,
         complexity: state.complexity,
         timeline: state.timeline,
+        setBrandIdentity,
+        setContentReadiness,
+        setDeadlineUrgency,
         setProjectType,
         setComplexity,
         setTimeline,
