@@ -1,0 +1,128 @@
+"use client"
+
+import { Container } from "@/components/container"
+import { useReveal } from "@/hooks/use-animation"
+import { Link } from "@/i18n/navigation"
+import { gsap } from "@/lib/gsap"
+import { useTranslations } from "next-intl"
+import { useEffect, useRef } from "react"
+
+export default function WritingPage() {
+    return (
+        <div className="relative min-h-screen w-full">
+            <OpeningSection />
+            <ListSection />
+        </div>
+    )
+}
+
+function OpeningSection() {
+    const t = useTranslations("writing")
+    const eyebrowRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0, duration: 0.5 })
+    const titleRef = useReveal<HTMLHeadingElement>({ direction: "up", delay: 0.1, duration: 0.8 })
+    const descRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0.25, duration: 0.7 })
+
+    return (
+        <section className="flex min-h-screen items-end section-padding pb-24">
+            <Container>
+                <div className="max-w-5xl">
+                    <p
+                        ref={eyebrowRef}
+                        className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-6 block"
+                    >
+                        {t("eyebrow")}
+                    </p>
+                    <h1
+                        ref={titleRef}
+                        className="mb-10 font-sans font-normal text-primary leading-[1.03]"
+                        style={{ fontSize: "clamp(44px, 7vw, 96px)", letterSpacing: "-0.025em" }}
+                    >
+                        {t("hero.title")}
+                        <br />
+                        <span
+                            className="text-primary/35"
+                            style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}
+                        >
+                            {t("hero.titleItalic")}
+                        </span>
+                    </h1>
+                    <div className="grid md:grid-cols-[80px_1fr] gap-8 items-start">
+                        <div className="h-px w-full bg-foreground/8 mt-3 hidden md:block" />
+                        <p ref={descRef} className="text-base text-primary/60 leading-relaxed max-w-[52ch]">
+                            {t("hero.description")}
+                        </p>
+                    </div>
+                </div>
+            </Container>
+        </section>
+    )
+}
+
+function ListSection() {
+    const tArticles = useTranslations("writing.articles")
+    const sectionRef = useRef<HTMLElement>(null)
+
+    useEffect(() => {
+        if (!sectionRef.current) return
+        const articles = sectionRef.current.querySelectorAll("[data-article]")
+        articles.forEach((article, index) => {
+            gsap.set(article, { opacity: 0, y: 20 })
+            gsap.to(article, {
+                opacity: 1, y: 0, duration: 0.6, delay: index * 0.1, ease: "power2.out",
+                scrollTrigger: { trigger: article, start: "top 90%", once: true },
+            })
+        })
+    }, [])
+
+    const articles = [
+        { slug: "why-not-wordpress", date: "November 2024", readTime: "2 min read" },
+        { slug: "technical-debt", date: "October 2024", readTime: "3 min read" },
+        { slug: "evaluating-developers", date: "September 2024", readTime: "4 min read" },
+        { slug: "multilingual-architecture", date: "August 2024", readTime: "3 min read" },
+    ]
+
+    return (
+        <section ref={sectionRef} className="section-padding border-t border-foreground/8">
+            <Container>
+                <div className="h-px w-full bg-foreground/8 mb-0" />
+                <div>
+                    {articles.map((article, i) => (
+                        <Link
+                            key={article.slug}
+                            href={`/writing/${article.slug}`}
+                            data-article
+                            className="group block border-b border-foreground/8 py-8 md:py-10 overflow-hidden relative cursor-pointer px-4"
+                        >
+                            <div
+                                aria-hidden
+                                className="absolute inset-0 bg-foreground/2 pointer-events-none origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"
+                            />
+                            <div className="relative z-10 grid gap-6 md:grid-cols-[56px_1fr_auto] items-start">
+                                <span className="font-mono font-light text-primary/20 group-hover:text-primary/50 transition-colors duration-300 leading-none pt-1"
+                                    style={{ fontSize: "clamp(16px, 1.5vw, 20px)", letterSpacing: "-0.02em" }}>
+                                    {String(i + 1).padStart(2, "0")}
+                                </span>
+                                <div>
+                                    <h2
+                                        className="font-sans font-medium text-primary mb-2 group-hover:translate-x-1.5 transition-transform duration-300"
+                                        style={{ fontSize: "clamp(17px, 2vw, 22px)", letterSpacing: "-0.015em" }}
+                                    >
+                                        {tArticles(`${article.slug}.title`)}
+                                    </h2>
+                                    <p className="text-base text-primary/60 leading-relaxed max-w-[52ch]">
+                                        {tArticles(`${article.slug}.excerpt`)}
+                                    </p>
+                                </div>
+                                <div className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.15em] text-primary/25 shrink-0 pt-1">
+                                    <span>{article.date}</span>
+                                    <span>·</span>
+                                    <span>{article.readTime}</span>
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            </Container>
+        </section>
+    )
+}

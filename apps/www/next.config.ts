@@ -1,0 +1,123 @@
+import { NextConfig } from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const withPWA = require("@ducanh2912/next-pwa").default({
+    dest: "public",
+    disable: process.env.NODE_ENV === "development",
+    register: true,
+    skipWaiting: true,
+    runtimeCaching: [
+        {
+            urlPattern: /\/_next\/static\/.*/i,
+            handler: "CacheFirst",
+            options: {
+                cacheName: "static-assets",
+                expiration: {
+                    maxEntries: 64,
+                    maxAgeSeconds: 30 * 24 * 60 * 60,
+                },
+            },
+        },
+        {
+            urlPattern: /\.(png|jpg|jpeg|svg|gif|ico|webp|avif)$/i,
+            handler: "CacheFirst",
+            options: {
+                cacheName: "image-cache",
+                expiration: {
+                    maxEntries: 100,
+                    maxAgeSeconds: 30 * 24 * 60 * 60,
+                },
+            },
+        },
+        {
+            urlPattern: /\.(woff|woff2|ttf|otf|eot)$/i,
+            handler: "CacheFirst",
+            options: {
+                cacheName: "font-cache",
+                expiration: {
+                    maxEntries: 20,
+                    maxAgeSeconds: 365 * 24 * 60 * 60,
+                },
+            },
+        },
+        {
+            urlPattern: /^https?.*/i,
+            handler: "NetworkFirst",
+            options: {
+                cacheName: "offlineCache",
+                expiration: {
+                    maxEntries: 200,
+                    maxAgeSeconds: 24 * 60 * 60,
+                },
+                networkTimeoutSeconds: 10,
+            },
+        },
+    ],
+});
+
+const nextConfig: NextConfig = {
+    pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+    reactStrictMode: true,
+    transpilePackages: ["@repo/database"],
+    compress: true,
+    poweredByHeader: false,
+    async headers() {
+        const isDev = process.env.NODE_ENV === "development";
+        const scriptSrc = isDev 
+            ? "'self' 'unsafe-inline' 'unsafe-eval' https://www.clarity.ms https://www.googletagmanager.com"
+            : "'self' 'unsafe-inline' https://www.clarity.ms https://www.googletagmanager.com";
+
+        return [
+            {
+                source: '/(.*)',
+                headers: [
+                    {
+                        key: 'Content-Security-Policy',
+                        value: `default-src 'self'; script-src ${scriptSrc}; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; connect-src 'self' https://www.clarity.ms https://www.google-analytics.com https://analytics.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';`,
+                    },
+                    {
+                        key: 'Strict-Transport-Security',
+                        value: 'max-age=31536000; includeSubDomains; preload',
+                    },
+                    {
+                        key: 'X-Content-Type-Options',
+                        value: 'nosniff',
+                    },
+                    {
+                        key: 'X-Frame-Options',
+                        value: 'DENY',
+                    },
+                    {
+                        key: 'Referrer-Policy',
+                        value: 'strict-origin-when-cross-origin',
+                    },
+                    {
+                        key: 'Permissions-Policy',
+                        value: 'camera=(), microphone=(), geolocation=()',
+                    },
+                    {
+                        key: 'X-DNS-Prefetch-Control',
+                        value: 'on',
+                    },
+                ],
+            },
+        ];
+    },
+};
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const withMDX = require('@next/mdx')({
+    extension: /\.mdx?$/,
+    options: {
+        remarkPlugins: [],
+        rehypePlugins: [],
+    },
+})
+
+const withNextIntl = createNextIntlPlugin();
+
+let config = withMDX(nextConfig);
+config = withNextIntl(withPWA(config));
+
+export default config;

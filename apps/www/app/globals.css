@@ -1,0 +1,443 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-border-mid: var(--border-mid);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --font-sans: var(--font-outfit);
+  --font-body: var(--font-inter);
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
+  --radius-2xl: calc(var(--radius) + 12px);
+}
+
+:root {
+  --n-0: #f7f8fa;
+  --n-1: #ebedf2;
+  --n-2: #d1d5db;
+  --n-3: #9ca3af;
+  --n-4: #6b7280;
+  --n-5: #4b5563;
+  --n-6: #374151;
+  --n-7: #1f2937;
+  --n-8: #111827;
+  --brand: #4a6ed4;
+  --brand-hover: #3b5cbd;
+  --brand-soft: #eff3ff;
+  --brand-foreground: #f7f8fa;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --destructive: var(--error);
+  --radius: 0.375rem;
+}
+
+:root {
+  --background: var(--n-0);
+  --foreground: var(--n-8);
+  --card: #ffffff;
+  --card-foreground: var(--n-8);
+  --popover: #ffffff;
+  --popover-foreground: var(--n-8);
+  --primary: var(--n-8);
+  --primary-foreground: var(--n-0);
+  --secondary: var(--n-1);
+  --secondary-foreground: var(--n-7);
+  --muted: var(--n-1);
+  --muted-foreground: var(--n-4);
+  --accent: var(--brand);
+  --accent-foreground: var(--brand-foreground);
+  --border: var(--n-2);
+  --border-mid: #cbd5e1;
+  --input: var(--n-2);
+  --ring: var(--brand);
+  --chart-1: var(--brand);
+  --chart-2: var(--success);
+  --chart-3: var(--warning);
+  --chart-4: var(--n-4);
+  --chart-5: var(--n-3);
+  --sidebar: var(--n-0);
+  --sidebar-foreground: var(--n-8);
+  --sidebar-primary: var(--n-8);
+  --sidebar-primary-foreground: var(--n-0);
+  --sidebar-accent: var(--brand);
+  --sidebar-accent-foreground: var(--brand-foreground);
+  --sidebar-border: var(--n-2);
+  --sidebar-ring: var(--brand);
+  --logo-wordmark: var(--n-8);
+  --logo-tagline: var(--n-5);
+}
+
+.dark {
+  --background: var(--n-8);
+  --foreground: var(--n-0);
+  --card: var(--n-7);
+  --card-foreground: var(--n-0);
+  --popover: var(--n-7);
+  --popover-foreground: var(--n-0);
+  --primary: var(--n-0);
+  --primary-foreground: var(--n-8);
+  --secondary: var(--n-6);
+  --secondary-foreground: var(--n-0);
+  --muted: var(--n-6);
+  --muted-foreground: var(--n-4);
+  --accent: var(--brand);
+  --accent-foreground: var(--brand-foreground);
+  --border: rgba(255, 255, 255, 0.07);
+  --border-mid: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.11);
+  --ring: var(--brand);
+  --chart-1: var(--brand);
+  --chart-2: var(--success);
+  --chart-3: var(--warning);
+  --chart-4: var(--n-3);
+  --chart-5: var(--n-4);
+  --sidebar: var(--n-7);
+  --sidebar-foreground: var(--n-0);
+  --sidebar-primary: var(--n-0);
+  --sidebar-primary-foreground: var(--n-8);
+  --sidebar-accent: var(--brand);
+  --sidebar-accent-foreground: var(--brand-foreground);
+  --sidebar-border: rgba(255, 255, 255, 0.07);
+  --sidebar-ring: var(--brand);
+  --logo-wordmark: var(--n-0);
+  --logo-tagline: var(--n-4);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  @media (pointer: fine) {
+    .custom-cursor-active * {
+      cursor: none;
+    }
+  }
+
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-inter), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  main {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  [data-initial-load="complete"] main {
+    opacity: 1;
+    visibility: visible;
+    transition:
+      opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+      visibility 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  [dir="rtl"] body {
+    font-family: var(--font-arabic), var(--font-inter), sans-serif;
+    line-height: 1.8;
+    font-size: 1.08rem;
+  }
+
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3,
+  [dir="rtl"] h4 {
+    font-family: var(--font-arabic), var(--font-outfit), sans-serif;
+    line-height: 1.35;
+  }
+
+  [dir="rtl"] .mono,
+  [dir="rtl"] .mono-uppercase {
+    font-family: 'Noto Kufi Arabic', 'IBM Plex Arabic', 'Tajawal', monospace;
+    line-height: 2;
+    letter-spacing: 0;
+  }
+
+  /* RTL uses logical properties for margins and padding */
+  [dir="rtl"] .ps-section {
+    text-align: right;
+  }
+
+  /* Flip icons in RTL */
+  [dir="rtl"] .rtl-flip {
+    transform: scaleX(-1);
+  }
+
+  section {
+    contain: layout style;
+  }
+
+  button {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-outfit), sans-serif;
+  }
+
+  h1 {
+    font-size: clamp(3.5rem, 8vw, 5rem);
+    line-height: 1.03;
+    letter-spacing: -0.025em;
+    font-weight: 600;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.018em;
+    font-weight: 400;
+  }
+
+  h4 {
+    font-size: clamp(1.125rem, 2vw, 1.75rem);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    font-weight: 500;
+  }
+
+  .body-lg {
+    font-size: clamp(1rem, 1.2vw, 1.2rem);
+    line-height: 1.65;
+  }
+
+  .body {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .small {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+
+  .mono {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    letter-spacing: 0.06em;
+  }
+
+  .mono-uppercase {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.625rem;
+    line-height: 1.5;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .sr-only:focus {
+    position: fixed;
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}
+
+@layer utilities {
+  .section-padding {
+    padding-top: clamp(5rem, 10vh, 8rem);
+    padding-bottom: clamp(5rem, 10vh, 8rem);
+  }
+
+  .border-grid {
+    @apply border-dashed border-border/60 dark:border-border;
+  }
+
+  .bg-brand {
+    background-color: var(--brand);
+    color: var(--brand-foreground);
+  }
+
+  .bg-brand:hover {
+    background-color: var(--brand-hover);
+  }
+
+  .border-brand {
+    border-color: var(--brand);
+  }
+
+  .text-brand {
+    color: var(--brand);
+  }
+
+  .bg-brand-soft {
+    background-color: var(--brand-soft);
+    color: var(--brand);
+  }
+
+  .glow-brand {
+    box-shadow:
+      0 0 0 1px rgba(74, 110, 212, 0.2),
+      0 4px 24px -4px rgba(74, 110, 212, 0.14);
+  }
+
+  .dark .glow-brand {
+    box-shadow:
+      0 0 0 1px rgba(74, 110, 212, 0.28),
+      0 4px 32px -4px rgba(74, 110, 212, 0.2);
+  }
+
+  .text-success {
+    color: var(--success);
+  }
+
+  .text-warning {
+    color: var(--warning);
+  }
+
+  .text-error {
+    color: var(--error);
+  }
+
+  .bg-success-soft {
+    background-color: rgba(34, 197, 94, 0.1);
+  }
+
+  .bg-warning-soft {
+    background-color: rgba(245, 158, 11, 0.1);
+  }
+
+  .bg-error-soft {
+    background-color: rgba(239, 68, 68, 0.1);
+  }
+
+  ::selection {
+    background-color: rgba(74, 110, 212, 0.18);
+    color: var(--foreground);
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 9999px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border) transparent;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  @keyframes ripple {
+    0% {
+      transform: translate(-50%, -50%) scale(0.01);
+      opacity: 0.3;
+    }
+
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0;
+    }
+  }
+
+  .animate-ripple {
+    animation: ripple 0.6s ease-out forwards;
+  }
+
+  .transition-default {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .transition-smooth {
+    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .transition-snappy {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  }
+}

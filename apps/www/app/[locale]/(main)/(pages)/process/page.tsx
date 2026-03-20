@@ -1,0 +1,192 @@
+"use client"
+
+import { Container } from "@/components/container"
+import { MagneticButton } from "@/components/magnetic-button"
+import { useReveal } from "@/hooks/use-animation"
+import { Link } from "@/i18n/navigation"
+import { gsap, ScrollTrigger } from "@/lib/gsap"
+import { localizeNumbers } from "@/lib/number"
+import { useLocale, useTranslations } from "next-intl"
+import { useEffect, useRef } from "react"
+
+export default function ProcessPage() {
+    return (
+        <div className="relative min-h-screen w-full">
+            <OpeningSection />
+            <PhasesList />
+            <ClosingSection />
+        </div>
+    )
+}
+
+function OpeningSection() {
+    const t = useTranslations("process.hero")
+    const eyebrowRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0, duration: 0.5 })
+    const titleRef = useReveal<HTMLHeadingElement>({ direction: "up", delay: 0.1, duration: 0.8 })
+    const descRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0.25, duration: 0.7 })
+
+    return (
+        <section className="flex min-h-screen items-end section-padding pb-24">
+            <Container>
+                <div className="max-w-5xl">
+                    <p
+                        ref={eyebrowRef}
+                        className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-6 block"
+                    >
+                        {t("eyebrow")}
+                    </p>
+                    <h1
+                        ref={titleRef}
+                        className="mb-10 font-sans font-normal text-primary leading-[1.03]"
+                        style={{ fontSize: "clamp(44px, 7vw, 96px)", letterSpacing: "-0.025em" }}
+                    >
+                        {t("title")}
+                        <br />
+                        <span
+                            className="text-primary/35"
+                            style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}
+                        >
+                            {t("titleItalic")}
+                        </span>
+                    </h1>
+                    <div className="grid md:grid-cols-[80px_1fr] gap-8 items-start">
+                        <div className="h-px w-full bg-foreground/8 mt-3 hidden md:block" />
+                        <p ref={descRef} className="text-base text-primary/60 leading-relaxed max-w-[52ch]">
+                            {t("description")}
+                        </p>
+                    </div>
+                </div>
+            </Container>
+        </section>
+    )
+}
+
+function PhasesList() {
+    const t = useTranslations("process.phases")
+    const sectionRef = useRef<HTMLElement>(null)
+    const locale = useLocale()
+
+    useEffect(() => {
+        if (!sectionRef.current) return
+        const phases = sectionRef.current.querySelectorAll("[data-phase]")
+        const triggers: ScrollTrigger[] = []
+        phases.forEach((phase, index) => {
+            gsap.set(phase, { opacity: 0, y: 30 })
+            const tween = gsap.to(phase, {
+                opacity: 1, y: 0, duration: 0.6, delay: index * 0.1, ease: "power2.out",
+                scrollTrigger: { trigger: phase, start: "top 85%", once: true },
+            })
+            if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
+        })
+        return () => triggers.forEach((t) => t.kill())
+    }, [])
+
+    const phases = [
+        { number: "1", key: "discovery" },
+        { number: "2", key: "wireframe" },
+        { number: "3", key: "design" },
+        { number: "4", key: "development" },
+        { number: "5", key: "launch" },
+    ]
+
+    return (
+        <section ref={sectionRef} className="section-padding border-t border-foreground/8">
+            <Container>
+                <div className="h-px w-full bg-foreground/8 mb-0" />
+                <div>
+                    {phases.map((phase, i) => (
+                        <div
+                            key={i}
+                            data-phase
+                            className="group border-b border-foreground/8 py-10 md:py-12 grid gap-8 md:grid-cols-[180px_1fr_1fr] items-start"
+                        >
+                            <div>
+                                <div
+                                    aria-hidden
+                                    className="font-mono font-light text-primary/[0.07] leading-none select-none mb-3"
+                                    style={{ fontSize: "clamp(64px, 9vw, 96px)", letterSpacing: "-0.04em" }}
+                                >
+                                    {localizeNumbers(phase.number, locale)}
+                                </div>
+                                <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary/25">
+                                    {localizeNumbers(t(`${phase.key}.timeline`), locale)}
+                                </p>
+                            </div>
+                            <div>
+                                <h3
+                                    className="font-sans font-medium text-primary mb-4 group-hover:text-primary/80 transition-colors duration-300"
+                                    style={{ fontSize: "clamp(18px, 2.5vw, 24px)", letterSpacing: "-0.015em" }}
+                                >
+                                    {t(`${phase.key}.title`)}
+                                </h3>
+                                <p className="text-base text-primary/60 leading-relaxed max-w-[38ch]">
+                                    {t(`${phase.key}.description`)}
+                                </p>
+                            </div>
+                            <div className="space-y-5">
+                                <div>
+                                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-2">
+                                        {t("deliverables")}
+                                    </p>
+                                    <p className="text-sm text-primary/60 leading-relaxed">
+                                        {t(`${phase.key}.deliverables`)}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-2">
+                                        {t("yourRole")}
+                                    </p>
+                                    <p className="text-sm text-primary/60 leading-relaxed">
+                                        {t(`${phase.key}.yourRole`)}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </Container>
+        </section>
+    )
+}
+
+function ClosingSection() {
+    const t = useTranslations("process")
+    const titleRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.5 })
+    const descRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0.15, duration: 0.5 })
+    const ctaRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.25, duration: 0.5 })
+
+    return (
+        <section className="section-padding border-t border-foreground/8">
+            <Container>
+                <div className="max-w-3xl">
+                    <div ref={titleRef} className="mb-12">
+                        <h2
+                            className="font-sans font-normal text-primary leading-[1.05]"
+                            style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
+                        >
+                            {t("flexibility.title")}
+                        </h2>
+                    </div>
+                    <p ref={descRef} className="text-base text-primary/60 leading-relaxed mb-12">
+                        {t("flexibility.description")}
+                    </p>
+                    <div ref={ctaRef}>
+                        <Link href="/schedule">
+                            <MagneticButton variant="primary" size="lg" className="group">
+                                <span className="flex items-center gap-2">
+                                    {t("closing.cta")}
+                                    <svg
+                                        className="w-4 h-4 transition-transform duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
+                                        fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </span>
+                            </MagneticButton>
+                        </Link>
+                    </div>
+                </div>
+            </Container>
+        </section>
+    )
+}

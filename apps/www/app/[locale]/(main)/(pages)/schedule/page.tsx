@@ -1,0 +1,244 @@
+"use client"
+
+import { Container } from "@/components/container"
+import { MagneticButton } from "@/components/magnetic-button"
+import { DatePicker } from "@/components/ui/date-picker"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { TimePicker } from "@/components/ui/time-picker"
+import { usePathname, useRouter } from "@/i18n/navigation"
+import { gsap } from "@/lib/gsap"
+import { cn } from "@/lib/utils"
+import { AlertCircle, ArrowLeft, Calendar, CheckCircle2, Clock } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useSearchParams } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
+
+export default function SchedulePage() {
+    const router = useRouter()
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
+    const t = useTranslations("schedule")
+    const locale = pathname.split("/")[1] || "en"
+
+    const [formData, setFormData] = useState({
+        name: searchParams.get("name") || "",
+        email: searchParams.get("email") || "",
+        message: searchParams.get("message") || "",
+        date: undefined as Date | undefined,
+        time: "",
+    })
+    const [errors, setErrors] = useState<Record<string, string>>({})
+    const [isSubmitting, setIsSubmitting] = useState(false)
+    const [submitSuccess, setSubmitSuccess] = useState(false)
+    const [submitError, setSubmitError] = useState<string | null>(null)
+
+    const backRef = useRef<HTMLDivElement>(null)
+    const headerRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.set([backRef.current, headerRef.current], { opacity: 0, y: -20 })
+            gsap.set(".form-field", { opacity: 0, y: 30 })
+            const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
+            tl.to(backRef.current, { opacity: 1, y: 0, duration: 0.6 })
+                .to(headerRef.current, { opacity: 1, y: 0, duration: 0.6 }, "-=0.4")
+                .to(".form-field", { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 }, "-=0.3")
+        })
+        return () => ctx.revert()
+    }, [])
+
+    const handleInputChange = (field: string, value: string | Date | undefined) => {
+        setFormData((prev) => ({ ...prev, [field]: value }))
+        if (errors[field]) setErrors((prev) => { const e = { ...prev }; delete e[field]; return e })
+    }
+
+    const validateForm = () => {
+        const e: Record<string, string> = {}
+        if (!formData.name || formData.name.length < 2) e.name = t("form.name.error")
+        if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = t("form.email.error")
+        if (!formData.date) {
+            e.date = t("form.date.errorRequired")
+        } else {
+            const today = new Date(); today.setHours(0, 0, 0, 0)
+            if (formData.date < today) e.date = t("form.date.errorPast")
+            const max = new Date(); max.setMonth(max.getMonth() + 3)
+            if (formData.date > max) e.date = t("form.date.errorFuture")
+        }
+        if (!formData.time) e.time = t("form.time.error")
+        setErrors(e)
+        return Object.keys(e).length === 0
+    }
+
+    const onSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
+        ev.preventDefault()
+        setSubmitError(null); setSubmitSuccess(false)
+        if (!validateForm()) return
+        setIsSubmitting(true)
+        try {
+            const [hours, minutes] = formData.time.split(":")
+            const dt = new Date(formData.date!)
+            dt.setHours(parseInt(hours), parseInt(minutes), 0, 0)
+            const res = await fetch(`/${locale}/api/schedule`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name: formData.name, email: formData.email, message: formData.message, scheduledDate: dt.toISOString(), scheduledTime: formData.time }),
+            })
+            const result = await res.json()
+            if (res.ok && result.success) {
+                setSubmitSuccess(true)
+                setTimeout(() => router.push("/"), 2000)
+            } else {
+                setSubmitError(result.message || t("submit.errorGeneric"))
+            }
+        } catch {
+            setSubmitError(t("submit.errorNetwork"))
+        } finally {
+            setIsSubmitting(false)
+        }
+    }
+
+    return (
+        <section className="flex min-h-screen items-center section-padding">
+            <Container>
+                <div className="mx-auto max-w-2xl">
+                    <div ref={backRef}>
+                        <button
+                            onClick={() => router.back()}
+                            className="group mb-10 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-primary/40 hover:text-primary/70 transition-colors duration-300"
+                        >
+                            <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 ltr:group-hover:-translate-x-1 rtl:group-hover:translate-x-1 rtl:-rotate-180" />
+                            {t("back")}
+                        </button>
+                    </div>
+                    <div ref={headerRef} className="mb-12">
+                        <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
+                            {t("eyebrow") ?? "Book a Call"}
+                        </p>
+                        <h1
+                            className="font-sans font-normal text-primary leading-[1.03] mb-4"
+                            style={{ fontSize: "clamp(36px, 5vw, 64px)", letterSpacing: "-0.025em" }}
+                        >
+                            {t("title")}
+                        </h1>
+                        <p className="font-mono text-sm text-primary/40">
+                            {t("subtitle")}
+                        </p>
+                    </div>
+                    <div className="h-px w-full bg-foreground/8 mb-10" />
+                    <form onSubmit={onSubmit} className="space-y-7" noValidate>
+                        <div className="form-field">
+                            <Label className="font-mono text-xs uppercase tracking-[0.18em] text-primary/40 mb-2 block">
+                                {t("form.name.label")} <span className="text-destructive">*</span>
+                            </Label>
+                            <Input
+                                type="text" value={formData.name}
+                                onChange={(e) => handleInputChange("name", e.target.value)}
+                                placeholder={t("form.name.placeholder")}
+                                className={cn("w-full text-primary placeholder:text-primary/25 bg-transparent", errors.name && "border-destructive")}
+                                aria-invalid={!!errors.name}
+                            />
+                            {errors.name && <FieldError msg={errors.name} />}
+                        </div>
+                        <div className="form-field">
+                            <Label className="font-mono text-xs uppercase tracking-[0.18em] text-primary/40 mb-2 block">
+                                {t("form.email.label")} <span className="text-destructive">*</span>
+                            </Label>
+                            <Input
+                                type="email" value={formData.email}
+                                onChange={(e) => handleInputChange("email", e.target.value)}
+                                placeholder={t("form.email.placeholder")}
+                                className={cn("w-full text-primary placeholder:text-primary/25 bg-transparent", errors.email && "border-destructive")}
+                                aria-invalid={!!errors.email} autoComplete="email"
+                            />
+                            {errors.email && <FieldError msg={errors.email} />}
+                        </div>
+                        <div className="form-field">
+                            <Label className="font-mono text-xs uppercase tracking-[0.18em] text-primary/40 mb-2 block">
+                                {t("form.message.label")}
+                            </Label>
+                            <Textarea
+                                value={formData.message}
+                                onChange={(e) => handleInputChange("message", e.target.value)}
+                                rows={4}
+                                placeholder={t("form.message.placeholder")}
+                                className="w-full text-primary placeholder:text-primary/25 bg-transparent resize-none"
+                            />
+                        </div>
+                        <div className="grid md:grid-cols-2 gap-7">
+                            <div className="form-field">
+                                <Label className="font-mono text-xs uppercase tracking-[0.18em] text-primary/40 mb-2 flex items-center gap-1.5">
+                                    <Calendar className="h-3 w-3" />
+                                    {t("form.date.label")} <span className="text-destructive">*</span>
+                                </Label>
+                                <DatePicker
+                                    date={formData.date}
+                                    onDateChange={(date) => handleInputChange("date", date)}
+                                    disabled={isSubmitting}
+                                    placeholder={t("form.date.placeholder")}
+                                    minDate={new Date()}
+                                    maxDate={(() => { const d = new Date(); d.setMonth(d.getMonth() + 3); return d })()}
+                                    className={cn(errors.date && "border-destructive")}
+                                />
+                                {errors.date && <FieldError msg={errors.date} />}
+                            </div>
+                            <div className="form-field">
+                                <Label className="font-mono text-xs uppercase tracking-[0.18em] text-primary/40 mb-2 flex items-center gap-1.5">
+                                    <Clock className="h-3 w-3" />
+                                    {t("form.time.label")} <span className="text-destructive">*</span>
+                                </Label>
+                                <TimePicker
+                                    value={formData.time}
+                                    onChange={(time) => handleInputChange("time", time)}
+                                    disabled={isSubmitting}
+                                    className={cn(errors.time && "border-destructive")}
+                                />
+                                {errors.time && <FieldError msg={errors.time} />}
+                                <p className="mt-1.5 font-mono text-xs text-primary/25 uppercase tracking-[0.15em]">
+                                    {t("form.time.availableHours")}
+                                </p>
+                            </div>
+                        </div>
+                        <div className="pt-4 form-field space-y-4">
+                            <MagneticButton
+                                type="submit" variant="primary" size="lg"
+                                className="w-full justify-center" disabled={isSubmitting}
+                            >
+                                {isSubmitting ? t("submit.submitting") : t("submit.button")}
+                            </MagneticButton>
+                            <p className="text-center font-mono text-xs text-primary/25 uppercase tracking-[0.15em]">
+                                {t("form.riskReversal")}
+                            </p>
+                            {submitSuccess && (
+                                <div className="p-4 rounded-sm bg-emerald-500/8 border border-emerald-500/15">
+                                    <p className="text-center font-mono text-sm text-primary flex items-center justify-center gap-2">
+                                        <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                                        {t("submit.success")}
+                                    </p>
+                                </div>
+                            )}
+                            {submitError && (
+                                <div className="p-4 rounded-sm bg-red-500/8 border border-red-500/15">
+                                    <p className="text-center font-mono text-sm text-primary flex items-center justify-center gap-2">
+                                        <AlertCircle className="h-4 w-4 text-red-400" />
+                                        {submitError}
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                    </form>
+                </div>
+            </Container>
+        </section>
+    )
+}
+
+function FieldError({ msg }: { msg: string }) {
+    return (
+        <p role="alert" className="mt-1.5 font-mono text-xs text-destructive flex items-center gap-1">
+            <AlertCircle className="h-3 w-3" aria-hidden />
+            {msg}
+        </p>
+    )
+}
