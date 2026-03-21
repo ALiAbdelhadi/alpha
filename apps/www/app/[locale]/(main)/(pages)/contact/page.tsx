@@ -6,7 +6,7 @@ import { useState } from "react"
 
 import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
-import { useReveal } from "@/hooks/use-animation"
+import { DEFAULTS, MOTION, useReveal } from "@/lib/motion"
 import { Link } from "@/i18n/navigation"
 import { contactFormSchema } from "@/lib/validations/contact"
 import { AlertCircle, CheckCircle2, Mail, MapPin, Phone } from "lucide-react"
@@ -17,12 +17,13 @@ type FormErrors = Record<string, string>
 export default function ContactPage() {
     const t = useTranslations("contactPage")
     const tContact = useTranslations("contact")
-    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.5 })
-    const leftRef = useReveal({ direction: "left", delay: 0.1, duration: 0.5 })
-    const rightRef = useReveal({ direction: "right", delay: 0.15, duration: 0.5 })
+
+    const titleRef = useReveal({ ...DEFAULTS.element, ease: MOTION.ease.smooth, delay: 0 })
+    const leftRef = useReveal({ ...DEFAULTS.element, direction: "left", ease: MOTION.ease.smooth, delay: 0.1 })
+    const rightRef = useReveal({ ...DEFAULTS.element, direction: "right", ease: MOTION.ease.smooth, delay: 0.15 })
 
     const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
+    const [phone, setPhone] = useState("")
     const [service, setService] = useState("")
     const [message, setMessage] = useState("")
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -40,7 +41,7 @@ export default function ContactPage() {
         try {
             const payload = {
                 name,
-                email,
+                phone,
                 message,
                 serviceInterest:
                     service === "development"
@@ -74,7 +75,7 @@ export default function ContactPage() {
             if (response.ok && result.success) {
                 setSubmitSuccess(true)
                 setName("")
-                setEmail("")
+                setPhone("")
                 setService("")
                 setMessage("")
                 setTimeout(() => setSubmitSuccess(false), 7000)
@@ -239,27 +240,27 @@ export default function ContactPage() {
                                         </div>
                                         <div>
                                             <label className="mb-2 block font-mono text-xs text-primary/60 tracking-wide sm:text-sm">
-                                                {t("form.emailLabel")} <span className="text-red-500">*</span>
+                                                {t("form.phoneLabel")} <span className="text-red-500">*</span>
                                             </label>
                                             <input
-                                                type="email"
-                                                value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
-                                                placeholder={t("form.emailPlaceholder")}
-                                                className={`w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all ${formErrors.email ? "border-red-500 focus:border-red-500" : ""
+                                                type="tel"
+                                                value={phone}
+                                                onChange={(e) => setPhone(e.target.value)}
+                                                placeholder={t("form.phonePlaceholder")}
+                                                className={`w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all ${formErrors.phone ? "border-red-500 focus:border-red-500" : ""
                                                     }`}
-                                                aria-invalid={!!formErrors.email}
-                                                aria-describedby={formErrors.email ? "contact-email-error" : undefined}
-                                                autoComplete="email"
+                                                aria-invalid={!!formErrors.phone}
+                                                aria-describedby={formErrors.phone ? "contact-phone-error" : undefined}
+                                                autoComplete="tel"
                                                 disabled={isSubmitting}
                                             />
-                                            {formErrors.email && (
+                                            {formErrors.phone && (
                                                 <p
-                                                    id="contact-email-error"
+                                                    id="contact-phone-error"
                                                     className="mt-1.5 flex items-center gap-1 font-mono text-xs text-red-500"
                                                 >
                                                     <AlertCircle className="h-3 w-3" aria-hidden="true" />
-                                                    {formErrors.email}
+                                                    {formErrors.phone}
                                                 </p>
                                             )}
                                         </div>

@@ -2,10 +2,10 @@
 
 import { Container } from "@/components/container"
 import { useLoading } from "@/components/providers/loading-provider"
-import { ANIM } from "@/lib/animation-utils"
 import { useInjectStyles } from "@/lib/dom-utils"
 import { gsap } from "@/lib/gsap"
-import { useLocale, useTranslations } from "next-intl"
+import { DEFAULTS, MOTION, useText } from "@/lib/motion"
+import { useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 import { memo, useLayoutEffect, useRef, useState } from "react"
 
@@ -98,7 +98,7 @@ const ServiceCard = memo(function ServiceCard({
         cursor: "default",
         background: "transparent",
         transition: "border-color 0.35s ease, background-color 0.35s ease",
-        transform: `translateY(${ANIM.distance.md}px)`,
+        transform: `translateY(${MOTION.distance.md}px)`,
         minHeight: isDouble ? 200 : 260,
         display: "flex",
         flexDirection: "column",
@@ -189,7 +189,6 @@ interface ServicesSectionProps {
 
 export const ServicesSection = memo(function ServicesSection({ invertColors = false }: ServicesSectionProps) {
   const t = useTranslations("services")
-  const locale = useLocale()
   const { isInitialLoadComplete } = useLoading()
   const { resolvedTheme } = useTheme()
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -197,11 +196,18 @@ export const ServicesSection = memo(function ServicesSection({ invertColors = fa
 
   useInjectStyles("services-styles", SERVICES_CSS)
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useLayoutEffect(() => { setMounted(true) }, [])
 
   const baseTokens: CTokens = (mounted && resolvedTheme === "dark") ? DARK_C : LIGHT_C
   const invertedTokens: CTokens = (mounted && resolvedTheme === "dark") ? LIGHT_C : DARK_C
   const C: CTokens = invertColors ? invertedTokens : baseTokens
+
+  const titleRef = useText<HTMLHeadingElement>({
+    ...DEFAULTS.heading,
+    ease: MOTION.ease.text,
+  })
+
 
   useLayoutEffect(() => {
     if (!isInitialLoadComplete || !sectionRef.current) return
@@ -210,51 +216,47 @@ export const ServicesSection = memo(function ServicesSection({ invertColors = fa
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 92%",
+          start: MOTION.trigger.late,
           once: true,
         }
       })
 
-      // Premium header reveal
       tl.fromTo("[data-service-header]",
-        { opacity: 0, y: 36 },
+        { opacity: 0, y: MOTION.distance.md },
         {
           opacity: 1,
           y: 0,
-          duration: 1.1,
-          ease: "cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+          duration: MOTION.duration.text,
+          ease: MOTION.ease.smooth
         }
       )
 
-      // Divider - smooth scale
       tl.fromTo("[data-service-divider]",
         { scaleX: 0, transformOrigin: "left" },
         {
           scaleX: 1,
-          duration: 1.2,
-          ease: "cubic-bezier(0.65, 0, 0.35, 1)"
+          duration: MOTION.duration.slow,
+          ease: MOTION.ease.gentle
         },
         "-=0.7"
       )
 
-      // Service cards - staggered premium reveal
       tl.to("[data-service-card]", {
         opacity: 1,
         y: 0,
-        duration: 0.9,
-        stagger: 0.12,
-        ease: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        duration: MOTION.duration.text,
+        stagger: MOTION.stagger.loose,
+        ease: MOTION.ease.smooth,
         force3D: true,
         clearProps: "transform"
       }, "-=0.5")
 
-      // Footer - gentle fade
       tl.fromTo("[data-service-footer]",
         { opacity: 0 },
         {
           opacity: 1,
-          duration: 1.0,
-          ease: "cubic-bezier(0.65, 0, 0.35, 1)"
+          duration: MOTION.duration.slow,
+          ease: MOTION.ease.gentle
         },
         "-=0.5"
       )
@@ -295,20 +297,22 @@ export const ServicesSection = memo(function ServicesSection({ invertColors = fa
               <p style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.25em", textTransform: "uppercase", color: C.muted, marginBottom: 16, marginTop: 0, transition: "color 0.4s ease" }}>
                 {t("eyebrow")}
               </p>
-              <h2 style={{ fontFamily: "system-ui, sans-serif", fontSize: "clamp(32px, 4.5vw, 56px)", fontWeight: 300, letterSpacing: "-0.02em", lineHeight: 1.05, color: C.high, margin: 0, transition: "color 0.4s ease" }}>
-                {firstPart}
-                <br />
-                <span style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontStyle: "italic", color: C.low, transition: "color 0.4s ease" }}>
-                  {secondPart}
-                </span>
-              </h2>
+              <h2
+                  ref={titleRef}
+                  style={{ fontFamily: "system-ui, sans-serif", fontSize: "clamp(32px, 4.5vw, 56px)", fontWeight: 300, letterSpacing: "-0.02em", lineHeight: 1.05, color: C.high, margin: 0, transition: "color 0.4s ease" }}
+                >
+                  {firstPart}
+                  <br />
+                  <span style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontStyle: "italic", color: C.low, transition: "color 0.4s ease" }}>
+                    {secondPart}
+                  </span>
+                </h2>
             </div>
             <p style={{ fontFamily: "monospace", fontSize: 14, lineHeight: 1.85, color: C.muted, maxWidth: 260, margin: 0, transition: "color 0.4s ease" }}>
               {t("subtitle")}
             </p>
           </div>
           <div data-service-divider style={{ height: 1, background: C.border, marginBottom: 20, transition: "background 0.4s ease" }} className="scale-x-0" />
-
           <div className="services-grid">
             {services.map((service, i) => (
               <ServiceCard
@@ -319,7 +323,6 @@ export const ServicesSection = memo(function ServicesSection({ invertColors = fa
               />
             ))}
           </div>
-
           <div data-service-footer className="opacity-0" style={{ marginTop: 36, display: "flex", justifyContent: "flex-end", alignItems: "center", gap: 16 }}>
             <div style={{ flex: 1, height: 1, background: C.border, transition: "background 0.4s ease" }} />
             <span style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.25em", textTransform: "uppercase", color: C.muted, transition: "color 0.4s ease" }}>

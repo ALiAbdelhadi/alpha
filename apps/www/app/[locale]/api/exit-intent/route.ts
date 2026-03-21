@@ -4,35 +4,35 @@ import { prisma } from "@repo/database"
 import { notifyNewContact } from "@/lib/crm"
 
 const exitIntentSchema = z.object({
-    email: z.string().email(),
+    phone: z.string(),
     source: z.string().default("exit_intent_modal"),
 })
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json()
-        const { email, source } = exitIntentSchema.parse(body)
+        const { phone, source } = exitIntentSchema.parse(body)
 
         // Store as a contact submission with special tag
         const submission = await prisma.contactSubmission.create({
             data: {
                 name: "Exit Intent Lead",
-                email,
+                phone,
                 message: `Captured via ${source}`,
                 priority: "HIGH", // Exit intent leads are high intent
                 locale: "en",
             },
-        })
+        } as any)
 
         // Send notification
         await notifyNewContact({
             name: "Exit Intent Lead",
-            email,
+            phone,
             message: `Captured via ${source}`,
         }, submission.id)
 
         return NextResponse.json(
-            { success: true, message: "Email captured" },
+            { success: true, message: "Contact captured" },
             { status: 201 }
         )
     } catch (error) {

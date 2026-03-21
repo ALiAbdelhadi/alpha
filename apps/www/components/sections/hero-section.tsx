@@ -8,17 +8,16 @@ import { useTranslations } from "next-intl"
 import { memo, useCallback, useRef } from "react"
 import { useGSAPSection } from "@/hooks/use-gsap-section"
 import { Container } from "../container"
-
-const EASE = {
-  hero: "cubic-bezier(0.2, 0, 0, 1)",
-  text: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-  subtle: "cubic-bezier(0.65, 0, 0.35, 1)",
-} as const
+import { DEFAULTS, MOTION, useText } from "@/lib/motion"
 
 export const HeroSection = memo(function HeroSection() {
   const t = useTranslations()
   const { isInitialLoadComplete } = useLoading()
   const sectionRef = useRef<HTMLElement>(null)
+  const titleRef = useText<HTMLHeadingElement>({
+    ...DEFAULTS.heading,
+    ease: MOTION.ease.text,
+  })
 
   useGSAPSection({ trigger: sectionRef }, (context) => {
     if (!isInitialLoadComplete || !sectionRef.current) return
@@ -29,9 +28,8 @@ export const HeroSection = memo(function HeroSection() {
       return
     }
 
-    // Hero animation timeline - starts earlier for immediate impact
     const tl = gsap.timeline({
-      defaults: { ease: EASE.hero, duration: 1.4 }
+      defaults: { ease: MOTION.ease.text, duration: 1.0 }
     })
 
     tl.fromTo("[data-hero-watermark]",
@@ -39,24 +37,24 @@ export const HeroSection = memo(function HeroSection() {
       {
         opacity: 1,
         x: 0,
-        duration: 2.2,
-        ease: EASE.subtle
+        duration: 1.0,
+        ease: MOTION.ease.gentle
       },
       0
     )
 
     tl.fromTo("[data-hero-content]",
-      { opacity: 0, y: 28 },
+      { opacity: 0, y: 24 },
       {
         opacity: 1,
         y: 0,
         stagger: 0.08,
-        duration: 1.1,
-        ease: EASE.text,
+        duration: 1.0,
+        ease: MOTION.ease.smooth,
         force3D: true,
         clearProps: "transform"
       },
-      0.15
+      0.12
     )
 
     tl.fromTo("[data-hero-scroll]",
@@ -64,10 +62,10 @@ export const HeroSection = memo(function HeroSection() {
       {
         opacity: 1,
         y: 0,
-        duration: 1.2,
-        ease: EASE.text
+        duration: 0.85,
+        ease: MOTION.ease.smooth
       },
-      "-=0.8"
+      "-=0.55"
     )
   }, [isInitialLoadComplete])
 
@@ -132,8 +130,8 @@ export const HeroSection = memo(function HeroSection() {
             </span>
           </div>
           <h1
-            data-hero-content
-            className="mb-10 font-sans font-normal text-primary leading-[1.03] tracking-tight opacity-0"
+            ref={titleRef}
+            className="mb-10 font-sans font-normal text-primary leading-[1.03] tracking-tight"
             style={{
               fontSize: "clamp(44px, 7vw, 96px)",
               letterSpacing: "-0.025em",
@@ -189,7 +187,7 @@ export const HeroSection = memo(function HeroSection() {
                 </div>
                 <div className="h-6 w-px bg-foreground/8" />
                 <div className="flex items-start flex-col gap-1 text-primary/60 text-[10px]">
-                  <span className="text-primary/40">100%  on-time</span> 
+                  <span className="text-primary/40">100%  on-time</span>
                   <span className="font-mono text-[10px] text-primary/40 uppercase tracking-wider">
                     {t("hero.trust")}
                   </span>

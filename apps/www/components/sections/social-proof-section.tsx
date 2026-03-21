@@ -1,5 +1,5 @@
 import { Container } from "@/components/container"
-import { useBatchReveal, useReveal } from "@/hooks/use-animation"
+import { useBatch, useReveal } from "@/lib/motion"
 import { TESTIMONIALS, type Testimonial } from "@/lib/testimonials"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
@@ -18,8 +18,8 @@ export const SocialProofSection = memo(function SocialProofSection() {
     delay: 0.1,
   })
 
-  const gridRef = useBatchReveal<HTMLDivElement>({
-    targets: ".testimonial-card",
+  const gridRef = useBatch<HTMLDivElement>({
+    selector: ".problem-card",
     stagger: 0.1,
     once: true,
   })
@@ -86,7 +86,7 @@ export const SocialProofSection = memo(function SocialProofSection() {
               <div
                 key={testimonial.id}
                 className="testimonial-card ltr:border-r rtl:border-l border-b border-foreground/8 px-6 py-8 group hover:bg-foreground/1.5 transition-colors duration-300"
-                >
+              >
                 <blockquote>
                   <p className="text-base text-primary/65 mb-6 leading-relaxed">
                     &ldquo;{t(`testimonials.${testimonial.id}.quote`) ?? testimonial.quote}&rdquo;
@@ -117,12 +117,12 @@ const Author = memo(function Author({ testimonial }: { testimonial: Testimonial 
       >
         {testimonial.avatar
           ? <Image
-              src={testimonial.avatar}
-              alt={authorName}
-              width={36}
-              height={36}
-              className="h-full w-full object-cover"
-            />
+            src={testimonial.avatar}
+            alt={authorName}
+            width={36}
+            height={36}
+            className="h-full w-full object-cover"
+          />
           : initials}
       </div>
       <div>

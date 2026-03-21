@@ -9,8 +9,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { TimePicker } from "@/components/ui/time-picker"
 import { usePathname, useRouter } from "@/i18n/navigation"
 import { gsap } from "@/lib/gsap"
+import { MOTION } from "@/lib/motion"
 import { cn } from "@/lib/utils"
-import { AlertCircle, ArrowLeft, Calendar, CheckCircle2, Clock } from "lucide-react"
+import { AlertCircle, ArrowLeft, Calendar, CheckCircle2, Clock, Phone } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
@@ -24,7 +25,7 @@ export default function SchedulePage() {
 
     const [formData, setFormData] = useState({
         name: searchParams.get("name") || "",
-        email: searchParams.get("email") || "",
+        phone: searchParams.get("phone") || "",
         message: searchParams.get("message") || "",
         date: undefined as Date | undefined,
         time: "",
@@ -39,12 +40,12 @@ export default function SchedulePage() {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.set([backRef.current, headerRef.current], { opacity: 0, y: -20 })
-            gsap.set(".form-field", { opacity: 0, y: 30 })
-            const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
-            tl.to(backRef.current, { opacity: 1, y: 0, duration: 0.6 })
-                .to(headerRef.current, { opacity: 1, y: 0, duration: 0.6 }, "-=0.4")
-                .to(".form-field", { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 }, "-=0.3")
+            gsap.set([backRef.current, headerRef.current], { opacity: 0, y: -MOTION.distance.sm })
+            gsap.set(".form-field", { opacity: 0, y: MOTION.distance.md })
+            const tl = gsap.timeline({ defaults: { ease: MOTION.ease.smooth, duration: MOTION.duration.base } })
+            tl.to(backRef.current, { opacity: 1, y: 0 })
+                .to(headerRef.current, { opacity: 1, y: 0 }, "-=0.4")
+                .to(".form-field", { opacity: 1, y: 0, stagger: MOTION.stagger.tight }, "-=0.3")
         })
         return () => ctx.revert()
     }, [])
@@ -57,7 +58,7 @@ export default function SchedulePage() {
     const validateForm = () => {
         const e: Record<string, string> = {}
         if (!formData.name || formData.name.length < 2) e.name = t("form.name.error")
-        if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) e.email = t("form.email.error")
+        if (!formData.phone || formData.phone.length < 10) e.phone = t("form.phone.error")
         if (!formData.date) {
             e.date = t("form.date.errorRequired")
         } else {
@@ -83,7 +84,13 @@ export default function SchedulePage() {
             const res = await fetch(`/${locale}/api/schedule`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name: formData.name, email: formData.email, message: formData.message, scheduledDate: dt.toISOString(), scheduledTime: formData.time }),
+                body: JSON.stringify({
+                    name: formData.name,
+                    phone: formData.phone,
+                    message: formData.message,
+                    scheduledDate: dt.toISOString(),
+                    scheduledTime: formData.time
+                }),
             })
             const result = await res.json()
             if (res.ok && result.success) {
@@ -143,16 +150,21 @@ export default function SchedulePage() {
                         </div>
                         <div className="form-field">
                             <Label className="font-mono text-xs uppercase tracking-[0.18em] text-primary/40 mb-2 block">
-                                {t("form.email.label")} <span className="text-destructive">*</span>
+                                {t("form.phone.label")} <span className="text-destructive">*</span>
                             </Label>
-                            <Input
-                                type="email" value={formData.email}
-                                onChange={(e) => handleInputChange("email", e.target.value)}
-                                placeholder={t("form.email.placeholder")}
-                                className={cn("w-full text-primary placeholder:text-primary/25 bg-transparent", errors.email && "border-destructive")}
-                                aria-invalid={!!errors.email} autoComplete="email"
-                            />
-                            {errors.email && <FieldError msg={errors.email} />}
+                            <div className="relative">
+                                <div className="absolute inset-y-0 ltr:left-3 rtl:right-3 flex items-center pointer-events-none text-primary/30">
+                                    <Phone className="h-4 w-4" />
+                                </div>
+                                <Input
+                                    type="tel" value={formData.phone}
+                                    onChange={(e) => handleInputChange("phone", e.target.value)}
+                                    placeholder={t("form.phone.placeholder")}
+                                    className={cn("w-full ltr:pl-10 rtl:pr-10 text-primary placeholder:text-primary/25 bg-transparent", errors.phone && "border-destructive")}
+                                    aria-invalid={!!errors.phone}
+                                />
+                            </div>
+                            {errors.phone && <FieldError msg={errors.phone} />}
                         </div>
                         <div className="form-field">
                             <Label className="font-mono text-xs uppercase tracking-[0.18em] text-primary/40 mb-2 block">

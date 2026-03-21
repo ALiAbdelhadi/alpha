@@ -20,6 +20,7 @@ import {
     FileText,
     Building2,
     Eye,
+    Phone,
 } from "lucide-react"
 import Link from "next/link"
 import { useParams, useRouter } from "next/navigation"
@@ -67,7 +68,7 @@ interface Meeting {
 interface ContactSubmission {
     id: string
     name: string
-    email: string
+    phone: string
     message: string
     status: SubmissionStatus
     priority: Priority
@@ -287,15 +288,15 @@ export default function ContactDetailPage() {
                         </h2>
                         <div className="space-y-3">
                             <div className="flex items-start gap-3">
-                                <Mail className="h-4 w-4 text-muted-foreground mt-1" />
+                                <Phone className="h-4 w-4 text-muted-foreground mt-1" />
                                 <div>
-                                    <p className="text-sm text-muted-foreground">Email</p>
+                                    <p className="text-sm text-muted-foreground">Phone</p>
                                     <a
-                                        href={`mailto:${contact.email}`}
+                                        href={`tel:${contact.phone}`}
                                         className="text-sm font-medium hover:underline"
                                     >
                                         <bdi>
-                                            {contact.email}
+                                            {contact.phone}
                                         </bdi>
                                     </a>
                                 </div>

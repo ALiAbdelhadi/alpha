@@ -5,7 +5,7 @@ import { MagneticButton } from "@/components/magnetic-button"
 import { ProposalNarrativeBlock } from "@/components/sections/estimator-section"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useReveal } from "@/hooks/use-animation"
+import { DEFAULTS, MOTION, useReveal } from "@/lib/motion"
 import {
     BrandIdentity,
     Budget,
@@ -72,8 +72,8 @@ export default function EstimatorPage() {
     useEffect(() => {
         if (!containerRef.current) return
         gsap.fromTo(containerRef.current,
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" })
+            { opacity: 0, y: MOTION.distance.sm },
+            { opacity: 1, y: 0, duration: MOTION.duration.fast, ease: MOTION.ease.smooth })
     }, [step, phoneDone])
 
     const formatCurrency = (n: number) =>
@@ -228,19 +228,6 @@ export default function EstimatorPage() {
                                     {step === DATA_STEPS - 1 ? t("getEstimate") : t("next")}
                                 </MagneticButton>
                             )}
-                            {isResultsStep && (
-                                <Link href="/schedule">
-                                    <MagneticButton variant="primary" className="group">
-                                        <span className="flex items-center gap-2">
-                                            {t("results.ctaPrimary")}
-                                            <svg className="w-4 h-4 transition-transform ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
-                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                            </svg>
-                                        </span>
-                                    </MagneticButton>
-                                </Link>
-                            )}
                         </div>
                     </div>
                 </Container>
@@ -361,7 +348,7 @@ function StepResults({
     contentReadiness?: ContentReadiness
     deadlineUrgency?: DeadlineUrgency
 }) {
-    const contentRef = useReveal({ direction: "up", delay: 0, duration: 0.6 })
+    const contentRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
 
     const projKey = mapProjectType(projectType)
     const tierKey = mapBudgetTier(budget)

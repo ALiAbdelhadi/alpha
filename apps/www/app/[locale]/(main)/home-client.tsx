@@ -5,6 +5,7 @@ import { ComparisonDemo } from "@/components/sections/comparison-demo"
 import { ProblemSection } from "@/components/sections/problem-section"
 import { useNavigation } from "@/components/providers/navigation-provider"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
+import { MOTION } from "@/lib/motion"
 import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
 import { SectionSkeleton } from "@/components/section-skeleton"
 import { useTheme } from "next-themes"
@@ -46,33 +47,27 @@ export function HomeClient() {
 
         const ctx = gsap.context(() => {
             ScrollTrigger.create({
-                trigger: "#services",
+                trigger: darkWrapperRef.current,
                 start: "top 65%",
-                end: "top 30%",
-                once: true,
-                onEnter: () => {
-                    setHasEntered(true)
-                    const bgTarget = themeRef.current === "dark" ? "#f9f9f9" : "#080808"
-                    gsap.to(darkWrapperRef.current, {
-                        backgroundColor: bgTarget,
-                        duration: 1.0,
-                        ease: "power2.inOut",
-                    })
-                },
+                end: "bottom 30%",
+                onEnter: () => setHasEntered(true),
+                onLeaveBack: () => setHasEntered(false),
             })
         })
 
         return () => ctx.revert()
     }, [])
     useEffect(() => {
-        if (!hasEntered) return
         if (!darkWrapperRef.current) return
 
-        const bgTarget = resolvedTheme === "dark" ? "#f9f9f9" : "#080808"
+        const bgTarget = hasEntered
+            ? (resolvedTheme === "dark" ? "#f9f9f9" : "#080808")
+            : "transparent"
+
         gsap.to(darkWrapperRef.current, {
             backgroundColor: bgTarget,
-            duration: 0.5,
-            ease: "power2.inOut",
+            duration: MOTION.duration.base,
+            ease: MOTION.ease.ui,
         })
     }, [hasEntered, resolvedTheme])
     

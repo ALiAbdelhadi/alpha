@@ -2,9 +2,9 @@
 
 import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
-import { useReveal } from "@/hooks/use-animation"
 import { Link } from "@/i18n/navigation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { localizeNumbers } from "@/lib/number"
 import { useLocale, useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
@@ -21,12 +21,12 @@ export default function ProcessPage() {
 
 function OpeningSection() {
     const t = useTranslations("process.hero")
-    const eyebrowRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0, duration: 0.5 })
-    const titleRef = useReveal<HTMLHeadingElement>({ direction: "up", delay: 0.1, duration: 0.8 })
-    const descRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0.25, duration: 0.7 })
+    const eyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
+    const titleRef = useText({ ...DEFAULTS.heading, ease: MOTION.ease.text })
+    const descRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
 
     return (
-        <section className="flex min-h-screen items-end section-padding pb-24">
+        <section className="flex min-h-screen items-center section-padding pb-24">
             <Container>
                 <div className="max-w-5xl">
                     <p
@@ -71,10 +71,10 @@ function PhasesList() {
         const phases = sectionRef.current.querySelectorAll("[data-phase]")
         const triggers: ScrollTrigger[] = []
         phases.forEach((phase, index) => {
-            gsap.set(phase, { opacity: 0, y: 30 })
+            gsap.set(phase, { opacity: 0, y: MOTION.distance.md })
             const tween = gsap.to(phase, {
-                opacity: 1, y: 0, duration: 0.6, delay: index * 0.1, ease: "power2.out",
-                scrollTrigger: { trigger: phase, start: "top 85%", once: true },
+                opacity: 1, y: 0, duration: MOTION.duration.base, delay: index * MOTION.stagger.loose, ease: MOTION.ease.smooth,
+                scrollTrigger: { trigger: phase, start: MOTION.trigger.late, once: true },
             })
             if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
         })
@@ -151,9 +151,9 @@ function PhasesList() {
 
 function ClosingSection() {
     const t = useTranslations("process")
-    const titleRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.5 })
-    const descRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0.15, duration: 0.5 })
-    const ctaRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.25, duration: 0.5 })
+    const titleRef = useText({ ...DEFAULTS.heading, ease: MOTION.ease.text })
+    const descRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
+    const ctaRef = useReveal({ ...DEFAULTS.element, delay: 0.25 })
 
     return (
         <section className="section-padding border-t border-foreground/8">

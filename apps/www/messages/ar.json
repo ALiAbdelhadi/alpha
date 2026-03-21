@@ -347,8 +347,8 @@
         "form": {
             "name": "الاسم",
             "namePlaceholder": "اسمك",
-            "email": "البريد الإلكتروني",
-            "emailPlaceholder": "your@email.com",
+            "phone": "رقم الهاتف",
+            "phonePlaceholder": "01XXXXXXXXX",
             "message": "الرسالة",
             "messagePlaceholder": "صف مشروعك - ما الذي تبنيه، ما الذي لا يعمل، أو ما الذي لا تزال غير متأكد منه.",
             "submit": "أرسل الرسالة",
@@ -380,8 +380,8 @@
         "form": {
             "nameLabel": "الاسم الكامل",
             "namePlaceholder": "اسمك",
-            "emailLabel": "البريد الإلكتروني",
-            "emailPlaceholder": "your@email.com",
+            "phoneLabel": "رقم الهاتف",
+            "phonePlaceholder": "01XXXXXXXXX",
             "serviceLabel": "الخدمة المطلوبة",
             "servicePlaceholder": "اختر خدمة",
             "serviceWebDesign": "تصميم ويب",
@@ -413,11 +413,11 @@
                 "required": "*",
                 "error": "يجب أن يتضمن الاسم حرفَين على الأقل"
             },
-            "email": {
-                "label": "البريد الإلكتروني",
-                "placeholder": "your.email@example.com",
+            "phone": {
+                "label": "رقم الهاتف",
+                "placeholder": "01XXXXXXXXX",
                 "required": "*",
-                "error": "أدخل بريداً إلكترونياً صحيحاً"
+                "error": "أدخل رقم هاتف صحيحاً"
             },
             "message": {
                 "label": "رسالة (اختياري)",
@@ -1488,6 +1488,25 @@
             "button": "تحميل التقدير",
             "generating": "جارٍ الإنشاء..."
         },
+        "exitIntent": {
+            "title": "قبل أن تغادر.",
+            "subtitle": "شيء أخير",
+            "description": "معظم المشاريع تفشل في المحادثة الأولى - وليس البناء. مكالمة مدتها ٣٠ دقيقة كافية لمعرفة ما إذا كنا الشخص المناسب.",
+            "phoneLabel": "رقم الهاتف (واتساب)",
+            "phonePlaceholder": "01XXXXXXXXX",
+            "phoneHint": "يستخدم فقط للمتابعة. لا يتم مشاركته أبداً.",
+            "phoneError": "أدخل رقم هاتف مصري صحيح (01XXXXXXXXX).",
+            "buttonText": "احجز مكالمة مجانية",
+            "secondaryButtonText": "لا شكراً",
+            "submitting": "جاري الإرسال...",
+            "successTitle": "تم استلام الطلب",
+            "successDescription": "سنتواصل معك عبر واتساب خلال ٢٤ ساعة.",
+            "stats": {
+                "noPitch": "بدون بيع",
+                "noCommitment": "بدون التزام",
+                "founderAccess": "تحدث مع المؤسس"
+            }
+        },
         "step1": {
             "question": "ما نوع المشروع الذي تريد بناءه؟",
             "options": {
@@ -1544,6 +1563,7 @@
             "timeline": "الجدول الزمني المُقدَّر",
             "weeks": "أسابيع",
             "investment": "نطاق الاستثمار",
+            "vatExcluded": "غير شامل ضريبة القيمة المضافة",
             "hostingIncluded": "شامل النطاق والاستضافة - سنة كاملة",
             "whatYouGet": "ما ستحصل عليه",
             "moreInPdf": "+ {count} مُخرجات إضافية في الـ PDF",
@@ -1815,5 +1835,23 @@
                 "description": "للأسئلة حول هذه الشروط، تواصل معنا على "
             }
         }
+    },
+    "exitIntent": {
+        "subtitle": "لحظة قبل ما تغادر",
+        "title": "خلينا نختبر فكرتك بجدية.",
+        "description": "مش متأكد إننا مناسبين لك؟ مكالمة تقنية لمدة 30 دقيقة كفيلة توضح كل شيء — بدون بيع، بدون ضغط.",
+        "stats": {
+            "noPitch": "بدون عرض بيع",
+            "noCommitment": "بدون التزام",
+            "founderAccess": "تواصل مباشر مع المؤسس"
+        },
+        "phonePlaceholder": "01XXXXXXXXX",
+        "phoneError": "يرجى إدخال رقم هاتف مصري صحيح",
+        "phoneHint": "هنستخدم الرقم فقط لتنسيق موعد المكالمة.",
+        "submitting": "جارٍ الإرسال...",
+        "buttonText": "اطلب مكالمة",
+        "secondaryButtonText": "لاحقًا",
+        "successTitle": "سنتحدث قريبًا.",
+        "successDescription": "تم استلام رقمك. سنتواصل معك خلال ساعتين عمل لتحديد موعد المكالمة."
     }
 }

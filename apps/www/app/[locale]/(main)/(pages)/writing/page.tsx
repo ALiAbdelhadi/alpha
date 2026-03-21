@@ -1,7 +1,7 @@
 "use client"
 
 import { Container } from "@/components/container"
-import { useReveal } from "@/hooks/use-animation"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { Link } from "@/i18n/navigation"
 import { gsap } from "@/lib/gsap"
 import { useTranslations } from "next-intl"
@@ -18,12 +18,12 @@ export default function WritingPage() {
 
 function OpeningSection() {
     const t = useTranslations("writing")
-    const eyebrowRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0, duration: 0.5 })
-    const titleRef = useReveal<HTMLHeadingElement>({ direction: "up", delay: 0.1, duration: 0.8 })
-    const descRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0.25, duration: 0.7 })
+    const eyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
+    const titleRef = useText(DEFAULTS.heading)
+    const descRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
 
     return (
-        <section className="flex min-h-screen items-end section-padding pb-24">
+        <section className="flex min-h-screen items-center section-padding pb-24">
             <Container>
                 <div className="max-w-5xl">
                     <p
@@ -66,19 +66,19 @@ function ListSection() {
         if (!sectionRef.current) return
         const articles = sectionRef.current.querySelectorAll("[data-article]")
         articles.forEach((article, index) => {
-            gsap.set(article, { opacity: 0, y: 20 })
+            gsap.set(article, { opacity: 0, y: MOTION.distance.md })
             gsap.to(article, {
-                opacity: 1, y: 0, duration: 0.6, delay: index * 0.1, ease: "power2.out",
+                opacity: 1, y: 0, duration: MOTION.duration.base, delay: index * MOTION.stagger.loose, ease: MOTION.ease.smooth,
                 scrollTrigger: { trigger: article, start: "top 90%", once: true },
             })
         })
     }, [])
 
     const articles = [
-        { slug: "why-not-wordpress", date: "November 2024", readTime: "2 min read" },
-        { slug: "technical-debt", date: "October 2024", readTime: "3 min read" },
-        { slug: "evaluating-developers", date: "September 2024", readTime: "4 min read" },
-        { slug: "multilingual-architecture", date: "August 2024", readTime: "3 min read" },
+        { slug: "why-not-wordpress", date: "November 2024", readTime: "6 min read" },
+        { slug: "technical-debt", date: "October 2024", readTime: "10 min read" },
+        { slug: "evaluating-developers", date: "September 2024", readTime: "14 min read" },
+        { slug: "multilingual-architecture", date: "August 2024", readTime: "6 min read" },
     ]
 
     return (

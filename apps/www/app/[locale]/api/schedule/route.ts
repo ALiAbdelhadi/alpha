@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        if (body.name && body.email && body.scheduledDate && body.scheduledTime) {
+        if (body.name && body.phone && body.scheduledDate && body.scheduledTime) {
             const validatedData = standaloneMeetingSchema.parse(body)
 
             const scheduledDate = new Date(validatedData.scheduledDate)
@@ -49,14 +49,14 @@ export async function POST(request: NextRequest) {
             const submission = await prisma.contactSubmission.create({
                 data: {
                     name: validatedData.name,
-                    email: validatedData.email,
+                    phone: validatedData.phone,
                     message: validatedData.message || "Meeting request from schedule page",
                     locale: body.locale || "en",
                     userAgent,
                     ipAddress,
                     referrer: referer,
                     priority: "HIGH",
-                },
+                } as any,
             })
 
             const meeting = await prisma.meeting.create({
@@ -66,10 +66,10 @@ export async function POST(request: NextRequest) {
                     scheduledDate,
                     scheduledTime: validatedData.scheduledTime,
                     guestName: validatedData.name,
-                    guestEmail: validatedData.email,
+                    phone: validatedData.phone,
                     submissionId: submission.id,
                     notes: validatedData.message,
-                },
+                } as any,
             })
             const admins = await prisma.user.findMany({
                 where: { role: { in: ["ADMIN", "SUPERADMIN"] } },
@@ -147,10 +147,10 @@ export async function POST(request: NextRequest) {
                     scheduledDate: requestedDate,
                     scheduledTime: validatedData.preferredTime,
                     guestName: submission.name,
-                    guestEmail: submission.email,
+                    phone: (submission as any).phone,
                     submissionId: submission.id,
                     notes: validatedData.notes,
-                },
+                } as any,
             })
 
             const admins = await prisma.user.findMany({

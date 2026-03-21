@@ -1,20 +1,16 @@
+"use client"
+
+// motion: DEFAULTS + MOTION.ease for line; removed opacity-0 on motion targets
 import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
 import { useLoading } from "@/components/providers/loading-provider"
+import { useGSAPSection } from "@/hooks/use-gsap-section"
 import { Link } from "@/i18n/navigation"
 import { gsap } from "@/lib/gsap"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { Calendar } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { memo, useCallback, useRef } from "react"
-import { useGSAPSection } from "@/hooks/use-gsap-section"
-import { useFadeUp } from "@/hooks/use-text-reveal"
-
-// Premium easing for CTA section
-const EASE = {
-  smooth: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-  gentle: "cubic-bezier(0.65, 0, 0.35, 1)",
-  text: "cubic-bezier(0.2, 0, 0, 1)",
-} as const
 
 interface CtaSectionProps {
   scrollToSection?: (sectionId: string) => void
@@ -26,10 +22,10 @@ export const CtaSectionEnhanced = memo(function CtaSectionEnhanced({ scrollToSec
   const ctaRef = useRef<HTMLDivElement>(null)
   const t = useTranslations("cta")
 
-  // Premium fade up animations
-  const eyebrowRef = useFadeUp<HTMLParagraphElement>({ delay: 0, duration: 0.7, distance: 24 })
-  const titleRef = useFadeUp<HTMLHeadingElement>({ delay: 0.1, duration: 0.9, distance: 28 })
-  const contentRef = useFadeUp<HTMLDivElement>({ delay: 0.2, duration: 0.8, distance: 24 })
+
+  const eyebrowRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0 })
+  const titleRef = useText({ ...DEFAULTS.heading, ease: MOTION.ease.text })
+  const contentRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.15 })
 
   useGSAPSection({ trigger: sectionRef }, (context) => {
     if (!isInitialLoadComplete || !sectionRef.current) return
@@ -40,16 +36,15 @@ export const CtaSectionEnhanced = memo(function CtaSectionEnhanced({ scrollToSec
       return
     }
 
-    // Premium divider line animation - earlier trigger
     gsap.fromTo("[data-cta-line]",
       { scaleX: 0, transformOrigin: "left" },
       {
         scaleX: 1,
-        duration: 1.4,
-        ease: EASE.gentle,
+        duration: MOTION.duration.slow,
+        ease: MOTION.ease.gentle,
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 92%",
+          start: MOTION.trigger.late,
           once: true,
         }
       }
@@ -67,24 +62,23 @@ export const CtaSectionEnhanced = memo(function CtaSectionEnhanced({ scrollToSec
     >
       <Container>
         <div data-cta-line className="h-px w-full bg-foreground/8 mb-16 scale-x-0" />
-
         <div className="grid md:grid-cols-[1fr_360px] gap-12 items-start">
           <div>
-            <p ref={eyebrowRef} data-cta-content className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-6 block opacity-0">
+            <p ref={eyebrowRef} data-cta-content className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-6 block">
               {t("eyebrow")}
             </p>
             <h2
               ref={titleRef}
               data-cta-content
-              className="font-sans font-normal text-primary leading-[1.05] opacity-0"
+              className="font-sans font-normal text-primary leading-[1.05]"
               style={{ fontSize: "clamp(30px, 5.5vw, 68px)", letterSpacing: "-0.025em" }}
             >
-              {t("title") ?? "Ready to transform your vision?"}
+              {t("title")}
             </h2>
           </div>
-          <div ref={contentRef} data-cta-content className="flex flex-col gap-6 opacity-0">
+          <div ref={contentRef} data-cta-content className="flex flex-col gap-6">
             <p className="text-base text-primary/55 leading-relaxed">
-              {t("description") ?? "Let's build something that outlasts your competition."}
+              {t("description")}
             </p>
             <div className="inline-flex items-center gap-2 rounded-full border border-foreground/8 bg-foreground/2.5 px-3 py-1.5 w-fit">
               <div className="h-1.5 w-1.5 rounded-full bg-foreground/30" />

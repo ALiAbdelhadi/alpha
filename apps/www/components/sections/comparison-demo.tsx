@@ -2,7 +2,7 @@
 "use client"
 
 import { Container } from "@/components/container"
-import { useReveal } from "@/hooks/use-animation"
+import { DEFAULTS, MOTION, useReveal } from "@/lib/motion"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
@@ -13,9 +13,9 @@ const getMetrics = (t: any) => [
 ]
 
 const getGenericIssues = (t: any) => [
-    t("generic.issue1") ?? "Unoptimized image stack - 14 uncached assets",
-    t("generic.issue2") ?? "No semantic structure - crawlers see noise",
-    t("generic.issue3") ?? "Generic CTA copy - zero conversion intent",
+    t("generic.issue1"),
+    t("generic.issue2") ,
+    t("generic.issue3") ,
 ]
 
 export function ComparisonDemo() {
@@ -25,7 +25,7 @@ export function ComparisonDemo() {
     const genericIssues = getGenericIssues(t)
     const activeMetrics = getMetrics(t)
 
-    const headerRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.6 })
+    const headerRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
 
     return (
         <section className="relative py-32 overflow-hidden">

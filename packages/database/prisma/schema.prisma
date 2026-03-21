@@ -85,7 +85,7 @@ model ContactSubmission {
 
     // Form Data
     name            String
-    email           String
+    phone           String
     message         String
     serviceInterest ServiceType?
     projectTimeline ProjectTimeline?
@@ -122,7 +122,7 @@ model ContactSubmission {
     firstViewedAt    DateTime?
     firstContactedAt DateTime?
 
-    @@index([email])
+    @@index([phone])
     @@index([status])
     @@index([priority])
     @@index([submittedAt])

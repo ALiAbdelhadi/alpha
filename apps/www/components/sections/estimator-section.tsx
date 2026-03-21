@@ -25,7 +25,7 @@ import { MagneticButton } from "../magnetic-button"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion"
-import { useFadeUp } from "@/hooks/use-text-reveal"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 
 type SectionTimeline = "urgent" | "soon" | "flexible"
 
@@ -79,9 +79,29 @@ export const EstimatorSection = memo(function EstimatorSection() {
   const formContainerRef = useRef<HTMLDivElement>(null)
   const tweenCtxRef = useRef<gsap.Context | null>(null)
 
-  // Premium fade up animations for estimator section
-  const titleRef = useFadeUp<HTMLDivElement>({ delay: 0, duration: 0.9, distance: 32 })
-  const formRef = useFadeUp<HTMLDivElement>({ delay: 0.15, duration: 0.8, distance: 28 })
+  const titleRef = useText<HTMLHeadingElement>({
+    ...DEFAULTS.heading,
+    ease: MOTION.ease.text,
+  })
+
+  const badgeRef = useReveal<HTMLParagraphElement>({
+    ...DEFAULTS.body,
+    ease: MOTION.ease.smooth,
+    delay: 0.2,
+  })
+
+  const descriptionRef = useReveal<HTMLParagraphElement>({
+    ...DEFAULTS.body,
+    ease: MOTION.ease.smooth,
+    delay: 0.35,
+  })
+
+  const formRef = useReveal<HTMLDivElement>({
+    ...DEFAULTS.body,
+    ease: MOTION.ease.smooth,
+    delay: 0.15,
+    distance: MOTION.distance.sm,
+  })
 
   useIsomorphicLayoutEffect(() => {
     if (!formContainerRef.current) return
@@ -104,23 +124,19 @@ export const EstimatorSection = memo(function EstimatorSection() {
     name: string
   }>({ projectType: null, tier: null, timeline: null, phone: "", name: "" })
 
-  // Premium step transition animation
   const animateStep = useCallback((dir: "forward" | "back", cb: () => void) => {
     if (!formContainerRef.current) { cb(); return }
 
-    // Smooth easing curve for premium feel
-    const easePremium = "cubic-bezier(0.65, 0, 0.35, 1)"
-
-    const fromY = dir === "forward" ? 24 : -24
-    const toY = dir === "forward" ? -24 : 24
+    const fromY = dir === "forward" ? MOTION.distance.md : -MOTION.distance.md
+    const toY = dir === "forward" ? -MOTION.distance.md : MOTION.distance.md
 
     gsap.set(formContainerRef.current, { willChange: "transform, opacity" })
     tweenCtxRef.current?.add(() => {
       gsap.to(formContainerRef.current!, {
         opacity: 0,
         y: toY,
-        duration: 0.35,
-        ease: "cubic-bezier(0.4, 0, 0.2, 1)",
+        duration: MOTION.duration.fast,
+        ease: MOTION.ease.ui,
         onComplete: () => {
           cb()
           gsap.fromTo(formContainerRef.current!,
@@ -128,8 +144,8 @@ export const EstimatorSection = memo(function EstimatorSection() {
             {
               opacity: 1,
               y: 0,
-              duration: 0.5,
-              ease: easePremium,
+              duration: MOTION.duration.base,
+              ease: MOTION.ease.gentle,
               onComplete() {
                 gsap.set(formContainerRef.current!, { willChange: "auto" })
               }
@@ -248,17 +264,18 @@ export const EstimatorSection = memo(function EstimatorSection() {
       className="flex w-full items-center section-padding"
     >
       <Container>
-        <div ref={titleRef} className="mb-16 text-center max-w-3xl mx-auto">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
+        <div className="mb-16 text-center max-w-3xl mx-auto">
+          <p ref={badgeRef} className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
             {t("badge")}
           </p>
           <h2
+            ref={titleRef}
             className="mb-6 font-sans font-normal text-primary leading-[1.05]"
             style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
           >
             {t("title")}
           </h2>
-          <p className="text-base text-primary/55 leading-relaxed">{t("description")}</p>
+          <p ref={descriptionRef} className="text-base text-primary/55 leading-relaxed">{t("description")}</p>
         </div>
         <div className="h-px w-full bg-foreground/8 mb-12 max-w-3xl mx-auto" />
         <div ref={formRef} className="max-w-3xl mx-auto bg-background rounded-sm border border-foreground/8 p-6 md:p-10 shadow-sm relative overflow-hidden">
@@ -553,7 +570,6 @@ export const EstimatorSection = memo(function EstimatorSection() {
             </div>
           )}
         </div>
-
         <div className="mt-32 max-w-3xl mx-auto">
           <div className="text-center mb-10">
             <h3 className="font-sans font-normal text-primary mb-3" style={{ fontSize: "clamp(24px, 4vw, 36px)", letterSpacing: "-0.02em" }}>

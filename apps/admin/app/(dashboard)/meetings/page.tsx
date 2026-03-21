@@ -26,7 +26,8 @@ import {
     Search,
     Trash2,
     User,
-    Video
+    Video,
+    Phone
 } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -50,7 +51,7 @@ interface Meeting {
     notes?: string | null
     adminNotes?: string | null
     assignedTo?: { name: string | null; email: string } | null
-    contactSubmission?: { id: string; name: string; email: string } | null
+    contactSubmission?: { id: string; name: string; phone: string } | null
     createdAt: string
     approvedAt?: string | null
     completedAt?: string | null
@@ -166,6 +167,7 @@ export default function MeetingsPage() {
             return (
                 meeting.title.toLowerCase().includes(query) ||
                 meeting.guestName?.toLowerCase().includes(query) ||
+                meeting.contactSubmission?.phone?.toLowerCase().includes(query) ||
                 meeting.guestEmail?.toLowerCase().includes(query) ||
                 meeting.notes?.toLowerCase().includes(query)
             )
@@ -252,7 +254,7 @@ export default function MeetingsPage() {
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <input
                         type="text"
-                        placeholder="Search by title, guest name, or email..."
+                        placeholder="Search by title, guest name, phone, or email..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full pl-10 pr-4 py-2 border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
@@ -344,12 +346,10 @@ export default function MeetingsPage() {
                                                     {meeting.guestName}
                                                 </div>
                                             )}
-                                            {meeting.guestEmail && (
-                                                <div className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
-                                                    <Mail className="h-3 w-3" />
-                                                    {meeting.guestEmail}
-                                                </div>
-                                            )}
+                                            <div className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
+                                                <Phone className="h-3 w-3" />
+                                                <bdi>{meeting.contactSubmission?.phone || meeting.guestEmail}</bdi>
+                                            </div>
                                         </td>
                                         <td className="px-4 py-4">
                                             <div className="text-sm flex items-center gap-1">

@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
                         select: {
                             id: true,
                             name: true,
-                            email: true,
+                            phone: true,
                             status: true,
                         },
                     },
@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
                 },
                 skip: (page - 1) * pageSize,
                 take: pageSize,
-            }),
+            } as any),
             prisma.meeting.count({ where }),
         ])
 
@@ -170,11 +170,11 @@ export async function PATCH(request: NextRequest) {
                     select: {
                         id: true,
                         name: true,
-                        email: true,
+                        phone: true,
                     },
                 },
             },
-        })
+        } as any)
 
         return NextResponse.json({
             success: true,

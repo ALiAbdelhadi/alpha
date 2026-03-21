@@ -1,6 +1,7 @@
 "use client"
 
 import { gsap } from "@/lib/gsap"
+import { MOTION } from "@/lib/motion"
 import type React from "react"
 import { useEffect, useRef, useState } from "react"
 
@@ -55,12 +56,12 @@ export function MagneticButton({
     if (!ref.current || prefersReducedMotion) return
 
     xTo.current = gsap.quickTo(ref.current, "x", {
-      duration: 0.6,
-      ease: "power3.out",
+      duration: MOTION.duration.magnetic,
+      ease: MOTION.ease.smooth,
     })
     yTo.current = gsap.quickTo(ref.current, "y", {
-      duration: 0.6,
-      ease: "power3.out",
+      duration: MOTION.duration.magnetic,
+      ease: MOTION.ease.smooth,
     })
   }, [prefersReducedMotion])
 

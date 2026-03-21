@@ -1,7 +1,7 @@
 "use client"
 
 import { Container } from "@/components/container"
-import { useReveal } from "@/hooks/use-animation"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
@@ -18,13 +18,12 @@ export default function StandardsPage() {
 
 function OpeningSection() {
     const t = useTranslations("standards.hero")
-    const eyebrowRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0, duration: 0.5 })
-    const titleRef = useReveal<HTMLHeadingElement>({ direction: "up", delay: 0.1, duration: 0.8 })
-    const descRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0.25, duration: 0.7 })
-    const metricsRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.35, duration: 0.6 })
-
+    const eyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
+    const titleRef = useText({ ...DEFAULTS.body, delay: 0.1 })
+    const descRef = useReveal({ ...DEFAULTS.body, delay: 0.25 })
+    const metricsRef = useReveal({ ...DEFAULTS.element, delay: 0.35 })
     return (
-        <section className="flex min-h-screen items-end section-padding pb-24">
+        <section className="flex min-h-screen items-center section-padding pb-24">
             <Container>
                 <div className="max-w-5xl">
                     <p
@@ -91,10 +90,10 @@ function CategoriesSection() {
         const cats = sectionRef.current.querySelectorAll("[data-category]")
         const triggers: ScrollTrigger[] = []
         cats.forEach((cat, i) => {
-            gsap.set(cat, { opacity: 0, y: 30 })
+            gsap.set(cat, { opacity: 0, y: MOTION.distance.md })
             const tween = gsap.to(cat, {
-                opacity: 1, y: 0, duration: 0.6, delay: i * 0.1, ease: "power2.out",
-                scrollTrigger: { trigger: cat, start: "top 85%", once: true },
+                opacity: 1, y: 0, duration: MOTION.duration.base, delay: i * MOTION.stagger.tight, ease: MOTION.ease.smooth,
+                scrollTrigger: { trigger: cat, start: MOTION.trigger.late, once: true },
             })
             if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
         })
@@ -162,15 +161,16 @@ function CategoriesSection() {
 
 function ClosingSection() {
     const t = useTranslations("standards.enforcement")
-    const titleRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.5 })
-    const descRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0.15, duration: 0.5 })
+    const titleRef = useText({ ...DEFAULTS.heading, ease: MOTION.ease.text })
+    const descRef = useReveal<HTMLParagraphElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.15 })
 
     return (
         <section className="section-padding border-t border-foreground/8">
             <Container>
                 <div className="max-w-3xl">
-                    <div ref={titleRef} className="mb-10">
+                    <div className="mb-10">
                         <h2
+                            ref={titleRef}
                             className="font-sans font-normal text-primary leading-[1.05]"
                             style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
                         >

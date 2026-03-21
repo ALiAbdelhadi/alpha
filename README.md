@@ -1,135 +1,184 @@
-# Turborepo starter
+# Altruvex — altruvex.com
 
-This Turborepo starter is maintained by the Turborepo core team.
+> **Engineering Beyond Standard.**  
+> Custom web systems. Built to outlast the next trend.
 
-## Using this example
+Production codebase for [altruvex.com](https://altruvex.com) — the official website of Altruvex, a custom web engineering studio based in Cairo, Egypt.
 
-Run the following command:
+---
 
-```sh
-npx create-turbo@latest
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | [Next.js 15](https://nextjs.org) (App Router) |
+| Language | TypeScript (strict) |
+| Styling | Tailwind CSS v4 |
+| i18n | [next-intl](https://next-intl-docs.vercel.app) — Arabic / English (RTL/LTR) |
+| Monorepo | Turborepo |
+| Deployment | Vercel |
+| Analytics | Microsoft Clarity |
+| PDF Generation | html2pdf.js + html2canvas |
+
+---
+
+## Project Structure
+
+```
+altruvex-www/
+├── apps/
+│   └── web/
+│       ├── app/
+│       │   └── [locale]/
+│       │       ├── (main)/           # Marketing pages
+│       │       ├── estimator/        # Project scope estimator (8-step flow)
+│       │       ├── work/             # Case studies
+│       │       ├── services/         # Service pages
+│       │       ├── writing/          # Technical blog
+│       │       └── schedule/         # Discovery call booking
+│       ├── components/
+│       │   ├── ui/                   # Base component library
+│       │   ├── exit-intent-modal/    # Exit intent capture
+│       │   └── magnetic-button/      # Magnetic CTA button
+│       ├── hooks/
+│       │   ├── use-estimator.ts      # Estimator state machine
+│       │   └── use-exit-intent.ts    # Exit intent detection
+│       ├── lib/
+│       │   ├── analytics.ts          # Clarity + event tracking
+│       │   ├── estimator-utils.ts    # Pricing logic, PDF builder, phone validation
+│       │   └── utils.ts
+│       └── messages/
+│           ├── en.json
+│           └── ar.json
+└── packages/
+    └── ui/                           # Shared design tokens
 ```
 
-## What's inside?
+---
 
-This Turborepo includes the following packages/apps:
+## Getting Started
 
-### Apps and Packages
+### Prerequisites
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- Node.js 20+
+- pnpm 9+
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+### Installation
 
-### Utilities
+```bash
+git clone https://github.com/altruvex/altruvex-www.git
+cd altruvex-www
+pnpm install
+```
 
-This Turborepo has some additional tools already setup for you:
+### Development
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+```bash
+pnpm dev
+```
+
+Runs on `http://localhost:3000`. Default locale redirects to `/en`.
 
 ### Build
 
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+```bash
+pnpm build
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+---
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+## Environment Variables
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+Create `.env.local` in `apps/web/`:
 
-### Develop
+```env
+# Microsoft Clarity
+NEXT_PUBLIC_CLARITY_ID=your_clarity_id
 
-To develop all apps and packages, run the following command:
+# Contact / Lead API (internal)
+CONTACT_API_SECRET=your_secret
 
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+# Rate limiting (future: Upstash Redis)
+# UPSTASH_REDIS_REST_URL=
+# UPSTASH_REDIS_REST_TOKEN=
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+---
 
+## Key Features
+
+### Estimator (`/estimator`)
+8-step project scoping flow. Captures project type, budget tier, scope level, delivery pace, timeline, content readiness, and brand status. Collects WhatsApp phone number as lead. Outputs a detailed PDF estimate via `html2pdf.js`.
+
+**Pricing logic** lives in `estimator-utils.ts` — single fixed output per combination (range maximum used to protect against scope creep).
+
+### Bilingual Architecture
+Full RTL/LTR support. Arabic and English are first-class — not translations layered on top of an English layout. Every component is direction-aware. Bilingual proposal narratives use fully hardcoded copy per language to prevent label leakage.
+
+### PDF Generation
+Uses `html2pdf.js` with iframe injection. `oklch()`/`lab()` colors are neutralized via `color-scheme: light only` and `onclone` callback for `html2canvas` compatibility.
+
+### Exit Intent
+Captures WhatsApp phone number (not email) — consistent with Egyptian B2B market behavior. 24-hour cooldown, max 3 displays per user.
+
+---
+
+## Design System
+
+| Token | Value |
+|---|---|
+| Background | `#F7F7F8` |
+| Foreground | `#0A0C14` |
+| Brand accent | `#4A6ED4` |
+| Dark bg (proposals) | `#111827` |
+
+Typography, spacing, and color tokens are defined in `globals.css` via CSS custom properties (`--n-0`, `--n-8`, `--brand`).
+
+---
+
+## Pages
+
+| Route | Description |
+|---|---|
+| `/` | Homepage — hero, problem framing, case study teaser, estimator teaser |
+| `/work` | Selected case studies |
+| `/work/[slug]` | Individual case study |
+| `/services` | Services overview |
+| `/services/web-design` | Interface Design |
+| `/services/development` | Custom Development |
+| `/services/consulting` | Technical Strategy |
+| `/services/maintenance` | System Maintenance |
+| `/approach` | Engineering philosophy |
+| `/process` | 5-phase delivery process |
+| `/standards` | Quality benchmarks |
+| `/pricing` | Investment tiers |
+| `/estimator` | Project scope estimator |
+| `/writing` | Technical blog |
+| `/contact` | Contact form |
+| `/schedule` | Discovery call booking |
+
+---
+
+## Deployment
+
+Deployed on [Vercel](https://vercel.com). Production branch: `main`. Preview deployments on all PRs.
+
+```bash
+# Manual deploy via Vercel CLI
+vercel --prod
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+---
 
-### Remote Caching
+## Contact
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+**Altruvex**  
+Cairo, Egypt · Remote worldwide
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+- hello@altruvex.com  
+- +20 102 312 5493  
+- [altruvex.com](https://altruvex.com)
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+---
 
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+*© 2026 Altruvex. All rights reserved.*

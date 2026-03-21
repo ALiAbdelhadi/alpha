@@ -1,4 +1,7 @@
-import { useBatchReveal, useReveal } from "@/hooks/use-animation"
+"use client"
+
+import { DEFAULTS, MOTION, useBatch, useReveal, useText } from "@/lib/motion"
+import { cn } from "@/lib/utils"
 import { Frown, HelpCircle, Hourglass, TrendingDown } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { memo } from "react"
@@ -7,19 +10,35 @@ import { Container } from "../container"
 export const ProblemSection = memo(function ProblemSection() {
   const t = useTranslations()
 
-  const titleRef = useReveal<HTMLDivElement>({
-    direction: "up",
+  const eyebrowRef = useReveal<HTMLParagraphElement>({
+    ...DEFAULTS.body,
+    ease: MOTION.ease.smooth,
+    delay: 0,
   })
 
-  const cardsRef = useBatchReveal<HTMLDivElement>({
-    targets: ".problem-card",
-    stagger: 0.1,
+  const titleRef = useText<HTMLHeadingElement>({
+    ...DEFAULTS.heading,
+    ease: MOTION.ease.text,
+  })
+
+  const subtitleRef = useReveal<HTMLParagraphElement>({
+    ...DEFAULTS.body,
+    ease: MOTION.ease.smooth,
+    delay: 0.15,
+  })
+
+  const cardsRef = useBatch<HTMLDivElement>({
+    ...DEFAULTS.card,
+    selector: ".problem-card",
+    ease: MOTION.ease.smooth,
+    stagger: MOTION.stagger.loose,
     once: true,
   })
 
   const quoteRef = useReveal<HTMLDivElement>({
-    direction: "up",
-    delay: 0.2,
+    ...DEFAULTS.body,
+    ease: MOTION.ease.smooth,
+    delay: 0,
   })
 
   const problems = [
@@ -35,11 +54,12 @@ export const ProblemSection = memo(function ProblemSection() {
       className="section-padding border-y border-foreground/8"
     >
       <Container>
-        <div ref={titleRef} className="max-w-3xl mb-20">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-6 block">
+        <div className="max-w-3xl mb-20">
+          <p ref={eyebrowRef} className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-6 block">
             01 - {t("problem.badge")}
           </p>
           <h2
+            ref={titleRef}
             className="font-sans font-normal text-primary leading-[1.05] mb-8"
             style={{ fontSize: "clamp(30px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
           >
@@ -54,7 +74,7 @@ export const ProblemSection = memo(function ProblemSection() {
               {t("problem.title.gradient")}
             </span>
           </h2>
-          <p className="text-base text-primary/50 leading-relaxed max-w-2xl">
+          <p ref={subtitleRef} className="text-base text-primary/50 leading-relaxed max-w-2xl">
             {t("problem.subtitle")}
           </p>
         </div>
@@ -64,8 +84,7 @@ export const ProblemSection = memo(function ProblemSection() {
             return (
               <div
                 key={i}
-                className={`md:col-span-5 group flex flex-col items-start problem-card ${isEven ? "md:col-start-1" : "md:col-start-7 lg:col-start-8"
-                   }`}
+                className={cn("md:col-span-5 group flex flex-col items-start problem-card", isEven ? "md:col-start-1" : "md:col-start-7 lg:col-start-8")}
               >
                 <div className="flex items-center gap-4 mb-6">
                   <span className="font-mono text-[10px] text-primary/20 tracking-[0.2em]">
@@ -88,8 +107,8 @@ export const ProblemSection = memo(function ProblemSection() {
             )
           })}
         </div>
-        <div ref={quoteRef} className="mt-28 pt-16 border-t border-foreground/8 grid grid-cols-1 md:grid-cols-12 gap-8">
-          <div className="md:col-span-8">
+        <div className="mt-28 pt-16 border-t border-foreground/8 grid grid-cols-1 md:grid-cols-12 gap-8">
+          <div ref={quoteRef} className="md:col-span-8">
             <p
               className="font-sans font-light text-primary/75 leading-snug"
               style={{ fontSize: "clamp(20px, 3vw, 30px)", letterSpacing: "-0.02em" }}
@@ -102,7 +121,7 @@ export const ProblemSection = memo(function ProblemSection() {
               <p className="font-mono text-xs text-primary/40 uppercase tracking-[0.25em] mb-1">
                 - {t("problem.author")}
               </p>
-              <span className="font-mono text-[10px]text-primary/20 uppercase tracking-[0.2em]">
+              <span className="font-mono text-[10px] text-primary/20 uppercase tracking-[0.2em]">
                 {t("problem.common.creativeDirection")}
               </span>
             </div>

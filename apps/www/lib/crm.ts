@@ -12,12 +12,12 @@ interface SlackMessage {
 
 interface ContactSubmissionData {
   name: string
-  email: string
+  phone: string
+  email?: string
   message?: string
   serviceInterest?: string
   projectTimeline?: string
   budget?: string
-  phone?: string
   company?: string
 }
 
@@ -58,10 +58,10 @@ export const formatContactSlackMessage = (
 ): SlackMessage => {
   const fields = [
     `*Name:*\n${data.name}`,
-    `*Email:*\n${data.email}`,
+    `*Phone:*\n${data.phone}`,
   ]
 
-  if (data.phone) fields.push(`*Phone:*\n${data.phone}`)
+  if (data.email) fields.push(`*Email:*\n${data.email}`)
   if (data.company) fields.push(`*Company:*\n${data.company}`)
   if (data.serviceInterest) fields.push(`*Service:*\n${data.serviceInterest}`)
   if (data.budget) fields.push(`*Budget:*\n${data.budget}`)
@@ -85,16 +85,16 @@ export const formatContactSlackMessage = (
           verbatim: false,
         })),
       },
-      ...(data.message
+      ... (data.message
         ? [
-            {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: `*Message:*\n${data.message}`,
-              },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `*Message:*\n${data.message}`,
             },
-          ]
+          },
+        ]
         : []),
       {
         type: "section",

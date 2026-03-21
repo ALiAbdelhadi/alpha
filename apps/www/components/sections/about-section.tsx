@@ -1,12 +1,14 @@
+"use client"
+
 import { useLoading } from "@/components/providers/loading-provider"
 import { useGSAPSection } from "@/hooks/use-gsap-section"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { localizeNumbers } from "@/lib/number"
 import { useLocale, useTranslations } from "next-intl"
 import { memo, useRef } from "react"
 import { Container } from "../container"
 import { MagneticButton } from "../magnetic-button"
-import { useTextReveal, useFadeUp, useStaggerReveal } from "@/hooks/use-text-reveal"
 
 export const AboutSection = memo(function AboutSection({
   scrollToSection
@@ -18,28 +20,21 @@ export const AboutSection = memo(function AboutSection({
   const { isInitialLoadComplete } = useLoading()
   const sectionRef = useRef<HTMLElement>(null)
 
-  // Premium text reveals for different content types
-  const titleRef = useTextReveal<HTMLDivElement>({
-    delay: 0,
-    duration: 1.1,
-    blur: true,
-    threshold: 0.25,
+  const titleRef = useText<HTMLHeadingElement>({
+    ...DEFAULTS.heading,
+    ease: MOTION.ease.text,
   })
-  const descRef = useFadeUp<HTMLDivElement>({
+
+  const descRef = useReveal<HTMLDivElement>({
+    ...DEFAULTS.body,
+    ease: MOTION.ease.smooth,
     delay: 0.15,
-    duration: 0.8,
-    distance: 28,
+    distance: MOTION.distance.sm,
   })
-  const buttonsRef = useFadeUp<HTMLDivElement>({
+  const buttonsRef = useReveal<HTMLDivElement>({
+    ...DEFAULTS.element,
+    ease: MOTION.ease.smooth,
     delay: 0.3,
-    duration: 0.7,
-    distance: 24,
-  })
-  const statsRef = useStaggerReveal<HTMLDivElement>({
-    delay: 0.1,
-    duration: 0.9,
-    stagger: 0.12,
-    distance: 28,
   })
 
   const statsEnabled =
@@ -70,9 +65,9 @@ export const AboutSection = memo(function AboutSection({
         gsap.to(batch, {
           opacity: 1,
           y: 0,
-          duration: 0.9,
+          duration: MOTION.duration.text,
           stagger: 0.1,
-          ease: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+          ease: MOTION.ease.smooth,
           onComplete() {
             gsap.set(batch, { willChange: "auto" })
           },
@@ -88,9 +83,9 @@ export const AboutSection = memo(function AboutSection({
             const obj = { value: 0 }
             gsap.to(obj, {
               value: numericValue,
-              duration: 1.2,
-              delay: index * 0.1 + 0.2,
-              ease: "cubic-bezier(0.65, 0, 0.35, 1)",
+              duration: MOTION.duration.slow,
+              delay: index * MOTION.stagger.loose + 0.2,
+              ease: MOTION.ease.gentle,
               onUpdate() {
                 valueEl.textContent = localizeNumbers(
                   finalValue.replace(/\d+/, Math.floor(obj.value).toString()),
@@ -130,8 +125,8 @@ export const AboutSection = memo(function AboutSection({
         <div className="grid gap-16 md:grid-cols-2 md:gap-20">
           <div className="flex flex-col justify-between gap-12">
             <div>
-              <div ref={titleRef}>
-                <h2
+              <h2
+                  ref={titleRef}
                   className="font-sans font-normal text-primary mb-8 leading-[1.05]"
                   style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
                 >
@@ -146,7 +141,6 @@ export const AboutSection = memo(function AboutSection({
                     {t("about.title3")}
                   </span>
                 </h2>
-              </div>
               <div ref={descRef} className="space-y-4">
                 <p className="text-base text-primary/65 max-w-[44ch] leading-relaxed">
                   {t("about.description1")}

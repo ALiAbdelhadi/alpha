@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
 import { Container } from "@/components/container"
 import { useLoading } from "@/components/providers/loading-provider"
-import { ANIM } from "@/lib/animation-utils"
 import { useInjectStyles } from "@/lib/dom-utils"
 import { gsap } from "@/lib/gsap"
-import { useLocale, useTranslations } from "next-intl"
+import { DEFAULTS, MOTION } from "@/lib/motion"
+import { useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 import { memo, useCallback, useLayoutEffect, useRef, useState } from "react"
 
@@ -185,7 +184,7 @@ interface StepItemProps {
   i: number
   active: number
   step: ProcessStep
-  t: any
+  t: (key: string) => string
   C: CTokens
   onToggle: (i: number) => void
 }
@@ -200,7 +199,7 @@ const ProcessStepItem = memo(function ProcessStepItem({
       style={{
         borderBottom: isLast ? "none" : `1px solid ${C.border}`,
         background: isOpen ? C.high.replace(/[\d.]+\)$/, "0.025)") : "transparent",
-        transition: `background ${ANIM.duration.sm}s ease, border-color 0.4s ease`,
+        transition: `background ${MOTION.duration.fast}s ease, border-color 0.4s ease`,
       }}
     >
       <button
@@ -214,7 +213,7 @@ const ProcessStepItem = memo(function ProcessStepItem({
             fontSize: 14,
             letterSpacing: "0.15em",
             color: isOpen ? C.mid : C.muted,
-            transition: `color ${ANIM.duration.xs}s ease`,
+            transition: `color ${MOTION.duration.instant}s ease`,
           }}
         >
           {step.index}
@@ -227,7 +226,7 @@ const ProcessStepItem = memo(function ProcessStepItem({
             fontWeight: 400,
             letterSpacing: "-0.02em",
             color: isOpen ? C.high : C.mid,
-            transition: `color ${ANIM.duration.xs}s ease`,
+            transition: `color ${MOTION.duration.instant}s ease`,
             textAlign: "start",
           }}
         >
@@ -245,7 +244,7 @@ const ProcessStepItem = memo(function ProcessStepItem({
             alignItems: "center",
             justifyContent: "center",
             flexShrink: 0,
-            transition: `border-color ${ANIM.duration.xs}s ease`,
+            transition: `border-color ${MOTION.duration.instant}s ease`,
           }}
         >
           <span
@@ -256,7 +255,7 @@ const ProcessStepItem = memo(function ProcessStepItem({
               lineHeight: 1,
               display: "block",
               transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
-              transition: "transform 0.35s cubic-bezier(0.4,0,0.2,1), color 0.3s ease",
+              transition: `transform ${MOTION.duration.fast}s ${MOTION.ease.ui}, color ${MOTION.duration.instant}s ease`,
             }}
           >
             +
@@ -270,7 +269,7 @@ const ProcessStepItem = memo(function ProcessStepItem({
         style={{
           display: "grid",
           gridTemplateRows: isOpen ? "1fr" : "0fr",
-          transition: "grid-template-rows 0.45s cubic-bezier(0.4,0,0.2,1)",
+          transition: `grid-template-rows ${MOTION.duration.fast}s ${MOTION.ease.ui}`,
         }}
       >
         <div style={{ overflow: "hidden" }}>
@@ -349,7 +348,6 @@ interface ProcessSectionProps {
 
 export const ProcessSection = memo(function ProcessSection({ invertColors = false }: ProcessSectionProps) {
   const t = useTranslations("process")
-  const locale = useLocale()
   const { isInitialLoadComplete } = useLoading()
   const { resolvedTheme } = useTheme()
   const [active, setActive] = useState(0)
@@ -376,60 +374,54 @@ export const ProcessSection = memo(function ProcessSection({ invertColors = fals
           once: true,
         }
       })
-
-      // Premium header reveal with smooth easing
       tl.fromTo("[data-process-header]",
         { opacity: 0, y: 36 },
         {
           opacity: 1,
           y: 0,
-          duration: 1.1,
-          ease: "cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+          duration: DEFAULTS.heading.duration,
+          ease: MOTION.ease.smooth
         }
       )
 
-      // Divider line - smooth scale reveal
       tl.fromTo("[data-process-divider]",
         { scaleX: 0, transformOrigin: "left" },
         {
           scaleX: 1,
           duration: 1.2,
-          ease: "cubic-bezier(0.65, 0, 0.35, 1)"
+          ease: MOTION.ease.gentle
         },
         "-=0.7"
       )
 
-      // Tabs - subtle fade up
       tl.fromTo("[data-process-tabs]",
-        { opacity: 0, y: 20 },
+        { opacity: 0, y: MOTION.distance.sm },
         {
           opacity: 1,
           y: 0,
-          duration: 0.9,
-          ease: "cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+          duration: MOTION.duration.text,
+          ease: MOTION.ease.smooth
         },
         "-=0.5"
       )
 
-      // Grid - smooth reveal
       tl.fromTo("[data-process-grid]",
         { opacity: 0, y: 28 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.9,
-          ease: "cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+          duration: MOTION.duration.text,
+          ease: MOTION.ease.smooth
         },
         "-=0.5"
       )
 
-      // Footer - gentle fade
       tl.fromTo("[data-process-footer]",
         { opacity: 0 },
         {
           opacity: 1,
-          duration: 1.0,
-          ease: "cubic-bezier(0.65, 0, 0.35, 1)"
+          duration: MOTION.duration.slow,
+          ease: MOTION.ease.gentle
         },
         "-=0.5"
       )
@@ -476,8 +468,8 @@ export const ProcessSection = memo(function ProcessSection({ invertColors = fals
           <div data-process-tabs className="ps-tabs-grid opacity-0">
             {steps.map((step, i) => (
               <button key={i} onClick={() => handleToggle(i)} style={{ all: "unset", cursor: "pointer", padding: "10px 0", textAlign: "center" }}>
-                <div style={{ height: 2, background: i <= active ? C.mid : C.border, borderRadius: 2, transition: `background ${ANIM.duration.sm}s ease`, marginBottom: 10 }} />
-                <span style={{ fontFamily: "monospace", fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", color: i === active ? C.mid : C.muted, transition: `color ${ANIM.duration.xs}s ease`, display: "block" }}>
+                <div style={{ height: 2, background: i <= active ? C.mid : C.border, borderRadius: 2, transition: `background ${MOTION.duration.fast}s ease`, marginBottom: 10 }} />
+                <span style={{ fontFamily: "monospace", fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", color: i === active ? C.mid : C.muted, transition: `color ${MOTION.duration.instant}s ease`, display: "block" }}>
                   {t(`steps.${step.key}.tag`)}
                 </span>
               </button>

@@ -4,6 +4,7 @@ import { AltruvexLogo } from "@/components/altruvex-logo"
 import { LanguageChanger } from "@/components/language-switcher"
 import { MagneticButton } from "@/components/magnetic-button"
 import { gsap } from "@/lib/gsap"
+import { MOTION } from "@/lib/motion"
 import { Menu, X } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
@@ -48,11 +49,11 @@ export function MobileNav({ currentSection, navItems, scrollToSection, onClose }
     if (isOpen) {
       gsap.set(menuRef.current, { x: '100%' })
       gsap.set(overlayRef.current, { opacity: 0, pointerEvents: 'none' })
-      gsap.to(menuRef.current, { x: 0, duration: 0.3, ease: 'power2.out' })
-      gsap.to(overlayRef.current, { opacity: 1, duration: 0.3, pointerEvents: 'auto', ease: 'power2.out' })
+      gsap.to(menuRef.current, { x: 0, duration: MOTION.duration.drawer, ease: MOTION.ease.ui })
+      gsap.to(overlayRef.current, { opacity: 1, duration: MOTION.duration.drawer, pointerEvents: 'auto', ease: MOTION.ease.ui })
     } else {
-      gsap.to(menuRef.current, { x: '100%', duration: 0.3, ease: 'power2.in' })
-      gsap.to(overlayRef.current, { opacity: 0, duration: 0.3, pointerEvents: 'none', ease: 'power2.in' })
+      gsap.to(menuRef.current, { x: '100%', duration: MOTION.duration.drawer, ease: MOTION.ease.ui })
+      gsap.to(overlayRef.current, { opacity: 0, duration: MOTION.duration.drawer, pointerEvents: 'none', ease: MOTION.ease.ui })
     }
   }, [isOpen])
 

@@ -1,23 +1,27 @@
+// motion: useBatch for top row, useReveal for logo block + description — 3 hooks
 "use client"
 
 import { Link } from "@/i18n/navigation"
-import { useLocale, useTranslations } from "next-intl"
-import { useReveal } from "@/hooks/use-animation"
-import { Container } from "./container"
-import { AltruvexLogo } from "./altruvex-logo"
+import { DEFAULTS, MOTION, useBatch, useReveal } from "@/lib/motion"
 import { localizeNumbers } from "@/lib/number"
-import { useLoading } from "./providers/loading-provider"
+import { useLocale, useTranslations } from "next-intl"
 import { memo, useMemo } from "react"
+import { AltruvexLogo } from "./altruvex-logo"
+import { Container } from "./container"
+import { useLoading } from "./providers/loading-provider"
 
 export const Footer = memo(function Footer() {
     const t = useTranslations("footer")
     const locale = useLocale()
     const { isInitialLoadComplete } = useLoading()
 
-    const taglineRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.5 })
-    const linksRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.1, duration: 0.5 })
-    const logoRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.2, duration: 0.6 })
-    const descRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.3, duration: 0.5 })
+    const topRowRef = useBatch<HTMLDivElement>({
+        ...DEFAULTS.card,
+        ease: MOTION.ease.smooth,
+        stagger: MOTION.stagger.tight,
+    })
+    const logoRef = useReveal<HTMLDivElement>({ ...DEFAULTS.element, ease: MOTION.ease.smooth, delay: 0.1 })
+    const descRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.15 })
 
     const localizedYear = useMemo(() => {
         const year = new Date().getFullYear()
@@ -55,8 +59,8 @@ export const Footer = memo(function Footer() {
     return (
         <footer className={`w-full border-t border-foreground/8 transition-opacity duration-500 ${isInitialLoadComplete ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
             <Container className="w-full py-16">
-                <div className="flex flex-col gap-12 md:flex-row md:justify-between md:items-start mb-16">
-                    <div ref={taglineRef} className="shrink-0">
+                <div ref={topRowRef} className="flex flex-col gap-12 md:flex-row md:justify-between md:items-start mb-16">
+                    <div className="shrink-0">
                         <p
                             className="font-sans font-normal text-primary"
                             style={{ fontSize: "clamp(16px, 2vw, 20px)", letterSpacing: "-0.01em" }}
@@ -64,7 +68,7 @@ export const Footer = memo(function Footer() {
                             {t("tagline")}
                         </p>
                     </div>
-                    <div ref={linksRef} className="flex flex-col gap-8 sm:flex-row sm:gap-12 md:gap-16">
+                    <div className="flex flex-col gap-8 sm:flex-row sm:gap-12 md:gap-16">
                         <div className="flex flex-col gap-4">
                             <h3 className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-2">
                                 {t("servicesTitle")}

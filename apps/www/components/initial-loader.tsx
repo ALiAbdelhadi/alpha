@@ -3,6 +3,7 @@
 import { useLoading } from "@/components/providers/loading-provider"
 import { useLockBodyScroll } from "@/hooks/use-lock-body-scroll"
 import { gsap } from "@/lib/gsap"
+import { MOTION } from "@/lib/motion"
 import { cn } from "@/lib/utils"
 import { useLocale } from "next-intl"
 import { memo, startTransition, useEffect, useMemo, useRef, useState } from "react"
@@ -57,6 +58,7 @@ export const InitialLoader = memo(function InitialLoader() {
         hasAnimatedRef.current = true
 
         const ctx = gsap.context(() => {
+            const L = MOTION.loader
             const handleExit = () => {
                 sessionStorage.setItem(INITIAL_LOAD_KEY, "true")
                 setShouldRender(false)
@@ -64,7 +66,7 @@ export const InitialLoader = memo(function InitialLoader() {
             }
 
             const tl = gsap.timeline({
-                defaults: { ease: "power3.out" },
+                defaults: { ease: MOTION.ease.gentle },
                 onComplete: handleExit,
             })
 
@@ -72,17 +74,17 @@ export const InitialLoader = memo(function InitialLoader() {
             gsap.set(shaderRef.current, { opacity: 0, scale: 1.05 })
 
             tl.to(shaderRef.current, {
-                opacity: 1, scale: 1, duration: 2.2, ease: "expo.out",
+                opacity: 1, scale: 1, duration: L.shaderReveal, ease: "expo.out",
                 force3D: true
             })
 
                 if (isRTL) {
                     gsap.set(textContainerRef.current, {
-                        opacity: 0, filter: "blur(10px)", scale: 1.1, y: 20,
+                        opacity: 0, filter: "blur(10px)", scale: 1.1, y: MOTION.distance.sm,
                     })
                     tl.to(textContainerRef.current, {
                         opacity: 1, filter: "blur(0px)", scale: 1, y: 0,
-                        duration: 1.8, ease: "expo.out",
+                        duration: L.textReveal, ease: "expo.out",
                         force3D: true
                     }, "-=1.8")
                     
@@ -91,22 +93,22 @@ export const InitialLoader = memo(function InitialLoader() {
                     if (label) {
                         tl.fromTo(label, 
                             { opacity: 0, y: 10 },
-                            { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" },
+                            { opacity: 1, y: 0, duration: L.label, ease: MOTION.ease.smooth },
                             "-=1.2"
                         )
                     }
 
                     tl.to(textContainerRef.current, {
-                        scale: 1.01, duration: 1.6, ease: "power2.inOut",
+                        scale: 1.01, duration: L.holdScale, ease: MOTION.ease.gentle,
                         force3D: true
                     }, "-=0.6")
                     tl.to(shaderRef.current, {
-                        scale: 1.1, opacity: 0, duration: 1.4, ease: "expo.in",
+                        scale: 1.1, opacity: 0, duration: L.shaderExit, ease: "expo.in",
                         force3D: true
                     }, "-=1.2")
                     tl.to(textContainerRef.current, {
-                        y: -40, opacity: 0, filter: "blur(15px)",
-                        duration: 1.1, ease: "expo.in",
+                        y: -MOTION.distance.lg, opacity: 0, filter: "blur(15px)",
+                        duration: L.textExit, ease: "expo.in",
                         force3D: true
                     }, "<")
                 } else {
@@ -114,9 +116,9 @@ export const InitialLoader = memo(function InitialLoader() {
                     if (chars?.length) {
                             tl.to(chars, {
                                 opacity: 1, filter: "blur(0px)", scale: 1, y: 0,
-                                duration: 1.4,
+                                duration: L.charReveal,
                                 ease: "expo.out",
-                                stagger: { each: 0.08, from: "start" },
+                                stagger: { each: L.charStaggerEach, from: "start" },
                                 force3D: true
                             }, "-=1.8")
                         }
@@ -126,25 +128,25 @@ export const InitialLoader = memo(function InitialLoader() {
                     if (label) {
                         tl.fromTo(label, 
                             { opacity: 0, y: 10 },
-                            { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" },
+                            { opacity: 1, y: 0, duration: L.label, ease: MOTION.ease.smooth },
                             "-=1.4"
                         )
                     }
 
                     tl.to(textContainerRef.current, {
                     scale: 1.01, letterSpacing: "0.02em",
-                    duration: 1.6, ease: "power2.inOut",
+                    duration: L.holdScale, ease: MOTION.ease.gentle,
                     force3D: true
                 }, "-=0.6")
                 tl.to(shaderRef.current, {
-                    scale: 1.1, opacity: 0, duration: 1.4, ease: "expo.in",
+                    scale: 1.1, opacity: 0, duration: L.shaderExit, ease: "expo.in",
                     force3D: true
                 }, "-=1.2")
                 if (chars?.length) {
                     tl.to(chars, {
-                        y: -40, opacity: 0, filter: "blur(15px)",
-                        duration: 1.1, ease: "expo.in",
-                        stagger: { each: 0.04, from: "center" },
+                        y: -MOTION.distance.lg, opacity: 0, filter: "blur(15px)",
+                        duration: L.textExit, ease: "expo.in",
+                        stagger: { each: L.charExitStaggerEach, from: "center" },
                         force3D: true
                     }, "<")
                 }
@@ -157,15 +159,15 @@ export const InitialLoader = memo(function InitialLoader() {
                     x: "random(-20, 20)",
                     y: "random(-20, 20)",
                     scale: "random(0.98, 1.05)",
-                    duration: "random(4, 6)",
+                    duration: `random(${L.orbMin}, ${L.orbMax})`,
                     repeat: -1,
                     yoyo: true,
                     ease: "sine.inOut",
-                    stagger: { each: 0.5, from: "random" }
+                    stagger: { each: L.orbStaggerEach, from: "random" }
                 })
             }
 
-            tl.to(containerRef.current, { opacity: 0, duration: 0.8, ease: "power2.inOut" }, "-=0.4")
+            tl.to(containerRef.current, { opacity: 0, duration: L.containerFade, ease: MOTION.ease.gentle }, "-=0.4")
         }, containerRef)
 
         return () => ctx.revert()

@@ -1,53 +1,43 @@
+// motion: useText(heading) h2, useReveal eyebrow/subtitle; MOTION on ScrollTrigger.batch cards
 "use client"
 
 import { useLoading } from "@/components/providers/loading-provider"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { memo, useMemo, useRef } from "react"
 import { useGSAPSection } from "@/hooks/use-gsap-section"
 import { Container } from "../container"
-import { useTextReveal } from "@/hooks/use-text-reveal"
-
-// Premium easing for work section
-const EASE = {
-  smooth: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-  gentle: "cubic-bezier(0.65, 0, 0.35, 1)",
-} as const
 
 export const WorkSection = memo(function WorkSection() {
   const t = useTranslations()
   const { isInitialLoadComplete } = useLoading()
   const sectionRef = useRef<HTMLElement>(null)
 
-  // Premium text reveal for title with subtle blur effect
-  const titleRef = useTextReveal<HTMLDivElement>({
-    delay: 0,
-    duration: 1.0,
-    blur: true,
-    threshold: 0.3,
-  })
+  const eyebrowRef = useReveal<HTMLParagraphElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
+  const titleRef = useText<HTMLHeadingElement>({ ...DEFAULTS.heading, ease: MOTION.ease.text })
+  const subtitleRef = useReveal<HTMLParagraphElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.1 })
 
-  useGSAPSection({ trigger: sectionRef }, (context) => {
+  useGSAPSection({ trigger: sectionRef }, () => {
     if (!isInitialLoadComplete || !sectionRef.current) return
 
     const cards = sectionRef.current!.querySelectorAll<HTMLElement>("[data-project-card]")
     if (!cards.length) return
 
-    // Premium batch reveal - earlier trigger for better visibility
     gsap.set(cards, { willChange: "transform, opacity" })
 
     ScrollTrigger.batch(cards, {
-      start: "top 92%",
+      start: MOTION.trigger.late,
       once: true,
       interval: 0.1,
       onEnter: (batch) => {
         gsap.from(batch, {
           opacity: 0,
-          y: 32,
-          duration: 0.9,
-          stagger: 0.06,
-          ease: EASE.smooth,
+          y: MOTION.distance.md,
+          duration: MOTION.duration.text,
+          stagger: MOTION.stagger.base,
+          ease: MOTION.ease.smooth,
           onComplete() {
             gsap.set(batch, { willChange: "auto" })
           },
@@ -72,31 +62,29 @@ export const WorkSection = memo(function WorkSection() {
       style={{ minHeight: "100vh" }}
     >
       <Container>
-        <div ref={titleRef} className="mb-6 flex items-end justify-between gap-8 flex-wrap">
+        <div className="mb-6 flex items-end justify-between gap-8 flex-wrap">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
+            <p ref={eyebrowRef} className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
               {t("work.eyebrow")}
             </p>
             <h2
+              ref={titleRef}
               className="font-sans font-normal text-primary leading-[1.05]"
               style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
             >
               {t("work.title")}
             </h2>
           </div>
-          <p className="font-mono text-xs text-primary/35 hidden md:block tracking-widest">
+          <p ref={subtitleRef} className="font-mono text-xs text-primary/35 hidden md:block tracking-widest">
             {t("work.subtitle")}
           </p>
         </div>
-
         <div className="h-px w-full bg-foreground/8 mb-0" />
-
         <div>
           {projects.map((project) => (
             <ProjectRow key={project.number} project={project} />
           ))}
         </div>
-
         <div className="mt-6 flex items-center gap-4">
           <span className="font-mono text-xs uppercase text-primary/20 tracking-[0.25em]">
             {projects.length.toString().padStart(2, "0")} {t("work.projectsLabel") ?? "Projects"}
@@ -156,4 +144,4 @@ const ProjectRow = memo(function ProjectRow({
       </div>
     </Link>
   )
-})
+})

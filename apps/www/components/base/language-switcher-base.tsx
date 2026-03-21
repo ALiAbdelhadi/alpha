@@ -1,6 +1,7 @@
 "use client"
 
 import { gsap } from "@/lib/gsap"
+import { MOTION } from "@/lib/motion"
 import { cn } from "@/lib/utils"
 import { Check, ChevronDown, Globe } from "lucide-react"
 import { useLocale } from "next-intl"
@@ -61,8 +62,8 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
         opacity: 1,
         scale: 1,
         y: 0,
-        duration: 0.2,
-        ease: "power2.out",
+        duration: MOTION.duration.instant,
+        ease: MOTION.ease.ui,
         pointerEvents: "auto",
       })
     } else {
@@ -70,8 +71,8 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
         opacity: 0,
         scale: 0.95,
         y: -10,
-        duration: 0.15,
-        ease: "power2.in",
+        duration: MOTION.duration.micro,
+        ease: MOTION.ease.ui,
         pointerEvents: "none",
       })
     }

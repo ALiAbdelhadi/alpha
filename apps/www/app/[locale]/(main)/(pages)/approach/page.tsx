@@ -2,11 +2,11 @@
 
 export const dynamic = "force-dynamic";
 
-import { Container } from "@/components/container"
-import { useReveal } from "@/hooks/use-animation"
-import { gsap, ScrollTrigger } from "@/lib/gsap"
-import { useTranslations } from "next-intl"
-import { useEffect, useRef, useState } from "react"
+import { Container } from "@/components/container";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
+import { useTranslations } from "next-intl";
+import { useEffect, useRef, useState } from "react";
 
 export default function ApproachPage() {
     const sectionRef = useRef<HTMLDivElement>(null)
@@ -26,18 +26,16 @@ export default function ApproachPage() {
 
 function OpeningSection() {
     const t = useTranslations("approach.hero")
-    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.8 })
-    const descRef = useReveal({ direction: "up", delay: 0.4, duration: 1.2 })
+    const titleRef = useText({ ...DEFAULTS.heading, ease: MOTION.ease.text })
+    const descRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
 
     return (
         <section className="flex min-h-screen items-center section-padding">
             <Container>
                 <div className="max-w-4xl py-16 md:py-24">
-                    <div ref={titleRef}>
-                        <h1 className="mb-8 font-sans font-normal text-primary">
+                    <h1 ref={titleRef} className="mb-8 font-sans font-normal text-primary">
                             {t("title")}
-                        </h1>
-                    </div>
+                    </h1>
                     <div ref={descRef}>
                         <p className="max-w-2xl body-lg text-primary/85">
                             {t("description")}
@@ -52,7 +50,7 @@ function OpeningSection() {
 function ProblemSection() {
     const t = useTranslations("approach.contrasts")
     const sectionRef = useRef<HTMLElement>(null)
-    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.5 })
+    const titleRef = useReveal({ ...DEFAULTS.body, direction: "up", ease: MOTION.ease.smooth, delay: 0 })
 
     useEffect(() => {
         if (!sectionRef.current) return
@@ -61,17 +59,17 @@ function ProblemSection() {
         const triggers: ScrollTrigger[] = []
 
         items.forEach((item, index) => {
-            gsap.set(item, { opacity: 0, y: 20 })
+            gsap.set(item, { opacity: 0, y: DEFAULTS.body.distance })
 
             const tween = gsap.to(item, {
                 opacity: 1,
                 y: 0,
-                duration: 0.5,
-                delay: index * 0.1,
-                ease: "power2.out",
+                duration: MOTION.duration.base,
+                delay: index * MOTION.stagger.loose,
+                ease: MOTION.ease.smooth,
                 scrollTrigger: {
                     trigger: item,
-                    start: "top 85%",
+                    start: MOTION.trigger.late,
                     toggleActions: "play none none none",
                     once: true,
                 },
@@ -92,8 +90,8 @@ function ProblemSection() {
     return (
         <section ref={sectionRef} className="section-padding">
             <Container>
-                <div ref={titleRef} className="mb-16">
-                    <h2 className="mb-3 font-sans font-normal text-primary">
+                <div className="mb-16">
+                    <h2 ref={titleRef} className="mb-3 font-sans font-normal text-primary">
                         {t("label.common")} vs {t("label.altruvex")}
                     </h2>
                 </div>
@@ -129,7 +127,7 @@ function ProblemSection() {
 function DecisionsSection() {
     const t = useTranslations("approach.decisions")
     const sectionRef = useRef<HTMLElement>(null)
-    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.5 })
+    const titleRef = useText({ ...DEFAULTS.heading, ease: MOTION.ease.text })
 
     useEffect(() => {
         if (!sectionRef.current) return
@@ -138,17 +136,17 @@ function DecisionsSection() {
         const triggers: ScrollTrigger[] = []
 
         items.forEach((item, index) => {
-            gsap.set(item, { opacity: 0, x: -20 })
+            gsap.set(item, { opacity: 0, x: -MOTION.distance.sm })
 
             const tween = gsap.to(item, {
                 opacity: 1,
                 x: 0,
-                duration: 0.5,
-                delay: index * 0.08,
-                ease: "power2.out",
+                duration: MOTION.duration.base,
+                delay: index * MOTION.stagger.base,
+                ease: MOTION.ease.smooth,
                 scrollTrigger: {
                     trigger: item,
-                    start: "top 85%",
+                    start: MOTION.trigger.late,
                     toggleActions: "play none none none",
                     once: true,
                 },
@@ -198,14 +196,14 @@ function DecisionsSection() {
 
 function ConstraintsSection() {
     const t = useTranslations("approach.constraints")
-    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.5 })
-    const descRef = useReveal({ direction: "up", delay: 0.15, duration: 0.5 })
+    const titleRef = useText({ ...DEFAULTS.heading, ease: MOTION.ease.text })
+    const descRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.15 })
 
     return (
         <section className="section-padding">
             <Container>
-                <div ref={titleRef} className="mb-12">
-                    <h2 className="mb-3 font-sans font-normal text-primary">
+                <div className="mb-12">
+                    <h2 ref={titleRef} className="mb-3 font-sans font-normal text-primary">
                         {t("title")}
                     </h2>
                 </div>
@@ -224,15 +222,15 @@ function ConstraintsSection() {
 function BilingualSection() {
     const t = useTranslations("approach.bilingual")
     const [isRTL, setIsRTL] = useState(false)
-    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.5 })
-    const descRef = useReveal({ direction: "up", delay: 0.15, duration: 0.5 })
-    const demoRef = useReveal({ direction: "up", delay: 0.25, duration: 0.5 })
+    const titleRef = useText({ ...DEFAULTS.heading, ease: MOTION.ease.text })
+    const descRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.15 })
+    const demoRef = useReveal({ ...DEFAULTS.element, ease: MOTION.ease.smooth, delay: 0.25 })
 
     return (
         <section className="section-padding">
             <Container>
-                <div ref={titleRef} className="mb-12">
-                    <h2 className="mb-3 font-sans font-normal text-primary">
+                <div className="mb-12">
+                    <h2 ref={titleRef} className="mb-3 font-sans font-normal text-primary">
                         {t("title")}
                     </h2>
                 </div>
@@ -275,7 +273,7 @@ function BilingualSection() {
 function BoundariesSection() {
     const t = useTranslations("approach.boundaries")
     const sectionRef = useRef<HTMLElement>(null)
-    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.5 })
+    const titleRef = useReveal({ ...DEFAULTS.body, direction: "up", ease: MOTION.ease.smooth, delay: 0 })
 
     useEffect(() => {
         if (!sectionRef.current) return
@@ -284,17 +282,17 @@ function BoundariesSection() {
         const triggers: ScrollTrigger[] = []
 
         items.forEach((item, index) => {
-            gsap.set(item, { opacity: 0, x: -15 })
+            gsap.set(item, { opacity: 0, x: -MOTION.distance.sm })
 
             const tween = gsap.to(item, {
                 opacity: 1,
                 x: 0,
-                duration: 0.4,
-                delay: index * 0.06,
-                ease: "power2.out",
+                duration: MOTION.duration.fast,
+                delay: index * MOTION.stagger.base,
+                ease: MOTION.ease.smooth,
                 scrollTrigger: {
                     trigger: item,
-                    start: "top 85%",
+                    start: MOTION.trigger.late,
                     toggleActions: "play none none none",
                     once: true,
                 },
@@ -311,8 +309,8 @@ function BoundariesSection() {
     return (
         <section ref={sectionRef} className="section-padding">
             <Container>
-                <div ref={titleRef} className="mb-12">
-                    <h2 className="mb-6 font-sans font-normal text-primary">
+                <div className="mb-12">
+                    <h2 ref={titleRef} className="mb-6 font-sans font-normal text-primary">
                         {t("title")}
                     </h2>
                     <p className="body-lg text-primary/75">{t("intro")}</p>
@@ -336,16 +334,16 @@ function BoundariesSection() {
 
 function ClosingSection() {
     const t = useTranslations("approach.closing")
-    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.5 })
-    const descRef = useReveal({ direction: "up", delay: 0.15, duration: 0.5 })
-    const ctaRef = useReveal({ direction: "up", delay: 0.25, duration: 0.5 })
+    const titleRef = useText({ ...DEFAULTS.heading, ease: MOTION.ease.text })
+    const descRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.15 })
+    const ctaRef = useReveal({ ...DEFAULTS.element, ease: MOTION.ease.smooth, delay: 0.25 })
 
     return (
         <section className="section-padding">
             <Container>
                 <div className="max-w-3xl">
-                    <div ref={titleRef} className="mb-12">
-                        <h2 className="mb-3 font-sans font-normal text-primary">
+                    <div className="mb-12">
+                        <h2 ref={titleRef} className="mb-3 font-sans font-normal text-primary">
                             {t("title")}
                         </h2>
                     </div>

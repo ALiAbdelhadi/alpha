@@ -26,7 +26,7 @@
         "how-we-work": "How We Work"
     },
     "hero": {
-        "badge": "Custom Web Development • Cairo, Egypt",
+        "badge": "Custom Web Development",
         "title": "Built to sell.",
         "title2": "Not just to look good.",
         "problem": "Most Cairo businesses have sites that look credible and convert nothing. We engineer custom Next.js systems - no templates, no shortcuts - that load fast, rank well, and turn visitors into customers.",
@@ -347,8 +347,8 @@
         "form": {
             "name": "Name",
             "namePlaceholder": "Your name",
-            "email": "Email",
-            "emailPlaceholder": "your@email.com",
+            "phone": "Phone Number",
+            "phonePlaceholder": "01XXXXXXXXX",
             "message": "Message",
             "messagePlaceholder": "Describe your project - what you're building, what's broken, or what you're unsure about.",
             "submit": "Send Message",
@@ -380,8 +380,8 @@
         "form": {
             "nameLabel": "Full Name",
             "namePlaceholder": "Your name",
-            "emailLabel": "Email",
-            "emailPlaceholder": "your@email.com",
+            "phoneLabel": "Phone Number",
+            "phonePlaceholder": "01XXXXXXXXX",
             "serviceLabel": "Service Interest",
             "servicePlaceholder": "Select a service",
             "serviceWebDesign": "Web Design",
@@ -1068,7 +1068,7 @@
     "estimator": {
         "badge": "Project Estimator",
         "title": "Scope your project in 3 minutes.",
-        "subtitle": "Answer four questions and get a calibrated investment range based on the class of system you need.",
+        "subtitle": "Answer a few questions and get a calibrated investment range based on the class of system you need.",
         "description": "No forms, no sales calls required to get a baseline number. Three questions, one honest range.",
         "preselected": "Preselected Tier",
         "tierNames": {
@@ -1224,7 +1224,7 @@
             "phoneLabel": "Phone Number (WhatsApp)",
             "phonePlaceholder": "01XXXXXXXXX",
             "phoneHint": "Used only for follow-up on this estimate. Never shared.",
-            "phoneError": "Enter a valid Egyptian mobile number (01XXXXXXXXX).",
+            "phoneError": "Enter a valid mobile number (01XXXXXXXXX).",
             "nameLabel": "Name or Company (Optional)",
             "namePlaceholder": "Your name or company name",
             "button": "View Your Estimate",
@@ -1488,6 +1488,25 @@
             "button": "Download Estimate",
             "generating": "Generating..."
         },
+        "exitIntent": {
+            "title": "Before you leave.",
+            "subtitle": "ONE LAST THING",
+            "description": "Most projects fail in the first conversation — not the build. A 30-minute call is enough to know if we're the right fit.",
+            "phoneLabel": "Phone (WhatsApp)",
+            "phonePlaceholder": "01XXXXXXXXX",
+            "phoneHint": "Used only for follow-up. Never shared.",
+            "phoneError": "Enter a valid Egyptian mobile number (01XXXXXXXXX).",
+            "buttonText": "Book a Free Call",
+            "secondaryButtonText": "No thanks",
+            "submitting": "Sending...",
+            "successTitle": "Request Received",
+            "successDescription": "We'll reach out on WhatsApp within 24 hours.",
+            "stats": {
+                "noPitch": "No pitch",
+                "noCommitment": "No commitment",
+                "founderAccess": "Founder access"
+            }
+        },
         "step1": {
             "question": "What type of project are you building?",
             "options": {
@@ -1544,6 +1563,7 @@
             "timeline": "Estimated Timeline",
             "weeks": "weeks",
             "investment": "Investment Range",
+            "vatExcluded": "Excl. VAT",
             "hostingIncluded": "Incl. domain + hosting - full year",
             "whatYouGet": "What you get",
             "moreInPdf": "+ {count} more deliverables in the PDF",
@@ -1815,5 +1835,23 @@
                 "description": "For questions about these terms, please contact us at "
             }
         }
+    },
+    "exitIntent": {
+        "subtitle": "Wait, before you go",
+        "title": "Let's stress-test your idea.",
+        "description": "Not sure if we're a fit? A 30-minute technical discovery call is enough to know - no pitch, no pressure.",
+        "stats": {
+            "noPitch": "No Sales Pitch",
+            "noCommitment": "No Commitment",
+            "founderAccess": "Founder Access"
+        },
+        "phonePlaceholder": "01XXXXXXXXX",
+        "phoneError": "Please enter a valid Egyptian phone number",
+        "phoneHint": "We'll only call to coordinate the time.",
+        "submitting": "Sending...",
+        "buttonText": "Request a Call",
+        "secondaryButtonText": "Maybe later",
+        "successTitle": "Talk soon.",
+        "successDescription": "We've received your number. We'll reach out within 2 business hours to coordinate our call."
     }
 }

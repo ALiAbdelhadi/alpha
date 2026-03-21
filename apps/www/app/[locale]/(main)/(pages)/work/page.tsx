@@ -3,7 +3,7 @@ import { Container } from "@/components/container"
 import { CASE_STUDIES } from "@/lib/case-studies"
 import { Link } from "@/i18n/navigation"
 import { useTranslations, useLocale } from "next-intl"
-import { useReveal } from "@/hooks/use-animation"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { memo, useMemo } from "react"
 
 interface Metric {
@@ -24,8 +24,9 @@ interface CaseStudy {
 export default memo(function WorkIndexPage() {
     const t = useTranslations("work")
     const locale = useLocale() as "en" | "ar"
-    const titleRef = useReveal({ direction: "up", delay: 0, duration: 0.8 })
-    const descRef = useReveal({ direction: "up", delay: 0.4, duration: 1.2 })
+    const eyebrowRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
+    const titleRef = useText({ ...DEFAULTS.heading, ease: MOTION.ease.text })
+    const descRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.15 })
 
     const projects = useMemo(() => CASE_STUDIES, [])
 
@@ -35,7 +36,7 @@ export default memo(function WorkIndexPage() {
                 <div className="py-16 md:py-24">
                     <div className="mb-16">
                         <p
-                            ref={titleRef}
+                            ref={eyebrowRef}
                             className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
                             {t("selectedWork")}
                         </p>

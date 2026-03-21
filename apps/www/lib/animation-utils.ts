@@ -1,46 +1,49 @@
+import { DEFAULTS, MOTION } from "@/lib/motion"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 
+/** @deprecated Prefer importing `MOTION.ease` from `@/lib/motion` */
 export const EASE = {
-    text: "cubic-bezier(0.2, 0, 0, 1)",
-    smooth: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-    gentle: "cubic-bezier(0.65, 0, 0.35, 1)",
-    ui: "cubic-bezier(0.4, 0, 0.2, 1)",
-    hero: "cubic-bezier(0.2, 0, 0, 1)",
-    ease: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-    easeIn: "power2.in",
-    easeMid: "power2.inOut",
+    text: MOTION.ease.text,
+    smooth: MOTION.ease.smooth,
+    gentle: MOTION.ease.gentle,
+    ui: MOTION.ease.ui,
+    hero: MOTION.ease.text,
+    ease: MOTION.ease.smooth,
+    easeIn: MOTION.ease.ui,
+    easeMid: MOTION.ease.gentle,
 } as const
 
+/** Legacy timeline helpers — durations/eases align with `MOTION` / `DEFAULTS` */
 export const ANIM = {
-    ease: EASE.smooth,
-    easeIn: "power2.in",
-    easeMid: "power2.inOut",
+    ease: MOTION.ease.smooth,
+    easeIn: MOTION.ease.ui,
+    easeMid: MOTION.ease.gentle,
 
     duration: {
-        xs: 0.35,
-        sm: 0.50,
-        md: 0.65,
-        lg: 0.80,
-        xl: 1.00,
+        xs: MOTION.duration.fast,
+        sm: MOTION.duration.magnetic,
+        md: MOTION.duration.base,
+        lg: MOTION.duration.text,
+        xl: MOTION.duration.slow,
     },
 
     stagger: {
-        tight: 0.05,
-        base: 0.08,
-        loose: 0.12,
-        wide: 0.16,
+        tight: MOTION.stagger.tight,
+        base: MOTION.stagger.base,
+        loose: MOTION.stagger.loose,
+        wide: MOTION.stagger.loose + MOTION.stagger.tight,
     },
 
     distance: {
-        sm: 20,
-        md: 40,
-        lg: 60,
+        sm: DEFAULTS.body.distance,
+        md: MOTION.distance.lg,
+        lg: MOTION.distance.xl,
     },
 
     scroll: {
-        start: "top 90%",      // Earlier trigger - was 85%
-        startLate: "top 80%",  // was 75%
-        startEarly: "top 95%", // was 92%
+        start: "top 90%",
+        startLate: "top 80%",
+        startEarly: "top 95%",
     },
 } as const
 

@@ -2,7 +2,6 @@ import { prisma } from "@repo/database"
 import { format } from "date-fns"
 import { Phone, MessageCircle, Users } from "lucide-react"
 import { ExportCsvButton, ViewDetailsButton } from "./client-buttons"
-
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 

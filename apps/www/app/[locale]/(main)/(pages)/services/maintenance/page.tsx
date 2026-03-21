@@ -2,9 +2,8 @@
 
 import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
-import { useReveal } from "@/hooks/use-animation"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { Link } from "@/i18n/navigation"
-import { ANIM } from "@/lib/animation-utils"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
@@ -26,11 +25,11 @@ function HeroSection() {
     const t = useTranslations("serviceDetails.maintenance")
     const tCommon = useTranslations("serviceDetails")
 
-    const eyebrowRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.5 })
-    const titleRef = useReveal<HTMLHeadingElement>({ direction: "up", delay: 0.08, duration: 0.8 })
-    const descRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.2, duration: 0.7 })
-    const ctaRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.32, duration: 0.6 })
-    const scrollRef = useReveal<HTMLDivElement>({ direction: "fade", delay: 0.45, duration: 0.55 })
+    const eyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
+    const titleRef = useText(DEFAULTS.heading)
+    const descRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
+    const ctaRef = useReveal({ ...DEFAULTS.element, delay: 0.25 })
+    const scrollRef = useReveal({ ...DEFAULTS.element, direction: "fade", delay: 0.45 })
 
     return (
         <section
@@ -131,8 +130,8 @@ function HeroSection() {
 
 function StatsSection() {
     const t = useTranslations("serviceDetails.maintenance")
-    const leftRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.6 })
-    const rightRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.15, duration: 0.6 })
+    const leftRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
+    const rightRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.15 })
 
     const stats = [
         { value: "99.9%", labelKey: "stats.uptime" },
@@ -199,13 +198,13 @@ function FeaturesSection() {
         const triggers: ScrollTrigger[] = []
 
         cards.forEach((card, index) => {
-            gsap.set(card, { opacity: 0, y: ANIM.distance.sm, willChange: "transform, opacity" })
+            gsap.set(card, { opacity: 0, y: MOTION.distance.sm, willChange: "transform, opacity" })
             const tween = gsap.to(card, {
                 opacity: 1, y: 0,
-                duration: ANIM.duration.md,
-                delay: index * ANIM.stagger.tight,
-                ease: ANIM.ease,
-                scrollTrigger: { trigger: card, start: ANIM.scroll.start, once: true },
+                duration: MOTION.duration.base,
+                delay: index * MOTION.stagger.tight,
+                ease: MOTION.ease.smooth,
+                scrollTrigger: { trigger: card, start: "top 90%", once: true },
                 onComplete() { gsap.set(card, { willChange: "auto" }) },
             })
             if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
@@ -297,13 +296,13 @@ function PricingSection() {
         const triggers: ScrollTrigger[] = []
 
         cards.forEach((card, index) => {
-            gsap.set(card, { opacity: 0, y: ANIM.distance.md, willChange: "transform, opacity" })
+            gsap.set(card, { opacity: 0, y: MOTION.distance.md, willChange: "transform, opacity" })
             const tween = gsap.to(card, {
                 opacity: 1, y: 0,
-                duration: ANIM.duration.md,
-                delay: index * ANIM.stagger.base,
-                ease: ANIM.ease,
-                scrollTrigger: { trigger: card, start: ANIM.scroll.start, once: true },
+                duration: MOTION.duration.base,
+                delay: index * MOTION.stagger.base,
+                ease: MOTION.ease.smooth,
+                scrollTrigger: { trigger: card, start: "top 90%", once: true },
                 onComplete() { gsap.set(card, { willChange: "auto" }) },
             })
             if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
@@ -432,7 +431,7 @@ function CtaSection() {
     const t = useTranslations("serviceDetails.maintenance")
     const tCommon = useTranslations("serviceDetails")
     const leftRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.6 })
-    const rightRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.12, duration: 0.6 })
+    const rightRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.12 })
 
     const checks = [
         { label: t("cta.checks.uptime") },

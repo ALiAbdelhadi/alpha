@@ -6,6 +6,7 @@ import { ThemeChanger } from "@/components/theme-changer"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Link } from "@/i18n/navigation"
 import { gsap } from "@/lib/gsap"
+import { MOTION } from "@/lib/motion"
 import { cn } from "@/lib/utils"
 import { Calendar } from "lucide-react"
 import { useLocale, useTranslations } from 'next-intl'
@@ -53,17 +54,24 @@ export function Nav() {
         if (!logoRef.current || !navItemsRef.current || !actionsRef.current) return
 
         const ctx = gsap.context(() => {
+            const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            const navChildren = navItemsRef.current?.children
+            if (reduced) {
+                gsap.set(logoRef.current, { opacity: 1, y: 0 })
+                gsap.set(actionsRef.current, { opacity: 1, y: 0 })
+                if (navChildren?.length) gsap.set(Array.from(navChildren), { opacity: 1, y: 0 })
+                return
+            }
             gsap.set(logoRef.current, { opacity: 0, y: -10 })
             gsap.set(actionsRef.current, { opacity: 0, y: -10 })
-            const navChildren = navItemsRef.current?.children
             if (navChildren?.length) gsap.set(Array.from(navChildren), { opacity: 0, y: -10 })
 
-            const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
-            tl.to(logoRef.current, { opacity: 1, y: 0, duration: 0.6 })
+            const tl = gsap.timeline({ defaults: { ease: MOTION.ease.smooth, duration: MOTION.duration.base } })
+            tl.to(logoRef.current, { opacity: 1, y: 0 })
             if (navChildren?.length) {
-                tl.to(Array.from(navChildren), { opacity: 1, y: 0, duration: 0.5, stagger: 0.05 }, "-=0.4")
+                tl.to(Array.from(navChildren), { opacity: 1, y: 0, stagger: MOTION.stagger.tight }, "-=0.35")
             }
-            tl.to(actionsRef.current, { opacity: 1, y: 0, duration: 0.5 }, "-=0.3")
+            tl.to(actionsRef.current, { opacity: 1, y: 0 }, "-=0.25")
         })
         return () => ctx.revert()
     }, [isInitialLoadComplete])
@@ -73,20 +81,26 @@ export function Nav() {
         setIsClosing(true)
         const items = mobileMenuRef.current.querySelectorAll('.mobile-menu-item')
         if (items.length > 0) {
-            gsap.to(Array.from(items), { opacity: 0, x: isRTL ? 20 : -20, duration: 0.3, stagger: 0.05, ease: "power2.in" })
+            gsap.to(Array.from(items), { opacity: 0, x: isRTL ? 20 : -20, duration: MOTION.duration.fast, stagger: MOTION.stagger.tight, ease: MOTION.ease.ui })
         }
         gsap.to(mobileMenuRef.current, {
-            opacity: 0, y: -20, duration: 0.4, ease: "power3.in",
+            opacity: 0, y: -20, duration: MOTION.duration.fast, ease: MOTION.ease.ui,
             onComplete: () => { setIsMobileMenuOpen(false); setIsClosing(false); },
         })
     }, [isRTL])
 
     useEffect(() => {
         if (!mobileMenuRef.current || !isMobileMenuOpen || isClosing) return
-        gsap.fromTo(mobileMenuRef.current, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" })
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+            gsap.set(mobileMenuRef.current, { opacity: 1, y: 0 })
+            const items = mobileMenuRef.current.querySelectorAll('.mobile-menu-item')
+            if (items.length > 0) gsap.set(Array.from(items), { opacity: 1, x: 0 })
+            return
+        }
+        gsap.fromTo(mobileMenuRef.current, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: MOTION.duration.fast, ease: MOTION.ease.smooth })
         const items = mobileMenuRef.current.querySelectorAll('.mobile-menu-item')
         if (items.length > 0) {
-            gsap.fromTo(Array.from(items), { opacity: 0, x: isRTL ? 20 : -20 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.08, ease: "power2.out" })
+            gsap.fromTo(Array.from(items), { opacity: 0, x: isRTL ? 20 : -20 }, { opacity: 1, x: 0, duration: MOTION.duration.fast, stagger: MOTION.stagger.base, ease: MOTION.ease.smooth })
         }
     }, [isMobileMenuOpen, isClosing, isRTL])
 

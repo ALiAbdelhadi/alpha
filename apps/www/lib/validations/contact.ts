@@ -11,10 +11,11 @@ export const contactFormSchema = z.object({
         .max(100, "Name must not exceed 100 characters")
         .trim(),
 
-    email: z
+    phone: z
         .string()
-        .email("Please enter a valid email address")
-        .toLowerCase()
+        .min(10, "Please enter a valid phone number")
+        .max(20, "Phone number must not exceed 20 characters")
+        .regex(/^[\d\s\-\+\(\)]+$/, "Phone number must contain only digits, spaces, dashes, or parentheses")
         .trim(),
 
     message: z
@@ -140,10 +141,11 @@ export const standaloneMeetingSchema = z.object({
         .min(2, "Name must be at least 2 characters")
         .max(100, "Name must not exceed 100 characters")
         .trim(),
-    email: z
+    phone: z
         .string()
-        .email("Please enter a valid email address")
-        .toLowerCase()
+        .min(10, "Please enter a valid phone number")
+        .max(20, "Phone number must not exceed 20 characters")
+        .regex(/^[\d\s\-\+\(\)]+$/, "Phone number must contain only digits, spaces, dashes, or parentheses")
         .trim(),
     message: z.string().max(1000).trim().optional(),
     scheduledDate: z.string().datetime(), // ISO datetime string

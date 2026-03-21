@@ -3,7 +3,7 @@
 import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
 import { CtaSectionEnhanced as CtaSection } from "@/components/sections/cta-section"
-import { useReveal } from "@/hooks/use-animation"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { Link } from "@/i18n/navigation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { useTranslations } from "next-intl"
@@ -25,10 +25,10 @@ export default memo(function ServicesPage() {
 
 const HeroSection = memo(function HeroSection() {
     const t = useTranslations("servicesPage")
-    const badgeRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.1, duration: 0.5 })
-    const titleRef = useReveal<HTMLHeadingElement>({ direction: "up", delay: 0, duration: 0.8 })
-    const descRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0.2, duration: 0.6 })
-    const ctaRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.35, duration: 0.5 })
+    const badgeRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0 })
+    const titleRef = useText({ ...DEFAULTS.heading, ease: MOTION.ease.text })
+    const descRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.15 })
+    const ctaRef = useReveal({ ...DEFAULTS.element, ease: MOTION.ease.smooth, delay: 0.25 })
 
     return (
         <section className="relative min-h-screen flex items-center section-padding">
@@ -85,7 +85,7 @@ const HeroSection = memo(function HeroSection() {
 const ServicesGrid = memo(function ServicesGrid() {
     const t = useTranslations("servicesPage")
     const sectionRef = useRef<HTMLElement>(null)
-    const titleRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0, duration: 0.5 })
+    const titleRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
 
     useEffect(() => {
         if (!sectionRef.current) return
@@ -93,9 +93,9 @@ const ServicesGrid = memo(function ServicesGrid() {
         const triggers: ScrollTrigger[] = []
 
         cards.forEach((card, index) => {
-            gsap.set(card, { opacity: 0, y: 24 })
+            gsap.set(card, { opacity: 0, y: MOTION.distance.md })
             const revealTween = gsap.to(card, {
-                opacity: 1, y: 0, duration: 0.6, delay: index * 0.1, ease: "power3.out",
+                opacity: 1, y: 0, duration: MOTION.duration.base, delay: index * MOTION.stagger.loose, ease: MOTION.ease.smooth,
                 scrollTrigger: { trigger: card, start: "top 90%", once: true },
             })
             if (revealTween.scrollTrigger) triggers.push(revealTween.scrollTrigger)

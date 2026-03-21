@@ -1,13 +1,5 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
 import {
     AlertDialog,
     AlertDialogAction,
@@ -18,11 +10,18 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
 import {
-    ArrowLeft,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import {
     Calendar,
     Eye,
-    Mail,
+    Phone,
     Search,
     Trash2
 } from "lucide-react"
@@ -45,7 +44,7 @@ type Priority = "LOW" | "MEDIUM" | "HIGH" | "URGENT"
 export interface ContactSubmission {
     id: string
     name: string
-    email: string
+    phone: string
     message: string
     status: SubmissionStatus
     priority: Priority
@@ -221,7 +220,7 @@ export function ContactsClient({ initialContacts, initialTotalPages }: ContactsC
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <input
                         type="text"
-                        placeholder="Search by name, email, or message (Press enter)..."
+                        placeholder="Search by name, phone, or message (Press enter)..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full pl-10 pr-4 py-2 border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
@@ -300,9 +299,9 @@ export function ContactsClient({ initialContacts, initialTotalPages }: ContactsC
                                         <td className="p-4">
                                             <div className="font-medium">{contact.name}</div>
                                             <div className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
-                                                <Mail className="h-3 w-3" />
+                                                <Phone className="h-3 w-3" />
                                                 <bdi>
-                                                    {contact.email}
+                                                    {contact.phone}
                                                 </bdi>
                                             </div>
                                             {contact.serviceInterest && (

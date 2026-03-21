@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
         const submission = await prisma.contactSubmission.create({
             data: {
                 name: validatedData.name,
-                email: validatedData.email,
+                phone: validatedData.phone,
                 message: validatedData.message,
                 serviceInterest: validatedData.serviceInterest
                     ? validatedData.serviceInterest.toUpperCase().replace(/-/g, "_") as any
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
                 priority: validatedData.projectTimeline === "immediate" ? "URGENT" :
                     validatedData.projectTimeline === "soon" ? "HIGH" : "MEDIUM",
             },
-        })
+        } as any)
 
         const admins = await prisma.user.findMany({
             where: { role: { in: ["ADMIN", "SUPERADMIN"] } },
@@ -116,7 +116,6 @@ export async function POST(request: NextRequest) {
                     scheduledDate,
                     scheduledTime: validatedData.preferredTime,
                     guestName: validatedData.name,
-                    guestEmail: validatedData.email,
                     submissionId: submission.id,
                     notes: validatedData.message,
                 },
@@ -141,7 +140,7 @@ export async function POST(request: NextRequest) {
         // Send CRM notifications
         await notifyNewContact({
             name: validatedData.name,
-            email: validatedData.email,
+            phone: validatedData.phone,
             message: validatedData.message,
             serviceInterest: validatedData.serviceInterest,
             projectTimeline: validatedData.projectTimeline,

@@ -1,8 +1,9 @@
+// motion: useText(DEFAULTS.heading) h1, useReveal body + element CTAs
 "use client"
 
 import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
-import { useReveal } from "@/hooks/use-animation"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { Link } from "@/i18n/navigation"
 import { cn } from "@/lib/utils"
 import { ReactNode } from "react"
@@ -40,9 +41,9 @@ export function ServiceHero({
     buttons,
     gradientPreset = "emerald-cyan",
 }: ServiceHeroProps) {
-    const titleRef = useReveal<HTMLHeadingElement>({ direction: "up", delay: 0, duration: 0.8 })
-    const descRef = useReveal<HTMLParagraphElement>({ direction: "up", delay: 0.2, duration: 0.6 })
-    const buttonsRef = useReveal<HTMLDivElement>({ direction: "up", delay: 0.35, duration: 0.5 })
+    const titleRef = useText<HTMLHeadingElement>({ ...DEFAULTS.heading, ease: MOTION.ease.text })
+    const descRef = useReveal<HTMLParagraphElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.15 })
+    const buttonsRef = useReveal<HTMLDivElement>({ ...DEFAULTS.element, ease: MOTION.ease.smooth, delay: 0.25 })
 
     const preset = EMERALD_PRESET
 

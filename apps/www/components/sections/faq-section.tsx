@@ -7,7 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { useTextReveal, useFadeUp } from "@/hooks/use-text-reveal"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
 import { memo } from "react"
@@ -20,21 +20,21 @@ interface FaqSectionProps {
 export const FaqSection = memo(function FaqSection({ namespace, className }: FaqSectionProps) {
   const t = useTranslations(namespace)
 
-  const headerRef = useTextReveal<HTMLDivElement>({
+  const headerRef = useText<HTMLDivElement>({
+    duration: DEFAULTS.heading.duration,
     delay: 0,
-    duration: 1.0,
+    ease: MOTION.ease.text,
     blur: true,
-    threshold: 0.15,  // Changed from 0.3 to 0.15 - trigger earlier
+    byWord: false,
   })
 
-  const contentRef = useFadeUp<HTMLDivElement>({
+  const contentRef = useReveal<HTMLDivElement>({
+    ...DEFAULTS.body,
     delay: 0.15,
-    duration: 0.8,
+    ease: MOTION.ease.smooth,
     distance: 28,
   })
 
-  // Get keys for questions. Assuming 'questions' is an object with numeric keys "01", "02", etc.
-  // We'll hardcode or dynamically determine. For our implementation, we added 5 questions.
   const questionKeys = ["01", "02", "03", "04", "05"]
 
   return (

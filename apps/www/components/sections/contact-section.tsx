@@ -3,42 +3,31 @@
 
 import { MagneticButton } from "@/components/magnetic-button"
 import { useLoading } from "@/components/providers/loading-provider"
+import { useGSAPSection } from "@/hooks/use-gsap-section"
 import { Link } from "@/i18n/navigation"
+import { AnalyticsEvents } from "@/lib/analytics"
 import { gsap } from "@/lib/gsap"
+import { DEFAULTS, MOTION, useText } from "@/lib/motion"
 import { cn } from "@/lib/utils"
 import { contactFormSchema, type ContactFormData } from "@/lib/validations/contact"
-import { AnalyticsEvents } from "@/lib/analytics"
 import { AlertCircle, Calendar, CheckCircle2, Mail, MapPin } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { memo, useCallback, useRef, useState } from "react"
-import { useGSAPSection } from "@/hooks/use-gsap-section"
 import { Container } from "../container"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
-import { Textarea } from "../ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
-import { useTextReveal, useFadeUp, useStaggerReveal } from "@/hooks/use-text-reveal"
-
-// Premium easing for contact section
-const EASE = {
-  smooth: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-  gentle: "cubic-bezier(0.65, 0, 0.35, 1)",
-} as const
+import { Textarea } from "../ui/textarea"
 
 export const ContactSection = memo(function ContactSection() {
   const t = useTranslations()
   const { isInitialLoadComplete } = useLoading()
   const sectionRef = useRef<HTMLElement>(null)
 
-  const titleRef = useTextReveal<HTMLDivElement>({
-    delay: 0,
-    duration: 1.1,
-    blur: true,
-    threshold: 0.25,
+  const titleRef = useText<HTMLHeadingElement>({
+    ...DEFAULTS.heading,
+    ease: MOTION.ease.text,
   })
-
-  const leftRef = useFadeUp<HTMLDivElement>({ delay: 0.1, duration: 0.8, distance: 28 })
-  const rightRef = useStaggerReveal<HTMLDivElement>({ delay: 0.15, duration: 0.9, stagger: 0.1, distance: 24 })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
@@ -46,7 +35,7 @@ export const ContactSection = memo(function ContactSection() {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({})
   const hasTrackedStartRef = useRef(false)
   const [formData, setFormData] = useState<ContactFormData>({
-    name: "", email: "", message: "",
+    name: "", phone: "", message: "",
     serviceInterest: undefined, projectTimeline: undefined,
     budget: undefined,
     requestMeeting: false, preferredDate: undefined,
@@ -63,14 +52,14 @@ export const ContactSection = memo(function ContactSection() {
     if (leftEls.length) {
       gsap.from(leftEls, {
         opacity: 0,
-        y: 28,
+        y: MOTION.distance.sm,
         willChange: "transform, opacity",
-        duration: 0.85,
-        stagger: 0.08,
-        ease: EASE.smooth,
+        duration: MOTION.duration.base,
+        stagger: MOTION.stagger.tight,
+        ease: MOTION.ease.smooth,
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 92%",
+          start: MOTION.trigger.late,
           once: true,
         },
         onComplete() { gsap.set(leftEls, { willChange: "auto" }) },
@@ -81,14 +70,14 @@ export const ContactSection = memo(function ContactSection() {
     if (rightEls.length) {
       gsap.from(rightEls, {
         opacity: 0,
-        x: 24,
+        x: MOTION.distance.sm,
         willChange: "transform, opacity",
-        duration: 0.9,
-        stagger: 0.08,
-        ease: EASE.smooth,
+        duration: MOTION.duration.text,
+        stagger: MOTION.stagger.tight,
+        ease: MOTION.ease.smooth,
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 92%",
+          start: MOTION.trigger.late,
           once: true,
         },
         onComplete() { gsap.set(rightEls, { willChange: "auto" }) },
@@ -136,7 +125,7 @@ export const ContactSection = memo(function ContactSection() {
         } catch { /* noop */ }
         setSubmitSuccess(true)
         setFormData({
-          name: "", email: "", message: "",
+          name: "", phone: "", message: "",
           serviceInterest: undefined, projectTimeline: undefined,
           budget: undefined,
           requestMeeting: false, preferredDate: undefined,
@@ -185,11 +174,12 @@ export const ContactSection = memo(function ContactSection() {
       className="flex min-h-screen w-full items-center overflow-x-hidden section-padding"
     >
       <Container>
-        <div ref={titleRef} className="mb-16">
+        <div className="mb-16">
           <p className="mono-uppercase text-primary/25 tracking-[0.25em] text-xs mb-4">
             {t("contact.eyebrow") ?? "Get in Touch"}
           </p>
           <h2
+            ref={titleRef}
             className="font-sans font-normal text-primary leading-tight"
             style={{ letterSpacing: "-0.02em", fontSize: "clamp(32px, 5vw, 64px)" }}
           >
@@ -275,16 +265,16 @@ export const ContactSection = memo(function ContactSection() {
               </div>
               <div data-contact-right>
                 <Label className="mono text-xs text-primary/40 uppercase tracking-[0.18em] mb-2 block">
-                  {t("contact.form.email")} <span className="text-destructive">*</span>
+                  {t("contact.form.phone")} <span className="text-destructive">*</span>
                 </Label>
                 <Input
-                  type="email" value={formData.email}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
-                  className={cn("w-full text-primary placeholder:text-primary/35 bg-transparent", formErrors.email && "border-destructive")}
-                  placeholder={t("contact.form.emailPlaceholder")}
-                  aria-required="true" aria-invalid={!!formErrors.email} autoComplete="email" disabled={isSubmitting}
+                  type="tel" value={formData.phone}
+                  onChange={(e) => handleInputChange("phone", e.target.value)}
+                  className={cn("w-full text-primary placeholder:text-primary/35 bg-transparent", formErrors.phone && "border-destructive")}
+                  placeholder={t("contact.form.phonePlaceholder")}
+                  aria-required="true" aria-invalid={!!formErrors.phone} autoComplete="tel" disabled={isSubmitting}
                 />
-                {formErrors.email && <FieldError msg={formErrors.email} id="email-error" />}
+                {formErrors.phone && <FieldError msg={formErrors.phone} id="phone-error" />}
               </div>
               <div data-contact-right>
                 <Label className="mono text-xs text-primary/40 uppercase tracking-[0.18em] mb-2 block">
