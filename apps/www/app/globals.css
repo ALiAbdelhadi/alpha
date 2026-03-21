@@ -315,7 +315,7 @@
 @layer utilities {
   .section-padding {
     padding-top: clamp(5rem, 10vh, 8rem);
-    padding-bottom: clamp(5rem, 10vh, 8rem);
+    padding-bottom: clamp(5rem, 14vh, 10rem);
   }
 
   .border-grid {
@@ -440,4 +440,5 @@
   .transition-snappy {
     transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
   }
+  
 }

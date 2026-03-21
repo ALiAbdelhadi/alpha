@@ -34,7 +34,7 @@ export function MainLayoutContent({ children }: layoutChildren) {
                 {children}
             </div>
             <Footer />
-            <WhatsAppFloat />
+            {/* <WhatsAppFloat /> */}
         </main>
     )
 }

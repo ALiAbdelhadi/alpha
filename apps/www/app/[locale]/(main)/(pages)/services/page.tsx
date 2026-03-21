@@ -2,12 +2,12 @@
 
 import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
+import { CtaSectionEnhanced as CtaSection } from "@/components/sections/cta-section"
 import { useReveal } from "@/hooks/use-animation"
 import { Link } from "@/i18n/navigation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { useTranslations } from "next-intl"
 import { memo, useEffect, useMemo, useRef } from "react"
-import { CtaSectionEnhanced as CtaSection } from "@/components/sections/cta-section"
 
 export default memo(function ServicesPage() {
     return (
@@ -74,7 +74,7 @@ const HeroSection = memo(function HeroSection() {
                 </div>
                 <div className="pointer-events-none absolute ltr:right-0 rtl:left-0 bottom-16 select-none" aria-hidden="true">
                     <span className="text-[clamp(8rem,20vw,18rem)] font-light leading-none text-foreground/4 tracking-tighter">
-                        01
+                        00
                     </span>
                 </div>
             </Container>

@@ -101,19 +101,18 @@ export const HeroSection = memo(function HeroSection() {
     <section
       id="home"
       ref={sectionRef}
-      className="relative flex w-full flex-col justify-end section-padding pb-24 overflow-hidden"
-      style={{ minHeight: "100vh" }}
+      className="relative min-h-screen flex w-full flex-col justify-end section-padding overflow-hidden"
       aria-label="Hero section"
     >
       <div
         aria-hidden="true"
         data-hero-watermark
-        className="pointer-events-none select-none absolute bottom-0 ltr:right-0 rtl:left-0 leading-none font-sans font-semibold tracking-tighter text-foreground/[0.028] opacity-0"
+        className="pointer-events-none select-none absolute bottom-0 ltr:right-0 rtl:left-0 leading-none font-sans font-semibold tracking-tighter text-foreground/4 opacity-0"
         style={{ fontSize: "clamp(120px, 22vw, 340px)", lineHeight: 0.85 }}
       >
         {t("hero.watermark")}
       </div>
-      <div data-hero-content className="absolute top-24 ltr:right-8 rtl:left-8 hidden md:flex flex-col ltr:items-end rtl:items-start gap-2 opacity-0">
+      <div data-hero-content className="absolute top-20 ltr:right-8 rtl:left-8 hidden md:flex flex-col ltr:items-end rtl:items-start gap-2 opacity-0">
         <div className="flex items-center gap-2">
           <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
           <span className="font-mono text-xs text-primary/50 uppercase tracking-[0.25em]">
@@ -189,13 +188,13 @@ export const HeroSection = memo(function HeroSection() {
                   </div>
                 </div>
                 <div className="h-6 w-px bg-foreground/8" />
-                <div className="flex items-center gap-1 text-primary/60 text-[10px]">
-                  <span className="text-primary/40">100%</span> on-time
+                <div className="flex items-start flex-col gap-1 text-primary/60 text-[10px]">
+                  <span className="text-primary/40">100%  on-time</span> 
+                  <span className="font-mono text-[10px] text-primary/40 uppercase tracking-wider">
+                    {t("hero.trust")}
+                  </span>
                 </div>
               </div>
-              <span className="font-mono text-[10px] text-primary/40 uppercase tracking-wider">
-                {t("hero.trust")}
-              </span>
             </div>
           </div>
         </div>
@@ -212,7 +211,6 @@ export const HeroSection = memo(function HeroSection() {
           <div className="absolute top-0 h-1/2 w-full bg-foreground/40 animate-[slideDown_1.8s_ease-in-out_infinite]" />
         </div>
       </div>
-
       <style>{`
         @keyframes slideDown {
           0%   { transform: translateY(-100%); }
