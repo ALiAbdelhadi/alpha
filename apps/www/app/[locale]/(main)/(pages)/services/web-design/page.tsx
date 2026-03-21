@@ -72,7 +72,7 @@ function HeroSection() {
                         {t("title")}
                         <br />
                         <span className="text-primary/35" style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontStyle: "italic" }}>
-                            {t("titleItalic") ?? "designed to convert."}
+                            {t("titleItalic")}
                         </span>
                     </h1>
                     <div ref={descRef} className="mb-12 grid md:grid-cols-[80px_1fr] gap-8 items-start">
@@ -151,14 +151,14 @@ function ShowcaseSection() {
             <Container>
                 <div ref={titleRef} className="mb-16">
                     <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
-                        {t("showcaseEyebrow") ?? "Project Types"}
+                        {t("showcaseEyebrow")}
                     </p>
                     <div className="flex items-end justify-between gap-8 flex-wrap">
                         <h2 className="font-sans font-normal text-primary leading-[1.05]" style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}>
                             {t("showcaseTitle")}
                             <br />
                             <span className="text-primary/35" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>
-                                {t("showcaseTitleItalic") ?? "for every context."}
+                                {t("showcaseTitleItalic")}
                             </span>
                         </h2>
                         <p className="font-mono text-sm text-primary/35 max-w-[36ch] hidden lg:block leading-relaxed">
@@ -221,12 +221,12 @@ function FeaturesSection() {
         <section ref={sectionRef} className="section-padding border-t border-foreground/8">
             <Container>
                 <div ref={titleRef} className="mb-16">
-                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">{tCommon("whatWeOfferEyebrow") ?? "What's Included"}</p>
+                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">{tCommon("whatWeOfferEyebrow")}</p>
                     <div className="flex items-end justify-between gap-8 flex-wrap">
                         <h2 className="font-sans font-normal text-primary leading-[1.05]" style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}>
                             {tCommon("whatWeOffer")}
                             <br />
-                            <span className="text-primary/35" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>{tCommon("whatWeOfferItalic") ?? "in every design."}</span>
+                            <span className="text-primary/35" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>{tCommon("whatWeOfferItalic")}</span>
                         </h2>
                         <p className="font-mono text-sm text-primary/35 max-w-[28ch] hidden md:block tracking-[0.05em]">{tCommon("whatWeOfferSubtitle")}</p>
                     </div>
@@ -278,7 +278,7 @@ function CtaSection() {
             <Container>
                 <div ref={titleRef} className="mb-16 flex items-end justify-between gap-8 flex-wrap">
                     <div className="max-w-xl">
-                        <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">{t("cta.eyebrow") ?? "Ready to Start"}</p>
+                        <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">{t("cta.eyebrow")}</p>
                         <h2 className="font-sans font-normal text-primary leading-[1.05] mb-4" style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}>{t("cta.title")}</h2>
                         <p className="text-base text-primary/60 leading-relaxed max-w-[44ch]">{t("cta.description")}</p>
                     </div>
@@ -294,7 +294,7 @@ function CtaSection() {
                             </MagneticButton>
                         </Link>
                         <Link href="/services">
-                            <MagneticButton size="lg" variant="secondary">{t("cta.back") ?? "View All Services"}</MagneticButton>
+                            <MagneticButton size="lg" variant="secondary">{t("cta.back")}</MagneticButton>
                         </Link>
                     </div>
                 </div>

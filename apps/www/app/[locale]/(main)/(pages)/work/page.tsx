@@ -68,7 +68,7 @@ export default memo(function WorkIndexPage() {
                     </div>
                     <div className="mt-6 flex items-center gap-4">
                         <span className="font-mono text-xs uppercase text-primary/20 tracking-[0.25em]">
-                            {String(projects.length).padStart(2, "0")} {t("projectsLabel") ?? "Projects"}
+                            {String(projects.length).padStart(2, "0")} {t("projectsLabel")}
                         </span>
                         <div className="flex-1 h-px bg-foreground/5" />
                     </div>

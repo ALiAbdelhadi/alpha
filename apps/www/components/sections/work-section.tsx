@@ -87,7 +87,7 @@ export const WorkSection = memo(function WorkSection() {
         </div>
         <div className="mt-6 flex items-center gap-4">
           <span className="font-mono text-xs uppercase text-primary/20 tracking-[0.25em]">
-            {projects.length.toString().padStart(2, "0")} {t("work.projectsLabel") ?? "Projects"}
+            {projects.length.toString().padStart(2, "0")} {t("work.projectsLabel")}
           </span>
           <div className="flex-1 h-px bg-foreground/5" />
         </div>

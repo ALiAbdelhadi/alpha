@@ -579,25 +579,25 @@ export const EstimatorSection = memo(function EstimatorSection() {
           </div>
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
-              <AccordionTrigger className="text-primary font-sans text-base">{t("faq.q1") ?? "Why custom code instead of WordPress/Shopify?"}</AccordionTrigger>
+              <AccordionTrigger className="text-primary font-sans text-base">{t("faq.q1")}</AccordionTrigger>
               <AccordionContent className="text-primary/60 text-base leading-relaxed">
                 {t("faq.a1")}
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
-              <AccordionTrigger className="text-primary font-sans text-base">{t("faq.q2") ?? "How accurate is this estimate?"}</AccordionTrigger>
+              <AccordionTrigger className="text-primary font-sans text-base">{t("faq.q2")}</AccordionTrigger>
               <AccordionContent className="text-primary/60 text-base leading-relaxed">
                 {t("faq.a2")}
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
-              <AccordionTrigger className="text-primary font-sans text-base">{t("faq.q3") ?? "Do you offer ongoing support?"}</AccordionTrigger>
+              <AccordionTrigger className="text-primary font-sans text-base">{t("faq.q3")}</AccordionTrigger>
               <AccordionContent className="text-primary/60 text-base leading-relaxed">
                 {t("faq.a3")}
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-4">
-              <AccordionTrigger className="text-primary font-sans text-base">{t("faq.q4") ?? "What happens after I request the pdf?"}</AccordionTrigger>
+              <AccordionTrigger className="text-primary font-sans text-base">{t("faq.q4")}</AccordionTrigger>
               <AccordionContent className="text-primary/60 text-base leading-relaxed">
                 {t("faq.a4")}
               </AccordionContent>

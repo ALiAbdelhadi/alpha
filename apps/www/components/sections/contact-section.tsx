@@ -176,7 +176,7 @@ export const ContactSection = memo(function ContactSection() {
       <Container>
         <div className="mb-16">
           <p className="mono-uppercase text-primary/25 tracking-[0.25em] text-xs mb-4">
-            {t("contact.eyebrow") ?? "Get in Touch"}
+            {t("contact.eyebrow")}
           </p>
           <h2
             ref={titleRef}
@@ -286,13 +286,13 @@ export const ContactSection = memo(function ContactSection() {
                   disabled={isSubmitting}
                 >
                   <SelectTrigger className={cn("w-full bg-transparent text-primary", !formData.budget && "text-primary/35")}>
-                    <SelectValue placeholder={t("contact.form.budgetPlaceholder") ?? "Select your budget range"} />
+                    <SelectValue placeholder={t("contact.form.budgetPlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="under_10k">{t("contact.form.budgetScale.under_10k") ?? "Under $10k"}</SelectItem>
-                    <SelectItem value="b_10k_25k">{t("contact.form.budgetScale.b_10k_25k") ?? "$10k - $25k"}</SelectItem>
-                    <SelectItem value="b_25k_50k">{t("contact.form.budgetScale.b_25k_50k") ?? "$25k - $50k"}</SelectItem>
-                    <SelectItem value="over_50k">{t("contact.form.budgetScale.over_50k") ?? "$50k+"}</SelectItem>
+                    <SelectItem value="under_10k">{t("contact.form.budgetScale.under_10k")}</SelectItem>
+                    <SelectItem value="b_10k_25k">{t("contact.form.budgetScale.b_10k_25k")}</SelectItem>
+                    <SelectItem value="b_25k_50k">{t("contact.form.budgetScale.b_25k_50k") }</SelectItem>
+                    <SelectItem value="over_50k">{t("contact.form.budgetScale.over_50k")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

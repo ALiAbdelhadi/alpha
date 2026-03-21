@@ -51,7 +51,7 @@ function HeroSection() {
                     <h1 ref={titleRef} className="mb-10 font-sans font-normal text-primary leading-[1.03]" style={{ fontSize: "clamp(44px, 7vw, 96px)", letterSpacing: "-0.025em" }}>
                         {t("title")}
                         <br />
-                        <span className="text-primary/35" style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontStyle: "italic" }}>{t("titleItalic") ?? "built to scale."}</span>
+                        <span className="text-primary/35" style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontStyle: "italic" }}>{t("titleItalic")}</span>
                     </h1>
                     <div ref={descRef} className="mb-12 grid md:grid-cols-[80px_1fr] gap-8 items-start">
                         <div className="h-px w-full bg-foreground/8 mt-3 hidden md:block" />
@@ -119,12 +119,12 @@ function TechStackSection() {
         <section id="tech-stack" ref={sectionRef} className="section-padding border-t border-foreground/8">
             <Container>
                 <div ref={titleRef} className="mb-16">
-                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">{t("techStack.eyebrow") ?? "The Stack"}</p>
+                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">{t("techStack.eyebrow")}</p>
                     <div className="flex items-end justify-between gap-8 flex-wrap">
                         <h2 className="font-sans font-normal text-primary leading-[1.05]" style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}>
                             {t("techStack.title")}
                             <br />
-                            <span className="text-primary/35" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>{t("techStack.titleItalic") ?? "every tool, intentional."}</span>
+                            <span className="text-primary/35" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>{t("techStack.titleItalic")}</span>
                         </h2>
                         <p className="font-mono text-sm text-primary/35 max-w-[32ch] hidden lg:block tracking-[0.05em]">{t("techStack.subtitle")}</p>
                     </div>
@@ -179,12 +179,12 @@ function FeaturesSection() {
         <section ref={sectionRef} className="section-padding border-t border-foreground/8">
             <Container>
                 <div ref={titleRef} className="mb-16">
-                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">{tCommon("whatWeOfferEyebrow") ?? "What's Included"}</p>
+                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">{tCommon("whatWeOfferEyebrow")}</p>
                     <div className="flex items-end justify-between gap-8 flex-wrap">
                         <h2 className="font-sans font-normal text-primary leading-[1.05]" style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}>
                             {tCommon("whatWeOffer")}
                             <br />
-                            <span className="text-primary/35" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>{tCommon("whatWeOfferItalic") ?? "in every build."}</span>
+                            <span className="text-primary/35" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>{tCommon("whatWeOfferItalic")}</span>
                         </h2>
                         <p className="font-mono text-sm text-primary/35 max-w-[28ch] hidden md:block tracking-[0.05em]">{tCommon("whatWeOfferSubtitle")}</p>
                     </div>
@@ -238,7 +238,7 @@ function CtaSection() {
                         </div>
                         <div className="p-8 md:p-10 flex flex-col justify-between gap-8">
                             <div>
-                                <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-5 block">{t("cta.eyebrow") ?? "Ready to Ship"}</p>
+                                <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-5 block">{t("cta.eyebrow")}</p>
                                 <h2 className="font-sans font-normal text-primary leading-[1.05] mb-4" style={{ fontSize: "clamp(22px, 3.5vw, 38px)", letterSpacing: "-0.02em" }}>{t("cta.title")}</h2>
                                 <p className="text-base text-primary/60 leading-relaxed max-w-[40ch]">{t("cta.description")}</p>
                             </div>
@@ -254,7 +254,7 @@ function CtaSection() {
                                     </MagneticButton>
                                 </Link>
                                 <Link href="/services" className="w-full">
-                                    <MagneticButton size="lg" variant="secondary" className="w-full justify-center">{t("cta.back") ?? "View All Services"}</MagneticButton>
+                                    <MagneticButton size="lg" variant="secondary" className="w-full justify-center">{t("cta.back")}</MagneticButton>
                                 </Link>
                             </div>
                         </div>

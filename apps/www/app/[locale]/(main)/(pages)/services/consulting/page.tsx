@@ -77,7 +77,7 @@ function HeroSection() {
                             className="text-primary/35"
                             style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontStyle: "italic" }}
                         >
-                            {t("titleItalic") ?? "strategic clarity."}
+                            {t("titleItalic")}
                         </span>
                     </h1>
                     <div ref={descRef} className="mb-12 grid md:grid-cols-[80px_1fr] gap-8 items-start">
@@ -180,7 +180,7 @@ function ProcessTimelineSection() {
                                 className="text-primary/35"
                                 style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}
                             >
-                                {t("approach.titleItalic") ?? "step by step."}
+                                {t("approach.titleItalic")}
                             </span>
                         </h2>
                         <p className="font-mono text-base text-primary/35 max-w-[36ch] hidden lg:block leading-relaxed">
@@ -242,7 +242,7 @@ function ValuePropositionSection() {
                         className="md:col-span-7 border border-foreground/8 rounded-sm bg-foreground/2 p-8 md:p-12"
                     >
                         <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
-                            {t("value.eyebrow") ?? "Why It Matters"}
+                            {t("value.eyebrow")}
                         </p>
                         <h2
                             className="font-sans font-normal text-primary leading-[1.05] mb-8"
@@ -335,7 +335,7 @@ function FeaturesSection() {
                                 className="text-primary/35"
                                 style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}
                             >
-                                {tCommon("whatWeOfferItalic") ?? "in every engagement."}
+                                {tCommon("whatWeOfferItalic")}
                             </span>
                         </h2>
                         <p className="font-mono text-base text-primary/35 max-w-[28ch] hidden md:block tracking-[0.05em]">
@@ -450,7 +450,7 @@ function CtaSection() {
                             </Link>
                             <Link href="/services" className="w-full">
                                 <MagneticButton size="lg" variant="secondary" className="w-full justify-center">
-                                    {t("cta.back") ?? "View All Services"}
+                                    {t("cta.back")}
                                 </MagneticButton>
                             </Link>
                         </div>

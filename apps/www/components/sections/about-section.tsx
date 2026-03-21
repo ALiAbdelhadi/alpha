@@ -120,7 +120,7 @@ export const AboutSection = memo(function AboutSection({
     >
       <Container>
         <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-16 block">
-          {t("about.eyebrow") ?? "About"}
+          {t("about.eyebrow")}
         </p>
         <div className="grid gap-16 md:grid-cols-2 md:gap-20">
           <div className="flex flex-col justify-between gap-12">

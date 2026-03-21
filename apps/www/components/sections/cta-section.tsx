@@ -94,14 +94,14 @@ export const CtaSectionEnhanced = memo(function CtaSectionEnhanced({ scrollToSec
                 className="group w-full justify-center"
               >
                 <span className="flex items-center gap-2">
-                  {t("primaryAction") ?? "Get started"}
+                  {t("primaryAction")}
                   <Calendar className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5" />
                 </span>
               </MagneticButton>
               <Link href="/how-we-work" className="w-full">
                 <MagneticButton size="lg" variant="secondary" className="w-full justify-center">
                   <span className="flex items-center justify-center gap-2">
-                    {t("secondaryAction") ?? "Explore portfolio"}
+                    {t("secondaryAction")}
                     <svg
                       className="w-4 h-4 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform duration-300 rtl:-rotate-180"
                       fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}

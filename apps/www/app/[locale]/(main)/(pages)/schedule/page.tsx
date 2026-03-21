@@ -121,7 +121,7 @@ export default function SchedulePage() {
                     </div>
                     <div ref={headerRef} className="mb-12">
                         <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
-                            {t("eyebrow") ?? "Book a Call"}
+                            {t("eyebrow")}
                         </p>
                         <h1
                             className="font-sans font-normal text-primary leading-[1.03] mb-4"
