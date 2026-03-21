@@ -17,12 +17,15 @@ const envSchema = z.object({
 const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
+  const errors = parsed.error.format();
   console.error(
     "❌ Invalid environment variables:",
-    JSON.stringify(parsed.error.format(), null, 2)
+    JSON.stringify(errors, null, 2)
   );
+  
   if (process.env.NODE_ENV === "production") {
-    throw new Error("Invalid environment variables. Check server logs.");
+    const missingFields = Object.keys(errors).filter(k => k !== "_errors").join(", ");
+    throw new Error(`Invalid environment variables: ${missingFields}. Check Vercel project settings.`);
   }
 }
 

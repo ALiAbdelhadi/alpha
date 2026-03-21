@@ -1,5 +1,7 @@
 "use client"
 
+export const dynamic = "force-dynamic";
+
 import { Container } from "@/components/container"
 import { useReveal } from "@/hooks/use-animation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
