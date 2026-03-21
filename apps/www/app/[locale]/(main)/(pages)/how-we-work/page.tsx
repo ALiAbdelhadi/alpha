@@ -1,8 +1,10 @@
+// motion: useText(heading) for h1/h2, useReveal for eyebrows/body, useBatch for phase cards and standard cards
 "use client"
 
 import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
 import { Link } from "@/i18n/navigation"
+import { DEFAULTS, MOTION, useBatch, useReveal, useText } from "@/lib/motion"
 import { useLocale, useTranslations } from "next-intl"
 
 export default function HowWeWorkPage() {
@@ -16,14 +18,49 @@ export default function HowWeWorkPage() {
 
     const phases = ["discovery", "wireframe", "design", "development", "launch"] as const
 
+    // ── Hero section ──────────────────────────────────────────
+    const heroEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
+    const heroTitleRef = useText(DEFAULTS.heading)
+    const heroDescRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
+
+    // ── Architecture section ──────────────────────────────────
+    const archEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
+    const archTitleRef = useText(DEFAULTS.heading)
+    const archBodyRef = useBatch<HTMLDivElement>({ ...DEFAULTS.card, selector: ".arch-p" })
+
+    // ── Phased process section ────────────────────────────────
+    const processEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
+    const processTitleRef = useText(DEFAULTS.heading)
+    const processDescRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
+    const phaseCardsRef = useBatch<HTMLDivElement>({ ...DEFAULTS.card, selector: ".phase-card" })
+
+    // ── Standards section ─────────────────────────────────────
+    const standardsEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
+    const standardsTitleRef = useText(DEFAULTS.heading)
+    const standardsBodyRef = useBatch<HTMLDivElement>({ ...DEFAULTS.card, selector: ".standards-p" })
+    const standardsCardsRef = useBatch<HTMLDivElement>({ ...DEFAULTS.card, selector: ".standard-card" })
+    const standardsLinkRef = useReveal({ ...DEFAULTS.element, delay: 0.15 })
+
+    // ── CTA section ───────────────────────────────────────────
+    const ctaEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
+    const ctaTitleRef = useText(DEFAULTS.heading)
+    const ctaDescRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
+    const ctaButtonsRef = useReveal({ ...DEFAULTS.element, delay: 0.25 })
+
     return (
         <main className="section-padding">
             <Container>
+
+                {/* ── Hero ──────────────────────────────────────────────── */}
                 <section className="py-16 md:py-24">
-                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-6 block">
+                    <p
+                        ref={heroEyebrowRef}
+                        className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-6 block"
+                    >
                         {tNav("how-we-work")}
                     </p>
                     <h1
+                        ref={heroTitleRef}
                         className="mb-10 font-sans font-normal text-primary leading-[1.03]"
                         style={{ fontSize: "clamp(44px, 7vw, 96px)", letterSpacing: "-0.025em" }}
                     >
@@ -36,7 +73,10 @@ export default function HowWeWorkPage() {
                             {t("hero.italic")}
                         </span>
                     </h1>
-                    <div className="grid md:grid-cols-[80px_1fr] gap-8 items-start">
+                    <div
+                        ref={heroDescRef}
+                        className="grid md:grid-cols-[80px_1fr] gap-8 items-start"
+                    >
                         <div className="h-px w-full bg-foreground/8 mt-3 hidden md:block" />
                         <div className="space-y-4 max-w-[52ch]">
                             <p className="text-base text-primary/60 leading-relaxed">
@@ -48,36 +88,53 @@ export default function HowWeWorkPage() {
                         </div>
                     </div>
                 </section>
+
                 <div className="h-px w-full bg-foreground/8" />
+
+                {/* ── Architecture ──────────────────────────────────────── */}
                 <section className="max-w-5xl mx-auto py-16 md:py-20">
-                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
+                    <p
+                        ref={archEyebrowRef}
+                        className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block"
+                    >
                         {t("architecture.eyebrow")}
                     </p>
                     <h2
+                        ref={archTitleRef}
                         className="font-sans font-normal text-primary leading-[1.05] mb-10"
                         style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
                     >
                         {t("architecture.title")}
                     </h2>
-                    <div className="grid md:grid-cols-2 gap-8 max-w-3xl">
-                        <p className="text-base text-primary/60 leading-relaxed">{t("architecture.p1")}</p>
-                        <p className="text-base text-primary/60 leading-relaxed">{t("architecture.p2")}</p>
+                    <div ref={archBodyRef} className="grid md:grid-cols-2 gap-8 max-w-3xl">
+                        <p className="arch-p text-base text-primary/60 leading-relaxed">{t("architecture.p1")}</p>
+                        <p className="arch-p text-base text-primary/60 leading-relaxed">{t("architecture.p2")}</p>
                     </div>
                 </section>
+
                 <div className="h-px w-full bg-foreground/8" />
+
+                {/* ── Phased Process ────────────────────────────────────── */}
                 <section className="max-w-5xl mx-auto py-16 md:py-20">
                     <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                         <div>
-                            <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
+                            <p
+                                ref={processEyebrowRef}
+                                className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block"
+                            >
                                 {t("phasedProcess.eyebrow")}
                             </p>
                             <h2
+                                ref={processTitleRef}
                                 className="font-sans font-normal text-primary leading-[1.05] mb-4"
                                 style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
                             >
                                 {t("phasedProcess.title")}
                             </h2>
-                            <p className="text-base text-primary/60 leading-relaxed max-w-[44ch]">
+                            <p
+                                ref={processDescRef}
+                                className="text-base text-primary/60 leading-relaxed max-w-[44ch]"
+                            >
                                 {t("phasedProcess.description")}
                             </p>
                         </div>
@@ -85,11 +142,11 @@ export default function HowWeWorkPage() {
                             {tPhases("deliverables")} · {tPhases("timeline")}
                         </p>
                     </div>
-                    <div className="grid gap-4 md:grid-cols-2">
+                    <div ref={phaseCardsRef} className="grid gap-4 md:grid-cols-2">
                         {phases.map((key, i) => (
                             <article
                                 key={key}
-                                className="group border border-foreground/8 rounded-sm bg-foreground/2 p-6 md:p-8 hover:bg-foreground/4 transition-colors duration-300"
+                                className="phase-card group border border-foreground/8 rounded-sm bg-foreground/2 p-6 md:p-8 hover:bg-foreground/4 transition-colors duration-300"
                             >
                                 <div className="flex items-start justify-between mb-4">
                                     <span
@@ -121,26 +178,33 @@ export default function HowWeWorkPage() {
                         {t("phasedProcess.footer")}
                     </p>
                 </section>
+
                 <div className="h-px w-full bg-foreground/8" />
+
+                {/* ── Standards ─────────────────────────────────────────── */}
                 <section className="max-w-5xl mx-auto py-16 md:py-20">
-                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
+                    <p
+                        ref={standardsEyebrowRef}
+                        className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block"
+                    >
                         {t("standards.eyebrow")}
                     </p>
                     <h2
+                        ref={standardsTitleRef}
                         className="font-sans font-normal text-primary leading-[1.05] mb-8"
                         style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
                     >
                         {t("standards.title")}
                     </h2>
-                    <div className="grid md:grid-cols-2 gap-6 max-w-3xl mb-6">
-                        <p className="text-base text-primary/60 leading-relaxed">
+                    <div ref={standardsBodyRef} className="grid md:grid-cols-2 gap-6 max-w-3xl mb-6">
+                        <p className="standards-p text-base text-primary/60 leading-relaxed">
                             {tStandards("description")}
                         </p>
-                        <p className="text-base text-primary/60 leading-relaxed">
+                        <p className="standards-p text-base text-primary/60 leading-relaxed">
                             {t("standards.description")}
                         </p>
                     </div>
-                    <div className="grid gap-4 md:grid-cols-3 mb-8">
+                    <div ref={standardsCardsRef} className="grid gap-4 md:grid-cols-3 mb-8">
                         {[
                             { key: "performance", label: t("standards.performance.label"), desc: t("standards.performance.description") },
                             { key: "accessibility", label: t("standards.accessibility.label"), desc: t("standards.accessibility.description") },
@@ -148,7 +212,7 @@ export default function HowWeWorkPage() {
                         ].map(({ key, label, desc }) => (
                             <div
                                 key={key}
-                                className="border border-foreground/8 rounded-sm bg-foreground/2 p-5"
+                                className="standard-card border border-foreground/8 rounded-sm bg-foreground/2 p-5"
                             >
                                 <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary/25 mb-3">
                                     {label}
@@ -157,29 +221,38 @@ export default function HowWeWorkPage() {
                             </div>
                         ))}
                     </div>
-                    <Link
-                        href="/standards"
-                        className="group inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-primary/40 hover:text-primary/70 transition-colors duration-300"
-                    >
-                        <span className="border-b border-transparent group-hover:border-foreground/30 transition-colors duration-300 pb-0.5">
-                            {locale === "ar" ? "اقرأ المعايير الكاملة" : "Read the full standards"}
-                        </span>
-                        <svg
-                            className="h-3.5 w-3.5 transition-transform duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    <div ref={standardsLinkRef}>
+                        <Link
+                            href="/standards"
+                            className="group inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.18em] text-primary/40 hover:text-primary/70 transition-colors duration-300"
                         >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                        </svg>
-                    </Link>
+                            <span className="border-b border-transparent group-hover:border-foreground/30 transition-colors duration-300 pb-0.5">
+                                {locale === "ar" ? "اقرأ المعايير الكاملة" : "Read the full standards"}
+                            </span>
+                            <svg
+                                className="h-3.5 w-3.5 transition-transform duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
+                                fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </Link>
+                    </div>
                 </section>
+
                 <div className="h-px w-full bg-foreground/8" />
+
+                {/* ── CTA ───────────────────────────────────────────────── */}
                 <section className="max-w-5xl mx-auto py-16 md:py-24">
                     <div className="grid md:grid-cols-[1fr_360px] gap-12 items-start">
                         <div>
-                            <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
+                            <p
+                                ref={ctaEyebrowRef}
+                                className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block"
+                            >
                                 {t("cta.eyebrow")}
                             </p>
                             <h2
+                                ref={ctaTitleRef}
                                 className="font-sans font-normal text-primary leading-[1.05] mb-4"
                                 style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
                             >
@@ -192,11 +265,14 @@ export default function HowWeWorkPage() {
                                     {t("cta.titleItalic")}
                                 </span>
                             </h2>
-                            <p className="text-base text-primary/60 leading-relaxed max-w-[44ch]">
+                            <p
+                                ref={ctaDescRef}
+                                className="text-base text-primary/60 leading-relaxed max-w-[44ch]"
+                            >
                                 {t("cta.description")}
                             </p>
                         </div>
-                        <div className="flex flex-col gap-3">
+                        <div ref={ctaButtonsRef} className="flex flex-col gap-3">
                             <Link href="/schedule">
                                 <MagneticButton size="lg" variant="primary" className="w-full justify-center">
                                     {t("cta.schedule")}

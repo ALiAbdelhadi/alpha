@@ -1,3 +1,4 @@
+// motion: useText(heading) for h1, useReveal for subtitle + badge + progress; step container keeps existing GSAP transition
 "use client"
 
 import { Container } from "@/components/container"
@@ -5,7 +6,7 @@ import { MagneticButton } from "@/components/magnetic-button"
 import { ProposalNarrativeBlock } from "@/components/sections/estimator-section"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { DEFAULTS, MOTION, useReveal } from "@/lib/motion"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import {
     BrandIdentity,
     Budget,
@@ -68,6 +69,13 @@ export default function EstimatorPage() {
 
     const estimate = getEstimate()
 
+    // ── Static header animations (run once on mount) ──────────
+    const titleRef = useText<HTMLHeadingElement>(DEFAULTS.heading)
+    const subtitleRef = useReveal<HTMLParagraphElement>({ ...DEFAULTS.body, delay: 0.15 })
+    const badgeRef = useReveal<HTMLDivElement>({ ...DEFAULTS.element, delay: 0.1 })
+    const progressRef = useReveal<HTMLDivElement>({ ...DEFAULTS.element, delay: 0.25 })
+
+    // ── Step container: GSAP transition on each step change ───
     const containerRef = useRef<HTMLDivElement>(null)
     useEffect(() => {
         if (!containerRef.current) return
@@ -117,7 +125,6 @@ export default function EstimatorPage() {
     const handleDownloadPDF = async () => {
         if (!estimate || !projectType || !budget) return
         setPdfGenerating(true)
-
         try {
             const html = buildPDFHtml({
                 locale, t,
@@ -134,7 +141,6 @@ export default function EstimatorPage() {
                 contentReadiness,
                 deadlineUrgency,
             })
-
             await generateEstimatePdf(html, `altruvex-estimate-${Date.now()}.pdf`)
         } catch (err) {
             console.error("PDF generation failed:", err)
@@ -158,24 +164,50 @@ export default function EstimatorPage() {
             <section className="min-h-screen flex items-center section-padding">
                 <Container>
                     <div className="max-w-3xl mx-auto">
+
+                        {/* ── Static header — animated once on mount ── */}
                         <div className="text-center mb-12">
-                            <h1 className="font-sans font-normal text-primary mb-4">{t("title")}</h1>
-                            <p className="body-lg text-primary/70">{t("subtitle")}</p>
+                            <h1
+                                ref={titleRef}
+                                className="font-sans font-normal text-primary mb-4"
+                            >
+                                {t("title")}
+                            </h1>
+                            <p ref={subtitleRef} className="body-lg text-primary/70">
+                                {t("subtitle")}
+                            </p>
                             {incomingTier && (
-                                <div className="inline-flex items-center gap-2 mt-4 px-3 py-1.5 rounded-sm border border-foreground/12 bg-foreground/4">
-                                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/40">{t("preselected")}</span>
-                                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70">{t(`tierNames.${incomingTier}`)}</span>
+                                <div
+                                    ref={badgeRef}
+                                    className="inline-flex items-center gap-2 mt-4 px-3 py-1.5 rounded-sm border border-foreground/12 bg-foreground/4"
+                                >
+                                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/40">
+                                        {t("preselected")}
+                                    </span>
+                                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-primary/70">
+                                        {t(`tierNames.${incomingTier}`)}
+                                    </span>
                                 </div>
                             )}
                         </div>
-                        <div className="flex items-center justify-center gap-1 mb-12">
+
+                        {/* ── Progress bar — animated once on mount ── */}
+                        <div
+                            ref={progressRef}
+                            className="flex items-center justify-center gap-1 mb-12"
+                        >
                             {Array.from({ length: TOTAL_STEPS }, (_, i) => i + 1).map((i) => (
-                                <div key={i}
-                                    className={cn("h-1.5 rounded-full transition-all duration-300",
-                                        i <= visibleStep ? "w-8 bg-primary" : "w-6 bg-foreground/10")}
+                                <div
+                                    key={i}
+                                    className={cn(
+                                        "h-1.5 rounded-full transition-all duration-300",
+                                        i <= visibleStep ? "w-8 bg-primary" : "w-6 bg-foreground/10"
+                                    )}
                                 />
                             ))}
                         </div>
+
+                        {/* ── Step container — GSAP animates on each step ── */}
                         <div ref={containerRef} className="mb-12">
                             {step === 1 && <StepBrandIdentity selected={brandIdentity} onSelect={setBrandIdentity} t={t} />}
                             {step === 2 && !preselectedBudget && <StepBudget selected={budget} onSelect={setBudget} t={t} />}
@@ -214,6 +246,8 @@ export default function EstimatorPage() {
                                 </>
                             )}
                         </div>
+
+                        {/* ── Navigation ── */}
                         <div className="flex items-center justify-between">
                             {(step > 1 || isResultsStep) ? (
                                 <MagneticButton variant="secondary" onClick={isResultsStep ? handleReset : handleBack}>
@@ -229,12 +263,15 @@ export default function EstimatorPage() {
                                 </MagneticButton>
                             )}
                         </div>
+
                     </div>
                 </Container>
             </section>
         </div>
     )
 }
+
+// ─── Step components (unchanged) ─────────────────────────────────────────────
 
 interface StepProps {
     t: (key: string, values?: Record<string, string | number>) => string
@@ -348,14 +385,12 @@ function StepResults({
     contentReadiness?: ContentReadiness
     deadlineUrgency?: DeadlineUrgency
 }) {
-    const contentRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
-
     const projKey = mapProjectType(projectType)
     const tierKey = mapBudgetTier(budget)
     const tlKey = timeline ?? "standard"
 
     return (
-        <div ref={contentRef}>
+        <div>
             <h2 className="text-2xl font-normal text-primary mb-6 text-center">{t("results.title")}</h2>
             <p className="body-lg text-primary/90 mb-8 text-center">
                 {t("results.rangeCopy", {

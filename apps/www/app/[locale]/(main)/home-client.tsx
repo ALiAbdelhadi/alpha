@@ -26,6 +26,7 @@ export function HomeClient() {
 
     const { resolvedTheme } = useTheme()
 
+    // eslint-disable-next-line react-hooks/refs
     themeRef.current = resolvedTheme
 
     const scrollToSection = useCallback((sectionId: string) => {

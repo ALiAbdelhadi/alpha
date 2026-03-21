@@ -20,14 +20,8 @@ interface FaqSectionProps {
 export const FaqSection = memo(function FaqSection({ namespace, className }: FaqSectionProps) {
   const t = useTranslations(namespace)
 
-  const headerRef = useText<HTMLDivElement>({
-    duration: DEFAULTS.heading.duration,
-    delay: 0,
-    ease: MOTION.ease.text,
-    blur: true,
-    byWord: false,
-  })
-
+  const headerRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, delay: 0 })
+  
   const contentRef = useReveal<HTMLDivElement>({
     ...DEFAULTS.body,
     delay: 0.15,

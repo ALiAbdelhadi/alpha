@@ -67,6 +67,7 @@ export const ProblemSection = memo(function ProblemSection() {
             <span className="text-primary/20 line-through decoration-primary/15">
               {t("problem.title.crossed")}
             </span>{" "}
+            <br />
             <span
               className="text-primary"
               style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontStyle: "italic" }}

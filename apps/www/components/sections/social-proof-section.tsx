@@ -1,5 +1,5 @@
 import { Container } from "@/components/container"
-import { useBatch, useReveal } from "@/lib/motion"
+import { DEFAULTS, useBatch, useReveal } from "@/lib/motion"
 import { TESTIMONIALS, type Testimonial } from "@/lib/testimonials"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
@@ -9,20 +9,11 @@ export const SocialProofSection = memo(function SocialProofSection() {
   const t = useTranslations("socialProof")
   const testimonials: Testimonial[] = TESTIMONIALS
 
-  const titleRef = useReveal<HTMLDivElement>({
-    direction: "up",
-  })
+  const titleRef = useReveal({ ...DEFAULTS.body, delay: 0 })
 
-  const featuredRef = useReveal<HTMLDivElement>({
-    direction: "up",
-    delay: 0.1,
-  })
+  const featuredRef = useReveal({ ...DEFAULTS.body, delay: 0.1 })
 
-  const gridRef = useBatch<HTMLDivElement>({
-    selector: ".problem-card",
-    stagger: 0.1,
-    once: true,
-  })
+  const gridRef = useBatch({ ...DEFAULTS.card, selector: ".testimonial-card" })
 
   if (testimonials.length === 0) return null
 

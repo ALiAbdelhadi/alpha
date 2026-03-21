@@ -1,8 +1,11 @@
+"use client"
+
 import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
-import { Link } from "@/i18n/navigation"
-import { useTranslations } from "next-intl"
 import { FaqSection } from "@/components/sections/faq-section"
+import { Link } from "@/i18n/navigation"
+import { DEFAULTS, useBatch, useReveal, useText } from "@/lib/motion"
+import { useTranslations } from "next-intl"
 
 const TIER_DESTINATION = {
     essential: "/estimator?tier=essential",
@@ -10,9 +13,17 @@ const TIER_DESTINATION = {
     flagship: "/schedule",
 } as const
 
-
 export default function PricingPage() {
     const t = useTranslations("pricing")
+    const heroEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
+    const heroTitleRef = useText<HTMLHeadingElement>(DEFAULTS.heading)
+    const heroDescRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
+    const tierCardsRef = useBatch<HTMLDivElement>({ ...DEFAULTS.card, selector: ".tier-card" })
+    const roiEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
+    const roiTitleRef = useText<HTMLHeadingElement>(DEFAULTS.heading)
+    const roiBodyRef = useBatch<HTMLDivElement>({ ...DEFAULTS.card, selector: ".roi-p" })
+    const roiStatsRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
+    const roiButtonsRef = useReveal({ ...DEFAULTS.element, delay: 0.25 })
 
     const tiers = [
         {
@@ -21,7 +32,6 @@ export default function PricingPage() {
             priceRange: t("tiers.essential.priceRange"),
             originalPrice: t("tiers.essential.originalPrice"),
             idealFor: t("tiers.essential.idealFor"),
-            systemDescription: t("tiers.essential.systemDescription"),
             notIncluded: t("tiers.essential.notIncluded"),
             highlight: false,
             features: Array.from({ length: 5 }, (_, i) => t(`tiers.essential.features.${i}`)),
@@ -32,7 +42,6 @@ export default function PricingPage() {
             priceRange: t("tiers.professional.priceRange"),
             originalPrice: t("tiers.professional.originalPrice"),
             idealFor: t("tiers.professional.idealFor"),
-            systemDescription: t("tiers.professional.systemDescription"),
             notIncluded: t("tiers.professional.notIncluded"),
             highlight: true,
             features: Array.from({ length: 5 }, (_, i) => t(`tiers.professional.features.${i}`)),
@@ -43,7 +52,6 @@ export default function PricingPage() {
             priceRange: t("tiers.flagship.priceRange"),
             originalPrice: t("tiers.flagship.originalPrice"),
             idealFor: t("tiers.flagship.idealFor"),
-            systemDescription: t("tiers.flagship.systemDescription"),
             notIncluded: null,
             highlight: false,
             features: Array.from({ length: 5 }, (_, i) => t(`tiers.flagship.features.${i}`)),
@@ -55,10 +63,14 @@ export default function PricingPage() {
             <Container>
                 <div className="py-12 md:py-24">
                     <div className="mb-16 max-w-5xl">
-                        <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
+                        <p
+                            ref={heroEyebrowRef}
+                            className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block"
+                        >
                             {t("label")}
                         </p>
                         <h1
+                            ref={heroTitleRef}
                             className="mb-6 font-sans font-normal text-primary leading-[1.03]"
                             style={{ fontSize: "clamp(44px, 7vw, 96px)", letterSpacing: "-0.025em" }}
                         >
@@ -71,17 +83,20 @@ export default function PricingPage() {
                                 {t("titleItalic")}
                             </span>
                         </h1>
-                        <p className="text-base text-primary/60 leading-relaxed max-w-[52ch]">
+                        <p
+                            ref={heroDescRef}
+                            className="text-base text-primary/60 leading-relaxed max-w-[52ch]"
+                        >
                             {t("description")}
                         </p>
                     </div>
                     <div className="h-px w-full bg-foreground/8 mb-12" />
-                    <div className="grid gap-4 md:grid-cols-3 mb-16">
+                    <div ref={tierCardsRef} className="grid gap-4 md:grid-cols-3 mb-16">
                         {tiers.map((tier, i) => (
                             <article
                                 key={tier.id}
                                 className={[
-                                    "relative border rounded-sm p-6 md:p-8 flex flex-col",
+                                    "tier-card relative border rounded-sm p-6 md:p-8 flex flex-col",
                                     tier.highlight
                                         ? "border-foreground/40 bg-foreground/4"
                                         : "border-foreground/8 bg-foreground/2",
@@ -126,7 +141,7 @@ export default function PricingPage() {
                                 <ul className="space-y-2 mb-8 flex-1">
                                     {tier.features.map((feature, j) => (
                                         <li key={j} className="flex items-start gap-3 text-sm text-primary/60">
-                                            <div className="h-px w-3 bg-foreground/8 mt-2.5 shrink-0 group-hover:bg-foreground/25" />
+                                            <div className="h-px w-3 bg-foreground/8 mt-2.5 shrink-0" />
                                             {feature}
                                         </li>
                                     ))}
@@ -150,59 +165,51 @@ export default function PricingPage() {
                     </div>
                     <div className="h-px w-full bg-foreground/8" />
                     <section className="pt-16">
-                        <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
+                        <p
+                            ref={roiEyebrowRef}
+                            className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block"
+                        >
                             {t("roi.eyebrow")}
                         </p>
                         <h2
+                            ref={roiTitleRef}
                             className="font-sans font-normal text-primary leading-[1.05] mb-8"
                             style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
                         >
                             {t("roi.title")}
                         </h2>
-                        <div className="grid md:grid-cols-2 gap-8 mb-10 max-w-3xl">
-                            <p className="text-base text-primary/60 leading-relaxed">{t("roi.calculation")}</p>
-                            <p className="text-base text-primary/60 leading-relaxed">{t("roi.question")}</p>
+                        <div ref={roiBodyRef} className="grid md:grid-cols-2 gap-8 mb-10 max-w-3xl">
+                            <p className="roi-p text-base text-primary/60 leading-relaxed">{t("roi.calculation")}</p>
+                            <p className="roi-p text-base text-primary/60 leading-relaxed">{t("roi.question")}</p>
                         </div>
-
-                        {/* Value Anchoring - Time Savings */}
-                        <div className="mt-12 p-6 rounded-sm bg-foreground/3 border border-foreground/8">
+                        <div
+                            ref={roiStatsRef}
+                            className="mt-12 p-6 rounded-sm bg-foreground/3 border border-foreground/8"
+                        >
                             <div className="grid md:grid-cols-3 gap-6">
-                                <div className="md:col-span-1">
-                                    <p className="font-mono text-xs uppercase tracking-[0.15em] text-primary/40 mb-2">
-                                        Typical Timeline
-                                    </p>
-                                    <p className="text-2xl font-light text-primary mb-1">
-                                        4-8 weeks
-                                    </p>
-                                    <p className="text-xs text-primary/40">
-                                        From discovery to launch
-                                    </p>
-                                </div>
-                                <div className="md:col-span-1 border-l border-foreground/8 pl-6">
-                                    <p className="font-mono text-xs uppercase tracking-[0.15em] text-primary/40 mb-2">
-                                        Your Time Saved
-                                    </p>
-                                    <p className="text-2xl font-light text-primary mb-1">
-                                        40-60 hours
-                                    </p>
-                                    <p className="text-xs text-primary/40">
-                                        No hiring, managing, or code reviews
-                                    </p>
-                                </div>
-                                <div className="md:col-span-1 border-l border-foreground/8 pl-6">
-                                    <p className="font-mono text-xs uppercase tracking-[0.15em] text-primary/40 mb-2">
-                                        What You Get
-                                    </p>
-                                    <p className="text-2xl font-light text-primary mb-1">
-                                        Production-ready
-                                    </p>
-                                    <p className="text-xs text-primary/40">
-                                        Deployed, tested, documented
-                                    </p>
-                                </div>
+                                {[
+                                    { label: "Typical Timeline", value: "4-8 weeks", sub: "From discovery to launch" },
+                                    { label: "Your Time Saved", value: "40-60 hours", sub: "No hiring, managing, or code reviews" },
+                                    { label: "What You Get", value: "Production-ready", sub: "Deployed, tested, documented" },
+                                ].map((stat, i) => (
+                                    <div
+                                        key={stat.label}
+                                        className={i > 0 ? "md:border-l border-foreground/8 md:pl-6" : ""}
+                                    >
+                                        <p className="font-mono text-xs uppercase tracking-[0.15em] text-primary/40 mb-2">
+                                            {stat.label}
+                                        </p>
+                                        <p className="text-2xl font-light text-primary mb-1">
+                                            {stat.value}
+                                        </p>
+                                        <p className="text-xs text-primary/40">
+                                            {stat.sub}
+                                        </p>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                        <div className="flex flex-wrap gap-3">
+                        <div ref={roiButtonsRef} className="flex flex-wrap gap-3 mt-8">
                             <Link href="/schedule">
                                 <MagneticButton size="lg" variant="primary">
                                     {t("roi.ctaSchedule")}

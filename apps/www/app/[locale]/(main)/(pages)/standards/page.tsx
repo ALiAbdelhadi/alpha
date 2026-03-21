@@ -19,7 +19,7 @@ export default function StandardsPage() {
 function OpeningSection() {
     const t = useTranslations("standards.hero")
     const eyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
-    const titleRef = useText({ ...DEFAULTS.body, delay: 0.1 })
+    const titleRef = useText(DEFAULTS.heading)
     const descRef = useReveal({ ...DEFAULTS.body, delay: 0.25 })
     const metricsRef = useReveal({ ...DEFAULTS.element, delay: 0.35 })
     return (

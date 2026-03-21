@@ -34,7 +34,7 @@ function OpeningSection() {
             <Container>
                 <div className="max-w-4xl py-16 md:py-24">
                     <h1 ref={titleRef} className="mb-8 font-sans font-normal text-primary">
-                            {t("title")}
+                        {t("title")}
                     </h1>
                     <div ref={descRef}>
                         <p className="max-w-2xl body-lg text-primary/85">
@@ -50,7 +50,7 @@ function OpeningSection() {
 function ProblemSection() {
     const t = useTranslations("approach.contrasts")
     const sectionRef = useRef<HTMLElement>(null)
-    const titleRef = useReveal({ ...DEFAULTS.body, direction: "up", ease: MOTION.ease.smooth, delay: 0 })
+    const titleRef = useText(DEFAULTS.heading)
 
     useEffect(() => {
         if (!sectionRef.current) return
