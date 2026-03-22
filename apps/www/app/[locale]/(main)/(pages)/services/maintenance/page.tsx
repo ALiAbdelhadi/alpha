@@ -1,4 +1,4 @@
-// motion: DEFAULTS throughout — fixed raw values in FeaturesSection/PricingSection/CtaSection
+// motion: DEFAULTS throughout - fixed raw values in FeaturesSection/PricingSection/CtaSection
 "use client"
 
 import { Container } from "@/components/container"

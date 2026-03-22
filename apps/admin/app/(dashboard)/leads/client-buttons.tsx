@@ -66,7 +66,7 @@ const FIELD_LABELS: Record<string, string> = {
 const ORDERED_KEYS = Object.keys(FIELD_LABELS)
 
 function formatValue(key: string, value: any): string {
-  if (value === null || value === undefined || value === "") return "—"
+  if (value === null || value === undefined || value === "") return "-"
   if (key === "createdAt") {
     return new Date(value).toLocaleString("en-EG", {
       dateStyle: "medium",
@@ -137,7 +137,7 @@ function LeadDetailModal({
         </div>
         <div className="px-6 py-4 border-t border-border flex justify-between items-center">
           <p className="font-mono text-[10px] text-foreground/30">
-            ID: {lead.id ?? "—"}
+            ID: {lead.id ?? "-"}
           </p>
           <a
             href={`https://wa.me/${(lead.phone ?? "").replace(/\D/g, "")}`}

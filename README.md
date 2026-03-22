@@ -1,9 +1,9 @@
-# Altruvex — altruvex.com
+# Altruvex - altruvex.com
 
 > **Engineering Beyond Standard.**  
 > Custom web systems. Built to outlast the next trend.
 
-Production codebase for [altruvex.com](https://altruvex.com) — the official website of Altruvex, a custom web engineering studio based in Cairo, Egypt.
+Production codebase for [altruvex.com](https://altruvex.com) - the official website of Altruvex, a custom web engineering studio based in Cairo, Egypt.
 
 ---
 
@@ -14,7 +14,7 @@ Production codebase for [altruvex.com](https://altruvex.com) — the official we
 | Framework | [Next.js 15](https://nextjs.org) (App Router) |
 | Language | TypeScript (strict) |
 | Styling | Tailwind CSS v4 |
-| i18n | [next-intl](https://next-intl-docs.vercel.app) — Arabic / English (RTL/LTR) |
+| i18n | [next-intl](https://next-intl-docs.vercel.app) - Arabic / English (RTL/LTR) |
 | Monorepo | Turborepo |
 | Deployment | Vercel |
 | Analytics | Microsoft Clarity |
@@ -110,16 +110,16 @@ CONTACT_API_SECRET=your_secret
 ### Estimator (`/estimator`)
 8-step project scoping flow. Captures project type, budget tier, scope level, delivery pace, timeline, content readiness, and brand status. Collects WhatsApp phone number as lead. Outputs a detailed PDF estimate via `html2pdf.js`.
 
-**Pricing logic** lives in `estimator-utils.ts` — single fixed output per combination (range maximum used to protect against scope creep).
+**Pricing logic** lives in `estimator-utils.ts` - single fixed output per combination (range maximum used to protect against scope creep).
 
 ### Bilingual Architecture
-Full RTL/LTR support. Arabic and English are first-class — not translations layered on top of an English layout. Every component is direction-aware. Bilingual proposal narratives use fully hardcoded copy per language to prevent label leakage.
+Full RTL/LTR support. Arabic and English are first-class - not translations layered on top of an English layout. Every component is direction-aware. Bilingual proposal narratives use fully hardcoded copy per language to prevent label leakage.
 
 ### PDF Generation
 Uses `html2pdf.js` with iframe injection. `oklch()`/`lab()` colors are neutralized via `color-scheme: light only` and `onclone` callback for `html2canvas` compatibility.
 
 ### Exit Intent
-Captures WhatsApp phone number (not email) — consistent with Egyptian B2B market behavior. 24-hour cooldown, max 3 displays per user.
+Captures WhatsApp phone number (not email) - consistent with Egyptian B2B market behavior. 24-hour cooldown, max 3 displays per user.
 
 ---
 
@@ -140,7 +140,7 @@ Typography, spacing, and color tokens are defined in `globals.css` via CSS custo
 
 | Route | Description |
 |---|---|
-| `/` | Homepage — hero, problem framing, case study teaser, estimator teaser |
+| `/` | Homepage - hero, problem framing, case study teaser, estimator teaser |
 | `/work` | Selected case studies |
 | `/work/[slug]` | Individual case study |
 | `/services` | Services overview |

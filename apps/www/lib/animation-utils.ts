@@ -13,7 +13,7 @@ export const EASE = {
     easeMid: MOTION.ease.gentle,
 } as const
 
-/** Legacy timeline helpers — durations/eases align with `MOTION` / `DEFAULTS` */
+/** Legacy timeline helpers - durations/eases align with `MOTION` / `DEFAULTS` */
 export const ANIM = {
     ease: MOTION.ease.smooth,
     easeIn: MOTION.ease.ui,

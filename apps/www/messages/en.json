@@ -792,6 +792,18 @@
             "showcaseCorporate": "Corporate",
             "showcasePortfolio": "Portfolio",
             "showcaseLanding": "Landing",
+            "compareEyebrow": "See the difference",
+            "compareTitle": "Same content.",
+            "compareTitleItalic": "Entirely different result.",
+            "compareSubtitle": "Drag the divider - same copy, same sections, opposite outcomes.",
+            "compareGenericLabel": "Generic template",
+            "compareAltruvexLabel": "Altruvex crafted",
+            "compareStat1Label": "Typography",
+            "compareStat1Sub": "More visual hierarchy",
+            "compareStat2Label": "Whitespace",
+            "compareStat2Sub": "More breathing room",
+            "compareStat3Label": "Visual noise",
+            "compareStat3Sub": "Elements removed",
             "features": {
                 "01": {
                     "title": "Conversion-First Layouts",
@@ -885,6 +897,84 @@
             "titleItalic": "before you build.",
             "subtitle": "Architecture & Decision Consulting",
             "description": "Make the right technical decisions before you spend six months on the wrong system. We map your constraints, evaluate your options, and give you a clear build direction.",
+            "stages": {
+                "discovery": "Discovery",
+                "audit": "Arch Audit",
+                "roadmap": "Decomp Plan",
+                "delivery": "Migration",
+                "labels": {
+                    "discovery": "DISC",
+                    "audit": "AUDT",
+                    "roadmap": "ROAD",
+                    "delivery": "DELV"
+                }
+            },
+            "notes": {
+                "noteSymptom": {
+                    "label": "Symptom",
+                    "body": "Release coupling, not a microservices problem. Teams move at the speed of the slowest deploy - investigate team topology before decomposition."
+                },
+                "noteRflag": {
+                    "label": "Red flag",
+                    "body": "Premature decomposition creates a distributed monolith. Splitting without bounded context clarity produces 14 services with the same coupling problems."
+                },
+                "noteQuestion": {
+                    "label": "Question",
+                    "body": "How many cross-domain joins exist in the shared schema? That count determines migration sequence and feature-flag scope per extraction."
+                },
+                "noteConnected": {
+                    "label": "Connected",
+                    "body": "Shared database and missing tracing are the same root: no service owns its data, so no service can be independently deployed or diagnosed."
+                },
+                "noteFinding": {
+                    "label": "Finding",
+                    "body": "Observability must precede decomposition. You cannot safely extract a service whose failure modes you cannot trace. Jaeger/OpenTelemetry first."
+                },
+                "noteAction": {
+                    "label": "Action",
+                    "body": "Strangler Fig sequence: instrument → identify bounded contexts → extract Auth → extract Inventory → last: Orders (highest coupling)."
+                }
+            },
+            "brief": {
+                "eyebrow": "Consulting engagement",
+                "title": "The brief, read",
+                "titleItalic": "carefully.",
+                "subtitle": "Every annotation is a decision. No recommendation before the architecture is understood.",
+                "annotationsLabel": "Annotations",
+                "docMeta": "Client brief - Engineering - March 2026",
+                "docRef": "Ref: ARCH-2026-04",
+                "docTitle": "Re: Monolith-to-microservices migration - Logistics Platform",
+                "p1pre": "Our platform has run on a single Django application for six years. Deployment cycles are now 48 minutes end-to-end.",
+                "p1release": "Teams block each other on every release",
+                "p1mid": "because all 11 squads deploy together.",
+                "p1monolith": "The monolith is the bottleneck.",
+                "p1post": " Engineering estimates we lose two sprint-days per month to merge coordination alone.",
+                "p2pre": "The solution is clear:",
+                "p2decompose": "to split everything into microservices immediately",
+                "p2post": ". We have 14 domain areas that map naturally to independent services. We just need the extraction sequence.",
+                "p3shareddb": "All 11 teams write directly to the same PostgreSQL schema.",
+                "p3mid": "No service owns its data. We also have",
+                "p3tracing": "no distributed tracing or correlation IDs across service boundaries",
+                "p3post": " - debugging cross-service failures means querying logs by hand.",
+                "p4pre": "Latency is",
+                "p4load": "degrading under peak load",
+                "p4post": " but we can't isolate which call chain is responsible. Engineers know the domain well. We need a migration sequence and someone to enforce the context boundaries.",
+                "o1label": "Time to bounded contexts",
+                "o1sub": "Workshops → draft domain map",
+                "o2label": "Services with observability",
+                "o2sub": "Before first extraction ships",
+                "o3label": "Coupling issues surfaced",
+                "o3sub": "vs. team initial estimate",
+                "outcomesLabel": "Typical migration engagement outcomes",
+                "prev": "Prev",
+                "next": "Next"
+            },
+            "body": {
+                "p1": "We've been growing fast over the past 18 months, but <align>we can't seem to keep the team aligned.</align> Every sprint we're shipping things, but <picture>nothing feels connected to a bigger picture.</picture>",
+                "p2": "<tooling>Our main problem is we need better tooling.</tooling> If we just had the right tools, the team would work better and we'd finally be able to scale.",
+                "p3": "Costs are increasing every quarter but <revenue>revenue isn't keeping pace.</revenue> We think the issue is that <priority>developers are spending time on wrong priorities.</priority>",
+                "p4": "We need someone to tell us what tools to buy and how to restructure the engineering team. <time>Budget isn't the constraint - time is.</time>"
+            },
             "value": {
                 "eyebrow": "Why It Matters",
                 "title": "Wrong builds cost more than right ones.",
@@ -1491,7 +1581,7 @@
         "exitIntent": {
             "title": "Before you leave.",
             "subtitle": "ONE LAST THING",
-            "description": "Most projects fail in the first conversation — not the build. A 30-minute call is enough to know if we're the right fit.",
+            "description": "Most projects fail in the first conversation - not the build. A 30-minute call is enough to know if we're the right fit.",
             "phoneLabel": "Phone (WhatsApp)",
             "phonePlaceholder": "01XXXXXXXXX",
             "phoneHint": "Used only for follow-up. Never shared.",

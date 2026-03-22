@@ -1,4 +1,4 @@
-// motion: useBatch for top row, useReveal for logo block + description — 3 hooks
+// motion: useBatch for top row, useReveal for logo block + description - 3 hooks
 "use client"
 
 import { Link } from "@/i18n/navigation"

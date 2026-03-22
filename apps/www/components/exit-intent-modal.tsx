@@ -5,7 +5,7 @@ import { markAsConverted, useExitIntent } from "@/hooks/use-exit-intent"
 import { trackEvent } from "@/lib/analytics"
 import { cn } from "@/lib/utils"
 import { X } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { useState } from "react"
 
 export const ExitIntentModal = () => {
@@ -15,7 +15,7 @@ export const ExitIntentModal = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const [error, setError] = useState("")
-
+  const locale = useLocale()
   const handleExit = () => {
     setIsVisible(true)
     trackEvent("exit_intent_shown")
@@ -44,7 +44,7 @@ export const ExitIntentModal = () => {
     setError("")
 
     try {
-      const response = await fetch("/api/exit-intent", {
+      const response = await fetch(`${locale}/api/exit-intent`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone, source: "exit_intent_modal" }),

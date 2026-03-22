@@ -1,6 +1,6 @@
 export const DEFAULTS = {
 
-    // Headings — byWord, blur, dramatic
+    // Headings - byWord, blur, dramatic
     heading: {
         byWord: true,
         blur: true,
@@ -9,7 +9,7 @@ export const DEFAULTS = {
         distance: 40,
     },
 
-    // Subheadings / eyebrows — byLine, subtle
+    // Subheadings / eyebrows - byLine, subtle
     subheading: {
         byLine: true,
         blur: false,
@@ -18,7 +18,7 @@ export const DEFAULTS = {
         distance: 24,
     },
 
-    // Body text / descriptions — no split, simple fade
+    // Body text / descriptions - no split, simple fade
     body: {
         duration: 0.8,
         distance: 20,
@@ -61,7 +61,7 @@ export const MOTION = {
         text: 0.9,
     },
 
-    /** Cinematic initial load sequence — numeric timings only; eases stay GSAP-native in the component */
+    /** Cinematic initial load sequence - numeric timings only; eases stay GSAP-native in the component */
     loader: {
         shaderReveal: 2.2,
         textReveal: 1.8,

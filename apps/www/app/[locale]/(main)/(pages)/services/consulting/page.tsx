@@ -1,20 +1,21 @@
 "use client"
 
+import { ConsultingBriefSection } from "@/components/consulting-brief-section"
 import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
-import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { Link } from "@/i18n/navigation"
-import { gsap, ScrollTrigger } from "@/lib/gsap"
+import { gsap } from "@/lib/gsap"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 
 export default function ConsultingPage() {
     return (
-        <div className="relative min-h-screen w-full overflow-x-hidden">
+        <div className="relative min-h-screen w-full">
             <HeroSection />
-            <ProcessTimelineSection />
-            <ValuePropositionSection />
-            <FeaturesSection />
+            <div className="pb-48">
+                <ConsultingBriefSection />
+            </div>
             <CtaSection />
         </div>
     )
@@ -57,7 +58,6 @@ function HeroSection() {
                     </span>
                 </div>
             </div>
-
             <Container>
                 <div className="max-w-5xl">
                     <div className="mb-8 flex items-center gap-2 md:hidden">
@@ -120,264 +120,11 @@ function HeroSection() {
             </div>
 
             <style>{`
-        @keyframes slideDown {
-          0%   { transform: translateY(-100%); }
-          100% { transform: translateY(200%); }
-        }
-      `}</style>
-        </section >
-    )
-}
-
-function ProcessTimelineSection() {
-    const t = useTranslations("serviceDetails.consulting")
-    const sectionRef = useRef<HTMLElement>(null)
-    const titleRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
-
-    useEffect(() => {
-        if (!sectionRef.current) return
-        const items = sectionRef.current.querySelectorAll("[data-process-item]")
-        const triggers: ScrollTrigger[] = []
-
-        items.forEach((item, index) => {
-            gsap.set(item, { opacity: 0, y: MOTION.distance.sm, willChange: "transform, opacity" })
-            const tween = gsap.to(item, {
-                opacity: 1, y: 0,
-                duration: MOTION.duration.base,
-                delay: index * MOTION.stagger.base,
-                ease: MOTION.ease.smooth,
-                scrollTrigger: { trigger: item, start: "top 90%", once: true },
-                onComplete() { gsap.set(item, { willChange: "auto" }) },
-            })
-            if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
-        })
-
-        return () => triggers.forEach((t) => t.kill())
-    }, [])
-
-    const steps = [
-        { number: "01", key: "01" },
-        { number: "02", key: "02" },
-        { number: "03", key: "03" },
-        { number: "04", key: "04" },
-    ]
-
-    return (
-        <section id="approach" ref={sectionRef} className="section-padding border-t border-foreground/8">
-            <Container>
-                <div ref={titleRef} className="mb-16">
-                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
-                        {t("approach.eyebrow")}
-                    </p>
-                    <div className="flex items-end justify-between gap-8 flex-wrap">
-                        <h2
-                            className="font-sans font-normal text-primary leading-[1.05]"
-                            style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
-                        >
-                            {t("approach.title")}
-                            <br />
-                            <span
-                                className="text-primary/35"
-                                style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}
-                            >
-                                {t("approach.titleItalic")}
-                            </span>
-                        </h2>
-                        <p className="font-mono text-base text-primary/35 max-w-[36ch] hidden lg:block leading-relaxed">
-                            {t("approach.subtitle")}
-                        </p>
-                    </div>
-                </div>
-                <div className="h-px w-full bg-foreground/8 mb-0" />
-                <div>
-                    {steps.map((step) => (
-                        <div
-                            key={step.number}
-                            data-process-item
-                            className="group not-last:border-b not-last:border-foreground/8 py-8 md:py-10 grid gap-6 md:grid-cols-[180px_1fr_1fr] items-start"
-                        >
-                            <div>
-                                <div
-                                    aria-hidden
-                                    className="font-mono font-light text-primary/[0.07] leading-none select-none mb-2"
-                                    style={{ fontSize: "clamp(52px, 7vw, 80px)", letterSpacing: "-0.04em" }}
-                                >
-                                    {step.number}
-                                </div>
-                            </div>
-                            <h3
-                                className="font-sans font-medium text-primary group-hover:text-primary/80 transition-colors duration-300 pt-1"
-                                style={{ fontSize: "clamp(16px, 1.8vw, 20px)", letterSpacing: "-0.015em" }}
-                            >
-                                {t(`approach.steps.${step.key}.title`)}
-                            </h3>
-                            <p className="text-base text-primary/60 leading-relaxed">
-                                {t(`approach.steps.${step.key}.description`)}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-            </Container>
-        </section>
-    )
-}
-
-function ValuePropositionSection() {
-    const t = useTranslations("serviceDetails.consulting")
-    const leftRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
-    const rightRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.15 })
-
-    const stats = [
-        { label: t("value.stats.systemsThinking"), value: "100%" },
-        { label: t("value.stats.dataDriven"), value: "100%" },
-        { label: t("value.stats.longTerm"), value: "100%" },
-    ]
-
-    return (
-        <section className="section-padding border-t border-foreground/8">
-            <Container>
-                <div className="grid md:grid-cols-12 gap-4">
-                    <div
-                        ref={leftRef}
-                        className="md:col-span-7 border border-foreground/8 rounded-sm bg-foreground/2 p-8 md:p-12"
-                    >
-                        <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
-                            {t("value.eyebrow")}
-                        </p>
-                        <h2
-                            className="font-sans font-normal text-primary leading-[1.05] mb-8"
-                            style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
-                        >
-                            {t("value.title")}
-                        </h2>
-                        <div className="space-y-5">
-                            <p className="text-base text-primary/60 leading-relaxed">
-                                {t("value.body1")}
-                            </p>
-                            <p className="text-base text-primary/60 leading-relaxed">
-                                {t("value.body2")}
-                            </p>
-                        </div>
-                    </div>
-                    <div ref={rightRef} className="md:col-span-5 flex flex-col gap-4">
-                        {stats.map((item, i) => (
-                            <div
-                                key={i}
-                                className="flex-1 border border-foreground/8 rounded-sm bg-foreground/2 p-6 md:p-8 flex flex-col justify-between group hover:bg-foreground/4 transition-colors duration-300"
-                            >
-                                <p className="font-mono text-xs uppercase tracking-[0.2em] text-primary/35 mb-4">
-                                    {item.label}
-                                </p>
-                                <span
-                                    className="font-sans font-light text-primary leading-none"
-                                    style={{ fontSize: "clamp(32px, 4vw, 44px)", letterSpacing: "-0.03em" }}
-                                >
-                                    {item.value}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </Container>
-        </section>
-    )
-}
-
-function FeaturesSection() {
-    const t = useTranslations("serviceDetails.consulting")
-    const tCommon = useTranslations("serviceDetails")
-    const sectionRef = useRef<HTMLElement>(null)
-    const titleRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
-
-    useEffect(() => {
-        if (!sectionRef.current) return
-        const cards = sectionRef.current.querySelectorAll("[data-feature-card]")
-        const triggers: ScrollTrigger[] = []
-
-        cards.forEach((card, index) => {
-            gsap.set(card, { opacity: 0, y: MOTION.distance.sm, willChange: "transform, opacity" })
-            const tween = gsap.to(card, {
-                opacity: 1, y: 0,
-                duration: MOTION.duration.base,
-                delay: index * MOTION.stagger.tight,
-                ease: MOTION.ease.smooth,
-                scrollTrigger: { trigger: card, start: "top 90%", once: true },
-                onComplete() { gsap.set(card, { willChange: "auto" }) },
-            })
-            if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
-        })
-
-        return () => triggers.forEach((t) => t.kill())
-    }, [])
-
-    const features = ["01", "02", "03", "04", "05", "06"].map((num, i) => ({
-        num,
-        title: t(`features.${num}.title`),
-        description: t(`features.${num}.description`),
-        wide: i === 0 || i === 5,
-    }))
-
-    return (
-        <section ref={sectionRef} className="section-padding border-t border-foreground/8">
-            <Container>
-                <div ref={titleRef} className="mb-16">
-                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
-                        {tCommon("whatWeOfferEyebrow")}
-                    </p>
-                    <div className="flex items-end justify-between gap-8 flex-wrap">
-                        <h2
-                            className="font-sans font-normal text-primary leading-[1.05]"
-                            style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
-                        >
-                            {tCommon("whatWeOffer")}
-                            <br />
-                            <span
-                                className="text-primary/35"
-                                style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}
-                            >
-                                {tCommon("whatWeOfferItalic")}
-                            </span>
-                        </h2>
-                        <p className="font-mono text-base text-primary/35 max-w-[28ch] hidden md:block tracking-[0.05em]">
-                            {tCommon("whatWeOfferSubtitle")}
-                        </p>
-                    </div>
-                </div>
-                <div className="grid md:grid-cols-6 gap-4">
-                    {features.map((feature, i) => (
-                        <div
-                            key={i}
-                            data-feature-card
-                            className={[
-                                "group relative border border-foreground/8 rounded-sm bg-foreground/2 p-6 md:p-8 overflow-hidden",
-                                "hover:bg-foreground/4 transition-colors duration-300",
-                                feature.wide ? "md:col-span-3" : "md:col-span-2",
-                            ].join(" ")}
-                        >
-                            <div className="flex items-start justify-between mb-6">
-                                <span className="font-mono text-xs text-primary/20 tracking-[0.2em]">
-                                    {String(i + 1).padStart(2, "0")}
-                                </span>
-                                <svg
-                                    className="w-4 h-4 text-primary/0 group-hover:text-primary/35 transition-all duration-300 ltr:-translate-x-2 rtl:-translate-x-2 group-hover:translate-x-0 rtl:group-hover:translate-x-0 rtl:-rotate-180"
-                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </svg>
-                            </div>
-                            <h3
-                                className="font-sans font-medium text-primary mb-3 group-hover:text-primary/80 transition-colors duration-300"
-                                style={{ fontSize: "clamp(15px, 1.6vw, 18px)", letterSpacing: "-0.01em" }}
-                            >
-                                {feature.title}
-                            </h3>
-                            <p className="text-sm text-primary/60 leading-relaxed">
-                                {feature.description}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-            </Container>
+                @keyframes slideDown {
+                    0%   { transform: translateY(-100%); }
+                    100% { transform: translateY(200%); }
+                }
+            `}</style>
         </section>
     )
 }

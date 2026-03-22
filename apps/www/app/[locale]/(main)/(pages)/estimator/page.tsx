@@ -165,7 +165,7 @@ export default function EstimatorPage() {
                 <Container>
                     <div className="max-w-3xl mx-auto">
 
-                        {/* ── Static header — animated once on mount ── */}
+                        {/* ── Static header - animated once on mount ── */}
                         <div className="text-center mb-12">
                             <h1
                                 ref={titleRef}
@@ -191,7 +191,7 @@ export default function EstimatorPage() {
                             )}
                         </div>
 
-                        {/* ── Progress bar — animated once on mount ── */}
+                        {/* ── Progress bar - animated once on mount ── */}
                         <div
                             ref={progressRef}
                             className="flex items-center justify-center gap-1 mb-12"
@@ -207,7 +207,7 @@ export default function EstimatorPage() {
                             ))}
                         </div>
 
-                        {/* ── Step container — GSAP animates on each step ── */}
+                        {/* ── Step container - GSAP animates on each step ── */}
                         <div ref={containerRef} className="mb-12">
                             {step === 1 && <StepBrandIdentity selected={brandIdentity} onSelect={setBrandIdentity} t={t} />}
                             {step === 2 && !preselectedBudget && <StepBudget selected={budget} onSelect={setBudget} t={t} />}

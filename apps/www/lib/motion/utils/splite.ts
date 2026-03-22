@@ -1,7 +1,7 @@
 // lib/motion/utils/split.ts
 // ─────────────────────────────────────────────────────────────
 // DOM-safe text splitting utilities.
-// These operate on actual DOM nodes — NOT innerHTML string replacement —
+// These operate on actual DOM nodes - NOT innerHTML string replacement -
 // so child elements like <em>, <span>, <strong> are preserved intact.
 // ─────────────────────────────────────────────────────────────
 

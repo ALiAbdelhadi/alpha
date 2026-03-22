@@ -130,7 +130,7 @@ export default function ContactPage() {
                 <Container>
                     <div className="grid gap-12 md:grid-cols-2 md:gap-20 lg:gap-28">
 
-                        {/* Left — contact info */}
+                        {/* Left - contact info */}
                         <div className="flex flex-col justify-center">
                             <div className="mb-12 sm:mb-14 md:mb-16">
                                 <h2
@@ -214,7 +214,7 @@ export default function ContactPage() {
                             </div>
                         </div>
 
-                        {/* Right — form */}
+                        {/* Right - form */}
                         <div ref={rightRef} className="flex flex-col justify-center">
                             <div className="p-8 rounded-2xl border border-foreground/10 bg-foreground/3 backdrop-blur-md">
                                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>

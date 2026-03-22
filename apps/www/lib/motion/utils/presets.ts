@@ -57,7 +57,7 @@ const scaleIn = (overrides: Partial<RevealConfig> = {}): RevealConfig => ({
 
 // ─── Text presets ─────────────────────────────────────────────
 
-/** Large hero/section headings — word-by-word with blur */
+/** Large hero/section headings - word-by-word with blur */
 const headline = (overrides: Partial<TextConfig> = {}): TextConfig => ({
     byWord: true,
     blur: true,
@@ -68,7 +68,7 @@ const headline = (overrides: Partial<TextConfig> = {}): TextConfig => ({
     ...overrides,
 })
 
-/** Subheadings — line-by-line, subtle */
+/** Subheadings - line-by-line, subtle */
 const subheading = (overrides: Partial<TextConfig> = {}): TextConfig => ({
     byLine: true,
     blur: false,
@@ -79,7 +79,7 @@ const subheading = (overrides: Partial<TextConfig> = {}): TextConfig => ({
     ...overrides,
 })
 
-/** Body text — single fade-up, no split */
+/** Body text - single fade-up, no split */
 const body = (overrides: Partial<TextConfig> = {}): TextConfig => ({
     byWord: false,
     byLine: false,
@@ -102,7 +102,7 @@ const cardGrid = (overrides: Partial<BatchConfig> = {}): BatchConfig => ({
     ...overrides,
 })
 
-/** List items — tight stagger */
+/** List items - tight stagger */
 const listItems = (overrides: Partial<BatchConfig> = {}): BatchConfig => ({
     direction: "up",
     duration: MOTION.duration.fast,

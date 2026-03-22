@@ -1,11 +1,11 @@
-// motion: DEFAULTS throughout — Hero(eyebrow/title/desc/cta/scroll), section titles via useReveal on wrapper divs, feature cards via GSAP loop with MOTION constants
 "use client"
 
 import { Container } from "@/components/container"
+import { DesignCompareSection } from "@/components/design-compare-section"
 import { MagneticButton } from "@/components/magnetic-button"
-import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { Link } from "@/i18n/navigation"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef } from "react"
 
@@ -13,6 +13,7 @@ export default function WebDesignPage() {
     return (
         <div className="relative min-h-screen w-full overflow-x-hidden">
             <HeroSection />
+            <DesignCompareSection />
             <ShowcaseSection />
             <FeaturesSection />
             <CtaSection />
@@ -24,11 +25,11 @@ function HeroSection() {
     const t = useTranslations("serviceDetails.webDesign")
     const tCommon = useTranslations("serviceDetails")
 
-    const eyebrowRef = useReveal({ ...DEFAULTS.body,    delay: 0 })
-    const titleRef   = useText(DEFAULTS.heading)
-    const descRef    = useReveal({ ...DEFAULTS.body,    delay: 0.15 })
-    const ctaRef     = useReveal({ ...DEFAULTS.element, delay: 0.25 })
-    const scrollRef  = useReveal({ ...DEFAULTS.element, direction: "fade", delay: 0.45 })
+    const eyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
+    const titleRef = useText(DEFAULTS.heading)
+    const descRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
+    const ctaRef = useReveal({ ...DEFAULTS.element, delay: 0.25 })
+    const scrollRef = useReveal({ ...DEFAULTS.element, direction: "fade", delay: 0.45 })
 
     return (
         <section
@@ -138,13 +139,13 @@ function ShowcaseSection() {
         { labelKey: "showcaseEcommerce", number: "01" },
         { labelKey: "showcaseCorporate", number: "02" },
         { labelKey: "showcasePortfolio", number: "03" },
-        { labelKey: "showcaseLanding",   number: "04" },
+        { labelKey: "showcaseLanding", number: "04" },
     ]
 
     const getSpan = (i: number) =>
         i === 0 ? "md:col-span-2 md:row-span-2" :
-        i === 1 ? "md:col-span-2 md:row-span-1" :
-                  "md:col-span-1 md:row-span-1"
+            i === 1 ? "md:col-span-2 md:row-span-1" :
+                "md:col-span-1 md:row-span-1"
 
     return (
         <section id="showcase" ref={sectionRef} className="section-padding border-t border-foreground/8">
@@ -154,7 +155,10 @@ function ShowcaseSection() {
                         {t("showcaseEyebrow")}
                     </p>
                     <div className="flex items-end justify-between gap-8 flex-wrap">
-                        <h2 className="font-sans font-normal text-primary leading-[1.05]" style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}>
+                        <h2
+                            className="font-sans font-normal text-primary leading-[1.05]"
+                            style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
+                        >
                             {t("showcaseTitle")}
                             <br />
                             <span className="text-primary/35" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>
@@ -179,7 +183,10 @@ function ShowcaseSection() {
                                 <span className="font-mono text-sm text-primary/25 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span>
                             </div>
                             <div className="relative z-10 mt-auto">
-                                <h3 className="font-sans font-medium text-primary group-hover:text-primary/80 transition-colors duration-300" style={{ fontSize: i === 0 ? "clamp(18px, 2.4vw, 26px)" : "clamp(16px, 1.8vw, 20px)", letterSpacing: "-0.015em", lineHeight: 1.25 }}>
+                                <h3
+                                    className="font-sans font-medium text-primary group-hover:text-primary/80 transition-colors duration-300"
+                                    style={{ fontSize: i === 0 ? "clamp(18px, 2.4vw, 26px)" : "clamp(16px, 1.8vw, 20px)", letterSpacing: "-0.015em", lineHeight: 1.25 }}
+                                >
                                     {t(item.labelKey)}
                                 </h3>
                             </div>
@@ -191,6 +198,126 @@ function ShowcaseSection() {
     )
 }
 
+const FEATURE_PALETTE: { r: number; g: number; b: number }[] = [
+    { r: 37, g: 99, b: 235 },
+    { r: 16, g: 185, b: 129 },
+    { r: 234, g: 88, b: 12 },
+    { r: 139, g: 92, b: 246 },
+    { r: 236, g: 72, b: 153 },
+    { r: 6, g: 182, b: 212 },
+]
+
+const GLOW_STYLES = `
+[data-feature] {
+    --gx: 50%;
+    --gy: 50%;
+    --go: 0;
+    --tx: 0px;
+    --ty: 0px;
+}
+[data-feature]::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(420px circle at var(--gx) var(--gy), var(--gc, rgba(37,99,235,.06)), transparent 68%);
+    opacity: var(--go);
+    transition: opacity 280ms ease;
+    pointer-events: none;
+    z-index: 0;
+}
+[data-feature-hero]::before {
+    background: radial-gradient(600px circle at var(--gx) var(--gy), var(--gc, rgba(37,99,235,.09)), transparent 60%);
+}
+.feat-text-inner {
+    transform: translate(var(--tx), var(--ty));
+    will-change: transform;
+    transition: transform 80ms linear;
+}
+.feat-num {
+    font-family: var(--font-mono, monospace);
+    font-size: clamp(52px, 7vw, 80px);
+    font-weight: 800;
+    letter-spacing: -.04em;
+    line-height: 1;
+    color: rgba(12,12,11,.055);
+    transition: color 320ms ease;
+    font-variant-numeric: tabular-nums;
+    user-select: none;
+    flex-shrink: 0;
+    width: 72px;
+}
+[data-feature]:hover .feat-num { color: var(--nc, rgba(37,99,235,.18)); }
+.feat-rule {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 1px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--lc, rgba(37,99,235,.4)), transparent);
+    z-index: 2;
+    transition: width 480ms cubic-bezier(.4,0,.2,1);
+}
+[data-feature]:hover .feat-rule { width: 100%; }
+.feat-desc {
+    font-size: 13.5px;
+    color: rgba(12,12,11,.0);
+    line-height: 1.75;
+    max-width: 54ch;
+    transform: translateY(6px);
+    transition: color 380ms ease, transform 380ms ease, opacity 380ms ease;
+    opacity: 0;
+}
+[data-feature]:hover .feat-desc {
+    color: rgba(12,12,11,.52);
+    transform: translateY(0);
+    opacity: 1;
+}
+.feat-tag {
+    font-family: var(--font-mono, monospace);
+    font-size: 8.5px;
+    font-weight: 500;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: rgba(12,12,11,.22);
+    border: 1px solid rgba(12,12,11,.09);
+    border-radius: 3px;
+    padding: 2.5px 7px;
+    white-space: nowrap;
+    transition: color 280ms ease, border-color 280ms ease, background 280ms ease;
+    flex-shrink: 0;
+}
+[data-feature]:hover .feat-tag {
+    color: var(--tc, rgba(37,99,235,.65));
+    border-color: var(--tbc, rgba(37,99,235,.22));
+    background: var(--tbg, rgba(37,99,235,.04));
+}
+.feat-arrow {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(12,12,11,.09);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 280ms ease, background 280ms ease, transform 280ms ease;
+    margin-left: auto;
+}
+[data-feature]:hover .feat-arrow {
+    border-color: var(--tbc, rgba(37,99,235,.25));
+    background: var(--tbg, rgba(37,99,235,.05));
+    transform: translateX(2px);
+}
+.feat-arrow svg {
+    width: 12px; height: 12px;
+    color: rgba(12,12,11,.22);
+    transition: color 280ms ease, transform 280ms ease, opacity 280ms ease;
+    transform: translateX(-2px);
+    opacity: 0;
+}
+[data-feature]:hover .feat-arrow svg {
+    color: var(--tc, rgba(37,99,235,.6));
+    transform: translateX(0);
+    opacity: 1;
+}
+`
+
 function FeaturesSection() {
     const t = useTranslations("serviceDetails.webDesign")
     const tCommon = useTranslations("serviceDetails")
@@ -199,54 +326,188 @@ function FeaturesSection() {
 
     useEffect(() => {
         if (!sectionRef.current) return
-        const cards = sectionRef.current.querySelectorAll("[data-feature-card]")
+
+        const cards = Array.from(
+            sectionRef.current.querySelectorAll<HTMLElement>("[data-feature]")
+        )
         const triggers: ScrollTrigger[] = []
-        cards.forEach((card, index) => {
-            gsap.set(card, { opacity: 0, y: MOTION.distance.sm, willChange: "transform, opacity" })
+
+        const cleanups = cards.map((card, idx) => {
+            const p = FEATURE_PALETTE[idx] ?? FEATURE_PALETTE[0]
+            const rgba = (a: number) => `rgba(${p.r},${p.g},${p.b},${a})`
+
+            card.style.setProperty("--gc", rgba(idx === 0 ? 0.09 : 0.065))
+            card.style.setProperty("--nc", rgba(0.2))
+            card.style.setProperty("--lc", rgba(0.45))
+            card.style.setProperty("--tc", rgba(0.65))
+            card.style.setProperty("--tbc", rgba(0.22))
+            card.style.setProperty("--tbg", rgba(0.05))
+
+            const inner = card.querySelector<HTMLElement>(".feat-text-inner")
+
+            const onMove = (e: MouseEvent) => {
+                const r = card.getBoundingClientRect()
+                card.style.setProperty("--gx", `${e.clientX - r.left}px`)
+                card.style.setProperty("--gy", `${e.clientY - r.top}px`)
+                card.style.setProperty("--go", "1")
+                if (inner) {
+                    const dx = (e.clientX - (r.left + r.width / 2)) / r.width
+                    const dy = (e.clientY - (r.top + r.height / 2)) / r.height
+                    inner.style.setProperty("--tx", `${dx * 1.8}px`)
+                    inner.style.setProperty("--ty", `${dy * 1.2}px`)
+                }
+            }
+            const onLeave = () => {
+                card.style.setProperty("--go", "0")
+                if (inner) {
+                    inner.style.setProperty("--tx", "0px")
+                    inner.style.setProperty("--ty", "0px")
+                }
+            }
+
+            card.addEventListener("mousemove", onMove)
+            card.addEventListener("mouseleave", onLeave)
+
+            gsap.set(card, { opacity: 0, scale: 0.97, filter: "blur(8px)" })
             const tween = gsap.to(card, {
-                opacity: 1, y: 0, duration: MOTION.duration.base, delay: index * MOTION.stagger.tight, ease: MOTION.ease.smooth,
-                scrollTrigger: { trigger: card, start: "top 90%", once: true },
-                onComplete() { gsap.set(card, { willChange: "auto" }) },
+                opacity: 1, scale: 1, filter: "blur(0px)",
+                duration: 0.9, ease: "power3.out",
+                scrollTrigger: { trigger: card, start: "top 85%", once: true },
             })
             if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
+
+            return () => {
+                card.removeEventListener("mousemove", onMove)
+                card.removeEventListener("mouseleave", onLeave)
+            }
         })
-        return () => triggers.forEach((t) => t.kill())
+
+        return () => {
+            cleanups.forEach(fn => fn())
+            triggers.forEach(t => t.kill())
+        }
     }, [])
 
     const features = ["01", "02", "03", "04", "05", "06"].map((num, i) => ({
-        num, title: t(`features.${num}.title`), description: t(`features.${num}.description`), wide: i === 0 || i === 5,
+        num,
+        title: t(`features.${num}.title`),
+        description: t(`features.${num}.description`),
+        featured: i === 0,
     }))
 
     return (
-        <section ref={sectionRef} className="section-padding border-t border-foreground/8">
-            <Container>
-                <div ref={titleRef} className="mb-16">
-                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">{tCommon("whatWeOfferEyebrow")}</p>
-                    <div className="flex items-end justify-between gap-8 flex-wrap">
-                        <h2 className="font-sans font-normal text-primary leading-[1.05]" style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}>
+        <>
+            <style dangerouslySetInnerHTML={{ __html: GLOW_STYLES }} />
+
+            <section ref={sectionRef} className="relative section-padding border-t border-foreground/8">
+                <div className="pointer-events-none absolute inset-0 opacity-40 [background:radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.06),transparent_60%)]" />
+
+                <Container>
+                    <div ref={titleRef} className="mb-16">
+                        <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">
+                            {tCommon("whatWeOfferEyebrow")}
+                        </p>
+                        <h2
+                            className="font-sans font-normal text-primary leading-[1.05]"
+                            style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.025em" }}
+                        >
                             {tCommon("whatWeOffer")}
                             <br />
-                            <span className="text-primary/35" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>{tCommon("whatWeOfferItalic")}</span>
+                            <span className="text-primary/35" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>
+                                {tCommon("whatWeOfferItalic")}
+                            </span>
                         </h2>
-                        <p className="font-mono text-sm text-primary/35 max-w-[28ch] hidden md:block tracking-[0.05em]">{tCommon("whatWeOfferSubtitle")}</p>
                     </div>
-                </div>
-                <div className="grid md:grid-cols-6 gap-4">
-                    {features.map((feature, i) => (
-                        <div key={i} data-feature-card className={["group relative border border-foreground/8 rounded-sm bg-foreground/2 p-6 md:p-8 overflow-hidden hover:bg-foreground/4 transition-colors duration-300", feature.wide ? "md:col-span-3" : "md:col-span-2"].join(" ")}>
-                            <div className="flex items-start justify-between mb-6">
-                                <span className="font-mono text-xs text-primary/20 tracking-[0.2em]">{String(i + 1).padStart(2, "0")}</span>
-                                <svg className="w-4 h-4 text-primary/0 group-hover:text-primary/35 transition-all duration-300 ltr:-translate-x-2 group-hover:translate-x-0 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                </svg>
-                            </div>
-                            <h3 className="font-sans font-medium text-primary mb-3 group-hover:text-primary/80 transition-colors duration-300" style={{ fontSize: "clamp(15px, 1.6vw, 18px)", letterSpacing: "-0.01em" }}>{feature.title}</h3>
-                            <p className="text-sm text-primary/60 leading-relaxed">{feature.description}</p>
-                        </div>
-                    ))}
-                </div>
-            </Container>
-        </section>
+
+                    <div className="flex flex-col">
+                        {features.map((feature, i) => {
+                            const isHero = feature.featured
+                            const p = FEATURE_PALETTE[i]
+
+                            return (
+                                <div
+                                    key={i}
+                                    data-feature
+                                    {...(isHero ? { "data-feature-hero": "" } : {})}
+                                    className={[
+                                        "group relative border-b border-foreground/8 overflow-hidden transition-all duration-500 p-6",
+                                        isHero ? "py-14 md:py-20 border-t" : "py-8 hover:py-12",
+                                    ].join(" ")}
+                                >
+                                    <div className="feat-rule" />
+
+                                    {isHero ? (
+                                        <div className="relative z-10 feat-text-inner">
+                                            <div className="flex items-center gap-3 mb-8">
+                                                <span
+                                                    className="feat-tag"
+                                                    style={{
+                                                        color: `rgba(${p.r},${p.g},${p.b},.55)`,
+                                                        borderColor: `rgba(${p.r},${p.g},${p.b},.2)`,
+                                                        background: `rgba(${p.r},${p.g},${p.b},.05)`,
+                                                    }}
+                                                >
+                                                    SERVICE_01
+                                                </span>
+                                                <span
+                                                    className="font-mono uppercase"
+                                                    style={{ fontSize: 9, letterSpacing: ".22em", color: "rgba(12,12,11,.2)" }}
+                                                >
+                                                    Featured
+                                                </span>
+                                            </div>
+                                            <h3
+                                                className="font-sans font-normal text-primary mb-5 leading-[1.08]"
+                                                style={{ fontSize: "clamp(26px, 3.8vw, 48px)", letterSpacing: "-.028em", fontWeight: 300 }}
+                                            >
+                                                {feature.title}
+                                            </h3>
+                                            <p style={{ fontSize: 14.5, color: "rgba(12,12,11,.48)", lineHeight: 1.75, maxWidth: "46ch" }}>
+                                                {feature.description}
+                                            </p>
+                                            <div
+                                                aria-hidden
+                                                className="pointer-events-none select-none absolute bottom-0 ltr:right-0 rtl:left-0 font-mono font-black leading-none"
+                                                style={{
+                                                    fontSize: "clamp(100px, 17vw, 200px)",
+                                                    letterSpacing: "-.05em",
+                                                    color: `rgba(${p.r},${p.g},${p.b},.04)`,
+                                                    lineHeight: 0.82,
+                                                }}
+                                            >
+                                                01
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="relative z-10 flex items-center gap-6 md:gap-8">
+                                            <span className="feat-num hidden md:block">
+                                                {feature.num}
+                                            </span>
+                                            <div className="feat-text-inner flex-1 min-w-0">
+                                                <div className="flex items-center gap-3 mb-1.5 flex-wrap">
+                                                    <span className="feat-tag hidden sm:inline-flex">
+                                                        SERVICE_{feature.num}
+                                                    </span>
+                                                    <h3
+                                                        className="font-sans font-normal text-primary"
+                                                        style={{ fontSize: "clamp(17px, 2.2vw, 24px)", letterSpacing: "-.02em", fontWeight: 300, lineHeight: 1.2 }}
+                                                    >
+                                                        {feature.title}
+                                                    </h3>
+                                                </div>
+                                                <p className="feat-desc mt-2.5">
+                                                    {feature.description}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )
+                        })}
+                    </div>
+                </Container>
+            </section>
+        </>
     )
 }
 
@@ -279,7 +540,12 @@ function CtaSection() {
                 <div ref={titleRef} className="mb-16 flex items-end justify-between gap-8 flex-wrap">
                     <div className="max-w-xl">
                         <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/25 mb-4 block">{t("cta.eyebrow")}</p>
-                        <h2 className="font-sans font-normal text-primary leading-[1.05] mb-4" style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}>{t("cta.title")}</h2>
+                        <h2
+                            className="font-sans font-normal text-primary leading-[1.05] mb-4"
+                            style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
+                        >
+                            {t("cta.title")}
+                        </h2>
                         <p className="text-base text-primary/60 leading-relaxed max-w-[44ch]">{t("cta.description")}</p>
                     </div>
                     <div className="flex flex-col gap-3">
