@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block crawlers from API routes and internal pages
+Disallow: /api/
+Disallow: /_next/
+
+Sitemap: https://altruvex.com/sitemap.xml

@@ -1,0 +1,89 @@
+"use client"
+
+import { Container } from "@/components/container"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
+import { useTranslations } from "next-intl"
+import { memo, useRef } from "react"
+
+const PAINS = [
+  { number: "01", titleKey: "problem.issues.templates.title", bodyKey: "problem.issues.templates.description" },
+  { number: "02", titleKey: "problem.issues.speed.title", bodyKey: "problem.issues.speed.description" },
+  { number: "03", titleKey: "problem.issues.confusion.title", bodyKey: "problem.issues.confusion.description" },
+  { number: "04", titleKey: "problem.issues.amateurs.title", bodyKey: "problem.issues.amateurs.description" },
+]
+
+export const ProblemSection = memo(function ProblemSection() {
+  const t = useTranslations()
+
+  const sectionRef = useRef<HTMLElement>(null)
+  const gridRef = useRef<HTMLDivElement>(null)
+  const eyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
+  const titleRef = useText<HTMLHeadingElement>({
+    ...DEFAULTS.heading,
+    ease: MOTION.ease.text,
+  })
+  const descRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
+
+  return (
+    <section
+      id="problem"
+      ref={sectionRef}
+      className="relative border-y border-border bg-background section-padding"
+    >
+      <Container>
+        <div className="max-w-3xl mb-16 space-y-3">
+          <p ref={eyebrowRef} className="font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground/60 ">
+            01 — {t("problem.badge")}
+          </p>
+          <h2 ref={titleRef} className="text-3xl md:text-4xl lg:text-5xl font-normal tracking-tight text-foreground leading-[1.1]">
+            {t("problem.title.pre")}{" "}
+            <span className="text-primary/20 line-through decoration-primary/15"> {t("problem.title.crossed")} </span>
+            <br />
+            <span className="italic font-serif text-foreground/90">
+              {t("problem.title.gradient")}
+            </span>
+          </h2>
+          <p ref={descRef} className="text-base md:text-lg text-muted-foreground max-w-xl leading-relaxed">
+            {t("problem.subtitle")}
+          </p>
+        </div>
+        <div
+          ref={gridRef}
+          className="grid grid-cols-1 md:grid-cols-2 border-t border-border"
+        >
+          {PAINS.map((pain, i) => (
+            <div
+              key={pain.number}
+              data-pain
+              className={`
+                group relative px-6 py-10 md:px-12 md:py-16 border-b border-border
+                ${i % 2 === 0 ? "md:border-r md:rtl:border-r-0 md:rtl:border-l" : ""}
+              `}
+            >
+              <div className="flex items-start gap-6 relative z-10">
+                <span className="font-mono text-2xl tracking-widest text-muted-foreground/40 mt-1.5">
+                  {pain.number}
+                </span>
+                <div className="space-y-3">
+                  <h3 className="text-lg md:text-xl font-medium text-foreground tracking-tight">
+                    {t(pain.titleKey)}
+                  </h3>
+                  <p className="text-sm md:text-base text-muted-foreground/80 leading-relaxed max-w-sm">
+                    {t(pain.bodyKey)}
+                  </p>
+                </div>
+              </div>
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none bg-linear-to-br from-muted/50 to-transparent" />
+            </div>
+          ))}
+        </div>
+        <div className="mt-12 flex items-center gap-4">
+          <div className="h-px flex-1 bg-border/60" />
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground/40">
+            {t("problem.common.creativeDirection")}
+          </span>
+        </div>
+      </Container>
+    </section>
+  )
+})
