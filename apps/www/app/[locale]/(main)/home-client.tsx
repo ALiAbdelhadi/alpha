@@ -9,6 +9,7 @@ import { ProblemSection } from "@/components/sections/problem-section"
 import { SocialProofSection } from "@/components/sections/social-proof-section"
 import { WorkSection } from "@/components/sections/work-section"
 
+
 export function HomeClient() {
 
     return (

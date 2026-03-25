@@ -31,7 +31,8 @@
     "watermark": "WEB",
     "stat1": "Load time",
     "stat2": "Custom — no templates",
-    "stat3": "Bilingual by default"
+    "stat3": "Bilingual by default",
+    "onTime": "100% on-time"
   },
   "process": {
     "eyebrow": "How We Work",
@@ -642,6 +643,12 @@
         "description": "Proactive monitoring, security patches, and performance upkeep - so your system keeps working long after launch day."
       }
     }
+  },
+  "pipeline": {
+    "eyebrow": "Service Architecture",
+    "title": "How we build",
+    "titleItalic": "systems that last",
+    "description": "Every technical decision in our pipeline is geared towards long-term stability and performance."
   },
   "serviceDetails": {
     "whatWeOffer": "What's Built",

@@ -3,26 +3,35 @@ import { Providers } from "@/components/providers";
 import { routing } from "@/i18n/routing";
 import "@/lib/env";
 import { cn } from "@/lib/utils";
-import "@fontsource/inter/400.css";
-import "@fontsource/inter/500.css";
-import "@fontsource/inter/600.css";
-import "@fontsource/inter/700.css";
-import "@fontsource/outfit/300.css";
-import "@fontsource/outfit/400.css";
-import "@fontsource/outfit/500.css";
-import "@fontsource/outfit/600.css";
-import "@fontsource/outfit/700.css";
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
-import { Vazirmatn } from "next/font/google";
+import { Inter, Outfit, Vazirmatn } from "next/font/google";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import "../globals.css";
 
+// Load Vazirmatn with swap for Arabic
 const vazirmatn = Vazirmatn({
   subsets: ["arabic"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-vazirmatn",
   display: "swap",
+  preload: true,
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
+  preload: true,
+});
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-outfit",
+  display: "swap",
+  preload: true,
 });
 
 type Props = {
@@ -53,10 +62,34 @@ export default async function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Altruvex" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Preconnect to analytics services */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.clarity.ms" crossOrigin="anonymous" />
+      </head>
+      <body
+        suppressHydrationWarning
+        className={cn(
+          "min-h-screen flex flex-col antialiased overflow-x-auto",
+          vazirmatn.variable,
+          inter.variable,
+          outfit.variable
+        )}
+      >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:p-3 focus:px-5 focus:bg-white focus:text-black dark:focus:bg-black dark:focus:text-white focus:rounded-md focus:shadow-lg focus:border focus:border-border"
+        >
+          Skip to main content
+        </a>
+        <Script
+          id="initial-load-script"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var c=sessionStorage.getItem('Altruvex_initial_load_complete');if(c){document.documentElement.setAttribute('data-initial-load','complete')}}catch(e){}})();`,
+          }}
+        />
         {/* Google Analytics */}
-        {gaId ? (
+        {gaId && (
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
@@ -66,86 +99,43 @@ export default async function RootLayout({
               id="google-analytics"
               strategy="afterInteractive"
               dangerouslySetInnerHTML={{
-                __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-                  gtag('config', '${gaId}', {
-                    page_path: window.location.pathname,
-                    send_page_view: true,
-                  });
-                `,
+                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}',{page_path:window.location.pathname,send_page_view:true});`,
               }}
             />
           </>
-        ) : null}
-        <Script
-          id="initial-load-script"
-          strategy="beforeInteractive"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  const isComplete = sessionStorage.getItem('Altruvex_initial_load_complete');
-                  if (isComplete) {
-                    document.documentElement.setAttribute('data-initial-load', 'complete');
-                  }
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
+        )}
         {/* Microsoft Clarity */}
-        {clarityId ? (
+        {clarityId && (
           <Script
             id="microsoft-clarity"
             strategy="afterInteractive"
-            type="text/javascript"
             dangerouslySetInnerHTML={{
-              __html: `
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "w1cg510edl");
-              `,
+              __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${clarityId}");`,
             }}
           />
-        ) : null}
+        )}
+        {/* JSON-LD structured data */}
         <Script
           id="json-ld"
           type="application/ld+json"
           strategy="afterInteractive"
-          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Organization",
-              "name": "Altruvex",
-              "url": process.env.NEXT_PUBLIC_APP_URL || "https://altruvex.com",
-              "logo": `${process.env.NEXT_PUBLIC_APP_URL || "https://altruvex.com"}/apple-touch-icon.png`,
-              "contactPoint": {
+              "@type": "ProfessionalService",
+              name: "Altruvex",
+              url: process.env.NEXT_PUBLIC_APP_URL || "https://altruvex.com",
+              logo: `${process.env.NEXT_PUBLIC_APP_URL || "https://altruvex.com"}/brand/altruvex-logo.png`,
+              contactPoint: {
                 "@type": "ContactPoint",
-                "email": "hello@altruvex.com"
-              }
-            })
+                email: "hello@altruvex.com",
+                contactType: "Customer Service",
+                areaServed: ["Worldwide", "Egypt", "UAE", "Saudi Arabia"],
+                availableLanguage: ["en", "ar"],
+              },
+            }),
           }}
         />
-      </head>
-      <body
-        suppressHydrationWarning
-        className={cn(
-          "min-h-screen flex flex-col antialiased overflow-x-auto",
-          vazirmatn.variable
-        )}
-      >
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:p-3 focus:px-5 focus:bg-white focus:text-black dark:focus:bg-black dark:focus:text-white focus:rounded-md focus:shadow-lg focus:border focus:border-border"
-        >
-          Skip to main content
-        </a>
         <NextIntlClientProvider>
           <Providers>
             <LayoutEffects>{children}</LayoutEffects>

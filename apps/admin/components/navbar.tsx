@@ -23,7 +23,7 @@ export function Navbar() {
             <div className="flex-shrink-0 flex items-center pr-4 border-r border-zinc-200 dark:border-zinc-800 mr-4">
               <span className="text-xl font-bold text-black dark:text-white">Altruvex</span>
             </div>
-            <div className="hidden sm:-my-px sm:flex sm:space-x-8">
+            <div className="hidden sm:-my-px sm:flex sm:space-x-8 rtl:space-x-reverse">
               {navItems.map((item) => {
                 const Icon = item.icon
                 const isActive = pathname === item.href

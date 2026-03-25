@@ -2,29 +2,23 @@
 
 import { useEffect } from "react"
 
-/**
- * Lenis + GSAP ticker run after idle so first paint / hydration stay responsive (Lighthouse TBT).
- */
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         let cancelled = false
         let teardown: (() => void) | undefined
+        let initialized = false
 
-        const useIdle =
-            typeof window !== "undefined" && typeof window.requestIdleCallback !== "undefined"
+        const initSmoothScroll = async () => {
+            if (initialized || cancelled) return
+            initialized = true
 
-        const idleId = useIdle
-            ? window.requestIdleCallback(() => run(), { timeout: 2000 })
-            : window.setTimeout(() => run(), 1)
-
-        function run() {
-            void (async () => {
-                if (cancelled) return
+            try {
                 const [{ gsap, ScrollTrigger }, { default: Lenis }, { MOTION }] = await Promise.all([
                     import("@/lib/gsap"),
                     import("lenis"),
                     import("@/lib/motion/config"),
                 ])
+
                 if (cancelled) return
 
                 const lenis = new Lenis({
@@ -45,13 +39,34 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
                     gsap.ticker.remove(tick)
                     lenis.destroy()
                 }
-            })()
+            } catch (e) {
+                console.warn("Failed to initialize smooth scroll:", e)
+            }
         }
+
+        const handleFirstInteraction = () => {
+            initSmoothScroll()
+            window.removeEventListener("pointerdown", handleFirstInteraction)
+            window.removeEventListener("keydown", handleFirstInteraction)
+            window.removeEventListener("touchstart", handleFirstInteraction)
+        }
+
+        window.addEventListener("pointerdown", handleFirstInteraction, { once: true, passive: true })
+        window.addEventListener("keydown", handleFirstInteraction, { once: true })
+        window.addEventListener("touchstart", handleFirstInteraction, { once: true, passive: true })
+
+        const fallbackTimer = setTimeout(() => {
+            if (!initialized) {
+                initSmoothScroll()
+            }
+        }, 3000)
 
         return () => {
             cancelled = true
-            if (useIdle) window.cancelIdleCallback(idleId)
-            else window.clearTimeout(idleId)
+            clearTimeout(fallbackTimer)
+            window.removeEventListener("pointerdown", handleFirstInteraction)
+            window.removeEventListener("keydown", handleFirstInteraction)
+            window.removeEventListener("touchstart", handleFirstInteraction)
             teardown?.()
         }
     }, [])

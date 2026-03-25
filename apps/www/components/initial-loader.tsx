@@ -105,8 +105,9 @@ export const InitialLoader = memo(function InitialLoader() {
 
     return (
         <div
+            dir={"ltr"}
             ref={containerRef}
-            className="fixed inset-0 z-9999 flex flex-col justify-center overflow-hidden"
+            className="fixed inset-0 z-9999 flex flex-col justify-center overflow-hidden "
             style={{
                 background: "var(--background)",
                 opacity: exiting ? 0 : 1,
@@ -151,10 +152,10 @@ export const InitialLoader = memo(function InitialLoader() {
                                     line.type === "command"
                                         ? "var(--foreground)"
                                         : line.type === "check"
-                                          ? "color-mix(in srgb, var(--foreground) 55%, transparent)"
-                                          : line.type === "ready"
-                                            ? "var(--foreground)"
-                                            : "transparent",
+                                            ? "color-mix(in srgb, var(--foreground) 55%, transparent)"
+                                            : line.type === "ready"
+                                                ? "var(--foreground)"
+                                                : "transparent",
                                 letterSpacing: "0.02em",
                                 minHeight: "1.6em",
                                 display: "flex",
@@ -171,25 +172,25 @@ export const InitialLoader = memo(function InitialLoader() {
                                 <span style={{ color: "rgba(34,197,94,0.7)" }}>
                                     {line.text.includes("✓")
                                         ? line.text.replace("✓", "").split("  ").map((part, j) =>
-                                              j === 0 ? (
-                                                  <span key={j} style={{ opacity: 0.35 }}>
-                                                      {part}
-                                                  </span>
-                                              ) : j === 1 ? (
-                                                  <span key={j} style={{ color: "rgba(34,197,94,0.7)" }}>
-                                                      ✓
-                                                  </span>
-                                              ) : (
-                                                  <span
-                                                      key={j}
-                                                      style={{
-                                                          color: "color-mix(in srgb, var(--foreground) 55%, transparent)",
-                                                      }}
-                                                  >
-                                                      {part}
-                                                  </span>
-                                              ),
-                                          )
+                                            j === 0 ? (
+                                                <span key={j} style={{ opacity: 0.35 }}>
+                                                    {part}
+                                                </span>
+                                            ) : j === 1 ? (
+                                                <span key={j} style={{ color: "rgba(34,197,94,0.7)" }}>
+                                                    ✓
+                                                </span>
+                                            ) : (
+                                                <span
+                                                    key={j}
+                                                    style={{
+                                                        color: "color-mix(in srgb, var(--foreground) 55%, transparent)",
+                                                    }}
+                                                >
+                                                    {part}
+                                                </span>
+                                            ),
+                                        )
                                         : line.text}
                                 </span>
                             )}

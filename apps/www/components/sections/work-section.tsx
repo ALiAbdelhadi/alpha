@@ -3,7 +3,7 @@
 import { Container } from "@/components/container"
 import { useLoading } from "@/components/providers/loading-provider"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
-import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
+import { DEFAULTS, useReveal, useText } from "@/lib/motion"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { memo, useLayoutEffect, useRef } from "react"
@@ -15,9 +15,11 @@ interface Project {
   year: string
   link: string
   accent: string
+  // image: string
 }
 
 const ProjectPreview = memo(function ProjectPreview({
+  title,
   category,
   number,
   accent,
@@ -44,7 +46,7 @@ const ProjectPreview = memo(function ProjectPreview({
           backgroundSize: "36px 36px",
         }}
       />
-      <div className="absolute inset-x-6 top-16 rounded-3xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm">
+      <div className="absolute inset-x-6 top-16 rounded-3xl border border-white/10 bg-white/3 p-5 backdrop-blur-sm">
         <div className="mb-5 flex items-center justify-between">
           <span className="rounded-full border border-white/10 px-3 py-1 font-mono text-[9px] uppercase tracking-[0.22em] text-white/55">
             {category}
@@ -56,63 +58,93 @@ const ProjectPreview = memo(function ProjectPreview({
           <div className="h-10 max-w-[16rem] rounded-[1rem] bg-white/10" />
           <div className="grid gap-2 pt-3 md:grid-cols-2">
             <div className="h-20 rounded-[1.25rem] border border-white/10 bg-black/15" />
-            <div className="h-20 rounded-[1.25rem] border border-white/10 bg-white/[0.04]" />
+            <div className="h-20 rounded-[1.25rem] border border-white/10 bg-white/4" />
           </div>
         </div>
       </div>
     </div>
   )
 })
+
 const ProjectCard = memo(function ProjectCard({ p }: { p: Project }) {
   return (
     <Link href={p.link} target="_blank" rel="noopener noreferrer" className="group block flex-none">
       <div
         data-hcard
-        className="project-card relative select-none"
+        className="relative select-none"
         style={{
           width: "clamp(360px, 36vw, 640px)",
           aspectRatio: "16 / 10",
           borderRadius: "6px",
           overflow: "hidden",
+          cursor: "pointer",
           background: "linear-gradient(180deg, rgba(18,18,18,0.98) 0%, rgba(10,10,10,1) 100%)",
+          border: "1px solid rgba(255,255,255,0.08)",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.14)",
+          transition:
+            "transform 0.45s cubic-bezier(0.22,1,0.36,1), border-color 0.45s ease, box-shadow 0.45s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "translateY(-3px)"
+          e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"
+          e.currentTarget.style.boxShadow = "0 14px 34px rgba(0,0,0,0.16)"
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "translateY(0)"
+          e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"
+          e.currentTarget.style.boxShadow = "0 10px 30px rgba(0,0,0,0.14)"
         }}
       >
         <ProjectPreview title={p.title} category={p.cat} number={p.number} accent={p.accent} />
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0"
           style={{
             background:
               "radial-gradient(circle at top left, rgba(255,255,255,0.05) 0%, transparent 34%), linear-gradient(180deg, rgba(255,255,255,0.015) 0%, rgba(255,255,255,0) 100%)",
           }}
         />
+
         <div
-          className="absolute top-0 left-0 right-0 h-px pointer-events-none"
+          className="absolute top-0 left-0 right-0 h-px"
           style={{
             background: "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%)",
           }}
         />
+
         <div
-          className="absolute left-0 top-0 bottom-0 w-[2px] pointer-events-none"
+          className="absolute left-0 top-0 bottom-0 w-[2px]"
           style={{
             background: `linear-gradient(180deg, ${p.accent} 0%, transparent 75%)`,
             opacity: 0.55,
           }}
         />
+
         <div className="absolute top-0 inset-x-0 flex items-center justify-between px-6 pt-6">
           <span
             className="font-mono uppercase"
-            style={{ fontSize: "9px", letterSpacing: "0.24em", color: "rgba(255,255,255,0.52)" }}
+            style={{
+              fontSize: "9px",
+              letterSpacing: "0.24em",
+              color: "rgba(255,255,255,0.52)",
+            }}
           >
             {p.cat}
           </span>
+
           <span
             className="font-mono"
-            style={{ fontSize: "10px", color: "rgba(255,255,255,0.34)", letterSpacing: "0.14em" }}
+            style={{
+              fontSize: "10px",
+              color: "rgba(255,255,255,0.34)",
+              letterSpacing: "0.14em",
+            }}
           >
             {p.year}
           </span>
         </div>
+
         <div className="absolute inset-x-0 bottom-0 px-6 pb-6">
+
           <div className="flex items-end justify-between gap-4">
             <h3
               className="font-sans text-white"
@@ -126,8 +158,9 @@ const ProjectCard = memo(function ProjectCard({ p }: { p: Project }) {
             >
               {p.title}
             </h3>
+
             <div
-              className="shrink-0 flex items-center justify-center rounded-full"
+              className="shrink-0 flex items-center justify-center rounded-full transition-all duration-500"
               style={{
                 width: 34,
                 height: 34,
@@ -137,8 +170,12 @@ const ProjectCard = memo(function ProjectCard({ p }: { p: Project }) {
               }}
             >
               <svg
-                width="12" height="12" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" strokeWidth="1.6"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
                 className="rtl:-rotate-180 transition-transform duration-500 group-hover:translate-x-[2px]"
               >
                 <path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeLinecap="round" strokeLinejoin="round" />
@@ -147,11 +184,26 @@ const ProjectCard = memo(function ProjectCard({ p }: { p: Project }) {
           </div>
         </div>
       </div>
+
       <div className="mt-3 flex items-center justify-between px-1">
-        <p className="project-card-label font-mono" style={{ fontSize: "12px", letterSpacing: "0.14em" }}>
+        <p
+          className="font-mono transition-colors duration-300"
+          style={{
+            fontSize: "12px",
+            letterSpacing: "0.14em",
+            color: "color-mix(in srgb, var(--foreground) 42%, transparent)",
+          }}
+        >
           {p.title}
         </p>
-        <span className="project-card-meta font-mono" style={{ fontSize: "12px", letterSpacing: "0.1em" }}>
+        <span
+          className="font-mono"
+          style={{
+            fontSize: "12px",
+            letterSpacing: "0.1em",
+            color: "color-mix(in srgb, var(--foreground) 28%, transparent)",
+          }}
+        >
           {p.cat}
         </span>
       </div>
@@ -169,10 +221,7 @@ export const WorkSection = memo(function WorkSection() {
   const trackRef = useRef<HTMLDivElement>(null)
 
   const eyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
-  const titleRef = useText<HTMLHeadingElement>({
-    ...DEFAULTS.heading,
-    ease: MOTION.ease.text,
-  })
+  const titleRef = useText(DEFAULTS.heading)
   const descRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
 
   const projects: Project[] = [
@@ -183,6 +232,7 @@ export const WorkSection = memo(function WorkSection() {
       year: t("work.projects.project1.year"),
       link: t("work.projects.project1.link"),
       accent: "rgba(74,110,212,0.6)",
+      // image: t("work.projects.project1.image"),
     },
     {
       number: "02",
@@ -191,6 +241,7 @@ export const WorkSection = memo(function WorkSection() {
       year: t("work.projects.project2.year"),
       link: t("work.projects.project2.link"),
       accent: "rgba(52,211,153,0.5)",
+      // image: t("work.projects.project2.image"),
     },
     {
       number: "03",
@@ -199,6 +250,7 @@ export const WorkSection = memo(function WorkSection() {
       year: t("work.projects.project3.year"),
       link: t("work.projects.project3.link"),
       accent: "rgba(248,163,50,0.5)",
+      // image: t("work.projects.project3.image"),
     },
     {
       number: "04",
@@ -207,8 +259,10 @@ export const WorkSection = memo(function WorkSection() {
       year: t("work.projects.project4.year"),
       link: t("work.projects.project4.link"),
       accent: "rgba(167,139,250,0.5)",
+      // image: t("work.projects.project4.image"),
     },
   ]
+
 
   useLayoutEffect(() => {
     if (!isInitialLoadComplete) return
@@ -221,43 +275,41 @@ export const WorkSection = memo(function WorkSection() {
       let teardown: (() => void) | undefined
 
       const setup = () => {
-        const outer = outerRef.current
-        const sticky = stickyRef.current
-        const track = trackRef.current
-        if (!outer || !sticky || !track) return
+        if (!outerRef.current || !stickyRef.current || !trackRef.current) return
 
-        const trackW = track.scrollWidth
-        const viewW = document.documentElement.clientWidth
+        const trackW = trackRef.current!.scrollWidth
+        const viewW = window.innerWidth
         const moveBy = trackW - viewW + 96
-
-        gsap.set(track, { x: 0 })
+        gsap.set(trackRef.current, { x: 0 })
 
         if (moveBy <= 0) {
-          outer.style.height = ""
+          outerRef.current!.style.height = ""
           return
         }
 
-        outer.style.height = `${moveBy + window.innerHeight}px`
+        outerRef.current!.style.height = `${moveBy + window.innerHeight}px`
 
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: outer,
+            trigger: outerRef.current,
             start: "top top",
-            end: () => `+=${trackRef.current!.scrollWidth - document.documentElement.clientWidth + 96}`,
-            pin: sticky,
+            end: () => `+=${moveBy}`,
+            pin: stickyRef.current,
             pinSpacing: false,
             scrub: 1,
             invalidateOnRefresh: true,
-            onRefresh() {
-              if (!outerRef.current || !trackRef.current) return
-              const newMoveBy = trackRef.current.scrollWidth - document.documentElement.clientWidth + 96
-              outerRef.current.style.height =
-                newMoveBy > 0 ? `${newMoveBy + window.innerHeight}px` : ""
+            onRefresh: () => {
+              const newMoveBy =
+                trackRef.current!.scrollWidth - window.innerWidth + 96
+              if (outerRef.current) {
+                outerRef.current.style.height =
+                  newMoveBy > 0 ? `${newMoveBy + window.innerHeight}px` : ""
+              }
             },
           },
         })
 
-        tl.to(track, { x: isRTL ? moveBy : -moveBy, ease: "none" })
+        tl.to(trackRef.current, { x: isRTL ? moveBy : -moveBy, ease: "none" })
         ScrollTrigger.refresh()
 
         return () => {
@@ -266,7 +318,9 @@ export const WorkSection = memo(function WorkSection() {
         }
       }
 
-      const raf = requestAnimationFrame(() => { teardown = setup() })
+      const raf = requestAnimationFrame(() => {
+        teardown = setup()
+      })
 
       return () => {
         cancelAnimationFrame(raf)
@@ -298,16 +352,13 @@ export const WorkSection = memo(function WorkSection() {
               className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 md:gap-12"
             >
               <div className="space-y-3 flex items-start flex-col justify-center w-full">
-                <p
-                  ref={eyebrowRef}
-                  className="mono-uppercase text-xs tracking-[0.25em] text-muted-foreground/60"
-                >
+                <p ref={eyebrowRef} style={{ fontFamily: "monospace", fontSize: 12, letterSpacing: "0.25em", textTransform: "uppercase" }}>
                   {t("work.eyebrow")}
                 </p>
                 <h2
                   ref={titleRef}
-                  className="font-sans font-light text-primary leading-[1.05]"
-                  style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
+                  className="ps-services-heading"
+                  style={{ fontFamily: "system-ui, sans-serif", fontSize: "clamp(32px, 4.5vw, 56px)", fontWeight: 300, letterSpacing: "-0.02em", lineHeight: 1.05 }}
                 >
                   {t("work.title")}
                 </h2>
@@ -321,7 +372,10 @@ export const WorkSection = memo(function WorkSection() {
             <div
               ref={trackRef}
               className="flex gap-10 items-center"
-              style={{ paddingInlineStart: "40px", paddingInlineEnd: "120px" }}
+              style={{
+                paddingInlineStart: "40px",
+                paddingInlineEnd: "120px",
+              }}
             >
               {projects.map((p) => (
                 <ProjectCard key={p.number} p={p} />
@@ -333,9 +387,13 @@ export const WorkSection = memo(function WorkSection() {
             <div className="flex items-center gap-2 text-primary/20">
               <span className="font-mono text-[10px] uppercase tracking-[0.2em]">scroll</span>
               <svg
-                width="14" height="14" viewBox="0 0 24 24"
-                fill="none" stroke="currentColor" strokeWidth="1.5"
-                className="rtl:-rotate-180"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="rtl:-rotate-180 transition-transform"
               >
                 <path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
@@ -349,7 +407,7 @@ export const WorkSection = memo(function WorkSection() {
       >
         <Container>
           <div data-reveal data-beat="0" className="mb-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-muted-foreground/50 mb-3">
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-primary/30 mb-3">
               {t("work.eyebrow")}
             </p>
             <h2
@@ -363,6 +421,7 @@ export const WorkSection = memo(function WorkSection() {
               {t("work.title")}
             </h2>
           </div>
+
           <div className="h-px w-full bg-foreground/6 mb-6" />
           <div className="flex flex-col gap-10">
             {projects.map((p) => (
@@ -380,8 +439,11 @@ export const WorkSection = memo(function WorkSection() {
                 >
                   <ProjectPreview title={p.title} category={p.cat} number={p.number} accent={p.accent} />
                   <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{ background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%)" }}
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%)",
+                    }}
                   />
                   <span
                     className="absolute bottom-4 ltr:left-4 rtl:right-4 font-mono uppercase backdrop-blur-sm"
@@ -401,13 +463,13 @@ export const WorkSection = memo(function WorkSection() {
                 <div className="flex items-start justify-between gap-4 px-1">
                   <div>
                     <p
-                      className="font-mono text-muted-foreground/60 mb-1.5"
+                      className="font-mono text-muted-foreground/80 mb-1.5"
                       style={{ fontSize: "12px", letterSpacing: "0.18em" }}
                     >
                       {p.number}
                     </p>
                     <h3
-                      className="font-sans font-normal text-primary group-hover:text-primary/60 transition-colors duration-300"
+                      className="font-sans font-medium text-primary group-hover:text-primary/65 transition-colors duration-300"
                       style={{
                         fontSize: "clamp(15px, 4vw, 19px)",
                         letterSpacing: "-0.015em",
@@ -417,7 +479,7 @@ export const WorkSection = memo(function WorkSection() {
                       {p.title}
                     </h3>
                   </div>
-                  <span className="font-mono text-[12px] text-muted-foreground/60 shrink-0 mt-1">
+                  <span className="font-mono text-[12px] text-muted-foreground/70 shrink-0 mt-1">
                     {p.year}
                   </span>
                 </div>
@@ -425,7 +487,7 @@ export const WorkSection = memo(function WorkSection() {
             ))}
           </div>
           <div className="mt-10 flex items-center gap-4">
-            <span className="font-mono text-[10px] uppercase text-muted-foreground/40 tracking-[0.25em]">
+            <span className="font-mono text-[10px] uppercase text-primary/20 tracking-[0.25em]">
               {String(projects.length).padStart(2, "0")} {t("work.projectsLabel")}
             </span>
             <div className="flex-1 h-px bg-foreground/5" />

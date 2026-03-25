@@ -32,20 +32,13 @@ function HeroSection() {
 
     return (
         <section
-            className="relative flex w-full flex-col justify-end section-padding pb-24 overflow-hidden"
+            className="consulting-watermark relative flex w-full flex-col justify-end section-padding pb-24 overflow-hidden"
             style={{ minHeight: "100vh" }}
         >
             <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <div className="absolute top-0 ltr:left-1/4 rtl:right-1/4 h-full w-px bg-foreground/6" />
                 <div className="absolute top-0 ltr:right-1/4 rtl:left-1/4 h-full w-px bg-foreground/6" />
                 <div className="absolute top-1/3 left-0 right-0 h-px bg-foreground/5" />
-            </div>
-            <div
-                aria-hidden="true"
-                className="pointer-events-none select-none absolute bottom-0 ltr:right-0 rtl:left-0 leading-none font-sans font-semibold tracking-tighter text-foreground/[0.028]"
-                style={{ fontSize: "clamp(120px, 22vw, 340px)", lineHeight: 0.85 }}
-            >
-                03
             </div>
             <div
                 ref={eyebrowRef}

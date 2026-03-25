@@ -92,86 +92,92 @@ export const HeroSection = memo(function HeroSection() {
     if (!isInitialLoadComplete || !sectionRef.current) return
     const { reduced } = ctx.conditions as { reduced: boolean }
 
-    const tokens = headlineRef.current?.querySelectorAll<HTMLElement>("[data-token]") ?? []
-    const content = [
-      badgeRef.current,
-      subRef.current,
-      ctaRef.current,
-      statsRef.current,
-      scrollRef.current,
-    ].filter(Boolean)
+    setTimeout(() => {
+      const tokens = headlineRef.current?.querySelectorAll<HTMLElement>("[data-token]") ?? []
+      const content = [
+        badgeRef.current,
+        subRef.current,
+        ctaRef.current,
+        statsRef.current,
+        scrollRef.current,
+      ].filter(Boolean)
 
-    if (reduced) {
-      gsap.set([...tokens, ...content], { opacity: 1, y: 0 })
-      return
-    }
+      if (reduced) {
+        gsap.set([...tokens, ...content], { opacity: 1, y: 0 })
+        return
+      }
 
-    const rawStagger = 0.022
-    const effectiveStagger =
-      tokens.length > 1
-        ? Math.min(rawStagger, MAX_STAGGER_TOTAL / tokens.length)
-        : rawStagger
+      const rawStagger = 0.022
+      const effectiveStagger =
+        tokens.length > 1
+          ? Math.min(rawStagger, MAX_STAGGER_TOTAL / tokens.length)
+          : rawStagger
 
-    if (headlineIsRTL) {
-      gsap.set(tokens, { opacity: 0, y: 40 })
-    } else {
-      gsap.set(tokens, { opacity: 0, y: 60, filter: "blur(8px)" })
-    }
-    gsap.set(content, { opacity: 0, y: 18 })
+      const tl = gsap.timeline({ defaults: { ease: MOTION.ease.text } })
 
-    const tl = gsap.timeline({ defaults: { ease: MOTION.ease.text } })
+      if (badgeRef.current) {
+        tl.fromTo(badgeRef.current,
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: MOTION.duration.fast, ease: MOTION.ease.smooth },
+          0.1
+        )
+      }
 
-    tl.to(
-      badgeRef.current,
-      { opacity: 1, y: 0, duration: MOTION.duration.fast, ease: MOTION.ease.smooth },
-      0.1,
-    )
+      if (tokens.length > 0) {
+        const tokenAnimStart: gsap.TweenVars = { opacity: 0, y: headlineIsRTL ? 40 : 60 }
+        if (!headlineIsRTL) tokenAnimStart.filter = "blur(8px)"
 
-    const tokenAnim: gsap.TweenVars = {
-      opacity: 1,
-      y: 0,
-      duration: headlineIsRTL ? 0.85 : 1.1,
-      stagger: { each: effectiveStagger, from: headlineIsRTL ? "end" : "start" },
-      ease: "power4.out",
-      onComplete() {
-        gsap.set(tokens, { clearProps: "filter,willChange" })
-      },
-    }
-    if (!headlineIsRTL) tokenAnim.filter = "blur(0px)"
-    tl.to(tokens, tokenAnim, 0.2)
+        const tokenAnimEnd: gsap.TweenVars = {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: headlineIsRTL ? 0.85 : 1.1,
+          stagger: { each: effectiveStagger, from: headlineIsRTL ? "end" : "start" },
+          ease: "power4.out",
+          onComplete() {
+            gsap.set(tokens, { clearProps: "filter,willChange" })
+          },
+        }
+        tl.fromTo(tokens, tokenAnimStart, tokenAnimEnd, 0.2)
+      }
 
-    tl.to(subRef.current, { opacity: 1, y: 0, duration: MOTION.duration.base, ease: MOTION.ease.smooth }, 0.55)
-    tl.to(ctaRef.current, { opacity: 1, y: 0, duration: MOTION.duration.fast, ease: MOTION.ease.smooth }, 0.70)
-    tl.to(statsRef.current, { opacity: 1, y: 0, duration: MOTION.duration.fast, ease: MOTION.ease.smooth }, 0.80)
-    tl.to(scrollRef.current, { opacity: 1, y: 0, duration: MOTION.duration.fast, ease: MOTION.ease.smooth }, 0.95)
+      if (subRef.current) tl.fromTo(subRef.current, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: MOTION.duration.base, ease: MOTION.ease.smooth }, 0.55)
+      if (ctaRef.current) tl.fromTo(ctaRef.current, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: MOTION.duration.fast, ease: MOTION.ease.smooth }, 0.70)
+      if (statsRef.current) tl.fromTo(statsRef.current, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: MOTION.duration.fast, ease: MOTION.ease.smooth }, 0.80)
+      if (scrollRef.current) tl.fromTo(scrollRef.current, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: MOTION.duration.fast, ease: MOTION.ease.smooth }, 0.95)
+    }, 50)
   }, [isInitialLoadComplete, title1, title2, headlineIsRTL])
 
   useEffect(() => {
     if (!isInitialLoadComplete || !headlineRef.current || !sectionRef.current) return
-    const tokens = headlineRef.current.querySelectorAll<HTMLElement>("[data-token]")
-    if (!tokens.length) return
 
-    const mm = gsap.matchMedia()
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const scrollProps: gsap.TweenVars = headlineIsRTL
-        ? { opacity: 0.12, stagger: { each: 0.006, from: "end" }, ease: "none" }
-        : { yPercent: -30, opacity: 0.12, stagger: { each: 0.008, from: "end" }, ease: "none" }
+    const timeoutId = setTimeout(() => {
+      const tokens = headlineRef.current?.querySelectorAll<HTMLElement>("[data-token]")
+      if (!tokens || !tokens.length) return
 
-      const st = gsap.to(tokens, {
-        ...scrollProps,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 1.2,
-        },
+      const mm = gsap.matchMedia()
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
+        const scrollProps: gsap.TweenVars = headlineIsRTL
+          ? { opacity: 0.12, stagger: { each: 0.006, from: "end" }, ease: "none" }
+          : { yPercent: -30, opacity: 0.12, stagger: { each: 0.008, from: "end" }, ease: "none" }
+
+        const st = gsap.to(tokens, {
+          ...scrollProps,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 1.2,
+          },
+        })
+        return () => {
+          st.scrollTrigger?.kill()
+          st.kill()
+        }
       })
-      return () => {
-        st.scrollTrigger?.kill()
-        st.kill()
-      }
-    })
-    return () => mm.revert()
+      return () => mm.revert()
+    }, 1500)
+    return () => clearTimeout(timeoutId)
   }, [isInitialLoadComplete, headlineIsRTL, title1, title2])
 
   const handleContactClick = useCallback(() => {
@@ -191,7 +197,7 @@ export const HeroSection = memo(function HeroSection() {
       <span ref={srTextRef} className="sr-only">{title1} {title2}</span>
       <div
         ref={badgeRef}
-        className="absolute top-20 ltr:right-8 rtl:left-8 hidden md:flex flex-col ltr:items-end rtl:items-start gap-2 opacity-0"
+        className="absolute top-20 ltr:right-8 rtl:left-8 hidden md:flex flex-col ltr:items-end rtl:items-start gap-2"
       >
         <div className="flex items-center gap-2">
           <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
@@ -224,7 +230,7 @@ export const HeroSection = memo(function HeroSection() {
           </h1>
           <div
             ref={subRef}
-            className="mb-12 grid md:grid-cols-[80px_1fr] gap-8 items-start opacity-0"
+            className="mb-12 grid md:grid-cols-[80px_1fr] gap-8 items-start"
           >
             <div className="h-px w-full bg-foreground/8 mt-3 hidden md:block" />
             <div className="space-y-3 max-w-xl">
@@ -238,7 +244,7 @@ export const HeroSection = memo(function HeroSection() {
           </div>
           <div
             ref={ctaRef}
-            className="flex flex-col sm:flex-row sm:items-center gap-4 opacity-0"
+            className="flex flex-col sm:flex-row sm:items-center gap-4"
           >
             <MagneticButton size="lg" variant="primary" onClick={handleContactClick} className="group">
               <span className="flex items-center gap-2">
@@ -267,7 +273,7 @@ export const HeroSection = memo(function HeroSection() {
                 </div>
                 <div className="h-6 w-px bg-foreground/10" />
                 <div className="flex flex-col gap-0.5 text-muted-foreground/70 text-[11px]">
-                  <span>100% on-time</span>
+                  <span>{t("hero.onTime")}</span>
                   <span className="font-mono text-[11px] uppercase tracking-wider">{t("hero.trust")}</span>
                 </div>
               </div>
@@ -275,7 +281,7 @@ export const HeroSection = memo(function HeroSection() {
           </div>
           <div
             ref={statsRef}
-            className="mt-16 grid gap-6 border-t border-foreground/8 pt-10 sm:grid-cols-3 sm:gap-0 opacity-0"
+            className="mt-16 grid gap-6 border-t border-foreground/8 pt-10 sm:grid-cols-3 sm:gap-0"
           >
             {[
               { val: "< 1s", label: t("hero.stat1") },
@@ -284,7 +290,7 @@ export const HeroSection = memo(function HeroSection() {
             ].map((s, i, arr) => (
               <div
                 key={s.label}
-                className="sm:[&:not(:last-child)]:border-r sm:[&:not(:last-child)]:border-foreground/10"
+                className="sm:not-last:border-r sm:not-last:border-foreground/10"
                 style={{
                   paddingLeft: i > 0 ? "clamp(16px, 3vw, 36px)" : 0,
                   paddingRight: i < arr.length - 1 ? "clamp(16px, 3vw, 36px)" : 0,
@@ -309,7 +315,7 @@ export const HeroSection = memo(function HeroSection() {
       </Container>
       <div
         ref={scrollRef}
-        className="pointer-events-none absolute bottom-7 ltr:left-1/2 rtl:right-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2 mt-6 opacity-0"
+        className="pointer-events-none absolute bottom-7 ltr:left-1/2 rtl:right-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2 mt-6"
         aria-hidden
       >
         <p className="font-mono text-xs uppercase text-muted-foreground/60 tracking-[0.25em]">

@@ -31,7 +31,7 @@ const HeroSection = memo(function HeroSection() {
     const ctaRef = useReveal({ ...DEFAULTS.element, ease: MOTION.ease.smooth, delay: 0.25 })
 
     return (
-        <section className="relative min-h-screen flex items-center section-padding">
+        <section className="services-watermark relative min-h-screen flex items-center section-padding">
             <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <div className="absolute top-0 ltr:left-1/4 rtl:right-1/4 h-full w-px bg-foreground/6" />
                 <div className="absolute top-0 ltr:right-1/4 rtl:left-1/4 h-full w-px bg-foreground/6" />
@@ -71,11 +71,6 @@ const HeroSection = memo(function HeroSection() {
                             <MagneticButton size="lg" variant="secondary">{t("ctaSecondary")}</MagneticButton>
                         </Link>
                     </div>
-                </div>
-                <div className="pointer-events-none absolute ltr:right-0 rtl:left-0 bottom-16 select-none" aria-hidden="true">
-                    <span className="text-[clamp(8rem,20vw,18rem)] font-light leading-none text-foreground/4 tracking-tighter">
-                        00
-                    </span>
                 </div>
             </Container>
         </section>

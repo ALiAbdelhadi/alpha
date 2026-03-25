@@ -529,20 +529,33 @@
     transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
   }
 
-  .hero-watermark::after {
-    content: "WEB";
+  .hero-watermark::after,
+  .services-watermark::after,
+  .webDesign-watermark::after,
+  .development-watermark::after,
+  .maintenance-watermark::after,
+  .consulting-watermark::after {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    font-size: clamp(80px, 18vw, 250px);
-    font-weight: 700;
-    letter-spacing: -0.05em;
-    line-height: 0.85;
-    color: color-mix(in srgb, var(--foreground) 2%, transparent);
+    bottom: 0em;
+    inset-inline-end: 0;
+    font-size: clamp(160px, 24vw, 400px);
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 0.75;
+    color: color-mix(in srgb, var(--foreground) 3.5%, transparent);
     pointer-events: none;
     user-select: none;
     z-index: 0;
+    font-family: var(--font-outfit), sans-serif;
   }
+
+  .hero-watermark::after { content: "WEB"; }
+  .services-watermark::after { content: "00"; }
+  .webDesign-watermark::after { content: "01"; }
+  .development-watermark::after { content: "02"; }
+  .consulting-watermark::after { content: "03"; }
+  .maintenance-watermark::after { content: "04"; }
+
   #services-wrapper {
     transition: background-color 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   }

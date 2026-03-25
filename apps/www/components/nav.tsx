@@ -135,10 +135,10 @@ export function Nav() {
                                     <Link
                                         key={item.key}
                                         href={item.href}
-                                        className="group relative rounded-full px-3 py-1.5 font-mono text-xs font-medium uppercase tracking-[0.15em] text-nowrap text-primary/60 transition-colors duration-200"
+                                        className="group relative rounded-full px-3 py-1.5 font-mono text-sm ltr:font-medium font-bold uppercase tracking-[0.15em] text-nowrap text-primary/60 transition-colors duration-200"
                                     >
-                                            {t(item.key)}
-                                            <span className="absolute -bottom-1 left-0 right-0 h-px bg-transparent group-hover:bg-foreground/25 transition-all duration-300" />
+                                        {t(item.key)}
+                                        <span className="absolute -bottom-1 left-0 right-0 h-px bg-transparent group-hover:bg-foreground/25 transition-all duration-300" />
                                     </Link>
                                 ))}
                             </nav>

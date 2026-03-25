@@ -372,20 +372,20 @@ export function TechDNASection() {
                         </div>
                     </div>
 
-                    <div className="md:hidden flex items-center justify-center gap-3 mt-4 opacity-20 pointer-events-none transition-opacity group-hover/scroll:opacity-5">
-                        <div className="h-px flex-1 bg-primary/40" />
-                        <p className="font-mono text-[9px] uppercase tracking-[0.3em] whitespace-nowrap">
+                    <div className="md:hidden flex items-center justify-center gap-3 mt-4 pointer-events-none transition-opacity group-hover/scroll:opacity-5">
+                        <div className="h-px flex-1 bg-border" />
+                        <p className="font-mono text-xs uppercase tracking-[0.3em] whitespace-nowrap text-muted-foreground/70">
                             {t("techStack.dragHint")}
                         </p>
-                        <div className="h-px flex-1 bg-primary/40" />
+                        <div className="h-px flex-1 bg-border" />
                     </div>
 
-                    <div className="mt-8 md:mt-24 min-h-[160px] md:min-h-[116px] relative">
+                    <div className="mt-8 md:mt-0 min-h-[160px] md:min-h-[116px] relative">
                         <div
                             className="absolute inset-0 flex items-center justify-center pointer-events-none"
                             style={{ opacity: activeNode ? 0 : 1, transition: "opacity 0.18s ease" }}
                         >
-                            <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.22em] text-primary/18 text-center px-6">
+                            <p className="font-mono text-xs md:text-sm uppercase tracking-[0.22em] text-muted-foreground text-center px-6">
                                 {t("techStack.inspect")}
                             </p>
                         </div>
