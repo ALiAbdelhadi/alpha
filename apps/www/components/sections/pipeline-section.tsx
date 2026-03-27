@@ -312,7 +312,7 @@ export function PipelineSection() {
                         >
                             {t("titleItalic")}
                         </span>
-                        <p ref={descRef} className="font-mono text-xs md:text-sm text-muted-foreground/70 leading-relaxed">
+                        <p ref={descRef} className="font-mono text-xs md:text-sm text-muted-foreground leading-relaxed">
                             {t("description")}
                         </p>
                     </h2>

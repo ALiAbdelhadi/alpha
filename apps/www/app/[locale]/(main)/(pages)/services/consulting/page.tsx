@@ -108,16 +108,9 @@ function HeroSection() {
             >
                 <p className="font-mono text-xs uppercase text-muted-foreground/70 tracking-[0.25em]">Scroll</p>
                 <div className="relative h-10 w-px overflow-hidden bg-foreground/8">
-                    <div className="absolute top-0 h-1/2 w-full bg-foreground/40 animate-[slideDown_1.8s_ease-in-out_infinite]" />
+                    <div className="absolute top-0 h-1/2 w-full bg-foreground/40 animate-slide-down" />
                 </div>
             </div>
-
-            <style>{`
-                @keyframes slideDown {
-                    0%   { transform: translateY(-100%); }
-                    100% { transform: translateY(200%); }
-                }
-            `}</style>
         </section>
     )
 }

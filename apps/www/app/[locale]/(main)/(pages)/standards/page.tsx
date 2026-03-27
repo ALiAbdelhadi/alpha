@@ -22,6 +22,7 @@ function OpeningSection() {
     const titleRef = useText(DEFAULTS.heading)
     const descRef = useReveal({ ...DEFAULTS.body, delay: 0.25 })
     const metricsRef = useReveal({ ...DEFAULTS.element, delay: 0.35 })
+
     return (
         <section className="flex min-h-screen items-center section-padding pb-24">
             <Container>
@@ -47,9 +48,9 @@ function OpeningSection() {
                     </div>
                     <div ref={metricsRef} className="grid gap-4 md:grid-cols-3">
                         {[
-                            { label: t("metrics.performance.label"), value: "90+", sub: t("metrics.performance.sub") },
+                            { label: t("metrics.performance.label"),  value: "90+", sub: t("metrics.performance.sub") },
                             { label: t("metrics.accessibility.label"), value: "95+", sub: t("metrics.accessibility.sub") },
-                            { label: t("metrics.webVitals.label"), value: null, sub: t("metrics.webVitals.description") },
+                            { label: t("metrics.webVitals.label"),     value: null,  sub: t("metrics.webVitals.description") },
                         ].map(({ label, value, sub }, i) => (
                             <div
                                 key={i}
@@ -92,7 +93,8 @@ function CategoriesSection() {
         cats.forEach((cat, i) => {
             gsap.set(cat, { opacity: 0, y: MOTION.distance.md })
             const tween = gsap.to(cat, {
-                opacity: 1, y: 0, duration: MOTION.duration.base, delay: i * MOTION.stagger.tight, ease: MOTION.ease.smooth,
+                opacity: 1, y: 0, duration: MOTION.duration.base,
+                delay: i * MOTION.stagger.tight, ease: MOTION.ease.smooth,
                 scrollTrigger: { trigger: cat, start: MOTION.trigger.late, once: true },
             })
             if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
@@ -105,7 +107,6 @@ function CategoriesSection() {
     return (
         <section ref={sectionRef} className="section-padding border-t border-foreground/8">
             <Container>
-                <div className="h-px w-full bg-foreground/8 mb-0" />
                 <div>
                     {categories.map((cat, i) => (
                         <div
@@ -126,11 +127,10 @@ function CategoriesSection() {
                                 <p className="text-base text-primary/60 leading-relaxed mb-10 max-w-[52ch]">
                                     {tCat(`${cat}.description`)}
                                 </p>
-
                                 <div className="grid gap-4 md:grid-cols-2">
                                     {[
                                         { heading: t("requirements"), items: tCat(`${cat}.requirements`).split(" | ") },
-                                        { heading: t("benchmarks"), items: tCat(`${cat}.benchmarks`).split(" | ") },
+                                        { heading: t("benchmarks"),   items: tCat(`${cat}.benchmarks`).split(" | ") },
                                     ].map(({ heading, items }) => (
                                         <div
                                             key={heading}

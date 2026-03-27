@@ -75,10 +75,9 @@ function HeroSection() {
             <div ref={scrollRef} className="pointer-events-none absolute bottom-7 ltr:left-1/2 rtl:right-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2" aria-hidden="true">
                 <p className="font-mono text-xs uppercase text-muted-foreground/70 tracking-[0.25em]">Scroll</p>
                 <div className="relative h-10 w-px overflow-hidden bg-foreground/8">
-                    <div className="absolute top-0 h-1/2 w-full bg-foreground/40 animate-[slideDown_1.8s_ease-in-out_infinite]" />
+                    <div className="absolute top-0 h-1/2 w-full bg-foreground/40 animate-slide-down" />
                 </div>
             </div>
-            <style>{`@keyframes slideDown { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }`}</style>
         </section>
     )
 }
@@ -91,8 +90,8 @@ function StatsSection() {
     const stats = [
         { value: "99.9%", labelKey: "stats.uptime" },
         { value: "< 1hr", labelKey: "stats.response" },
-        { value: "24/7", labelKey: "stats.monitoring" },
-        { value: "100%", labelKey: "stats.satisfaction" },
+        { value: "24/7",  labelKey: "stats.monitoring" },
+        { value: "100%",  labelKey: "stats.satisfaction" },
     ]
 
     return (
@@ -125,7 +124,6 @@ function FeaturesSection() {
     const t = useTranslations("serviceDetails.maintenance")
     const tCommon = useTranslations("serviceDetails")
     const sectionRef = useRef<HTMLElement>(null)
-    // ✅ fixed: was { direction: "up", delay: 0, duration: 0.5 }
     const titleRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
 
     useEffect(() => {
@@ -135,7 +133,8 @@ function FeaturesSection() {
         cards.forEach((card, index) => {
             gsap.set(card, { opacity: 0, y: MOTION.distance.sm, willChange: "transform, opacity" })
             const tween = gsap.to(card, {
-                opacity: 1, y: 0, duration: MOTION.duration.base, delay: index * MOTION.stagger.tight, ease: MOTION.ease.smooth,
+                opacity: 1, y: 0, duration: MOTION.duration.base,
+                delay: index * MOTION.stagger.tight, ease: MOTION.ease.smooth,
                 scrollTrigger: { trigger: card, start: "top 90%", once: true },
                 onComplete() { gsap.set(card, { willChange: "auto" }) },
             })
@@ -184,7 +183,6 @@ function FeaturesSection() {
 function PricingSection() {
     const t = useTranslations("serviceDetails.maintenance")
     const sectionRef = useRef<HTMLElement>(null)
-    // ✅ fixed: was { direction: "up", delay: 0, duration: 0.5 }
     const titleRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
 
     useEffect(() => {
@@ -194,7 +192,8 @@ function PricingSection() {
         cards.forEach((card, index) => {
             gsap.set(card, { opacity: 0, y: MOTION.distance.md, willChange: "transform, opacity" })
             const tween = gsap.to(card, {
-                opacity: 1, y: 0, duration: MOTION.duration.base, delay: index * MOTION.stagger.base, ease: MOTION.ease.smooth,
+                opacity: 1, y: 0, duration: MOTION.duration.base,
+                delay: index * MOTION.stagger.base, ease: MOTION.ease.smooth,
                 scrollTrigger: { trigger: card, start: "top 90%", once: true },
                 onComplete() { gsap.set(card, { willChange: "auto" }) },
             })
@@ -204,9 +203,9 @@ function PricingSection() {
     }, [])
 
     const plans = [
-        { key: "essential", price: "7,500 EGP", featured: false, index: "01" },
-        { key: "professional", price: "15,000 EGP", featured: true, index: "02" },
-        { key: "enterprise", price: null, featured: false, index: "03" },
+        { key: "essential",    price: "7,500 EGP",  featured: false, index: "01" },
+        { key: "professional", price: "15,000 EGP", featured: true,  index: "02" },
+        { key: "enterprise",   price: null,          featured: false, index: "03" },
     ]
 
     return (
@@ -270,7 +269,6 @@ function PricingSection() {
 function CtaSection() {
     const t = useTranslations("serviceDetails.maintenance")
     const tCommon = useTranslations("serviceDetails")
-    // ✅ fixed: was { direction: "up", delay: 0, duration: 0.6 }
     const leftRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
     const rightRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.12 })
 

@@ -30,9 +30,7 @@ function HeroSection() {
     const scrollRef = useReveal({ ...DEFAULTS.element, direction: "fade", delay: 0.45 })
 
     return (
-        <section
-            className="development-watermark relative flex w-full flex-col justify-end section-padding pb-24 overflow-hidden min-h-screen"
-        >
+        <section className="development-watermark relative flex w-full flex-col justify-end section-padding pb-24 overflow-hidden min-h-screen">
             <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <div className="absolute top-0 ltr:left-1/4 rtl:right-1/4 h-full w-px bg-foreground/6" />
                 <div className="absolute top-0 ltr:right-1/4 rtl:left-1/4 h-full w-px bg-foreground/6" />
@@ -87,15 +85,12 @@ function HeroSection() {
             >
                 <p className="font-mono text-xs uppercase text-muted-foreground/70 tracking-[0.25em]">Scroll</p>
                 <div className="relative h-10 w-px overflow-hidden bg-foreground/8">
-                    <div className="absolute top-0 h-1/2 w-full bg-foreground/40 animate-[slideDown_1.8s_ease-in-out_infinite]" />
+                    <div className="absolute top-0 h-1/2 w-full bg-foreground/40 animate-slide-down" />
                 </div>
             </div>
-
-            <style>{`@keyframes slideDown{0%{transform:translateY(-100%)}100%{transform:translateY(200%)}}`}</style>
         </section>
     )
 }
-
 
 function CtaSection() {
     const t = useTranslations("serviceDetails.development")
@@ -116,7 +111,6 @@ function CtaSection() {
                             new-project - bash
                         </span>
                     </div>
-
                     <div className="grid md:grid-cols-2">
                         <div className="p-8 md:p-10 border-b border-foreground/8 md:border-b-0 ltr:md:border-r rtl:md:border-l font-mono text-sm space-y-3">
                             <div className="flex gap-3 text-primary/40">
@@ -155,7 +149,6 @@ function CtaSection() {
                                     {t("cta.description")}
                                 </p>
                             </div>
-
                             <div className="flex flex-col gap-3">
                                 <Link href="/contact" className="w-full">
                                     <MagneticButton size="lg" variant="primary" className="group w-full justify-center">

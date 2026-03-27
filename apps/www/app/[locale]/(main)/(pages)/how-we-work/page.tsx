@@ -1,10 +1,9 @@
-// motion: useText(heading) for h1/h2, useReveal for eyebrows/body, useBatch for phase cards and standard cards
 "use client"
 
 import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
 import { Link } from "@/i18n/navigation"
-import { DEFAULTS, MOTION, useBatch, useReveal, useText } from "@/lib/motion"
+import { DEFAULTS, useBatch, useReveal, useText } from "@/lib/motion"
 import { useLocale, useTranslations } from "next-intl"
 
 export default function HowWeWorkPage() {
@@ -18,30 +17,25 @@ export default function HowWeWorkPage() {
 
     const phases = ["discovery", "wireframe", "design", "development", "launch"] as const
 
-    // ── Hero section ──────────────────────────────────────────
     const heroEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
     const heroTitleRef = useText(DEFAULTS.heading)
     const heroDescRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
 
-    // ── Architecture section ──────────────────────────────────
     const archEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
     const archTitleRef = useText(DEFAULTS.heading)
     const archBodyRef = useBatch<HTMLDivElement>({ ...DEFAULTS.card, selector: ".arch-p" })
 
-    // ── Phased process section ────────────────────────────────
     const processEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
     const processTitleRef = useText(DEFAULTS.heading)
     const processDescRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
     const phaseCardsRef = useBatch<HTMLDivElement>({ ...DEFAULTS.card, selector: ".phase-card" })
 
-    // ── Standards section ─────────────────────────────────────
     const standardsEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
     const standardsTitleRef = useText(DEFAULTS.heading)
     const standardsBodyRef = useBatch<HTMLDivElement>({ ...DEFAULTS.card, selector: ".standards-p" })
     const standardsCardsRef = useBatch<HTMLDivElement>({ ...DEFAULTS.card, selector: ".standard-card" })
     const standardsLinkRef = useReveal({ ...DEFAULTS.element, delay: 0.15 })
 
-    // ── CTA section ───────────────────────────────────────────
     const ctaEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
     const ctaTitleRef = useText(DEFAULTS.heading)
     const ctaDescRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
@@ -50,8 +44,6 @@ export default function HowWeWorkPage() {
     return (
         <main className="section-padding">
             <Container>
-
-                {/* ── Hero ──────────────────────────────────────────────── */}
                 <section className="py-16 md:py-24">
                     <p
                         ref={heroEyebrowRef}
@@ -88,10 +80,7 @@ export default function HowWeWorkPage() {
                         </div>
                     </div>
                 </section>
-
                 <div className="h-px w-full bg-foreground/8" />
-
-                {/* ── Architecture ──────────────────────────────────────── */}
                 <section className="max-w-5xl mx-auto py-16 md:py-20">
                     <p
                         ref={archEyebrowRef}
@@ -111,10 +100,7 @@ export default function HowWeWorkPage() {
                         <p className="arch-p text-base text-primary/60 leading-relaxed">{t("architecture.p2")}</p>
                     </div>
                 </section>
-
                 <div className="h-px w-full bg-foreground/8" />
-
-                {/* ── Phased Process ────────────────────────────────────── */}
                 <section className="max-w-5xl mx-auto py-16 md:py-20">
                     <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                         <div>
@@ -178,10 +164,7 @@ export default function HowWeWorkPage() {
                         {t("phasedProcess.footer")}
                     </p>
                 </section>
-
                 <div className="h-px w-full bg-foreground/8" />
-
-                {/* ── Standards ─────────────────────────────────────────── */}
                 <section className="max-w-5xl mx-auto py-16 md:py-20">
                     <p
                         ref={standardsEyebrowRef}
@@ -238,10 +221,7 @@ export default function HowWeWorkPage() {
                         </Link>
                     </div>
                 </section>
-
                 <div className="h-px w-full bg-foreground/8" />
-
-                {/* ── CTA ───────────────────────────────────────────────── */}
                 <section className="max-w-5xl mx-auto py-16 md:py-24">
                     <div className="grid md:grid-cols-[1fr_360px] gap-12 items-start">
                         <div>

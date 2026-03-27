@@ -1,12 +1,12 @@
 "use client"
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"
 
-import { Container } from "@/components/container";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
-import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
-import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { Container } from "@/components/container"
+import { gsap, ScrollTrigger } from "@/lib/gsap"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
+import { useTranslations } from "next-intl"
+import { useEffect, useRef, useState } from "react"
 
 export default function ApproachPage() {
     return (
