@@ -2,7 +2,6 @@
 
 import { SectionSkeleton } from "@/components/section-skeleton"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
-import { useTheme } from "next-themes"
 import { lazy, Suspense, useEffect, useRef, useState } from "react"
 
 const ServicesSection = lazy(() =>
@@ -20,21 +19,28 @@ const ProcessSection = lazy(() =>
 const NOISE_SVG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`
 
 const INVERTED_BG = {
-    dark: "#fcfcfd",   // بدل الأبيض الحاد
-    light: "#0b0c10",  // أعمق من القديم
+    dark: "#fcfcfd",
+    light: "#0b0c10",
 }
 
 export function SceneInversionWrapper() {
-    const { resolvedTheme } = useTheme()
     const wrapperRef = useRef<HTMLDivElement>(null)
-
     const [mounted, setMounted] = useState(false)
     const [entered, setEntered] = useState(false)
+    const [isDark, setIsDark] = useState(false)
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true)
+        setIsDark(document.documentElement.classList.contains("dark"))
+
+        const observer = new MutationObserver(() => {
+            setIsDark(document.documentElement.classList.contains("dark"))
+        })
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] })
+        return () => observer.disconnect()
     }, [])
+
     useEffect(() => {
         const el = wrapperRef.current
         if (!el || !mounted) return
@@ -60,17 +66,16 @@ export function SceneInversionWrapper() {
             return
         }
 
-        const theme = resolvedTheme === "dark" ? "dark" : "light"
+        const theme = isDark ? "dark" : "light"
         el.style.backgroundColor = INVERTED_BG[theme]
-    }, [entered, resolvedTheme, mounted])
-
-    const isDark = mounted && resolvedTheme === "dark"
+    }, [entered, isDark, mounted])
 
     return (
         <div
             id="services-wrapper"
             ref={wrapperRef}
             className="ps-section relative overflow-hidden"
+            data-scene={entered ? "inverted" : undefined}
         >
             <div
                 aria-hidden
@@ -85,20 +90,20 @@ export function SceneInversionWrapper() {
                 className="absolute inset-0 pointer-events-none z-0"
                 style={{
                     backgroundImage: `radial-gradient(circle, ${isDark
-                            ? "rgba(255,255,255,0.03)"
-                            : "rgba(0,0,0,0.04)"
+                        ? "rgba(255,255,255,0.03)"
+                        : "rgba(0,0,0,0.04)"
                         } 1px, transparent 1px)`,
                     backgroundSize: "40px 40px",
                 }}
             />
 
-            <div className="relative z-[1]">
+            <div className="relative z-1">
                 <Suspense fallback={<SectionSkeleton />}>
-                    <ServicesSection invertColors={entered} />
+                    <ServicesSection />
                 </Suspense>
 
                 <Suspense fallback={<SectionSkeleton />}>
-                    <ProcessSection invertColors={entered} />
+                    <ProcessSection />
                 </Suspense>
             </div>
         </div>

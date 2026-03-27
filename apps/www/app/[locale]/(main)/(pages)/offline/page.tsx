@@ -5,14 +5,20 @@ import { MagneticButton } from "@/components/magnetic-button"
 import { useRouter } from "@/i18n/navigation"
 import { WifiOff } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useState } from "react"
 
 export default function OfflinePage() {
     const router = useRouter()
     const t = useTranslations("offline")
+    const [stillOffline, setStillOffline] = useState(false)
 
     const handleRetry = () => {
-        if (navigator.onLine) router.refresh()
-        else alert("Still offline. Please check your connection.")
+        if (navigator.onLine) {
+            router.refresh()
+        } else {
+            setStillOffline(true)
+            setTimeout(() => setStillOffline(false), 4000)
+        }
     }
 
     return (
@@ -36,11 +42,18 @@ export default function OfflinePage() {
                     >
                         {t("title")}
                     </h1>
-                    <p className="mb-10 text-base text-primary/60 leading-relaxed max-w-[40ch]">
+                    <p className="mb-4 text-base text-primary/60 leading-relaxed max-w-[40ch]">
                         {t("description")}
                         {" "}{t("description2")}
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                    {stillOffline && (
+                        <div className="mb-6 px-4 py-2.5 rounded-sm border border-destructive/30 bg-destructive/8">
+                            <p className="font-mono text-xs text-destructive/80 uppercase tracking-[0.15em]">
+                                Still offline — please check your connection
+                            </p>
+                        </div>
+                    )}
+                    <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto mt-2">
                         <MagneticButton size="lg" variant="primary" onClick={handleRetry} className="justify-center sm:w-auto">
                             {t("tryAgain")}
                         </MagneticButton>

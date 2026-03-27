@@ -1,17 +1,16 @@
 "use client"
 
 import { useEffect } from "react"
+import type Lenis from "lenis"
 
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         let cancelled = false
-        let teardown: (() => void) | undefined
-        let initialized = false
+        let gsapInstance: typeof import("@/lib/gsap") | null = null
+        let lenisInstance: Lenis | null = null
+        let tickFn: ((time: number) => void) | null = null
 
-        const initSmoothScroll = async () => {
-            if (initialized || cancelled) return
-            initialized = true
-
+        const init = async () => {
             try {
                 const [{ gsap, ScrollTrigger }, { default: Lenis }, { MOTION }] = await Promise.all([
                     import("@/lib/gsap"),
@@ -21,53 +20,37 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
 
                 if (cancelled) return
 
+                gsapInstance = { gsap, ScrollTrigger }
+
                 const lenis = new Lenis({
                     duration: MOTION.lenis.duration,
                     easing: MOTION.lenis.easing,
                     smoothWheel: MOTION.lenis.smoothWheel,
                 })
 
+                lenisInstance = lenis
+
                 lenis.on("scroll", () => {
                     ScrollTrigger.update()
                 })
 
-                const tick = (time: number) => lenis.raf(time * 1000)
-                gsap.ticker.add(tick)
-                gsap.ticker.lagSmoothing(0)
+                tickFn = (time: number) => lenis.raf(time * 1000)
 
-                teardown = () => {
-                    gsap.ticker.remove(tick)
-                    lenis.destroy()
-                }
+                gsap.ticker.add(tickFn)
+                gsap.ticker.lagSmoothing(0)
             } catch (e) {
                 console.warn("Failed to initialize smooth scroll:", e)
             }
         }
 
-        const handleFirstInteraction = () => {
-            initSmoothScroll()
-            window.removeEventListener("pointerdown", handleFirstInteraction)
-            window.removeEventListener("keydown", handleFirstInteraction)
-            window.removeEventListener("touchstart", handleFirstInteraction)
-        }
-
-        window.addEventListener("pointerdown", handleFirstInteraction, { once: true, passive: true })
-        window.addEventListener("keydown", handleFirstInteraction, { once: true })
-        window.addEventListener("touchstart", handleFirstInteraction, { once: true, passive: true })
-
-        const fallbackTimer = setTimeout(() => {
-            if (!initialized) {
-                initSmoothScroll()
-            }
-        }, 3000)
+        init()
 
         return () => {
             cancelled = true
-            clearTimeout(fallbackTimer)
-            window.removeEventListener("pointerdown", handleFirstInteraction)
-            window.removeEventListener("keydown", handleFirstInteraction)
-            window.removeEventListener("touchstart", handleFirstInteraction)
-            teardown?.()
+            if (gsapInstance && tickFn) {
+                gsapInstance.gsap.ticker.remove(tickFn)
+            }
+            lenisInstance?.destroy()
         }
     }, [])
 

@@ -2,23 +2,17 @@
 import { ErrorBoundary } from "@/components/error-boundary"
 import { SceneInversionWrapper } from "@/components/scene-inversion-wrapper"
 import { AboutSection } from "@/components/sections/about-section"
-import { ComparisonDemo } from "@/components/sections/comparison-demo"
 import { CtaSection } from "@/components/sections/cta-section"
 import { EstimatorSection } from "@/components/sections/estimator-section"
 import { ProblemSection } from "@/components/sections/problem-section"
 import { SocialProofSection } from "@/components/sections/social-proof-section"
 import { WorkSection } from "@/components/sections/work-section"
 
-
 export function HomeClient() {
-
     return (
         <>
             <ErrorBoundary>
                 <ProblemSection />
-            </ErrorBoundary>
-            <ErrorBoundary>
-                <ComparisonDemo />
             </ErrorBoundary>
             <ErrorBoundary>
                 <SceneInversionWrapper />
@@ -33,10 +27,10 @@ export function HomeClient() {
                 <AboutSection />
             </ErrorBoundary>
             <ErrorBoundary>
-                <CtaSection />
+                <EstimatorSection />
             </ErrorBoundary>
             <ErrorBoundary>
-                <EstimatorSection />
+                <CtaSection />
             </ErrorBoundary>
         </>
     )

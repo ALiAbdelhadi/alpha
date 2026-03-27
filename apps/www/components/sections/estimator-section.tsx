@@ -242,12 +242,16 @@ export const EstimatorSection = memo(function EstimatorSection() {
     }
   }, [estimate, locale, sel.name, sel.phone, selection, t])
 
-  // Auto-download only once after lead captured
   useIsomorphicLayoutEffect(() => {
     if (!leadCaptured || hasAutoDownloadedRef.current || !estimate || !sel.phone) return
     hasAutoDownloadedRef.current = true
     void handleDownloadPDF()
   }, [leadCaptured, handleDownloadPDF, estimate, sel.phone])
+
+  const canProceed =
+    (step === 1 && !!sel.projectType) ||
+    (step === 2 && !!sel.tier) ||
+    (step === 3 && !!sel.timeline)
 
   const optCls = (selected: boolean) =>
     cn(
@@ -296,9 +300,8 @@ export const EstimatorSection = memo(function EstimatorSection() {
                   {(["ecommerce", "corporate", "custom", "performance"] as DeliverableProject[]).map((type) => (
                     <button
                       key={type}
-                      onClick={() => { setSel((s) => ({ ...s, projectType: type })); setTimeout(goNext, 300) }}
+                      onClick={() => setSel((s) => ({ ...s, projectType: type }))}
                       className={optCls(sel.projectType === type)}
-                      aria-label={`اختر ${t(`step1.options.${type}.title` as any)}`}
                     >
                       <h4 className="font-medium text-primary mb-1 text-base">{t(`step1.options.${type}.title` as any)}</h4>
                       <p className="text-xs text-primary/50 leading-relaxed">{t(`step1.options.${type}.desc` as any)}</p>
@@ -321,9 +324,8 @@ export const EstimatorSection = memo(function EstimatorSection() {
                   {(["small", "medium", "large", "enterprise"] as DeliverableTier[]).map((tier) => (
                     <button
                       key={tier}
-                      onClick={() => { setSel((s) => ({ ...s, tier })); setTimeout(goNext, 300) }}
+                      onClick={() => setSel((s) => ({ ...s, tier }))}
                       className={optCls(sel.tier === tier)}
-                      aria-label={`اختر ${t(`step2.options.${tier}` as any)}`}
                     >
                       <div className="flex items-center justify-between">
                         <h4 className="font-medium text-primary text-base">{t(`step2.options.${tier}` as any)}</h4>
@@ -343,9 +345,8 @@ export const EstimatorSection = memo(function EstimatorSection() {
                   {(["urgent", "soon", "flexible"] as SectionTimeline[]).map((timeline) => (
                     <button
                       key={timeline}
-                      onClick={() => { setSel((s) => ({ ...s, timeline })); setTimeout(goNext, 300) }}
+                      onClick={() => setSel((s) => ({ ...s, timeline }))}
                       className={optCls(sel.timeline === timeline)}
-                      aria-label={`اختر ${t(`step3.options.${timeline}.title` as any)}`}
                     >
                       <h4 className="font-medium text-primary text-base">{t(`step3.options.${timeline}.title` as any)}</h4>
                       <p className="text-base text-primary/50 mt-0.5">{t(`step3.options.${timeline}.desc` as any)}</p>
@@ -532,40 +533,40 @@ export const EstimatorSection = memo(function EstimatorSection() {
               </div>
             )}
           </div>
-          {step > 1 && step < 5 && (
+
+          {/* Navigation — visible from step 1 */}
+          {step < 5 && step !== 4 && (
             <div className="mt-8 flex justify-between items-center border-t border-border pt-6">
-              <button
-                onClick={goPrev}
-                disabled={isAnimating}
-                className="text-primary/40 hover:text-primary/70 transition-colors flex items-center gap-2 text-base font-mono group disabled:opacity-30 disabled:cursor-not-allowed"
-                aria-label="السابق"
-              >
-                <ArrowLeft className="h-3.5 w-3.5 ltr:group-hover:-translate-x-1 rtl:group-hover:translate-x-1 transition-transform rtl:-rotate-180" />
-                {t("back")}
-              </button>
-              <span className="font-mono text-primary/20 text-xs tracking-[0.15em]">{step} / 5</span>
-              {step < 4 ? (
+              {step > 1 ? (
                 <button
-                  onClick={goNext}
-                  disabled={(step === 2 && !sel.tier) || (step === 3 && !sel.timeline) || isAnimating}
-                  className="text-primary/40 hover:text-primary/70 transition-colors flex items-center gap-2 text-base font-mono disabled:opacity-20 disabled:cursor-not-allowed group"
-                  aria-label="التالي"
+                  onClick={goPrev}
+                  disabled={isAnimating}
+                  className="text-primary/40 hover:text-primary/70 transition-colors flex items-center gap-2 text-base font-mono group disabled:opacity-30 disabled:cursor-not-allowed"
                 >
-                  {t("next")}
-                  <ArrowRight className="h-3.5 w-3.5 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform rtl:-rotate-180" />
+                  <ArrowLeft className="h-3.5 w-3.5 ltr:group-hover:-translate-x-1 rtl:group-hover:translate-x-1 transition-transform rtl:-rotate-180" />
+                  {t("back")}
                 </button>
               ) : (
                 <div />
               )}
+              <span className="font-mono text-primary/20 text-xs tracking-[0.15em]">{step} / 5</span>
+              <button
+                onClick={goNext}
+                disabled={!canProceed || isAnimating}
+                className="text-primary/40 hover:text-primary/70 transition-colors flex items-center gap-2 text-base font-mono disabled:opacity-20 disabled:cursor-not-allowed group"
+              >
+                {t("next")}
+                <ArrowRight className="h-3.5 w-3.5 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform rtl:-rotate-180" />
+              </button>
             </div>
           )}
+
           {step === 5 && (
             <div className="mt-6 border-t border-border pt-6 flex justify-between items-center">
               <button
                 onClick={() => animateStep("back", () => setStep(4))}
                 disabled={isAnimating}
                 className="text-primary/40 hover:text-primary/70 transition-colors flex items-center gap-2 text-base font-mono group"
-                aria-label="السابق"
               >
                 <ArrowLeft className="h-3.5 w-3.5 ltr:group-hover:-translate-x-1 rtl:group-hover:translate-x-1 transition-transform rtl:-rotate-180" />
                 {t("back")}
@@ -578,6 +579,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
             </div>
           )}
         </div>
+
         <div className="mt-32 max-w-3xl mx-auto">
           <div className="text-center mb-10">
             <h3 className="font-sans font-normal text-primary mb-3" style={{ fontSize: "clamp(24px, 4vw, 36px)", letterSpacing: "-0.02em" }}>

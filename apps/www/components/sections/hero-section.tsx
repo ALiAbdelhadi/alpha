@@ -10,21 +10,16 @@ import { isRTLText } from "@/lib/motion/utils/splite"
 import { useTranslations } from "next-intl"
 import { type ReactNode, memo, useCallback, useEffect, useMemo, useRef } from "react"
 
-const MAX_STAGGER_TOTAL = 0.55
-
-function splitTextTokens(
-  text: string,
-  className?: string,
-): { nodes: ReactNode; isRTL: boolean } {
+function splitTextTokens(text: string): { nodes: ReactNode; isRTL: boolean } {
   const rtl = isRTLText(text)
+  const words = text.split(" ")
 
   if (rtl) {
-    const words = text.split(" ")
     return {
       isRTL: true,
       nodes: words.map((word, wi) => (
         <span key={wi} style={{ display: "inline-block" }}>
-          <span data-token className={className} style={{ display: "inline-block" }}>
+          <span data-token style={{ display: "inline-block" }}>
             {word}
           </span>
           {wi < words.length - 1 && (
@@ -35,7 +30,6 @@ function splitTextTokens(
     }
   }
 
-  const words = text.split(" ")
   return {
     isRTL: false,
     nodes: words.map((word, wi) => (
@@ -49,16 +43,9 @@ function splitTextTokens(
           verticalAlign: "bottom",
         }}
       >
-        {word.split("").map((char, i) => (
-          <span
-            key={i}
-            data-token
-            className={className}
-            style={{ display: "inline-block" }}
-          >
-            {char}
-          </span>
-        ))}
+        <span data-token style={{ display: "inline-block" }}>
+          {word}
+        </span>
         {wi < words.length - 1 && (
           <span style={{ display: "inline-block", whiteSpace: "pre" }}>{" "}</span>
         )}
@@ -103,20 +90,15 @@ export const HeroSection = memo(function HeroSection() {
       ].filter(Boolean)
 
       if (reduced) {
-        gsap.set([...tokens, ...content], { opacity: 1, y: 0 })
+        gsap.set([...tokens, ...content], { opacity: 1, y: 0, filter: "none" })
         return
       }
-
-      const rawStagger = 0.022
-      const effectiveStagger =
-        tokens.length > 1
-          ? Math.min(rawStagger, MAX_STAGGER_TOTAL / tokens.length)
-          : rawStagger
 
       const tl = gsap.timeline({ defaults: { ease: MOTION.ease.text } })
 
       if (badgeRef.current) {
-        tl.fromTo(badgeRef.current,
+        tl.fromTo(
+          badgeRef.current,
           { opacity: 0, y: 18 },
           { opacity: 1, y: 0, duration: MOTION.duration.fast, ease: MOTION.ease.smooth },
           0.1
@@ -124,21 +106,22 @@ export const HeroSection = memo(function HeroSection() {
       }
 
       if (tokens.length > 0) {
-        const tokenAnimStart: gsap.TweenVars = { opacity: 0, y: headlineIsRTL ? 40 : 60 }
-        if (!headlineIsRTL) tokenAnimStart.filter = "blur(8px)"
-
-        const tokenAnimEnd: gsap.TweenVars = {
-          opacity: 1,
-          y: 0,
-          filter: "blur(0px)",
-          duration: headlineIsRTL ? 0.85 : 1.1,
-          stagger: { each: effectiveStagger, from: headlineIsRTL ? "end" : "start" },
-          ease: "power4.out",
-          onComplete() {
-            gsap.set(tokens, { clearProps: "filter,willChange" })
+        tl.fromTo(
+          tokens,
+          { opacity: 0, y: headlineIsRTL ? 40 : 50, filter: "blur(4px)" },
+          {
+            opacity: 1,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 0.9,
+            stagger: { each: 0.06, from: headlineIsRTL ? "end" : "start" },
+            ease: "power4.out",
+            onComplete() {
+              gsap.set(tokens, { clearProps: "filter,willChange" })
+            },
           },
-        }
-        tl.fromTo(tokens, tokenAnimStart, tokenAnimEnd, 0.2)
+          0.2
+        )
       }
 
       if (subRef.current) tl.fromTo(subRef.current, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: MOTION.duration.base, ease: MOTION.ease.smooth }, 0.55)

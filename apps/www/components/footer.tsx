@@ -17,7 +17,7 @@ export const Footer = memo(function Footer() {
     }, [locale])
 
     const servicesLinks = useMemo(() => [
-        { href: "/services/web-design", label: t("webDesign") },
+        { href: "/services/interface-design", label: t("webDesign") },
         { href: "/services/development", label: t("development") },
         { href: "/services/consulting", label: t("consulting") },
         { href: "/services/maintenance", label: t("maintenance") },
@@ -84,7 +84,7 @@ export const Footer = memo(function Footer() {
                         <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 sm:gap-x-8 md:gap-x-12">
                             {linkColumns.map(({ title, links }) => (
                                 <div key={title}>
-                                    <h3 className="font-mono text-[10px] uppercase tracking-[0.25em] text-primary/25 mb-3">
+                                    <h3 className="font-mono text-sm lg:text-base uppercase tracking-widest text-primary/25 mb-3">
                                         {title}
                                     </h3>
                                     <ul className="flex flex-col gap-2.5">
@@ -92,7 +92,7 @@ export const Footer = memo(function Footer() {
                                             <li key={label}>
                                                 <Link
                                                     href={href}
-                                                    className="text-[13px] text-primary/50 transition-colors duration-200 hover:text-primary leading-snug"
+                                                    className="text-xs tracking-wider lg:text-sm text-primary/50 transition-colors duration-200 hover:text-primary leading-snug"
                                                 >
                                                     {label}
                                                 </Link>
