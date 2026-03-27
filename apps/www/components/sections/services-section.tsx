@@ -26,9 +26,6 @@ const LIGHT_C = {
 
 type CTokens = typeof DARK_C | typeof LIGHT_C
 
-const MONO = "var(--font-geist-mono), ui-monospace, 'SFMono-Regular', monospace"
-const SERIF = "Georgia, 'Times New Roman', serif"
-
 interface ServiceData { key: string; index: string; span: "single" | "double" }
 
 const services: ServiceData[] = [
@@ -74,16 +71,9 @@ const SERVICES_CSS = `
   [dir="rtl"] .ps-service-arrow {
     transform: scaleX(-1);
   }
-
-  [dir="rtl"] .ps-services-heading {
-    font-family: 'Noto Naskh Arabic', 'Amiri', 'Scheherazade New', serif;
-    font-style: normal;
-  }
-
-  [dir="rtl"] .ps-services-body {
-    font-family: 'Noto Kufi Arabic', 'IBM Plex Arabic', 'Tajawal', sans-serif;
-    line-height: 2;
-    letter-spacing: 0;
+  
+  [dir="rtl"] .ps-service-card:hover .ps-service-arrow {
+    transform: scaleX(-1) translate(2px, 2px);
   }
 
   @media (max-width: 768px) {
@@ -103,8 +93,7 @@ const SERVICES_CSS = `
 
 function splitHeadline(value: string) {
     if (!value.trim()) return { first: "", second: "" }
-
-    const sentenceMatch = value.match(/^(.+[.!?])\s+(.+)$/)
+    const sentenceMatch = value.match(/^(.+[.!?،])\s+(.+)$/)
     if (sentenceMatch) {
         return { first: sentenceMatch[1], second: sentenceMatch[2] }
     }
@@ -156,13 +145,12 @@ const ServiceCard = memo(function ServiceCard({
         >
             <div
                 aria-hidden
-                className="ps-service-number"
+                className="ps-service-number font-mono"
                 style={{
                     position: "absolute",
                     insetInlineEnd: isDouble ? 48 : 28,
                     top: "50%",
                     transform: "translateY(-50%)",
-                    fontFamily: MONO,
                     fontSize: "clamp(88px, 12vw, 144px)",
                     fontWeight: 700,
                     color: "transparent",
@@ -173,16 +161,15 @@ const ServiceCard = memo(function ServiceCard({
                     letterSpacing: "-0.04em",
                     transition: "transform 0.45s ease, -webkit-text-stroke 0.35s ease",
                     unicodeBidi: "embed",
-                    direction: "ltr",
                 }}
             >
                 {service.index}
             </div>
+            
             <div className="flex items-center justify-between w-full mb-8">
                 <span
-                    className="ps-service-tag"
+                    className="ps-service-tag font-mono"
                     style={{
-                        fontFamily: MONO,
                         fontSize: 10.5,
                         letterSpacing: "0.25em",
                         textTransform: "uppercase",
@@ -199,7 +186,7 @@ const ServiceCard = memo(function ServiceCard({
                 <span
                     className="ps-service-arrow"
                     style={{
-                        fontFamily: MONO,
+                        fontFamily: "var(--font-body-mono)",
                         fontSize: 15,
                         color: C.low,
                         opacity: 0,
@@ -209,14 +196,12 @@ const ServiceCard = memo(function ServiceCard({
                     ↗
                 </span>
             </div>
-            <div
-                className="relative z-[1]"
-                style={{ maxWidth: isDouble ? 500 : "100%" }}
-            >
+            
+            <div className="relative z-1" style={{ maxWidth: isDouble ? 500 : "100%" }}>
                 <h3
                     className="ps-service-title"
                     style={{
-                        fontFamily: SERIF,
+                        fontFamily: "var(--font-serif)",
                         fontStyle: "italic",
                         fontSize: isDouble ? 28 : 21,
                         fontWeight: 400,
@@ -233,7 +218,7 @@ const ServiceCard = memo(function ServiceCard({
                 <p
                     className="ps-service-body"
                     style={{
-                        fontFamily: MONO,
+                        fontFamily: "var(--font-body-mono)",
                         fontSize: 13,
                         lineHeight: 1.8,
                         color: C.muted,
@@ -260,7 +245,6 @@ export const ServicesSection = memo(function ServicesSection({ invertColors = fa
 
     // eslint-disable-next-line react-hooks/set-state-in-effect
     useEffect(() => { setMounted(true) }, [])
-
     useInjectStyles("services-styles", SERVICES_CSS)
 
     const baseTokens: CTokens = (mounted && resolvedTheme === "dark") ? DARK_C : LIGHT_C
@@ -280,7 +264,7 @@ export const ServicesSection = memo(function ServicesSection({ invertColors = fa
         <div
             ref={sectionRef}
             id="services"
-            className="bg-transparent relative section-padding"
+            className="services-section bg-transparent relative section-padding"
             style={{ color: C.high }}
         >
             <div className="relative">
@@ -291,8 +275,9 @@ export const ServicesSection = memo(function ServicesSection({ invertColors = fa
                     <div className="flex flex-col items-start justify-center w-full space-y-3">
                         <p
                             ref={eyebrowRef}
+                            className="font-mono"
                             style={{
-                                fontFamily: MONO,
+                                fontFamily: "var(--font-body-mono)",
                                 fontSize: 12,
                                 letterSpacing: "0.25em",
                                 textTransform: "uppercase",
@@ -307,7 +292,7 @@ export const ServicesSection = memo(function ServicesSection({ invertColors = fa
                             ref={titleRef}
                             className="ps-services-heading"
                             style={{
-                                fontFamily: "var(--font-outfit), sans-serif",
+                                fontFamily: "var(--font-heading)",
                                 fontSize: "clamp(32px, 4.5vw, 56px)",
                                 fontWeight: 400,
                                 letterSpacing: "-0.02em",
@@ -324,7 +309,7 @@ export const ServicesSection = memo(function ServicesSection({ invertColors = fa
                                     <span
                                         className="block mt-2 md:mt-0 md:inline"
                                         style={{
-                                            fontFamily: SERIF,
+                                            fontFamily: "var(--font-serif)",
                                             fontStyle: "italic",
                                             color: C.low,
                                             transition: "color 0.4s ease",
@@ -339,9 +324,8 @@ export const ServicesSection = memo(function ServicesSection({ invertColors = fa
 
                     <p
                         ref={descRef}
-                        className="ps-services-body w-full lg:max-w-[320px]"
+                        className="ps-services-body w-full lg:max-w-[320px] font-mono"
                         style={{
-                            fontFamily: MONO,
                             fontSize: 13,
                             lineHeight: 1.85,
                             color: C.muted,
@@ -351,6 +335,7 @@ export const ServicesSection = memo(function ServicesSection({ invertColors = fa
                         {t("subtitle")}
                     </p>
                 </div>
+                
                 <div
                     data-service-divider
                     className="scale-x-0"
@@ -367,15 +352,12 @@ export const ServicesSection = memo(function ServicesSection({ invertColors = fa
                 >
                     <div className="flex-1" style={{ height: 1, background: C.border }} />
                     <span
+                    className="font-mono uppercase tracking-tight text-xs"
                         style={{
-                            fontFamily: MONO,
-                            fontSize: 11,
-                            letterSpacing: "0.25em",
-                            textTransform: "uppercase",
                             color: C.muted,
                         }}
                     >
-                        04 Core Services — ALTRUVEX
+                        {t("footerText")}
                     </span>
                 </div>
             </div>

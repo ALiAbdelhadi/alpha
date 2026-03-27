@@ -127,7 +127,7 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
               onClick={() => switchLocale(lang.code)}
               data-cursor-pointer
               className={cn(
-                "relative z-10 px-3 py-1.5 font-mono text-xs uppercase transition-all duration-300",
+                "relative z-10 px-3 py-1.5 font-mono text-xs uppercase transition-all duration-300 ",
                 isActive
                   ? "bg-foreground/90 text-background shadow-md"
                   : "text-primary/60 hover:bg-foreground/20 hover:text-primary"
@@ -154,7 +154,7 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
         onClick={() => setIsOpen(!isOpen)}
         data-cursor-pointer
         className={cn(
-          "group flex items-center gap-2 rounded-lg border border-foreground/12 bg-background/70 px-3 py-1.5 transition-all duration-300 hover:border-foreground/20 hover:bg-foreground/5 focus:outline-none focus:ring-2 focus:ring-foreground/50 focus:ring-offset-2",
+          "group flex items-center gap-2 rounded-lg border border-foreground/12 bg-background/70 px-3 py-1.5 transition-all duration-300 hover:border-foreground/20 hover:bg-foreground/5 focus:outline-none focus:ring-2 focus:ring-foreground/50 focus:ring-offset-2 backdrop-blur-md",
           variant === "compact" && "h-11 w-11 sm:h-9 sm:w-9 p-0 justify-center"
         )}
         aria-label="Select language"

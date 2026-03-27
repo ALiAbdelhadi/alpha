@@ -255,6 +255,7 @@
   },
   "services": {
     "eyebrow": "What We Build",
+    "footerText": "04 Core Services — ALTRUVEX",
     "title": "Four systems. One standard.",
     "subtitle": "Every layer engineered precisely - from the interface to the data model.",
     "service1": {
