@@ -1,3 +1,4 @@
+import { Container } from '@/components/container';
 import { useTranslations, useLocale } from 'next-intl'
 
 export default function PrivacyPolicyPage() {
@@ -13,10 +14,10 @@ export default function PrivacyPolicyPage() {
         year: 'numeric'
     });
 
-    
+
     return (
         <section id="privacy-content" className="section-padding py-32">
-            <div className="max-w-3xl mx-auto">
+            <Container className="max-w-3xl mx-auto">
                 <h1 className="text-4xl font-semibold text-primary tracking-tight mb-8">
                     {t('title')}
                 </h1>
@@ -78,7 +79,7 @@ export default function PrivacyPolicyPage() {
                         </p>
                     </section>
                 </div>
-            </div>
+            </Container>
         </section>
     )
 }
