@@ -30,7 +30,9 @@ function HeroSection() {
     const scrollRef = useReveal({ ...DEFAULTS.element, direction: "fade", delay: 0.45 })
 
     return (
-        <section className="development-watermark relative flex w-full flex-col justify-end section-padding pb-24 overflow-hidden min-h-screen">
+        <section
+            className="development-watermark relative flex w-full flex-col justify-end section-padding pb-24 overflow-hidden min-h-screen"
+        >
             <div className="pointer-events-none absolute inset-0 overflow-hidden">
                 <div className="absolute top-0 ltr:left-1/4 rtl:right-1/4 h-full w-px bg-foreground/6" />
                 <div className="absolute top-0 ltr:right-1/4 rtl:left-1/4 h-full w-px bg-foreground/6" />
@@ -103,14 +105,15 @@ function CtaSection() {
                 <div ref={cardRef} className="border border-foreground/8 rounded-2xl overflow-hidden">
                     <div className="flex items-center gap-3 px-5 py-3.5 border-b border-foreground/8 bg-foreground/2">
                         <div className="flex gap-1.5">
-                            <div className="w-2.5 h-2.5 rounded-full border-red-500/10 bg-red-500/70" />
-                            <div className="w-2.5 h-2.5 rounded-full border-yellow-500/10 bg-yellow-500/70" />
-                            <div className="w-2.5 h-2.5 rounded-full border-green-500/10 bg-green-500/70" />
+                            <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+                            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+                            <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
                         </div>
                         <span className="font-mono text-xs text-muted-foreground/70 tracking-[0.2em] mx-auto">
-                            new-project - bash
+                            new-project — bash
                         </span>
                     </div>
+
                     <div className="grid md:grid-cols-2">
                         <div className="p-8 md:p-10 border-b border-foreground/8 md:border-b-0 ltr:md:border-r rtl:md:border-l font-mono text-sm space-y-3">
                             <div className="flex gap-3 text-primary/40">

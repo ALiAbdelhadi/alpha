@@ -90,8 +90,7 @@ const ServicesGrid = memo(function ServicesGrid() {
         cards.forEach((card, index) => {
             gsap.set(card, { opacity: 0, y: MOTION.distance.md })
             const revealTween = gsap.to(card, {
-                opacity: 1, y: 0, duration: MOTION.duration.base,
-                delay: index * MOTION.stagger.loose, ease: MOTION.ease.smooth,
+                opacity: 1, y: 0, duration: MOTION.duration.base, delay: index * MOTION.stagger.loose, ease: MOTION.ease.smooth,
                 scrollTrigger: { trigger: card, start: "top 90%", once: true },
             })
             if (revealTween.scrollTrigger) triggers.push(revealTween.scrollTrigger)
@@ -143,8 +142,8 @@ const ServicesGrid = memo(function ServicesGrid() {
                                         </span>
                                         <div className="w-10 h-10 rounded-full border border-primary/10 flex items-center justify-center text-primary/40 bg-background group-hover:bg-primary group-hover:text-background group-hover:-translate-y-1 group-hover:translate-x-1 transition-all duration-300">
                                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                <line x1="7" y1="17" x2="17" y2="7" />
-                                                <polyline points="7 7 17 7 17 17" />
+                                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                                <polyline points="7 7 17 7 17 17"></polyline>
                                             </svg>
                                         </div>
                                     </div>

@@ -9,7 +9,7 @@ import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useRef } from "react"
 
-export default function WebDesignPage() {
+export default function InterfacePage() {
     return (
         <div className="relative min-h-screen w-full overflow-x-hidden">
             <HeroSection />
@@ -129,10 +129,10 @@ function ShowcaseSection() {
     }, [])
 
     const showcaseItems = [
-        { labelKey: "showcaseEcommerce",  number: "01" },
-        { labelKey: "showcaseCorporate",  number: "02" },
-        { labelKey: "showcasePortfolio",  number: "03" },
-        { labelKey: "showcaseLanding",    number: "04" },
+        { labelKey: "showcaseEcommerce", number: "01" },
+        { labelKey: "showcaseCorporate", number: "02" },
+        { labelKey: "showcasePortfolio", number: "03" },
+        { labelKey: "showcaseLanding", number: "04" },
     ]
 
     const getSpan = (i: number) =>
@@ -195,12 +195,12 @@ function ShowcaseSection() {
 }
 
 const FEATURE_PALETTE: { r: number; g: number; b: number }[] = [
-    { r: 37,  g: 99,  b: 235 },
-    { r: 16,  g: 185, b: 129 },
-    { r: 234, g: 88,  b: 12  },
-    { r: 139, g: 92,  b: 246 },
-    { r: 236, g: 72,  b: 153 },
-    { r: 6,   g: 182, b: 212 },
+    { r: 37, g: 99, b: 235 },
+    { r: 16, g: 185, b: 129 },
+    { r: 234, g: 88, b: 12 },
+    { r: 139, g: 92, b: 246 },
+    { r: 236, g: 72, b: 153 },
+    { r: 6, g: 182, b: 212 },
 ]
 
 function FeaturesSection() {
@@ -450,7 +450,7 @@ function CtaSection() {
                     <div data-token-card className="border border-foreground/8 rounded-sm bg-foreground/2 p-6 space-y-4">
                         <span className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground/70 block">Colors</span>
                         <div className="flex gap-2">
-                            {["bg-foreground/80","bg-foreground/50","bg-foreground/25","bg-foreground/10","bg-foreground/4"].map((c, i) => (
+                            {["bg-foreground/80", "bg-foreground/50", "bg-foreground/25", "bg-foreground/10", "bg-foreground/4"].map((c, i) => (
                                 <div key={i} className={`flex-1 h-10 rounded-sm ${c}`} />
                             ))}
                         </div>

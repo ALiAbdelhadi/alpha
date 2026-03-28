@@ -7,6 +7,7 @@
     "contact": "Contact",
     "approach": "Approach",
     "process": "Process",
+    "pricing": "Pricing",
     "standards": "Standards",
     "writing": "Writing",
     "estimator": "Estimator",
@@ -333,7 +334,7 @@
     "title2": "something that works.",
     "subtitle": "Start the conversation",
     "email": "Email",
-    "emailValue": "hello@altruvex.com",
+    "emailValue": "altruvex@gmail.com",
     "location": "Location",
     "locationValue": "Cairo, Egypt",
     "scheduleMeeting": "Book a Meeting",
@@ -510,7 +511,7 @@
       "title": "If this matches how you think,",
       "titleItalic": "let's talk.",
       "description": "Not every project needs this level of thinking. Some need speed. Some need iteration. But if you're building something that needs to last - if the system is the product, not the storefront - we should talk. No pitch. No pressure. A direct technical discussion about what you're building and whether we're the right fit.",
-      "cta": "Start the conversation: hello@altruvex.com"
+      "cta": "Start the conversation: altruvex@gmail.com"
     }
   },
   "standards": {

@@ -73,8 +73,7 @@ function PhasesList() {
         phases.forEach((phase, index) => {
             gsap.set(phase, { opacity: 0, y: MOTION.distance.md })
             const tween = gsap.to(phase, {
-                opacity: 1, y: 0, duration: MOTION.duration.base,
-                delay: index * MOTION.stagger.loose, ease: MOTION.ease.smooth,
+                opacity: 1, y: 0, duration: MOTION.duration.base, delay: index * MOTION.stagger.loose, ease: MOTION.ease.smooth,
                 scrollTrigger: { trigger: phase, start: MOTION.trigger.late, once: true },
             })
             if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)

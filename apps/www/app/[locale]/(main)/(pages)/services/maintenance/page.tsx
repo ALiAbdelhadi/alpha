@@ -90,8 +90,8 @@ function StatsSection() {
     const stats = [
         { value: "99.9%", labelKey: "stats.uptime" },
         { value: "< 1hr", labelKey: "stats.response" },
-        { value: "24/7",  labelKey: "stats.monitoring" },
-        { value: "100%",  labelKey: "stats.satisfaction" },
+        { value: "24/7", labelKey: "stats.monitoring" },
+        { value: "100%", labelKey: "stats.satisfaction" },
     ]
 
     return (
@@ -133,8 +133,7 @@ function FeaturesSection() {
         cards.forEach((card, index) => {
             gsap.set(card, { opacity: 0, y: MOTION.distance.sm, willChange: "transform, opacity" })
             const tween = gsap.to(card, {
-                opacity: 1, y: 0, duration: MOTION.duration.base,
-                delay: index * MOTION.stagger.tight, ease: MOTION.ease.smooth,
+                opacity: 1, y: 0, duration: MOTION.duration.base, delay: index * MOTION.stagger.tight, ease: MOTION.ease.smooth,
                 scrollTrigger: { trigger: card, start: "top 90%", once: true },
                 onComplete() { gsap.set(card, { willChange: "auto" }) },
             })
@@ -192,8 +191,7 @@ function PricingSection() {
         cards.forEach((card, index) => {
             gsap.set(card, { opacity: 0, y: MOTION.distance.md, willChange: "transform, opacity" })
             const tween = gsap.to(card, {
-                opacity: 1, y: 0, duration: MOTION.duration.base,
-                delay: index * MOTION.stagger.base, ease: MOTION.ease.smooth,
+                opacity: 1, y: 0, duration: MOTION.duration.base, delay: index * MOTION.stagger.base, ease: MOTION.ease.smooth,
                 scrollTrigger: { trigger: card, start: "top 90%", once: true },
                 onComplete() { gsap.set(card, { willChange: "auto" }) },
             })
@@ -203,9 +201,9 @@ function PricingSection() {
     }, [])
 
     const plans = [
-        { key: "essential",    price: "7,500 EGP",  featured: false, index: "01" },
-        { key: "professional", price: "15,000 EGP", featured: true,  index: "02" },
-        { key: "enterprise",   price: null,          featured: false, index: "03" },
+        { key: "essential", price: "7,500 EGP", featured: false, index: "01" },
+        { key: "professional", price: "15,000 EGP", featured: true, index: "02" },
+        { key: "enterprise", price: null, featured: false, index: "03" },
     ]
 
     return (

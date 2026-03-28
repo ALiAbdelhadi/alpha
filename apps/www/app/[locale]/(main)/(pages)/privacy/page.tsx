@@ -72,8 +72,8 @@ export default function PrivacyPolicyPage() {
                         <h2 className="text-2xl font-medium text-primary">{t('sections.6.title')}</h2>
                         <p>
                             {t('sections.6.description')}
-                            <a dir="ltr" href="mailto:hello@altruvex.com" className="text-brand underline underline-offset-4 hover:text-brand/80 transition-colors inline-block">
-                                hello@altruvex.com
+                            <a dir="ltr" href="mailto:altruvex@gmail.com" className="text-brand underline underline-offset-4 hover:text-brand/80 transition-colors inline-block">
+                                altruvex@gmail.com
                             </a>
                         </p>
                     </section>

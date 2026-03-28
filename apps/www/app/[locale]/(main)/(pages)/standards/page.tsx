@@ -48,9 +48,9 @@ function OpeningSection() {
                     </div>
                     <div ref={metricsRef} className="grid gap-4 md:grid-cols-3">
                         {[
-                            { label: t("metrics.performance.label"),  value: "90+", sub: t("metrics.performance.sub") },
+                            { label: t("metrics.performance.label"), value: "90+", sub: t("metrics.performance.sub") },
                             { label: t("metrics.accessibility.label"), value: "95+", sub: t("metrics.accessibility.sub") },
-                            { label: t("metrics.webVitals.label"),     value: null,  sub: t("metrics.webVitals.description") },
+                            { label: t("metrics.webVitals.label"), value: null, sub: t("metrics.webVitals.description") },
                         ].map(({ label, value, sub }, i) => (
                             <div
                                 key={i}
@@ -93,8 +93,7 @@ function CategoriesSection() {
         cats.forEach((cat, i) => {
             gsap.set(cat, { opacity: 0, y: MOTION.distance.md })
             const tween = gsap.to(cat, {
-                opacity: 1, y: 0, duration: MOTION.duration.base,
-                delay: i * MOTION.stagger.tight, ease: MOTION.ease.smooth,
+                opacity: 1, y: 0, duration: MOTION.duration.base, delay: i * MOTION.stagger.tight, ease: MOTION.ease.smooth,
                 scrollTrigger: { trigger: cat, start: MOTION.trigger.late, once: true },
             })
             if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
@@ -130,7 +129,7 @@ function CategoriesSection() {
                                 <div className="grid gap-4 md:grid-cols-2">
                                     {[
                                         { heading: t("requirements"), items: tCat(`${cat}.requirements`).split(" | ") },
-                                        { heading: t("benchmarks"),   items: tCat(`${cat}.benchmarks`).split(" | ") },
+                                        { heading: t("benchmarks"), items: tCat(`${cat}.benchmarks`).split(" | ") },
                                     ].map(({ heading, items }) => (
                                         <div
                                             key={heading}

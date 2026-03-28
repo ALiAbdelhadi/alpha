@@ -4,6 +4,7 @@ import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
 import { useLoading } from "@/components/providers/loading-provider"
 import { useGSAPSection } from "@/hooks/use-gsap-section"
+import { Link } from "@/i18n/navigation"
 import { gsap } from "@/lib/gsap"
 import { MOTION } from "@/lib/motion"
 import { isRTLText } from "@/lib/motion/utils/splite"
@@ -229,18 +230,20 @@ export const HeroSection = memo(function HeroSection() {
             ref={ctaRef}
             className="flex flex-col sm:flex-row sm:items-center gap-4"
           >
-            <MagneticButton size="lg" variant="primary" onClick={handleContactClick} className="group">
-              <span className="flex items-center gap-2">
-                {t("hero.ctaPrimary")}
-                <svg
-                  aria-hidden
-                  className="h-4 w-4 transition-transform duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
-                  fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </span>
-            </MagneticButton>
+            <Link href="estimator">
+              <MagneticButton size="lg" variant="primary" onClick={handleContactClick} className="group">
+                <span className="flex items-center gap-2">
+                  {t("hero.ctaPrimary")}
+                  <svg
+                    aria-hidden
+                    className="h-4 w-4 transition-transform duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </span>
+              </MagneticButton>
+            </Link>
             <MagneticButton size="lg" variant="secondary" onClick={handleWorkClick}>
               {t("hero.ctaSecondary")}
             </MagneticButton>

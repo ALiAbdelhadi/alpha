@@ -62,7 +62,6 @@ export default async function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Altruvex" />
-        {/* Preconnect to analytics services */}
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://www.clarity.ms" crossOrigin="anonymous" />
       </head>
@@ -128,7 +127,7 @@ export default async function RootLayout({
               logo: `${process.env.NEXT_PUBLIC_APP_URL || "https://altruvex.com"}/brand/altruvex-logo.png`,
               contactPoint: {
                 "@type": "ContactPoint",
-                email: "hello@altruvex.com",
+                email: "altruvex@gmail.com",
                 contactType: "Customer Service",
                 areaServed: ["Worldwide", "Egypt", "UAE", "Saudi Arabia"],
                 availableLanguage: ["en", "ar"],

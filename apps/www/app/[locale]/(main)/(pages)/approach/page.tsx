@@ -58,21 +58,11 @@ function ProblemSection() {
 
         items.forEach((item, index) => {
             gsap.set(item, { opacity: 0, y: DEFAULTS.body.distance })
-
             const tween = gsap.to(item, {
-                opacity: 1,
-                y: 0,
-                duration: MOTION.duration.base,
-                delay: index * MOTION.stagger.loose,
-                ease: MOTION.ease.smooth,
-                scrollTrigger: {
-                    trigger: item,
-                    start: MOTION.trigger.late,
-                    toggleActions: "play none none none",
-                    once: true,
-                },
+                opacity: 1, y: 0, duration: MOTION.duration.base,
+                delay: index * MOTION.stagger.loose, ease: MOTION.ease.smooth,
+                scrollTrigger: { trigger: item, start: MOTION.trigger.late, toggleActions: "play none none none", once: true },
             })
-
             if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
         })
 
@@ -135,21 +125,11 @@ function DecisionsSection() {
 
         items.forEach((item, index) => {
             gsap.set(item, { opacity: 0, x: -MOTION.distance.sm })
-
             const tween = gsap.to(item, {
-                opacity: 1,
-                x: 0,
-                duration: MOTION.duration.base,
-                delay: index * MOTION.stagger.base,
-                ease: MOTION.ease.smooth,
-                scrollTrigger: {
-                    trigger: item,
-                    start: MOTION.trigger.late,
-                    toggleActions: "play none none none",
-                    once: true,
-                },
+                opacity: 1, x: 0, duration: MOTION.duration.base,
+                delay: index * MOTION.stagger.base, ease: MOTION.ease.smooth,
+                scrollTrigger: { trigger: item, start: MOTION.trigger.late, toggleActions: "play none none none", once: true },
             })
-
             if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
         })
 
@@ -282,21 +262,11 @@ function BoundariesSection() {
 
         items.forEach((item, index) => {
             gsap.set(item, { opacity: 0, x: -MOTION.distance.sm })
-
             const tween = gsap.to(item, {
-                opacity: 1,
-                x: 0,
-                duration: MOTION.duration.fast,
-                delay: index * MOTION.stagger.base,
-                ease: MOTION.ease.smooth,
-                scrollTrigger: {
-                    trigger: item,
-                    start: MOTION.trigger.late,
-                    toggleActions: "play none none none",
-                    once: true,
-                },
+                opacity: 1, x: 0, duration: MOTION.duration.fast,
+                delay: index * MOTION.stagger.base, ease: MOTION.ease.smooth,
+                scrollTrigger: { trigger: item, start: MOTION.trigger.late, toggleActions: "play none none none", once: true },
             })
-
             if (tween.scrollTrigger) triggers.push(tween.scrollTrigger)
         })
 

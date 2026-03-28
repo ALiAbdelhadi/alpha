@@ -24,7 +24,7 @@ export function AltruvexLogo({ className, size = "md", variant = "full" }: Altru
         return (
             <div
                 className={cn(
-                    "flex items-center justify-center rounded-xl border border-foreground/10 bg-background/80 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-foreground/20 hover:bg-foreground/5",
+                    "flex items-center justify-center rounded-md border border-foreground/10 bg-background/80 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-foreground/20 hover:bg-foreground/5",
                     iconSizeClasses[size]
                 )}
             >

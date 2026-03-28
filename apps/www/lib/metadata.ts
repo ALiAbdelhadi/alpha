@@ -167,7 +167,7 @@ export function generateStructuredData() {
     sameAs: [],
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'hello@altruvex.com',
+      email: 'altruvex@gmail.com',
       contactType: 'Customer Service',
       areaServed: ['Worldwide', 'Egypt', 'UAE', 'Saudi Arabia'],
       availableLanguage: ['en', 'ar'],
