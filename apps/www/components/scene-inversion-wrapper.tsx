@@ -2,7 +2,7 @@
 
 import { SectionSkeleton } from "@/components/section-skeleton"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
-import { lazy, Suspense, useEffect, useRef, useState } from "react"
+import { lazy, Suspense, useEffect, useRef, useState, useSyncExternalStore } from "react"
 
 const ServicesSection = lazy(() =>
     import("@/components/sections/services-section").then((m) => ({
@@ -25,21 +25,31 @@ const INVERTED_BG = {
 
 export function SceneInversionWrapper() {
     const wrapperRef = useRef<HTMLDivElement>(null)
-    const [mounted, setMounted] = useState(false)
+    const mounted = useSyncExternalStore(
+        () => () => undefined,
+        () => true,
+        () => false
+    )
     const [entered, setEntered] = useState(false)
-    const [isDark, setIsDark] = useState(false)
+    const isDark = useSyncExternalStore(
+        (onStoreChange) => {
+            if (typeof document === "undefined") {
+                return () => undefined
+            }
 
-    useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setMounted(true)
-        setIsDark(document.documentElement.classList.contains("dark"))
+            const observer = new MutationObserver(() => onStoreChange())
+            observer.observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: ["class"],
+            })
 
-        const observer = new MutationObserver(() => {
-            setIsDark(document.documentElement.classList.contains("dark"))
-        })
-        observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] })
-        return () => observer.disconnect()
-    }, [])
+            return () => observer.disconnect()
+        },
+        () =>
+            typeof document !== "undefined" &&
+            document.documentElement.classList.contains("dark"),
+        () => false
+    )
 
     useEffect(() => {
         const el = wrapperRef.current

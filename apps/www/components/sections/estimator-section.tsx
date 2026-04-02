@@ -1,34 +1,47 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"
+"use client";
 
-import { Link } from "@/i18n/navigation"
-import { useIsomorphicLayoutEffect } from "@/lib/dom-utils"
+import { Link } from "@/i18n/navigation";
+import { useIsomorphicLayoutEffect } from "@/lib/dom-utils";
 import {
   buildPDFHtml,
   calculateQuickEstimate,
   DeliverableProject,
   DeliverableTier,
+  EstimatorTranslator,
   generateEstimatePdf,
   generateProposalNarrative,
   HOSTING_RENEWAL,
   normalisePhone,
   pickLang,
   validatePhone,
-} from "@/lib/estimator-utils"
-import { gsap } from "@/lib/gsap"
-import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
-import { localizeNumbers } from "@/lib/number"
-import { cn } from "@/lib/utils"
-import { ArrowLeft, ArrowRight, Check, Download, Phone } from "lucide-react"
-import { useLocale, useTranslations } from "next-intl"
-import { memo, useCallback, useMemo, useRef, useState } from "react"
-import { Container } from "../container"
-import { MagneticButton } from "../magnetic-button"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion"
-import { Input } from "../ui/input"
-import { Label } from "../ui/label"
+} from "@/lib/estimator-utils";
+import { gsap } from "@/lib/gsap";
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
+import { localizeNumbers } from "@/lib/number";
+import { cn } from "@/lib/utils";
+import { ArrowLeft, ArrowRight, Check, Download, Phone } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  memo,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { Container } from "../container";
+import { MagneticButton } from "../magnetic-button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../ui/accordion";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
-type SectionTimeline = "urgent" | "soon" | "flexible"
+type SectionTimeline = "urgent" | "soon" | "flexible";
 
 export const ProposalNarrativeBlock = memo(function ProposalNarrativeBlock({
   projectType,
@@ -39,20 +52,24 @@ export const ProposalNarrativeBlock = memo(function ProposalNarrativeBlock({
   contentReadiness,
   deadlineUrgency,
 }: {
-  projectType: DeliverableProject
-  tier: DeliverableTier
-  timelineKey: string
-  locale: string
-  brandIdentity?: string | null
-  contentReadiness?: string | null
-  deadlineUrgency?: string | null
+  projectType: DeliverableProject;
+  tier: DeliverableTier;
+  timelineKey: string;
+  locale: string;
+  brandIdentity?: string | null;
+  contentReadiness?: string | null;
+  deadlineUrgency?: string | null;
 }) {
   const narrative = generateProposalNarrative({
-    projectType, tier, timelineKey,
-    brandIdentity, contentReadiness, deadlineUrgency,
-  })
-  const L = (obj: { ar: string; en: string }) => pickLang(obj, locale)
-  const isRtl = locale.startsWith("ar")
+    projectType,
+    tier,
+    timelineKey,
+    brandIdentity,
+    contentReadiness,
+    deadlineUrgency,
+  });
+  const L = (obj: { ar: string; en: string }) => pickLang(obj, locale);
+  const isRtl = locale.startsWith("ar");
 
   return (
     <div className="space-y-3">
@@ -64,127 +81,160 @@ export const ProposalNarrativeBlock = memo(function ProposalNarrativeBlock({
       </div>
       <div className="flex gap-3 p-4 rounded-sm bg-muted/20 border border-border">
         <div className="w-0.5 self-stretch rounded-full bg-primary/20 shrink-0" />
-        <p className={cn("text-base text-muted-foreground leading-relaxed", isRtl ? "font-sans" : "font-mono")}>
+        <p
+          className={cn(
+            "text-base text-muted-foreground leading-relaxed",
+            isRtl ? "font-sans" : "font-mono",
+          )}
+        >
           {L(narrative.closing)}
         </p>
       </div>
     </div>
-  )
-})
+  );
+});
 
 export const EstimatorSection = memo(function EstimatorSection() {
-  const t = useTranslations("estimator")
-  const locale = useLocale()
+  const t = useTranslations("estimator");
+  const translate = t as EstimatorTranslator;
+  const locale = useLocale();
 
-  const sectionRef = useRef<HTMLElement>(null)
-  const formContainerRef = useRef<HTMLDivElement>(null)
-  const tweenCtxRef = useRef<gsap.Context | null>(null)
-  const [isAnimating, setIsAnimating] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null);
+  const formContainerRef = useRef<HTMLDivElement>(null);
+  const tweenCtxRef = useRef<gsap.Context | null>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const titleRef = useText<HTMLHeadingElement>({
     ...DEFAULTS.heading,
     ease: MOTION.ease.text,
-  })
+  });
 
   const badgeRef = useReveal<HTMLParagraphElement>({
     ...DEFAULTS.body,
     ease: MOTION.ease.smooth,
     delay: 0.2,
-  })
+  });
 
   const descriptionRef = useReveal<HTMLParagraphElement>({
     ...DEFAULTS.body,
     ease: MOTION.ease.smooth,
     delay: 0.35,
-  })
+  });
 
   const formRef = useReveal<HTMLDivElement>({
     ...DEFAULTS.body,
     ease: MOTION.ease.smooth,
     delay: 0.15,
     distance: MOTION.distance.sm,
-  })
+  });
 
   useIsomorphicLayoutEffect(() => {
-    if (!formContainerRef.current) return
-    tweenCtxRef.current = gsap.context(() => { }, formContainerRef)
-    return () => { tweenCtxRef.current?.revert(); tweenCtxRef.current = null }
-  }, [])
+    if (!formContainerRef.current) return;
+    tweenCtxRef.current = gsap.context(() => {}, formContainerRef);
+    return () => {
+      tweenCtxRef.current?.revert();
+      tweenCtxRef.current = null;
+    };
+  }, []);
 
-  const [step, setStep] = useState(1)
-  const [isGenerating, setIsGen] = useState(false)
-  const [isSubmitting, setIsSub] = useState(false)
-  const [phoneError, setPhoneError] = useState<string | null>(null)
-  const [leadCaptured, setLeadCaptured] = useState(false)
-  const hasAutoDownloadedRef = useRef(false)
+  const [step, setStep] = useState(1);
+  const [isGenerating, setIsGen] = useState(false);
+  const [isSubmitting, setIsSub] = useState(false);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [leadCaptured, setLeadCaptured] = useState(false);
+  const hasAutoDownloadedRef = useRef(false);
 
   const [sel, setSel] = useState<{
-    projectType: DeliverableProject | null
-    tier: DeliverableTier | null
-    timeline: SectionTimeline | null
-    phone: string
-    name: string
-  }>({ projectType: null, tier: null, timeline: null, phone: "", name: "" })
+    projectType: DeliverableProject | null;
+    tier: DeliverableTier | null;
+    timeline: SectionTimeline | null;
+    phone: string;
+    name: string;
+  }>({ projectType: null, tier: null, timeline: null, phone: "", name: "" });
 
-  const animateStep = useCallback((dir: "forward" | "back", cb: () => void) => {
-    if (!formContainerRef.current || isAnimating) return
-    setIsAnimating(true)
+  const animateStep = useCallback(
+    (dir: "forward" | "back", cb: () => void) => {
+      if (!formContainerRef.current || isAnimating) return;
+      setIsAnimating(true);
 
-    const fromY = dir === "forward" ? MOTION.distance.md : -MOTION.distance.md
-    const toY = dir === "forward" ? -MOTION.distance.md : MOTION.distance.md
+      const fromY =
+        dir === "forward" ? MOTION.distance.md : -MOTION.distance.md;
+      const toY = dir === "forward" ? -MOTION.distance.md : MOTION.distance.md;
 
-    gsap.killTweensOf(formContainerRef.current)
-    tweenCtxRef.current?.add(() => {
-      gsap.to(formContainerRef.current!, {
-        opacity: 0,
-        y: toY,
-        duration: MOTION.duration.fast,
-        ease: MOTION.ease.ui,
-        onComplete: () => {
-          cb()
-          gsap.fromTo(formContainerRef.current!,
-            { opacity: 0, y: fromY },
-            {
-              opacity: 1,
-              y: 0,
-              duration: MOTION.duration.base,
-              ease: MOTION.ease.gentle,
-              onComplete: () => setIsAnimating(false)
-            })
-        },
-      })
-    })
-  }, [isAnimating])
+      gsap.killTweensOf(formContainerRef.current);
+      tweenCtxRef.current?.add(() => {
+        gsap.to(formContainerRef.current!, {
+          opacity: 0,
+          y: toY,
+          duration: MOTION.duration.fast,
+          ease: MOTION.ease.ui,
+          onComplete: () => {
+            cb();
+            gsap.fromTo(
+              formContainerRef.current!,
+              { opacity: 0, y: fromY },
+              {
+                opacity: 1,
+                y: 0,
+                duration: MOTION.duration.base,
+                ease: MOTION.ease.gentle,
+                onComplete: () => setIsAnimating(false),
+              },
+            );
+          },
+        });
+      });
+    },
+    [isAnimating],
+  );
 
-  const goNext = useCallback(() => animateStep("forward", () => setStep((s) => s + 1)), [animateStep])
-  const goPrev = useCallback(() => animateStep("back", () => setStep((s) => s - 1)), [animateStep])
+  const goNext = useCallback(
+    () => animateStep("forward", () => setStep((s) => s + 1)),
+    [animateStep],
+  );
+  const goPrev = useCallback(
+    () => animateStep("back", () => setStep((s) => s - 1)),
+    [animateStep],
+  );
 
-  const estimate = sel.projectType && sel.tier && sel.timeline
-    ? calculateQuickEstimate(sel.projectType, sel.tier, sel.timeline)
-    : null
-
-  const selection = useMemo(() => (
+  const estimate =
     sel.projectType && sel.tier && sel.timeline
-      ? { projectType: sel.projectType, tier: sel.tier, timeline: sel.timeline }
-      : null
-  ), [sel.projectType, sel.tier, sel.timeline])
+      ? calculateQuickEstimate(sel.projectType, sel.tier, sel.timeline)
+      : null;
 
-  const formatEGP = useCallback((n: number) =>
-    new Intl.NumberFormat(locale === "ar" ? "ar-EG" : "en-EG", {
-      style: "currency", currency: "EGP", maximumFractionDigits: 0,
-    }).format(n), [locale])
+  const selection = useMemo(
+    () =>
+      sel.projectType && sel.tier && sel.timeline
+        ? {
+            projectType: sel.projectType,
+            tier: sel.tier,
+            timeline: sel.timeline,
+          }
+        : null,
+    [sel.projectType, sel.tier, sel.timeline],
+  );
+
+  const formatEGP = useCallback(
+    (n: number) =>
+      new Intl.NumberFormat(locale === "ar" ? "ar-EG" : "en-EG", {
+        style: "currency",
+        currency: "EGP",
+        maximumFractionDigits: 0,
+      }).format(n),
+    [locale],
+  );
 
   const handlePhoneSubmit = useCallback(async () => {
-    if (!selection || !estimate) return
+    if (!selection || !estimate) return;
     if (!validatePhone(sel.phone)) {
-      setPhoneError(t("phoneCapture.phoneError"))
-      return
+      setPhoneError(t("phoneCapture.phoneError"));
+      return;
     }
-    setPhoneError(null)
-    setIsSub(true)
+    setPhoneError(null);
+    setIsSub(true);
     try {
-      const controller = new AbortController()
-      const timeoutId = setTimeout(() => controller.abort(), 10_000)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10_000);
       try {
         await fetch(`/${locale}/api/estimator`, {
           method: "POST",
@@ -202,64 +252,69 @@ export const EstimatorSection = memo(function EstimatorSection() {
             weeksMax: estimate.weeksMax,
           }),
           signal: controller.signal,
-        })
+        });
       } finally {
-        clearTimeout(timeoutId)
+        clearTimeout(timeoutId);
       }
     } catch {
-      // Silent fail
     } finally {
-      setIsSub(false)
+      setIsSub(false);
     }
-    setLeadCaptured(true)
-    animateStep("forward", () => setStep(5))
-  }, [animateStep, estimate, locale, sel.name, sel.phone, selection, t])
+    setLeadCaptured(true);
+    animateStep("forward", () => setStep(5));
+  }, [animateStep, estimate, locale, sel.name, sel.phone, selection, t]);
 
   const handleDownloadPDF = useCallback(async () => {
-    if (!selection || !estimate) return
-    setIsGen(true)
+    if (!selection || !estimate) return;
+    setIsGen(true);
 
     try {
       const html = buildPDFHtml({
         locale,
-        t,
+        t: translate,
         projectType: selection.projectType,
         tier: selection.tier,
         timelineKey: selection.timeline,
-        priceMin: Math.round((estimate.priceMin + estimate.priceMax) / 2),
-        priceMax: Math.round((estimate.priceMin + estimate.priceMax) / 2),
+        priceMin: estimate.priceMin,
+        priceMax: estimate.priceMax,
         weeksMin: estimate.weeksMin,
         weeksMax: estimate.weeksMax,
         phone: normalisePhone(sel.phone),
         name: sel.name,
-      })
+      });
 
-      await generateEstimatePdf(html, `altruvex-estimate-${Date.now()}.pdf`)
+      await generateEstimatePdf(html, `altruvex-estimate-${Date.now()}.pdf`);
     } catch (err) {
-      console.error("PDF generation failed:", err)
+      console.error("PDF generation failed:", err);
     } finally {
-      setIsGen(false)
+      setIsGen(false);
     }
-  }, [estimate, locale, sel.name, sel.phone, selection, t])
+  }, [estimate, locale, sel.name, sel.phone, selection, translate]);
 
   useIsomorphicLayoutEffect(() => {
-    if (!leadCaptured || hasAutoDownloadedRef.current || !estimate || !sel.phone) return
-    hasAutoDownloadedRef.current = true
-    void handleDownloadPDF()
-  }, [leadCaptured, handleDownloadPDF, estimate, sel.phone])
+    if (
+      !leadCaptured ||
+      hasAutoDownloadedRef.current ||
+      !estimate ||
+      !sel.phone
+    )
+      return;
+    hasAutoDownloadedRef.current = true;
+    void handleDownloadPDF();
+  }, [leadCaptured, handleDownloadPDF, estimate, sel.phone]);
 
   const canProceed =
     (step === 1 && !!sel.projectType) ||
     (step === 2 && !!sel.tier) ||
-    (step === 3 && !!sel.timeline)
+    (step === 3 && !!sel.timeline);
 
   const optCls = (selected: boolean) =>
     cn(
       "relative p-5 rounded-sm border text-start transition-all duration-300",
       selected
         ? "border-foreground/40 bg-foreground/4 ring-1 ring-foreground/30"
-        : "border-border bg-foreground/[0.015] hover:border-foreground/20 hover:bg-foreground/[0.03]"
-    )
+        : "border-border bg-foreground/[0.015] hover:border-foreground/20 hover:bg-foreground/[0.03]",
+    );
 
   return (
     <section
@@ -270,20 +325,34 @@ export const EstimatorSection = memo(function EstimatorSection() {
     >
       <Container>
         <div className="mb-12 space-y-3 text-center max-w-3xl mx-auto ">
-          <p ref={badgeRef} className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground/70 block">
+          <p
+            ref={badgeRef}
+            className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground/70 block"
+          >
             {t("badge")}
           </p>
           <h2
             ref={titleRef}
             className="font-sans font-normal text-primary leading-[1.05]"
-            style={{ fontSize: "clamp(28px, 4.5vw, 52px)", letterSpacing: "-0.02em" }}
+            style={{
+              fontSize: "clamp(28px, 4.5vw, 52px)",
+              letterSpacing: "-0.02em",
+            }}
           >
             {t("title")}
           </h2>
-          <p ref={descriptionRef} className="text-base text-muted-foreground leading-relaxed">{t("description")}</p>
+          <p
+            ref={descriptionRef}
+            className="text-base text-muted-foreground leading-relaxed"
+          >
+            {t("description")}
+          </p>
         </div>
         <div className="h-px w-full bg-border mb-12 max-w-3xl mx-auto" />
-        <div ref={formRef} className="max-w-3xl mx-auto bg-background rounded-sm border border-border p-6 md:p-10 shadow-sm relative overflow-hidden">
+        <div
+          ref={formRef}
+          className="max-w-3xl mx-auto bg-background rounded-sm border border-border p-6 md:p-10 shadow-sm relative overflow-hidden"
+        >
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-border">
             <div
               className="h-full bg-primary/60 transition-all duration-500 ease-out"
@@ -293,18 +362,37 @@ export const EstimatorSection = memo(function EstimatorSection() {
           <div ref={formContainerRef} className="pt-4">
             {step === 1 && (
               <div className="space-y-6">
-                <h3 className="font-sans font-normal text-primary" style={{ fontSize: "clamp(18px,3vw,24px)", letterSpacing: "-0.015em" }}>
+                <h3
+                  className="font-sans font-normal text-primary"
+                  style={{
+                    fontSize: "clamp(18px,3vw,24px)",
+                    letterSpacing: "-0.015em",
+                  }}
+                >
                   {t("step1.question")}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {(["ecommerce", "corporate", "custom", "performance"] as DeliverableProject[]).map((type) => (
+                  {(
+                    [
+                      "ecommerce",
+                      "corporate",
+                      "custom",
+                      "performance",
+                    ] as DeliverableProject[]
+                  ).map((type) => (
                     <button
                       key={type}
-                      onClick={() => setSel((s) => ({ ...s, projectType: type }))}
+                      onClick={() =>
+                        setSel((s) => ({ ...s, projectType: type }))
+                      }
                       className={optCls(sel.projectType === type)}
                     >
-                      <h4 className="font-medium text-primary mb-1 text-base">{t(`step1.options.${type}.title` as any)}</h4>
-                      <p className="text-xs text-primary/50 leading-relaxed">{t(`step1.options.${type}.desc` as any)}</p>
+                      <h4 className="font-medium text-primary mb-1 text-base">
+                          {translate(`step1.options.${type}.title`)}
+                        </h4>
+                      <p className="text-xs text-primary/50 leading-relaxed">
+                        {translate(`step1.options.${type}.desc`)}
+                      </p>
                       {sel.projectType === type && (
                         <div className="absolute top-4 ltr:right-4 rtl:left-4 text-primary/60">
                           <Check className="h-4 w-4" />
@@ -317,19 +405,36 @@ export const EstimatorSection = memo(function EstimatorSection() {
             )}
             {step === 2 && (
               <div className="space-y-6">
-                <h3 className="font-sans font-normal text-primary" style={{ fontSize: "clamp(18px,3vw,24px)", letterSpacing: "-0.015em" }}>
+                <h3
+                  className="font-sans font-normal text-primary"
+                  style={{
+                    fontSize: "clamp(18px,3vw,24px)",
+                    letterSpacing: "-0.015em",
+                  }}
+                >
                   {t("step2.question")}
                 </h3>
                 <div className="flex flex-col gap-3">
-                  {(["small", "medium", "large", "enterprise"] as DeliverableTier[]).map((tier) => (
+                  {(
+                    [
+                      "small",
+                      "medium",
+                      "large",
+                      "enterprise",
+                    ] as DeliverableTier[]
+                  ).map((tier) => (
                     <button
                       key={tier}
                       onClick={() => setSel((s) => ({ ...s, tier }))}
                       className={optCls(sel.tier === tier)}
                     >
                       <div className="flex items-center justify-between">
-                        <h4 className="font-medium text-primary text-base">{t(`step2.options.${tier}` as any)}</h4>
-                        {sel.tier === tier && <Check className="h-4 w-4 text-primary/60" />}
+                        <h4 className="font-medium text-primary text-base">
+                          {translate(`step2.options.${tier}`)}
+                        </h4>
+                        {sel.tier === tier && (
+                          <Check className="h-4 w-4 text-primary/60" />
+                        )}
                       </div>
                     </button>
                   ))}
@@ -338,25 +443,37 @@ export const EstimatorSection = memo(function EstimatorSection() {
             )}
             {step === 3 && (
               <div className="space-y-6">
-                <h3 className="font-sans font-normal text-primary" style={{ fontSize: "clamp(18px,3vw,24px)", letterSpacing: "-0.015em" }}>
+                <h3
+                  className="font-sans font-normal text-primary"
+                  style={{
+                    fontSize: "clamp(18px,3vw,24px)",
+                    letterSpacing: "-0.015em",
+                  }}
+                >
                   {t("step3.question")}
                 </h3>
                 <div className="flex flex-col gap-3">
-                  {(["urgent", "soon", "flexible"] as SectionTimeline[]).map((timeline) => (
-                    <button
-                      key={timeline}
-                      onClick={() => setSel((s) => ({ ...s, timeline }))}
-                      className={optCls(sel.timeline === timeline)}
-                    >
-                      <h4 className="font-medium text-primary text-base">{t(`step3.options.${timeline}.title` as any)}</h4>
-                      <p className="text-base text-primary/50 mt-0.5">{t(`step3.options.${timeline}.desc` as any)}</p>
-                      {sel.timeline === timeline && (
-                        <div className="absolute top-1/2 -translate-y-1/2 ltr:right-4 rtl:left-4 text-primary/60">
-                          <Check className="h-4 w-4" />
-                        </div>
-                      )}
-                    </button>
-                  ))}
+                  {(["urgent", "soon", "flexible"] as SectionTimeline[]).map(
+                    (timeline) => (
+                      <button
+                        key={timeline}
+                        onClick={() => setSel((s) => ({ ...s, timeline }))}
+                        className={optCls(sel.timeline === timeline)}
+                      >
+                        <h4 className="font-medium text-primary text-base">
+                          {translate(`step3.options.${timeline}.title`)}
+                        </h4>
+                        <p className="text-base text-primary/50 mt-0.5">
+                          {translate(`step3.options.${timeline}.desc`)}
+                        </p>
+                        {sel.timeline === timeline && (
+                          <div className="absolute top-1/2 -translate-y-1/2 ltr:right-4 rtl:left-4 text-primary/60">
+                            <Check className="h-4 w-4" />
+                          </div>
+                        )}
+                      </button>
+                    ),
+                  )}
                 </div>
               </div>
             )}
@@ -365,16 +482,22 @@ export const EstimatorSection = memo(function EstimatorSection() {
                 <div>
                   <h3
                     className="font-sans font-normal text-primary mb-2"
-                    style={{ fontSize: "clamp(18px,3vw,24px)", letterSpacing: "-0.015em" }}
+                    style={{
+                      fontSize: "clamp(18px,3vw,24px)",
+                      letterSpacing: "-0.015em",
+                    }}
                   >
                     {t("phoneCapture.title")}
                   </h3>
-                  <p className="text-base text-muted-foreground leading-relaxed">{t("phoneCapture.subtitle")}</p>
+                  <p className="text-base text-muted-foreground leading-relaxed">
+                    {t("phoneCapture.subtitle")}
+                  </p>
                 </div>
                 <div className="space-y-4">
                   <div>
                     <Label className="font-mono text-xs text-primary/40 uppercase tracking-[0.18em] mb-2 block">
-                      {t("phoneCapture.phoneLabel")} <span className="text-destructive">*</span>
+                      {t("phoneCapture.phoneLabel")}{" "}
+                      <span className="text-destructive">*</span>
                     </Label>
                     <div className="relative">
                       <div className="absolute inset-y-0 ltr:left-3 rtl:right-3 flex items-center pointer-events-none">
@@ -384,16 +507,25 @@ export const EstimatorSection = memo(function EstimatorSection() {
                         type="tel"
                         dir="ltr"
                         value={sel.phone}
-                        onChange={(e: any) => {
-                          setSel((s) => ({ ...s, phone: e.target.value }))
-                          setPhoneError(null)
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          setSel((s) => ({ ...s, phone: e.target.value }));
+                          setPhoneError(null);
                         }}
-                        onKeyDown={(e: any) => e.key === "Enter" && !isSubmitting && !leadCaptured && handlePhoneSubmit()}
+                        onKeyDown={(e: KeyboardEvent<HTMLInputElement>) =>
+                          e.key === "Enter" &&
+                          !isSubmitting &&
+                          !leadCaptured &&
+                          handlePhoneSubmit()
+                        }
                         placeholder={t("phoneCapture.phonePlaceholder")}
                         className={`ltr:pl-10 rtl:pr-10 text-primary bg-transparent placeholder:text-primary/30 ${phoneError ? "border-destructive" : ""}`}
                       />
                     </div>
-                    {phoneError && <p className="mt-1.5 font-mono text-xs text-destructive">{phoneError}</p>}
+                    {phoneError && (
+                      <p className="mt-1.5 font-mono text-xs text-destructive">
+                        {phoneError}
+                      </p>
+                    )}
                     <p className="mt-2 font-mono text-[10px] text-muted-foreground/70 uppercase tracking-[0.12em]">
                       {t("phoneCapture.phoneHint")}
                     </p>
@@ -405,7 +537,9 @@ export const EstimatorSection = memo(function EstimatorSection() {
                     <Input
                       type="text"
                       value={sel.name}
-                      onChange={(e: any) => setSel((s) => ({ ...s, name: e.target.value }))}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        setSel((s) => ({ ...s, name: e.target.value }))
+                      }
                       placeholder={t("phoneCapture.namePlaceholder")}
                       className="text-primary bg-transparent placeholder:text-primary/30"
                     />
@@ -419,7 +553,9 @@ export const EstimatorSection = memo(function EstimatorSection() {
                   onClick={handlePhoneSubmit}
                   disabled={isSubmitting || !sel.phone}
                 >
-                  {isSubmitting ? t("phoneCapture.submitting") : t("phoneCapture.button")}
+                  {isSubmitting
+                    ? t("phoneCapture.submitting")
+                    : t("phoneCapture.button")}
                 </MagneticButton>
               </div>
             )}
@@ -427,10 +563,21 @@ export const EstimatorSection = memo(function EstimatorSection() {
               <div className="space-y-7 py-2">
                 <div>
                   <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/20 px-3 py-1 mb-4">
-                    <Check className="h-3 w-3 text-primary/40" strokeWidth={2.5} />
-                    <span className="font-mono text-[10px] text-primary/40 uppercase tracking-[0.15em]">{t("results.badge")}</span>
+                    <Check
+                      className="h-3 w-3 text-primary/40"
+                      strokeWidth={2.5}
+                    />
+                    <span className="font-mono text-[10px] text-primary/40 uppercase tracking-[0.15em]">
+                      {t("results.badge")}
+                    </span>
                   </div>
-                  <h3 className="font-sans font-normal text-primary" style={{ fontSize: "clamp(20px,3.5vw,30px)", letterSpacing: "-0.02em" }}>
+                  <h3
+                    className="font-sans font-normal text-primary"
+                    style={{
+                      fontSize: "clamp(20px,3.5vw,30px)",
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
                     {t("results.title")}
                   </h3>
                 </div>
@@ -438,19 +585,50 @@ export const EstimatorSection = memo(function EstimatorSection() {
                   <>
                     <div className="grid gap-3 md:grid-cols-2">
                       <div className="p-6 rounded-sm bg-primary text-primary-foreground">
-                        <p className="font-mono text-xs uppercase tracking-[0.2em] opacity-40 mb-3">{t("results.investment")}</p>
-                        <p className="font-sans font-light leading-none mb-1" style={{ fontSize: "clamp(18px,3.5vw,26px)", letterSpacing: "-0.03em" }}>
-                          {formatEGP(Math.round((estimate.priceMin + estimate.priceMax) / 2))}
+                        <p className="font-mono text-xs uppercase tracking-[0.2em] opacity-40 mb-3">
+                          {t("results.investment")}
                         </p>
-                        <p className="font-mono text-xs opacity-40">{t("results.vatExcluded")}</p>
-                        <p className="font-mono text-xs uppercase tracking-[0.12em] opacity-30 mt-3">{t("results.hostingIncluded")}</p>
+                        <p
+                          className="font-sans font-light leading-none mb-1"
+                          style={{
+                            fontSize: "clamp(18px,3.5vw,26px)",
+                            letterSpacing: "-0.03em",
+                          }}
+                        >
+                          {formatEGP(estimate.priceMin)} –{" "}
+                          {formatEGP(estimate.priceMax)}
+                        </p>
+                        <p className="font-mono text-xs opacity-40">
+                          {t("results.vatExcluded")}
+                        </p>
+                        <p className="font-mono text-xs uppercase tracking-[0.12em] opacity-30 mt-3">
+                          {t("results.hostingIncluded")}
+                        </p>
                       </div>
                       <div className="p-6 rounded-sm bg-muted/20 border border-border">
-                        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">{t("results.timeline")}</p>
-                        <p className="font-sans font-light text-primary leading-none mb-1" style={{ fontSize: "clamp(18px,3.5vw,26px)", letterSpacing: "-0.03em" }}>
-                          {localizeNumbers(estimate.weeksMin.toString(), locale)}–{localizeNumbers(estimate.weeksMax.toString(), locale)}
+                        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">
+                          {t("results.timeline")}
                         </p>
-                        <p className="font-mono text-xs text-primary/35">{t("results.weeks")}</p>
+                        <p
+                          className="font-sans font-light text-primary leading-none mb-1"
+                          style={{
+                            fontSize: "clamp(18px,3.5vw,26px)",
+                            letterSpacing: "-0.03em",
+                          }}
+                        >
+                          {localizeNumbers(
+                            estimate.weeksMin.toString(),
+                            locale,
+                          )}
+                          –
+                          {localizeNumbers(
+                            estimate.weeksMax.toString(),
+                            locale,
+                          )}
+                        </p>
+                        <p className="font-mono text-xs text-primary/35">
+                          {t("results.weeks")}
+                        </p>
                       </div>
                     </div>
                     {selection && (
@@ -462,41 +640,68 @@ export const EstimatorSection = memo(function EstimatorSection() {
                       />
                     )}
                     <div>
-                      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">{t("results.whatYouGet")}</p>
+                      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">
+                        {t("results.whatYouGet")}
+                      </p>
                       <div className="space-y-2.5">
                         {(() => {
-                          if (!selection) return []
-                          const items = (t as any).raw(`pdfContent.deliverables.${selection.projectType}.${selection.tier}`) || []
+                          if (!selection) return [];
+                          const rawItems = translate.raw?.(
+                            `pdfContent.deliverables.${selection.projectType}.${selection.tier}`,
+                          );
+                          const items =
+                            Array.isArray(rawItems)
+                              ? rawItems.filter(
+                                  (item): item is string =>
+                                    typeof item === "string",
+                                )
+                              : [];
                           return (
                             <>
                               {items.slice(0, 5).map((d: string, i: number) => (
                                 <div key={i} className="flex items-start gap-3">
                                   <div className="h-1.5 w-1.5 rounded-full bg-muted-foreground/25 mt-[7px] shrink-0" />
-                                  <p className="text-base text-muted-foreground leading-relaxed">{d}</p>
+                                  <p className="text-base text-muted-foreground leading-relaxed">
+                                    {d}
+                                  </p>
                                 </div>
                               ))}
                               {items.length > 5 && (
                                 <p className="font-mono text-[10px] text-muted-foreground/70 uppercase tracking-[0.12em] ltr:pl-5 rtl:pr-5 pt-1">
-                                  {t("results.moreInPdf", { count: items.length - 5 })}
+                                  {t("results.moreInPdf", {
+                                    count: items.length - 5,
+                                  })}
                                 </p>
                               )}
                             </>
-                          )
+                          );
                         })()}
                       </div>
                     </div>
                     <div className="flex gap-3 p-4 rounded-sm bg-muted/20 border border-border">
                       <div className="h-1.5 w-1.5 rounded-full bg-primary/30 mt-2 shrink-0" />
                       <p className="font-mono text-xs text-muted-foreground leading-relaxed">
-                        <span className="text-primary/60 font-medium">{t("results.infraLabel")}:</span>{" "}
-                        {selection ? t("results.infraDescription", { amount: formatEGP(HOSTING_RENEWAL[selection.tier]) }) : null}
+                        <span className="text-primary/60 font-medium">
+                          {t("results.infraLabel")}:
+                        </span>{" "}
+                        {selection
+                          ? t("results.infraDescription", {
+                              amount: formatEGP(
+                                HOSTING_RENEWAL[selection.tier],
+                              ),
+                            })
+                          : null}
                       </p>
                     </div>
                     <div className="p-6 rounded-sm border border-border bg-muted/20 flex gap-5 items-start">
                       <div className="w-1.5 self-stretch rounded-full bg-primary/30 shrink-0" />
                       <div>
-                        <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/40 mb-2">{t("results.rangeCtaLabel")}</p>
-                        <p className="text-base text-muted-foreground leading-relaxed font-sans">{t("results.rangeCta")}</p>
+                        <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/40 mb-2">
+                          {t("results.rangeCtaLabel")}
+                        </p>
+                        <p className="text-base text-muted-foreground leading-relaxed font-sans">
+                          {t("results.rangeCta")}
+                        </p>
                       </div>
                     </div>
                     <div className="space-y-3 pt-1">
@@ -508,7 +713,9 @@ export const EstimatorSection = memo(function EstimatorSection() {
                         disabled={isGenerating}
                       >
                         <span className="flex items-center gap-2">
-                          {isGenerating ? t("pdf.generating") : (
+                          {isGenerating ? (
+                            t("pdf.generating")
+                          ) : (
                             <>
                               <Download className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5" />
                               {t("pdf.button")}
@@ -516,14 +723,19 @@ export const EstimatorSection = memo(function EstimatorSection() {
                           )}
                         </span>
                       </MagneticButton>
-                      <Link href="/estimator">
-                        <MagneticButton variant="secondary" size="lg" className="w-full justify-center group">
+                      <MagneticButton
+                        asChild
+                        variant="secondary"
+                        size="lg"
+                        className="w-full justify-center group"
+                      >
+                        <Link href="/schedule">
                           <span className="flex items-center gap-2">
                             {t("results.ctaPrimary")}
                             <ArrowRight className="h-4 w-4 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform rtl:-rotate-180" />
                           </span>
-                        </MagneticButton>
-                      </Link>
+                        </Link>
+                      </MagneticButton>
                     </div>
                     <p className="font-mono text-xs text-muted-foreground/30 text-center uppercase tracking-[0.15em]">
                       {t("results.disclaimer")}
@@ -534,7 +746,6 @@ export const EstimatorSection = memo(function EstimatorSection() {
             )}
           </div>
 
-          {/* Navigation — visible from step 1 */}
           {step < 5 && step !== 4 && (
             <div className="mt-8 flex justify-between items-center border-t border-border pt-6">
               {step > 1 ? (
@@ -549,7 +760,9 @@ export const EstimatorSection = memo(function EstimatorSection() {
               ) : (
                 <div />
               )}
-              <span className="font-mono text-primary/20 text-xs tracking-[0.15em]">{step} / 5</span>
+              <span className="font-mono text-primary/20 text-xs tracking-[0.15em]">
+                {step} / 5
+              </span>
               <button
                 onClick={goNext}
                 disabled={!canProceed || isAnimating}
@@ -582,32 +795,48 @@ export const EstimatorSection = memo(function EstimatorSection() {
 
         <div className="mt-32 max-w-3xl mx-auto">
           <div className="text-center mb-10">
-            <h3 className="font-sans font-normal text-primary mb-3" style={{ fontSize: "clamp(24px, 4vw, 36px)", letterSpacing: "-0.02em" }}>
+            <h3
+              className="font-sans font-normal text-primary mb-3"
+              style={{
+                fontSize: "clamp(24px, 4vw, 36px)",
+                letterSpacing: "-0.02em",
+              }}
+            >
               {t("faq.title")}
             </h3>
-            <p className="text-muted-foreground text-base">{t("faq.subtitle")}</p>
+            <p className="text-muted-foreground text-base">
+              {t("faq.subtitle")}
+            </p>
           </div>
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1" className="border-border">
-              <AccordionTrigger className="text-primary font-sans text-base">{t("faq.q1")}</AccordionTrigger>
+              <AccordionTrigger className="text-primary font-sans text-base">
+                {t("faq.q1")}
+              </AccordionTrigger>
               <AccordionContent className="text-muted-foreground text-base leading-relaxed">
                 {t("faq.a1")}
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2" className="border-border">
-              <AccordionTrigger className="text-primary font-sans text-base">{t("faq.q2")}</AccordionTrigger>
+              <AccordionTrigger className="text-primary font-sans text-base">
+                {t("faq.q2")}
+              </AccordionTrigger>
               <AccordionContent className="text-muted-foreground text-base leading-relaxed">
                 {t("faq.a2")}
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3" className="border-border">
-              <AccordionTrigger className="text-primary font-sans text-base">{t("faq.q3")}</AccordionTrigger>
+              <AccordionTrigger className="text-primary font-sans text-base">
+                {t("faq.q3")}
+              </AccordionTrigger>
               <AccordionContent className="text-muted-foreground text-base leading-relaxed">
                 {t("faq.a3")}
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-4" className="border-border">
-              <AccordionTrigger className="text-primary font-sans text-base">{t("faq.q4")}</AccordionTrigger>
+              <AccordionTrigger className="text-primary font-sans text-base">
+                {t("faq.q4")}
+              </AccordionTrigger>
               <AccordionContent className="text-muted-foreground text-base leading-relaxed">
                 {t("faq.a4")}
               </AccordionContent>
@@ -616,5 +845,5 @@ export const EstimatorSection = memo(function EstimatorSection() {
         </div>
       </Container>
     </section>
-  )
-})
+  );
+});

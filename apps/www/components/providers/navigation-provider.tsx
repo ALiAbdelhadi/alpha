@@ -32,7 +32,6 @@ export function NavigationProvider({ children }: { children: ReactNode }) {
 export function useNavigation() {
     const context = useContext(NavigationContext)
     if (context === undefined) {
-        // Return default values if not in provider (for pages that don't need scroll tracking)
         return {
             currentSection: "home",
             setCurrentSection: () => {},
@@ -42,5 +41,4 @@ export function useNavigation() {
     }
     return context
 }
-
 

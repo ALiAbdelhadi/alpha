@@ -78,7 +78,6 @@ export function useBatch<T extends HTMLElement = HTMLDivElement>(
                 }
 
                 items.forEach((item, i) => {
-                    // Alternate direction: odd items come from opposite side
                     const itemDir: RevealDirection =
                         alternate && i % 2 === 1
                             ? direction === "left" ? "right"

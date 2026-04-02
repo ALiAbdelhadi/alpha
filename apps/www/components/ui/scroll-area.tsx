@@ -13,29 +13,10 @@ const ScrollAreaLocaleContext = createContext<LocaleType>("en")
 const useScrollAreaLocale = () => useContext(ScrollAreaLocaleContext)
 
 interface ScrollAreaProps extends React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> {
-    /**
-     * The viewport's height
-     * @default "100%"
-     */
     viewportHeight?: string | number
-    /**
-     * Whether to hide the scrollbar when not in use
-     * @default true
-     */
     autoHide?: boolean
-    /**
-     * The scrollbar's width
-     * @default 10
-     */
     scrollbarSize?: number
-    /**
-     * The scrollbar's color
-     */
     scrollbarColor?: string
-    /**
-     * The scrollbar's border radius
-     * @default "9999px"
-     */
     scrollbarRadius?: string | number
 }
 
@@ -121,6 +102,7 @@ const ScrollBar = React.forwardRef<React.ElementRef<typeof ScrollAreaPrimitive.S
                         : "w-full h-2.5 border-t border-t-transparent p-[1px] hover:h-3",
                     className,
                 )}
+                style={isVertical ? { width: size } : { height: size }}
                 {...props}
             >
                 <ScrollAreaPrimitive.ScrollAreaThumb

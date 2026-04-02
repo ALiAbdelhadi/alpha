@@ -1,6 +1,4 @@
 export const DEFAULTS = {
-
-    // Headings - byWord, blur, dramatic
     heading: {
         byWord: true,
         blur: true,
@@ -9,7 +7,6 @@ export const DEFAULTS = {
         distance: 40,
     },
 
-    // Subheadings / eyebrows - byLine, subtle
     subheading: {
         byLine: true,
         blur: false,
@@ -18,20 +15,17 @@ export const DEFAULTS = {
         distance: 24,
     },
 
-    // Body text / descriptions - no split, simple fade
     body: {
         duration: 0.8,
         distance: 20,
     },
 
-    // Buttons / small elements
     element: {
         direction: "up" as const,
         duration: 0.7,
         distance: 16,
     },
 
-    // Cards / grid items
     card: {
         duration: 0.7,
         stagger: 0.08,
@@ -43,11 +37,11 @@ export const DEFAULTS = {
 
 export const MOTION = {
     ease: {
-        text: "cubic-bezier(0.2, 0, 0, 1)",      // Premium text reveal
-        smooth: "cubic-bezier(0.25, 0.46, 0.45, 0.94)", // General UI
-        gentle: "cubic-bezier(0.65, 0, 0.35, 1)",       // Subtle transitions
-        ui: "cubic-bezier(0.4, 0, 0.2, 1)",          // Standard interactions
-        spring: "elastic.out(1, 0.75)",                   // Playful / bouncy
+        text: "cubic-bezier(0.2, 0, 0, 1)",
+        smooth: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        gentle: "cubic-bezier(0.65, 0, 0.35, 1)",
+        ui: "cubic-bezier(0.4, 0, 0.2, 1)",
+        spring: "elastic.out(1, 0.75)",
     },
 
     duration: {
@@ -61,7 +55,6 @@ export const MOTION = {
         text: 0.9,
     },
 
-    /** Cinematic initial load sequence - numeric timings only; eases stay GSAP-native in the component */
     loader: {
         shaderReveal: 2.2,
         textReveal: 1.8,
@@ -81,7 +74,7 @@ export const MOTION = {
     distance: {
         xs: 8,
         sm: 16,
-        md: 24,  // default
+        md: 24,
         lg: 40,
         xl: 64,
     },
@@ -93,11 +86,8 @@ export const MOTION = {
     },
 
     trigger: {
-        // "top bottom" = starts animating the moment element enters viewport from bottom
         default: "top bottom",
-        // "top 85%"    = element must be 15% into the viewport before animating
         late: "top 85%",
-        // "top 75%"    = element is well inside viewport before animating
         latest: "top 75%",
     },
 

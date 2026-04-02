@@ -12,7 +12,6 @@ export function ThemeScript() {
 
         document.documentElement.classList.toggle('dark', shouldBeDark)
       } catch {
-        // Silently fail if localStorage is not available
       }
     }
 

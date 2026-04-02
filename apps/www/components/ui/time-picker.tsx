@@ -53,9 +53,8 @@ export function TimePicker({
         }
     }
 
-    // Generate hours (9-18 for business hours, or 0-23 for full day)
-    const hours = Array.from({ length: 10 }, (_, i) => i + 9) // 9 AM to 6 PM
-    const minutes = ["00", "15", "30", "45"] // 15-minute intervals
+    const hours = Array.from({ length: 10 }, (_, i) => i + 9)
+    const minutes = ["00", "15", "30", "45"]
 
     return (
         <div className={cn("flex items-center gap-2", className)}>

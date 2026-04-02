@@ -1,9 +1,5 @@
 import { z } from "zod"
 
-/**
- * Contact Form Validation Schema
- * Shared between client and server for type safety
- */
 export const contactFormSchema = z.object({
     name: z
         .string()
@@ -52,10 +48,8 @@ export const contactFormSchema = z.object({
         ])
         .optional(),
 
-    // Honeypot field - should always be empty
     website: z.string().max(0).optional(),
 
-    // Scheduling fields (optional)
     requestMeeting: z.boolean().optional(),
     preferredDate: z
         .string()
@@ -80,13 +74,12 @@ export const contactFormSchema = z.object({
         )
         .optional(),
     preferredTime: z.enum([
-        "morning",    // 9am-12pm
-        "afternoon",  // 12pm-3pm
-        "evening"     // 3pm-6pm
+        "morning",
+        "afternoon",
+        "evening"
     ]).optional(),
 }).refine(
     (data) => {
-        // If meeting is requested, date and time are required
         if (data.requestMeeting) {
             return !!data.preferredDate && !!data.preferredTime
         }
@@ -98,9 +91,6 @@ export const contactFormSchema = z.object({
     }
 )
 
-/**
- * Meeting Request Validation Schema (for existing contact submission)
- */
 export const meetingRequestSchema = z.object({
     contactSubmissionId: z.string().uuid(),
     preferredDate: z
@@ -128,9 +118,6 @@ export const meetingRequestSchema = z.object({
     notes: z.string().max(500).optional(),
 })
 
-/**
- * Standalone Meeting Schedule Schema (for new schedule page)
- */
 export const standaloneMeetingSchema = z.object({
     name: z
         .string()
@@ -144,6 +131,6 @@ export const standaloneMeetingSchema = z.object({
         .regex(/^[\d\s\-\+\(\)]+$/, "Phone number must contain only digits, spaces, dashes, or parentheses")
         .trim(),
     message: z.string().max(1000).trim().optional(),
-    scheduledDate: z.string().datetime(), // ISO datetime string
-    scheduledTime: z.string().regex(/^\d{2}:\d{2}$/, "Time must be in HH:MM format"), // "HH:MM" format
+    scheduledDate: z.string().datetime(),
+    scheduledTime: z.string().regex(/^\d{2}:\d{2}$/, "Time must be in HH:MM format"),
 })

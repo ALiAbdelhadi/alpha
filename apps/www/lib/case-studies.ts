@@ -1,30 +1,88 @@
 export type LocalizedString = {
-  en: string
-  ar: string
-}
+  en: string;
+  ar: string;
+};
 
 export type CaseStudyMetric = {
-  label: LocalizedString
-  value: string
-  description?: LocalizedString
-}
+  label: LocalizedString;
+  value: string;
+  description?: LocalizedString;
+};
 
 export type CaseStudy = {
-  slug: string
-  name: LocalizedString
-  client: LocalizedString
-  industry: LocalizedString
-  year: string
-  summary: LocalizedString
-  externalUrl?: string
-  metrics: CaseStudyMetric[]
-  problem: LocalizedString
-  solution: LocalizedString
-  outcome: LocalizedString
-  techStack: string[]
-}
+  slug: string;
+  name: LocalizedString;
+  client: LocalizedString;
+  industry: LocalizedString;
+  year: string;
+  summary: LocalizedString;
+  externalUrl?: string;
+  metrics: CaseStudyMetric[];
+  problem: LocalizedString;
+  solution: LocalizedString;
+  outcome: LocalizedString;
+  techStack: string[];
+};
 
 export const CASE_STUDIES: CaseStudy[] = [
+  {
+    slug: "altruvex-site",
+    name: {
+      en: "Altruvex.com — The Site Itself Had to Be the Proof",
+      ar: "Altruvex.com — كان على الموقع نفسه أن يكون الدليل",
+    },
+    client: {
+      en: "Internal / Altruvex",
+      ar: "داخلي / ألتروفيكس",
+    },
+    industry: {
+      en: "Web Engineering / Agency",
+      ar: "هندسة الويب / وكالة",
+    },
+    year: "2025",
+    externalUrl: "https://altruvex.com",
+    summary: {
+      en: "A bilingual Arabic/English proof build designed to demonstrate technical quality, native RTL execution, and lead qualification before the first call.",
+      ar: "مشروع إثبات عربي/إنجليزي صُمم لإظهار الجودة التقنية والتنفيذ الأصلي لـ RTL وتأهيل العميل المحتمل قبل أول مكالمة.",
+    },
+    metrics: [
+      {
+        label: { en: "Mobile TTI", ar: "وقت التفاعل على الجوال" },
+        value: "< 1s",
+      },
+      {
+        label: { en: "RTL Switch", ar: "سرعة تبديل العربي" },
+        value: "< 16ms",
+      },
+      {
+        label: { en: "Discovery-call time", ar: "وقت مكالمات الاكتشاف" },
+        value: "-40%",
+      },
+    ],
+    problem: {
+      en: "In a market where many agencies compete on price, Altruvex needed its own site to prove technical quality without leaning on borrowed enterprise credibility.",
+      ar: "في سوق تتنافس فيه وكالات كثيرة على السعر، كان على موقع Altruvex نفسه أن يثبت الجودة التقنية دون الاعتماد على مصداقية مستعارة من شعارات شركات كبرى.",
+    },
+    solution: {
+      en: "We built a bilingual Arabic/English site on a custom Next.js stack with native RTL architecture, performance-first frontend engineering, and a pricing estimator that qualifies leads before the first conversation.",
+      ar: "بنينا موقعًا عربيًا/إنجليزيًا على بنية Next.js مخصصة مع معمارية RTL أصلية، وهندسة واجهات تركّز على الأداء، ومقدّر أسعار يؤهل العميل المحتمل قبل أول محادثة.",
+    },
+    outcome: {
+      en: "Sub-1s mobile TTI, RTL switching in under 16ms with zero layout shift, and an estimated 40% reduction in discovery-call time because leads arrive better qualified.",
+      ar: "أقل من ثانية لوقت التفاعل على الجوال، وتبديل RTL في أقل من 16ms دون أي اهتزاز بصري، وانخفاض تقديري 40٪ في وقت مكالمات الاكتشاف لأن العملاء يصلون أكثر تأهيلاً.",
+    },
+    techStack: [
+      "Next.js 16",
+      "TypeScript 6",
+      "Tailwind CSS v4",
+      "GSAP",
+      "Lenis",
+      "next-intl",
+      "Prisma",
+      "PostgreSQL",
+      "Vercel",
+    ],
+  },
   {
     slug: "art-lighting-store",
     name: {
@@ -207,9 +265,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       "PostgreSQL + Prisma",
     ],
   },
-]
+];
 
 export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
-  return CASE_STUDIES.find((cs) => cs.slug === slug)
+  return CASE_STUDIES.find((cs) => cs.slug === slug);
 }
-

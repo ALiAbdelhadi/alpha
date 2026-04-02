@@ -1,7 +1,6 @@
 import { DEFAULTS, MOTION } from "@/lib/motion"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 
-/** @deprecated Prefer importing `MOTION.ease` from `@/lib/motion` */
 export const EASE = {
     text: MOTION.ease.text,
     smooth: MOTION.ease.smooth,
@@ -13,7 +12,6 @@ export const EASE = {
     easeMid: MOTION.ease.gentle,
 } as const
 
-/** Legacy timeline helpers - durations/eases align with `MOTION` / `DEFAULTS` */
 export const ANIM = {
     ease: MOTION.ease.smooth,
     easeIn: MOTION.ease.ui,

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 "use client"
 
 import { Container } from "@/components/container"
@@ -6,7 +5,7 @@ import { useIsomorphicLayoutEffect } from "@/lib/dom-utils"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { useLocale, useTranslations } from "next-intl"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react"
 
 const INK = {
   red: "rgba(210, 68,  68,  0.82)",
@@ -109,11 +108,13 @@ export function ConsultingBriefSection() {
 
   const [activeStage, setActiveStage] = useState(-1)
   const [scrollStage, setScrollStage] = useState(-1)
-  const [mounted, setMounted] = useState(false)
+  const mounted = useSyncExternalStore(
+    () => () => undefined,
+    () => true,
+    () => false
+  )
   const [hintVisible, setHintVisible] = useState(true)
   const [activeTargets, setActiveTargets] = useState<Set<string>>(new Set())
-
-  useEffect(() => { setMounted(true) }, [])
 
   useIsomorphicLayoutEffect(() => {
     const el = progressBarRef.current
@@ -198,14 +199,21 @@ export function ConsultingBriefSection() {
 
   useEffect(() => {
     if (scrollStage < 0) {
-      tlRef.current?.kill()
-      currentStage.current = -1
-      setActiveStage(-1)
-      setHintVisible(true)
-      setActiveTargets(new Set())
-      return
+      const resetId = window.requestAnimationFrame(() => {
+        tlRef.current?.kill()
+        currentStage.current = -1
+        setActiveStage(-1)
+        setHintVisible(true)
+        setActiveTargets(new Set())
+      })
+      return () => window.cancelAnimationFrame(resetId)
     }
-    goStage(scrollStage)
+
+    const stageId = window.requestAnimationFrame(() => {
+      goStage(scrollStage)
+    })
+
+    return () => window.cancelAnimationFrame(stageId)
   }, [scrollStage, goStage])
 
   const a = activeTargets

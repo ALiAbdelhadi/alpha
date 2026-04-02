@@ -9,20 +9,20 @@ import { DEFAULTS, useReveal, useText } from "@/lib/motion"
 import { contactFormSchema } from "@/lib/validations/contact"
 import { AlertCircle, CheckCircle2, Mail, MapPin, Phone } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useSearchParams } from "next/navigation"
 
 type FormErrors = Record<string, string>
 
 export default function ContactPage() {
     const t = useTranslations("contactPage")
     const tContact = useTranslations("contact")
+    const searchParams = useSearchParams()
 
-    // ── Hero section ──────────────────────────────────────────
     const badgeRef = useReveal({ ...DEFAULTS.element, delay: 0 })
     const titleRef = useText<HTMLHeadingElement>(DEFAULTS.heading)
     const descRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
 
-    // ── Contact section ───────────────────────────────────────
     const infoTitleRef = useText<HTMLHeadingElement>(DEFAULTS.heading)
     const leftRef = useReveal({ ...DEFAULTS.body, direction: "left", delay: 0.1 })
     const rightRef = useReveal({ ...DEFAULTS.body, direction: "right", delay: 0.15 })
@@ -35,6 +35,20 @@ export default function ContactPage() {
     const [submitSuccess, setSubmitSuccess] = useState(false)
     const [submitError, setSubmitError] = useState<string | null>(null)
     const [formErrors, setFormErrors] = useState<FormErrors>({})
+
+    useEffect(() => {
+        const incomingService = searchParams.get("service")
+        if (!incomingService || service) return
+
+        if (
+            incomingService === "development" ||
+            incomingService === "interface-design" ||
+            incomingService === "consulting" ||
+            incomingService === "maintenance"
+        ) {
+            setService(incomingService)
+        }
+    }, [searchParams, service])
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -94,8 +108,6 @@ export default function ContactPage() {
 
     return (
         <div className="flex flex-col min-h-screen">
-
-            {/* ── Hero ──────────────────────────────────────────────── */}
             <section className="flex min-h-[70vh] w-full items-center justify-center pt-32 md:pt-40">
                 <Container>
                     <div className="max-w-4xl">
@@ -124,13 +136,9 @@ export default function ContactPage() {
                     </div>
                 </Container>
             </section>
-
-            {/* ── Contact columns ───────────────────────────────────── */}
             <section className="flex w-full items-center py-24 md:py-32">
                 <Container>
                     <div className="grid gap-12 md:grid-cols-2 md:gap-20 lg:gap-28">
-
-                        {/* Left - contact info */}
                         <div className="flex flex-col justify-center">
                             <div className="mb-12 sm:mb-14 md:mb-16">
                                 <h2
@@ -213,8 +221,6 @@ export default function ContactPage() {
                                 </div>
                             </div>
                         </div>
-
-                        {/* Right - form */}
                         <div ref={rightRef} className="flex flex-col justify-center">
                             <div className="p-8 rounded-2xl border border-foreground/10 bg-foreground/3 backdrop-blur-md">
                                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>

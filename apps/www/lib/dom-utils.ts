@@ -3,9 +3,6 @@ import { useEffect, useLayoutEffect } from "react";
 export const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-/**
- * Injects a temporary style block into the document head.
- */
 export function useInjectStyles(id: string, css: string) {
   useIsomorphicLayoutEffect(() => {
     if (typeof document === "undefined") return;

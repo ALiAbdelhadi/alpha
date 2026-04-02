@@ -1,12 +1,5 @@
 "use client"
 
-/**
- * Language Switcher Components
- * 
- * Wrapper components that use the unified LanguageSwitcherBase.
- * Maintains backward compatibility while eliminating code duplication.
- */
-
 import { LanguageSwitcherBase } from "./base/language-switcher-base"
 
 export function LanguageChanger() {

@@ -6,6 +6,7 @@ import { ZodError } from "zod"
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json()
+        const locale = typeof body.locale === "string" ? body.locale : "en"
 
         const origin = request.headers.get("origin")
         const allowedOrigins = [process.env.NEXT_PUBLIC_APP_URL].filter(
@@ -51,12 +52,12 @@ export async function POST(request: NextRequest) {
                     name: validatedData.name,
                     phone: validatedData.phone,
                     message: validatedData.message || "Meeting request from schedule page",
-                    locale: body.locale || "en",
+                    locale,
                     userAgent,
                     ipAddress,
                     referrer: referer,
                     priority: "HIGH",
-                } as any,
+                },
             })
 
             const meeting = await prisma.meeting.create({
@@ -66,10 +67,9 @@ export async function POST(request: NextRequest) {
                     scheduledDate,
                     scheduledTime: validatedData.scheduledTime,
                     guestName: validatedData.name,
-                    phone: validatedData.phone,
                     submissionId: submission.id,
                     notes: validatedData.message,
-                } as any,
+                },
             })
             const admins = await prisma.user.findMany({
                 where: { role: { in: ["ADMIN", "SUPERADMIN"] } },
@@ -147,10 +147,9 @@ export async function POST(request: NextRequest) {
                     scheduledDate: requestedDate,
                     scheduledTime: validatedData.preferredTime,
                     guestName: submission.name,
-                    phone: (submission as any).phone,
                     submissionId: submission.id,
                     notes: validatedData.notes,
-                } as any,
+                },
             })
 
             const admins = await prisma.user.findMany({
@@ -193,9 +192,9 @@ export async function POST(request: NextRequest) {
                 {
                     success: false,
                     message: "Validation failed",
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    errors: error.issues.reduce((acc: Record<string, string>, err: any) => {
-                        acc[err.path[0]] = err.message
+                    errors: error.issues.reduce((acc: Record<string, string>, err) => {
+                        const field = String(err.path[0] ?? "form")
+                        acc[field] = err.message
                         return acc
                     }, {}),
                 },

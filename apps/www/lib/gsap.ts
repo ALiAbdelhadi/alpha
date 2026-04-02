@@ -14,7 +14,6 @@ if (typeof window !== "undefined") {
     force3D: true,
   })
 
-  // Matches MOTION.ease.smooth - keep in sync with lib/motion/config.ts
   gsap.defaults({
     ease: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
     overwrite: "auto",
@@ -22,4 +21,3 @@ if (typeof window !== "undefined") {
 }
 
 export { gsap, ScrollTrigger }
-

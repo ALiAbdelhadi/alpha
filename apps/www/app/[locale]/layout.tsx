@@ -10,7 +10,6 @@ import { notFound } from "next/navigation";
 import Script from "next/script";
 import "../globals.css";
 
-// Load Vazirmatn with swap for Arabic
 const vazirmatn = Vazirmatn({
   subsets: ["arabic"],
   weight: ["400", "500", "600", "700"],
@@ -88,7 +87,6 @@ export default async function RootLayout({
             __html: `(function(){try{var c=sessionStorage.getItem('Altruvex_initial_load_complete');if(c){document.documentElement.setAttribute('data-initial-load','complete')}}catch(e){}})();`,
           }}
         />
-        {/* Google Analytics */}
         {gaId && (
           <>
             <Script
@@ -104,7 +102,6 @@ export default async function RootLayout({
             />
           </>
         )}
-        {/* Microsoft Clarity */}
         {clarityId && (
           <Script
             id="microsoft-clarity"
@@ -114,7 +111,6 @@ export default async function RootLayout({
             }}
           />
         )}
-        {/* JSON-LD structured data */}
         <Script
           id="json-ld"
           type="application/ld+json"

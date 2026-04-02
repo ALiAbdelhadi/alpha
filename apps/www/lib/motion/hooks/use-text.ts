@@ -1,18 +1,3 @@
-// lib/motion/hooks/use-text.ts
-// ─────────────────────────────────────────────────────────────
-// Text reveal animation with word/char/line splitting.
-//
-// Arabic-aware:
-//   - Detects RTL content via autoSplit()
-//   - Suppresses blur on Arabic (both visually wrong AND GPU-heavy)
-//   - Uses y-distance reveal for RTL; x-distance (ltr-aware) for Latin
-//
-// Performance:
-//   - willChange set immediately before animate, cleared onComplete
-//   - No blur on RTL targets
-//   - stagger values are capped for large char arrays
-// ─────────────────────────────────────────────────────────────
-
 "use client"
 
 import { useLoading } from "@/components/providers/loading-provider"
@@ -30,9 +15,7 @@ export interface TextConfig {
     ease?: string
     trigger?: string
     once?: boolean
-    /** Split strategy: "char" (default), "word", or "line" */
     splitBy?: "char" | "word" | "line"
-    /** Apply blur to Latin text (ignored automatically for Arabic) */
     blur?: boolean
 }
 
@@ -48,8 +31,6 @@ const DEFAULTS: Required<TextConfig> = {
     blur: true,
 }
 
-// Maximum stagger before capping — prevents long char arrays (80+ chars)
-// from creating a 4-second animation tail.
 const MAX_TOTAL_STAGGER_DURATION = 0.6 // seconds
 
 export function useText<T extends HTMLElement = HTMLHeadingElement>(
@@ -89,7 +70,6 @@ export function useText<T extends HTMLElement = HTMLHeadingElement>(
                     return
                 }
 
-                // ── Split (idempotent via data-m-split guard) ────────────────
                 let targets: Element[]
                 let isRTL = false
                 let canBlur = blur
@@ -109,25 +89,19 @@ export function useText<T extends HTMLElement = HTMLHeadingElement>(
                             : splitType === "word" ? ".m-word"
                                 : ".m-line"
                     targets = Array.from(el.querySelectorAll(selector))
-                    // Re-detect RTL from existing content
                     isRTL = targets.some((t) => (t as HTMLElement).dataset.script === "arabic")
                     canBlur = blur && !isRTL
                 }
 
                 if (!targets.length) {
-                    // Fallback: animate the element as a whole
                     targets = [el]
                 }
 
-                // ── Cap stagger for large arrays ─────────────────────────────
                 const effectiveStagger =
                     targets.length > 1
                         ? Math.min(stagger, MAX_TOTAL_STAGGER_DURATION / targets.length)
                         : stagger
 
-                // ── Initial state ────────────────────────────────────────────
-                // For RTL: translate from y only (Arabic text in RTL flow;
-                // x-axis movement fights the bidi rendering pipeline)
                 const from: gsap.TweenVars = {
                     opacity: 0,
                     y: distance,
@@ -139,7 +113,6 @@ export function useText<T extends HTMLElement = HTMLHeadingElement>(
 
                 gsap.set(targets, from)
 
-                // ── Animate ──────────────────────────────────────────────────
                 const animProps: gsap.TweenVars = {
                     opacity: 1,
                     y: 0,
@@ -154,7 +127,6 @@ export function useText<T extends HTMLElement = HTMLHeadingElement>(
                         toggleActions: once ? "play none none none" : "play none none reverse",
                     },
                     onComplete() {
-                        // Release GPU resources immediately after animation
                         gsap.set(targets, { clearProps: "willChange,filter" })
                     },
                 }

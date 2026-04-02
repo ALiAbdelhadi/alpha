@@ -4,7 +4,7 @@ import { z, ZodError } from "zod"
 
 
 const estimatorLeadSchema = z.object({
-    phone: z.string().regex(/^(\+20|0020|0)?1[0125]\d{8}$/, "Invalid Egyptian phone number"),
+    phone: z.string().regex(/^\+?\d{8,15}$/, "Invalid phone number"),
     name: z.string().max(120).optional(),
     projectType: z.enum(["ecommerce", "corporate", "custom", "performance"]),
     complexity: z.enum(["small", "medium", "large", "enterprise"]),

@@ -3,7 +3,7 @@
 import { gsap } from "@/lib/gsap"
 import { MOTION } from "@/lib/motion"
 import type React from "react"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 
 type ButtonVariant = "primary" | "secondary" | "ghost"
 type ButtonSize = "default" | "lg"
@@ -23,6 +23,25 @@ interface MagneticButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEleme
   hapticEnabled?: boolean
 }
 
+function subscribeToReducedMotion(onStoreChange: () => void) {
+  if (typeof window === "undefined") {
+    return () => undefined
+  }
+
+  const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
+  const handleChange = () => onStoreChange()
+  mediaQuery.addEventListener("change", handleChange)
+  return () => mediaQuery.removeEventListener("change", handleChange)
+}
+
+function getReducedMotionPreference() {
+  if (typeof window === "undefined") {
+    return false
+  }
+
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches
+}
+
 export function MagneticButton({
   children,
   className = "",
@@ -36,21 +55,13 @@ export function MagneticButton({
   const ref = useRef<HTMLButtonElement>(null)
   const xTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null)
   const yTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null)
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const prefersReducedMotion = useSyncExternalStore(
+    subscribeToReducedMotion,
+    getReducedMotionPreference,
+    () => false
+  )
   const [isPressed, setIsPressed] = useState(false)
   const [ripples, setRipples] = useState<Ripple[]>([])
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
-    setPrefersReducedMotion(mediaQuery.matches)
-
-    const handleChange = (e: MediaQueryListEvent) => {
-      setPrefersReducedMotion(e.matches)
-    }
-
-    mediaQuery.addEventListener("change", handleChange)
-    return () => mediaQuery.removeEventListener("change", handleChange)
-  }, [])
 
   useEffect(() => {
     if (!ref.current || prefersReducedMotion) return

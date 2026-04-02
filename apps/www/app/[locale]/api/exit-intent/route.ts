@@ -12,16 +12,15 @@ export async function POST(request: NextRequest) {
         const body = await request.json()
         const { phone, source } = exitIntentSchema.parse(body)
 
-        // Store as a contact submission with special tag
-        const submission = await prisma.contactSubmission.create({
+        await prisma.contactSubmission.create({
             data: {
                 name: "Exit Intent Lead",
                 phone,
                 message: `Captured via ${source}`,
-                priority: "HIGH", // Exit intent leads are high intent
+                priority: "HIGH",
                 locale: "en",
             },
-        } as any)
+        })
 
         return NextResponse.json(
             { success: true, message: "Contact captured" },

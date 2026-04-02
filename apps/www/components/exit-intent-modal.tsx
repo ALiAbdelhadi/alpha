@@ -27,15 +27,15 @@ export const ExitIntentModal = () => {
     maxDisplays: 3,
   })
 
-  const validateEgyptianPhone = (value: string) => {
+  const validatePhone = (value: string) => {
     const cleaned = value.replace(/\D/g, "")
-    return cleaned.length >= 10 && cleaned.length <= 11
+    return cleaned.length >= 8 && cleaned.length <= 15
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!validateEgyptianPhone(phone)) {
+    if (!validatePhone(phone)) {
       setError(t("phoneError"))
       return
     }
@@ -134,9 +134,6 @@ export const ExitIntentModal = () => {
                     error && "border-destructive"
                   )}
                 >
-                  <span className="text-xs text-foreground/40 shrink-0 font-mono">
-                    +20
-                  </span>
                   <input
                     type="tel"
                     placeholder={t("phonePlaceholder")}

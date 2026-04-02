@@ -64,19 +64,19 @@
 }
 
 :root {
-  --n-0: #fbfbfd;
-  --n-1: #f8f9fc;
-  --n-2: #f0f2f7;
-  --n-3: #e2e6ed;
-  --n-4: #c6cbd7;
-  --n-5: #9ca3b3;
-  --n-6: #6b738a;
-  --n-7: #3c4250;
-  --n-8: #0f1117;
-  --brand: #5b5bd6;
-  --brand-hover: #484897;
-  --brand-soft: rgba(91, 91, 214, 0.07);
-  --brand-foreground: #fbfbfd;
+  --n-0: #f7f8fa;
+  --n-1: #f1f3f6;
+  --n-2: #e7ebf2;
+  --n-3: #d8dee7;
+  --n-4: #bcc4d2;
+  --n-5: #8b95a8;
+  --n-6: #5d6679;
+  --n-7: #1c2432;
+  --n-8: #0a0c14;
+  --brand: #4a6ed4;
+  --brand-hover: #395cc0;
+  --brand-soft: rgba(74, 110, 212, 0.08);
+  --brand-foreground: #f7f8fa;
   --success: #049968;
   --warning: #ca8a04;
   --error: #d32f2f;
@@ -89,96 +89,93 @@
   --font-geist-mono: "Geist Mono", ui-monospace, "SFMono-Regular", monospace;
   --font-vazirmatn: "Vazirmatn", sans-serif;
 
-  /* Scene tokens — light mode defaults (dark ink on light bg) */
-  --s-high: rgba(26, 32, 44, 0.92);
-  --s-mid: rgba(26, 32, 44, 0.6);
-  --s-low: rgba(26, 32, 44, 0.42);
-  --s-muted: rgba(26, 32, 44, 0.25);
-  --s-border: rgba(26, 32, 44, 0.1);
-  --s-border-hover: rgba(26, 32, 44, 0.2);
-  --s-high-soft: rgba(26, 32, 44, 0.025);
+  --s-high: rgba(10, 12, 20, 0.9);
+  --s-mid: rgba(10, 12, 20, 0.72);
+  --s-low: rgba(10, 12, 20, 0.52);
+  --s-muted: rgba(10, 12, 20, 0.46);
+  --s-border: rgba(10, 12, 20, 0.12);
+  --s-border-hover: rgba(10, 12, 20, 0.18);
+  --s-high-soft: rgba(10, 12, 20, 0.03);
 }
 
 :root {
-  --background: #fafbfc;
-  --foreground: #1a202c;
+  --background: #f7f8fa;
+  --foreground: #0a0c14;
   --card: #ffffff;
-  --card-foreground: #1a202c;
+  --card-foreground: #0a0c14;
   --popover: #ffffff;
-  --popover-foreground: #1a202c;
-  --primary: #1a202c;
-  --primary-foreground: #fafbfc;
-  --secondary: #f0f2f7;
-  --secondary-foreground: #3c4250;
-  --muted: #e2e6ed;
-  --muted-foreground: #6b738a;
+  --popover-foreground: #0a0c14;
+  --primary: #0a0c14;
+  --primary-foreground: #f7f8fa;
+  --secondary: #eef1f6;
+  --secondary-foreground: #394150;
+  --muted: #e7ebf2;
+  --muted-foreground: #5d6679;
   --accent: var(--brand);
   --accent-foreground: var(--brand-foreground);
-  --border: #e2e6ed;
-  --border-mid: #d1d5db;
-  --input: #f0f2f7;
+  --border: rgba(10, 12, 20, 0.12);
+  --border-mid: rgba(10, 12, 20, 0.16);
+  --input: #eef1f6;
   --ring: var(--brand);
   --chart-1: var(--brand);
   --chart-2: var(--success);
   --chart-3: var(--warning);
-  --chart-4: #7b8ca8;
-  --chart-5: #9ca3b3;
-  --sidebar: #fafbfc;
-  --sidebar-foreground: #1a202c;
-  --sidebar-primary: #1a202c;
-  --sidebar-primary-foreground: #fafbfc;
+  --chart-4: #7685a3;
+  --chart-5: #96a0b2;
+  --sidebar: #f7f8fa;
+  --sidebar-foreground: #0a0c14;
+  --sidebar-primary: #0a0c14;
+  --sidebar-primary-foreground: #f7f8fa;
   --sidebar-accent: var(--brand);
   --sidebar-accent-foreground: var(--brand-foreground);
-  --sidebar-border: #e2e6ed;
+  --sidebar-border: rgba(10, 12, 20, 0.12);
   --sidebar-ring: var(--brand);
-  --logo-wordmark: #1a202c;
-  --logo-tagline: #6b738a;
+  --logo-wordmark: #0a0c14;
+  --logo-tagline: #5d6679;
 }
 
 .dark {
-  --background: #0d0e12;
-  --foreground: #e8eaef;
-  --card: #131620;
-  --card-foreground: #e8eaef;
-  --popover: #131620;
-  --popover-foreground: #e8eaef;
-  --primary: #e8eaef;
-  --primary-foreground: #0d0e12;
-  --secondary: #1a1f2e;
-  --secondary-foreground: #e8eaef;
-  --muted: #22293a;
-  --muted-foreground: #9ca3b3;
-  --border: rgba(255, 255, 255, 0.06);
-  --border-mid: rgba(255, 255, 255, 0.09);
+  --background: #0a0c14;
+  --foreground: #eef1f6;
+  --card: #111522;
+  --card-foreground: #eef1f6;
+  --popover: #111522;
+  --popover-foreground: #eef1f6;
+  --primary: #eef1f6;
+  --primary-foreground: #0a0c14;
+  --secondary: #161d2d;
+  --secondary-foreground: #eef1f6;
+  --muted: #1b2435;
+  --muted-foreground: #8b95a8;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-mid: rgba(255, 255, 255, 0.12);
   --input: rgba(255, 255, 255, 0.04);
   --ring: var(--brand);
   --chart-1: var(--brand);
   --chart-2: var(--success);
   --chart-3: var(--warning);
-  --chart-4: #5a6378;
-  --chart-5: #7a8497;
-  --sidebar: #131620;
-  --sidebar-foreground: #e8eaef;
-  --sidebar-primary: #e8eaef;
-  --sidebar-primary-foreground: #0d0e12;
+  --chart-4: #5a667f;
+  --chart-5: #748095;
+  --sidebar: #111522;
+  --sidebar-foreground: #eef1f6;
+  --sidebar-primary: #eef1f6;
+  --sidebar-primary-foreground: #0a0c14;
   --sidebar-accent: var(--brand);
   --sidebar-accent-foreground: var(--brand-foreground);
-  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --sidebar-border: rgba(255, 255, 255, 0.08);
   --sidebar-ring: var(--brand);
-  --logo-wordmark: #e8eaef;
-  --logo-tagline: #9ca3b3;
+  --logo-wordmark: #eef1f6;
+  --logo-tagline: #8b95a8;
 
-  /* Scene tokens — dark mode defaults (light ink on dark bg) */
-  --s-high: rgba(232, 234, 239, 0.92);
-  --s-mid: rgba(232, 234, 239, 0.55);
-  --s-low: rgba(232, 234, 239, 0.35);
-  --s-muted: rgba(232, 234, 239, 0.2);
-  --s-border: rgba(232, 234, 239, 0.08);
-  --s-border-hover: rgba(232, 234, 239, 0.16);
-  --s-high-soft: rgba(232, 234, 239, 0.025);
+  --s-high: rgba(247, 248, 250, 0.9);
+  --s-mid: rgba(247, 248, 250, 0.72);
+  --s-low: rgba(247, 248, 250, 0.52);
+  --s-muted: rgba(247, 248, 250, 0.46);
+  --s-border: rgba(247, 248, 250, 0.12);
+  --s-border-hover: rgba(247, 248, 250, 0.18);
+  --s-high-soft: rgba(247, 248, 250, 0.04);
 }
 
-/* Inverted scene: light-mode section with dark bg gets light ink */
 [data-scene="inverted"] {
   --s-high: rgba(250, 250, 250, 0.92);
   --s-mid: rgba(255, 255, 255, 0.55);
@@ -189,15 +186,14 @@
   --s-high-soft: rgba(255, 255, 255, 0.025);
 }
 
-/* Inverted scene: dark-mode section with light bg gets dark ink */
 .dark [data-scene="inverted"] {
-  --s-high: rgba(10, 10, 10, 0.92);
-  --s-mid: rgba(0, 0, 0, 0.6);
-  --s-low: rgba(0, 0, 0, 0.42);
-  --s-muted: rgba(0, 0, 0, 0.25);
-  --s-border: rgba(0, 0, 0, 0.1);
-  --s-border-hover: rgba(0, 0, 0, 0.2);
-  --s-high-soft: rgba(0, 0, 0, 0.025);
+  --s-high: rgba(10, 12, 20, 0.9);
+  --s-mid: rgba(10, 12, 20, 0.72);
+  --s-low: rgba(10, 12, 20, 0.52);
+  --s-muted: rgba(10, 12, 20, 0.46);
+  --s-border: rgba(10, 12, 20, 0.12);
+  --s-border-hover: rgba(10, 12, 20, 0.18);
+  --s-high-soft: rgba(10, 12, 20, 0.03);
 }
 
 @layer base {
@@ -218,8 +214,21 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-inter);
+    font-size: clamp(17px, 1.05vw, 18px);
+    line-height: 1.75;
+    background-image:
+      radial-gradient(circle at top, rgba(74, 110, 212, 0.12), transparent 24%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(247, 248, 250, 1));
+    background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  .dark body {
+    background-image:
+      radial-gradient(circle at top, rgba(74, 110, 212, 0.2), transparent 28%),
+      radial-gradient(circle at bottom right, rgba(74, 110, 212, 0.08), transparent 30%),
+      linear-gradient(180deg, rgba(10, 12, 20, 0.98), rgba(10, 12, 20, 1));
   }
 
   main {
@@ -237,8 +246,8 @@
 
   [dir="rtl"] body {
     font-family: var(--font-vazirmatn), var(--font-inter), sans-serif;
-    line-height: 1.8;
-    font-size: 1.08rem;
+    line-height: 1.9;
+    font-size: clamp(17px, 1.05vw, 18px);
   }
 
   [dir="rtl"] h1,
@@ -246,13 +255,14 @@
   [dir="rtl"] h3,
   [dir="rtl"] h4 {
     font-family: var(--font-vazirmatn), var(--font-outfit), sans-serif;
-    line-height: 1.35;
+    line-height: 1.28;
   }
 
   [dir="rtl"] .mono,
   [dir="rtl"] .mono-uppercase {
-    font-family: "Noto Kufi Arabic", "IBM Plex Arabic", "Tajawal", monospace;
-    line-height: 2;
+    font-family:
+      var(--font-geist-mono), var(--font-vazirmatn), ui-monospace, monospace;
+    line-height: 1.7;
     letter-spacing: 0;
   }
 
@@ -269,23 +279,23 @@
 
   h1 {
     font-family: var(--font-outfit), sans-serif;
-    font-size: clamp(3.5rem, 8vw, 5rem);
-    line-height: 1.03;
-    letter-spacing: -0.025em;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
     font-weight: 300;
   }
 
   h2 {
     font-family: var(--font-outfit), sans-serif;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    line-height: 1.05;
+    font-size: clamp(2.125rem, 4vw, 3.25rem);
+    line-height: 1.08;
     letter-spacing: -0.02em;
     font-weight: 400;
   }
 
   h3 {
     font-family: var(--font-outfit), sans-serif;
-    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
     line-height: 1.15;
     letter-spacing: -0.018em;
     font-weight: 400;
@@ -305,16 +315,24 @@
   }
 
   .body-lg {
-    font-size: clamp(1rem, 1.2vw, 1.2rem);
-    line-height: 1.65;
+    font-size: clamp(1.0625rem, 1.05vw, 1.125rem);
+    line-height: 1.75;
   }
   .body {
-    font-size: 1rem;
-    line-height: 1.65;
+    font-size: clamp(1.0625rem, 1.05vw, 1.125rem);
+    line-height: 1.75;
+  }
+  .body-copy {
+    font-size: clamp(1.0625rem, 1.05vw, 1.125rem);
+    line-height: 1.75;
+  }
+  .body-secondary {
+    font-size: clamp(0.9375rem, 0.98vw, 1rem);
+    line-height: 1.7;
   }
   .small {
-    font-size: 0.8125rem;
-    line-height: 1.5;
+    font-size: clamp(0.9375rem, 0.98vw, 1rem);
+    line-height: 1.7;
   }
 
   .mono {
@@ -326,10 +344,73 @@
 
   .mono-uppercase {
     font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.625rem;
+    font-size: 0.75rem;
     line-height: 1.5;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
+  }
+
+  .display-h1 {
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+  }
+
+  .display-h2 {
+    font-size: clamp(2.125rem, 4vw, 3.25rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+  }
+
+  .display-h3 {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.018em;
+  }
+
+  .meta-eyebrow {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  [dir="rtl"] .display-h1 {
+    font-family: var(--font-vazirmatn), var(--font-outfit), sans-serif;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+
+  [dir="rtl"] .display-h2 {
+    font-family: var(--font-vazirmatn), var(--font-outfit), sans-serif;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+
+  [dir="rtl"] .display-h3 {
+    font-family: var(--font-vazirmatn), var(--font-outfit), sans-serif;
+    line-height: 1.28;
+    letter-spacing: -0.012em;
+  }
+
+  [dir="rtl"] .body,
+  [dir="rtl"] .body-lg,
+  [dir="rtl"] .body-copy {
+    font-family: var(--font-vazirmatn), var(--font-inter), sans-serif;
+    line-height: 1.9;
+  }
+
+  [dir="rtl"] .body-secondary,
+  [dir="rtl"] .small {
+    font-family: var(--font-vazirmatn), var(--font-inter), sans-serif;
+    line-height: 1.85;
+  }
+
+  [dir="rtl"] .meta-eyebrow {
+    font-family: var(--font-vazirmatn), var(--font-inter), sans-serif;
+    letter-spacing: 0;
+    text-transform: none;
   }
 
   .sr-only {
@@ -386,13 +467,13 @@
 
   .glow-brand {
     box-shadow:
-      0 0 0 1px rgba(91, 91, 214, 0.12),
-      0 4px 16px -4px rgba(91, 91, 214, 0.08);
+      0 0 0 1px rgba(74, 110, 212, 0.14),
+      0 4px 16px -4px rgba(74, 110, 212, 0.1);
   }
   .dark .glow-brand {
     box-shadow:
-      0 0 0 1px rgba(91, 91, 214, 0.18),
-      0 4px 20px -4px rgba(91, 91, 214, 0.12);
+      0 0 0 1px rgba(74, 110, 212, 0.2),
+      0 4px 20px -4px rgba(74, 110, 212, 0.14);
   }
 
   .glass-panel {
@@ -426,6 +507,16 @@
     font-family: Georgia, "Times New Roman", serif;
     font-style: italic;
     font-weight: 300;
+  }
+
+  [dir="rtl"] .font-display-serif {
+    font-family: var(--font-vazirmatn), var(--font-outfit), sans-serif;
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .text-display-italic {
+    color: color-mix(in srgb, var(--foreground) 45%, transparent);
   }
 
   .section-heading {
@@ -578,8 +669,6 @@
     transition: background-color 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* ─── Services section CSS ───────────────────────────────── */
-
   .services-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -626,8 +715,6 @@
       inset-inline-end: 20px !important;
     }
   }
-
-  /* ─── Process section CSS ────────────────────────────────── */
 
   .ps-header-row {
     display: flex;
@@ -735,8 +822,6 @@
   [dir="rtl"] .ps-toggle-icon-open {
     transform: rotate(-45deg) !important;
   }
-
-  /* ─── FeaturesSection glow system (interface-design page) ── */
 
   [data-feature] {
     --gx: 50%;
@@ -894,5 +979,4 @@
     transform: translateX(0);
     opacity: 1;
   }
-  
 }

@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useMediaQuery } from "@/lib/use-media-query"
+import { useEffect, useRef } from "react"
 
 const CURSOR_SIZE = { outer: 32, inner: 8 }
 const IDLE_TIMEOUT = 2000
@@ -11,7 +12,9 @@ function CustomCursor() {
   const outerRef = useRef<HTMLDivElement>(null)
   const innerRef = useRef<HTMLDivElement>(null)
 
-  const [enabled, setEnabled] = useState(false)
+  const prefersFinePointer = useMediaQuery("(pointer: fine)")
+  const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)")
+  const enabled = prefersFinePointer && !prefersReducedMotion
 
   const state = useRef({
     mouseX: 0,
@@ -24,13 +27,6 @@ function CustomCursor() {
     magnetic: null as null | { x: number; y: number },
   })
 
-  // Detect capability once (no reactivity noise)
-  useEffect(() => {
-    const isFine = window.matchMedia("(pointer: fine)").matches
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    if (isFine && !reduced) setEnabled(true)
-  }, [])
-
   useEffect(() => {
     if (!enabled) return
 
@@ -41,7 +37,6 @@ function CustomCursor() {
     const loop = () => {
       const now = performance.now()
 
-      // Stop loop if idle
       if (now - s.lastMove > IDLE_TIMEOUT) {
         cancelAnimationFrame(s.raf)
         s.raf = 0

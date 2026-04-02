@@ -22,7 +22,6 @@ export function useGSAPSection(
       reduced: "(prefers-reduced-motion: reduce)",
     };
 
-    // GSAP expects an Element or selector string for matchMedia scope — not a RefObject
     mm.add(conditions, (context) => {
       setup(context);
     }, scope);

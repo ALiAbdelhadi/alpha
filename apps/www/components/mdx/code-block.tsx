@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Check, Copy } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -13,8 +13,20 @@ export function CodeBlock({ children, className }: CodeBlockProps) {
     const [copied, setCopied] = useState(false);
 
     const handleCopy = () => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const code = (children as any)?.props?.children;
+        let code = "";
+
+        if (typeof children === "string") {
+            code = children;
+        } else if (
+            React.isValidElement(children) &&
+            typeof children.props === "object" &&
+            children.props !== null &&
+            "children" in children.props &&
+            typeof children.props.children === "string"
+        ) {
+            code = children.props.children;
+        }
+
         if (code) {
             navigator.clipboard.writeText(code);
             setCopied(true);

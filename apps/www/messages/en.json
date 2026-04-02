@@ -21,10 +21,10 @@
     "badge": "Custom Web Development",
     "title": "Built to sell.",
     "title2": "Not just to look good.",
-    "problem": "Most Cairo businesses have sites that look credible and convert nothing. We engineer custom Next.js systems - no templates, no shortcuts - that load fast, rank well, and turn visitors into customers.",
-    "description": "You own everything. No templates, no lock-in.",
-    "ctaPrimary": "Scope Your Project",
-    "ctaSecondary": "See the Work",
+    "problem": "Most businesses hire a web agency and get a template with their logo on it. We don't sell templates. We engineer systems — built specifically for what your business needs to do, in Arabic and English, from day one.",
+    "description": "Altruvex works with teams that have outgrown generic solutions. If you need something that performs, scales, and works correctly in Arabic and English, that's our exact domain.",
+    "ctaPrimary": "Get Your Project Range",
+    "ctaSecondary": "See a Real Build",
     "scrollHint": "Scroll to explore",
     "clientsCount": "2",
     "trust": "On time · Zero templates · Full code ownership",
@@ -33,10 +33,11 @@
     "stat1": "Load time",
     "stat2": "Custom — no templates",
     "stat3": "Bilingual by default",
-    "onTime": "100% on-time"
+    "onTime": "100% on-time",
+    "productionCallout": "What you're experiencing right now is a live demonstration of our production standard."
   },
   "process": {
-    "eyebrow": "How We Work",
+    "eyebrow": "03 - How We Work",
     "title": "Zero ambiguity.",
     "subtitle": "Four phases. Every deliverable defined upfront. No surprises in scope, timeline, or ownership.",
     "steps": {
@@ -129,7 +130,7 @@
     }
   },
   "socialProof": {
-    "eyebrow": "Client Results",
+    "eyebrow": "05 - Client Results",
     "title": "What changed after launch.",
     "subtitle": "From the founders and directors who needed more than a website.",
     "testimonials": {
@@ -219,43 +220,43 @@
     }
   },
   "work": {
-    "eyebrow": "Selected Work",
+    "eyebrow": "04 - Selected Work",
     "title": "Three builds.",
     "titleItalic": "Real results.",
     "subtitle": "Performance numbers, technical decisions, and what changed after launch - not screenshots.",
     "projectsLabel": "Projects",
     "selectedWork": "Selected work",
     "description": "Three projects that show how we think about performance, bilingual UX, and conversion - with the metrics to back it up.",
-    "viewCaseStudy": "View case study",
+    "viewCaseStudy": "Read the Case Study",
     "projects": {
       "project1": {
-        "title": "Art Lighting Store",
-        "category": "E-Commerce",
-        "link": "https://example.com/art-lighting",
-        "year": "2024"
+        "title": "Altruvex.com — The Site Itself Had to Be the Proof",
+        "category": "Web Engineering",
+        "link": "/work/altruvex-site",
+        "year": "2025"
       },
       "project2": {
         "title": "CasesCobra",
         "category": "Web Application",
-        "link": "https://example.com/casescobra",
+        "link": "/work/custom-case-builder",
         "year": "2024"
       },
       "project3": {
         "title": "NewLight Portal",
         "category": "B2B Platform",
-        "link": "https://example.com/newlight",
-        "year": "2023"
+        "link": "/work/bilingual-corporate-portal",
+        "year": "2024"
       },
       "project4": {
-        "title": "Confidential Fintech",
-        "category": "Dashboard",
-        "link": "https://example.com/fintech",
-        "year": "2025"
+        "title": "Art Lighting Store",
+        "category": "E-Commerce",
+        "link": "/work/art-lighting-store",
+        "year": "2024"
       }
     }
   },
   "services": {
-    "eyebrow": "What We Build",
+    "eyebrow": "02 - What We Build",
     "footerText": "04 Core Services — ALTRUVEX",
     "title": "Four systems. One standard.",
     "subtitle": "Every layer engineered precisely - from the interface to the data model.",
@@ -281,7 +282,7 @@
     }
   },
   "about": {
-    "eyebrow": "About",
+    "eyebrow": "06 - About",
     "title": "One team.",
     "title2": "Focused on your system.",
     "title3": "Accountable for results.",
@@ -318,6 +319,15 @@
         "label": "Outcome-focused",
         "sublabel": "Your metrics define our success"
       }
+    },
+    "founder": {
+      "eyebrow": "Founder",
+      "name": "Ali Abdelhadi",
+      "role": "Founder & Lead Engineer",
+      "philosophy1": "I'm building Altruvex to become the reference standard in its category: a company known for engineering clarity, technical precision, and execution that holds up under scrutiny.",
+      "philosophy2": "The goal isn't to look premium. It's to build work with such strong quality, branding, and positioning that others can imitate the surface, but not the standard behind it.",
+      "linkedInLabel": "LinkedIn",
+      "linkedInUrl": "https://www.linkedin.com/in/ali-abdelhadi-65094b283/"
     }
   },
   "cta": {
@@ -370,7 +380,7 @@
     "locationLabel": "Location",
     "address1": "Cairo, Egypt",
     "address2": "Remote worldwide",
-    "scheduleCall": "Book a Discovery Call",
+    "scheduleCall": "Book a Technical Call",
     "responseTime": "We respond within 24 hours",
     "form": {
       "nameLabel": "Full Name",
@@ -397,9 +407,9 @@
     "phoneValue": "+20 102 312 5493"
   },
   "schedule": {
-    "eyebrow": "Book a Call",
+    "eyebrow": "Book a Technical Call",
     "back": "Back",
-    "title": "Schedule a Discovery Call",
+    "title": "Schedule a Technical Call",
     "subtitle": "Choose a time for a 30-minute technical conversation. No pitch. No obligation.",
     "form": {
       "name": {
@@ -623,8 +633,8 @@
     "title": "Four systems.",
     "titleHighlight": "One engineering standard.",
     "description": "We build e-commerce stores that convert, web applications that scale, bilingual portals that serve Arabic and English speakers equally, and performance rescues for sites that have stopped working.",
-    "ctaPrimary": "Scope Your Project",
-    "ctaSecondary": "See the Work",
+    "ctaPrimary": "Get Your Project Range",
+    "ctaSecondary": "See a Real Build",
     "gridTitle": "What We Build",
     "gridSubtitle": "Every engagement scoped precisely. You pay for what your system actually needs.",
     "services": {
@@ -719,8 +729,8 @@
     "whatWeOfferSubtitle": "Scoped to what your system needs - nothing more.",
     "whatWeOfferEyebrow": "Included",
     "whatWeOfferItalic": "in every engagement.",
-    "ctaPrimary": "Scope Your Project",
-    "ctaSecondary": "See the Work",
+    "ctaPrimary": "Get Your Project Range",
+    "ctaSecondary": "See a Real Build",
     "webDesign": {
       "title": "Interface Design",
       "titleItalic": "built to convert.",
@@ -833,35 +843,19 @@
         "nodes": {
           "nextjs": {
             "description": "Full-stack React framework powering every project. App Router, server components, ISR, and edge runtime in one coherent system.",
-            "highlights": [
-              "App Router",
-              "Server Actions",
-              "Edge Runtime"
-            ]
+            "highlights": ["App Router", "Server Actions", "Edge Runtime"]
           },
           "react": {
             "description": "Component-based UI layer. Every interface is composable, reusable, and predictably state-driven with concurrent rendering.",
-            "highlights": [
-              "Server Components",
-              "Suspense",
-              "Concurrent Mode"
-            ]
+            "highlights": ["Server Components", "Suspense", "Concurrent Mode"]
           },
           "typescript": {
             "description": "Strict type safety across the entire codebase - APIs, database queries, and UI components all share a single type system.",
-            "highlights": [
-              "Strict mode",
-              "Zero implicit any",
-              "Shared types"
-            ]
+            "highlights": ["Strict mode", "Zero implicit any", "Shared types"]
           },
           "nodejs": {
             "description": "Server runtime for API routes, background jobs, webhooks, and serverless functions. Non-blocking I/O at the core.",
-            "highlights": [
-              "API routes",
-              "Edge functions",
-              "Streaming SSR"
-            ]
+            "highlights": ["API routes", "Edge functions", "Streaming SSR"]
           },
           "postgresql": {
             "description": "Production-grade relational database. ACID compliant, with JSON column support, full-text search, and row-level security.",
@@ -873,27 +867,15 @@
           },
           "prisma": {
             "description": "Type-safe database client - schema is the source of truth, TypeScript types are generated automatically. No raw SQL drift.",
-            "highlights": [
-              "Type-safe queries",
-              "Migrations",
-              "Schema-first"
-            ]
+            "highlights": ["Type-safe queries", "Migrations", "Schema-first"]
           },
           "tailwind": {
             "description": "Utility-first CSS with design tokens baked in. Fast iteration, zero dead styles in production builds, and true dark mode.",
-            "highlights": [
-              "Design tokens",
-              "JIT compiler",
-              "Dark mode"
-            ]
+            "highlights": ["Design tokens", "JIT compiler", "Dark mode"]
           },
           "vercel": {
             "description": "Zero-config deployment with a global edge network, real-time analytics, instant rollbacks, and preview environments per branch.",
-            "highlights": [
-              "Edge Network",
-              "Preview deploys",
-              "Analytics"
-            ]
+            "highlights": ["Edge Network", "Preview deploys", "Analytics"]
           },
           "vps": {
             "description": "Powerful infrastructure for high-traffic platforms. We use custom VPS servers for complex projects requiring maximum performance, dedicated resources, and specialized configurations that go beyond standard hosting.",
@@ -1005,7 +987,7 @@
       "title": "System Maintenance",
       "titleItalic": "always operational.",
       "subtitle": "Proactive System Support",
-      "description": "Most sites degrade silently after launch - security patches skipped, performance drifting, dependencies aging. We prevent that.",
+      "description": "Most sites degrade silently after launch - security patches skipped, performance drifting, dependencies aging. We keep the system stable without turning every small fix into a new project.",
       "hero": {
         "services": {
           "website": "Website"
@@ -1051,36 +1033,60 @@
         "eyebrow": "Maintenance Plans",
         "title": "Support Plans",
         "titleItalic": "transparent, predictable.",
-        "subtitle": "Choose the coverage your system needs",
+        "subtitle": "Choose the coverage your system actually needs",
         "plans": {
           "essential": {
             "name": "Essential",
+            "price": "3,500 EGP",
             "features": [
-              "Monthly security and performance updates",
-              "Basic uptime monitoring with alerts",
-              "Email support during business hours",
-              "Quarterly health report"
+              "Monthly security and dependency update cycle",
+              "Uptime monitoring and backup verification",
+              "Up to 30 minutes of content or config changes per month",
+              "Business-hours WhatsApp or email support",
+              "Quarterly health summary"
             ]
           },
           "professional": {
             "name": "Professional",
+            "price": "6,500 EGP",
             "features": [
-              "Weekly updates and priority incident handling",
-              "24/7 monitoring with detailed performance reports",
-              "Content and landing page updates included",
-              "Monthly performance and security report"
+              "Weekly checks and priority incident handling",
+              "Daily monitoring with backup and uptime review",
+              "Up to 2 hours of content, landing page, or config updates per month",
+              "Monthly performance and security report",
+              "Support for small rollout or release updates"
             ]
           },
           "enterprise": {
             "name": "Enterprise",
             "features": [
-              "Dedicated success manager and custom SLAs",
-              "Quarterly architecture and performance reviews",
-              "Custom integrations and security hardening",
-              "Annual infrastructure audit and roadmap"
+              "Custom SLA and dedicated response flow",
+              "Architecture, performance, and security review cadence",
+              "Coordinated deployments and rollback support",
+              "Multi-system monitoring and incident handling",
+              "Optional tooling and integration management"
             ]
           }
         },
+        "notes": {
+          "vat": {
+            "label": "VAT",
+            "value": "All maintenance retainers shown are before 14% VAT."
+          },
+          "infra": {
+            "label": "What It Does Not Cover",
+            "value": "Domain renewals, hosting renewals, SMS, email credits, paid SaaS, and third-party subscriptions are billed separately from the monthly retainer."
+          },
+          "scope": {
+            "label": "Scope Limit",
+            "value": "Maintenance covers monitoring, updates, and small iterative changes. Major new features or rebuilds are quoted as separate work."
+          },
+          "addons": {
+            "label": "Optional Add-ons",
+            "value": "Optional Altruvex tools or subscriptions can be added when useful, but they are not bundled into every maintenance plan by default."
+          }
+        },
+        "perMonth": "/month",
         "getStarted": "Get Started",
         "recommended": "Recommended",
         "customPrice": "Custom"
@@ -1103,8 +1109,8 @@
   "estimator": {
     "badge": "Project Estimator",
     "title": "Scope your project in 3 minutes.",
-    "subtitle": "Answer a few questions and get a calibrated investment range based on the class of system you need.",
-    "description": "No forms, no sales calls required to get a baseline number. Three questions, one honest range.",
+    "subtitle": "Answer a few questions and get an investment range shaped for teams buying real custom work, not off-the-shelf templates.",
+    "description": "No forms or sales calls required to get a serious baseline. The estimator is designed to help buyers scope custom websites, portals, and operational systems with more clarity before the first conversation.",
     "preselected": "Preselected Tier",
     "tierNames": {
       "essential": "Static System",
@@ -1227,19 +1233,19 @@
         "options": {
           "small": {
             "title": "Static System",
-            "range": "50,000 – 150,000 EGP - focused marketing system without complex app logic."
+            "range": "75,000 – 160,000 EGP - custom marketing sites and focused corporate builds."
           },
           "medium": {
             "title": "Connected System",
-            "range": "150,000 – 450,000 EGP - systems with integrations, auth, or more advanced flows."
+            "range": "160,000 – 320,000 EGP - connected systems with one or two serious integrations or richer bilingual scope."
           },
           "large": {
             "title": "Full Infrastructure",
-            "range": "450,000+ EGP - full, multi-layer systems with infrastructure and internal tools."
+            "range": "320,000 – 750,000 EGP - custom products, dashboards, portals, and heavier operational systems."
           },
           "custom": {
             "title": "Architecture Consultation",
-            "range": "Custom Scope - we scope and price a bespoke architecture engagement."
+            "range": "750,000+ EGP - enterprise architecture, multi-system builds, or phased technical programs."
           }
         }
       }
@@ -1250,14 +1256,14 @@
       "phoneLabel": "Phone Number (WhatsApp)",
       "phonePlaceholder": "01XXXXXXXXX",
       "phoneHint": "Used only for follow-up on this estimate. Never shared.",
-      "phoneError": "Enter a valid mobile number (01XXXXXXXXX).",
+      "phoneError": "Enter a valid phone or WhatsApp number.",
       "nameLabel": "Name or Company (Optional)",
       "namePlaceholder": "Your name or company name",
       "button": "View Your Estimate",
       "submitting": "Preparing your estimate..."
     },
     "pdfContent": {
-      "estimateValid": "Preliminary estimate valid for 30 days. Final investment confirmed after a detailed scoping session. Taxes, if applicable, are not included. Infrastructure renewal is billed annually from Year 2.",
+      "estimateValid": "Preliminary estimate valid for 30 days. Final investment is confirmed after scoping. 14% VAT is not included. Year 1 domain, SSL, and base hosting are included where relevant; third-party subscriptions and messaging costs are excluded unless scoped.",
       "confidential": "This document is confidential and prepared exclusively for {name}. Scope and pricing may adjust after discovery if requirements change.",
       "prospectiveClient": "the prospective client",
       "engineeringBeyond": "Engineering Beyond Standards",
@@ -1267,13 +1273,13 @@
       "deliveryMode": "Delivery Mode",
       "investmentEstimate": "Investment Estimate",
       "totalRange": "Total Range - Year 1",
-      "inclDomain": "Incl. domain + hosting (Year 1)",
+      "inclDomain": "Incl. domain + base hosting (Year 1)",
       "estimatedDelivery": "Estimated Delivery",
       "weeksFromKickoff": "weeks from kick-off",
       "discoverySeparate": "Discovery phase separate",
       "infraIncluded": "Infrastructure - Included Year 1",
       "whatsCovered": "What's Covered",
-      "infraDetails": "Domain registration (.com or equivalent) · production hosting environment · SSL/TLS certificate · global CDN · automated daily backups · staging environment. All bundled into the Year 1 investment range above.",
+      "infraDetails": "Domain registration (.com or equivalent) · SSL/TLS · deployment setup · and the standard hosting stack required for launch. Higher-load infrastructure, databases, SMS, email credits, and paid subscriptions are quoted separately only when needed.",
       "renewalFromYear2": "Renewal from Year 2: {amount} / year",
       "readyToMoveForward": "Ready to move forward?",
       "bookCall": "Book a free 30-min discovery call - no obligation.",
@@ -1311,188 +1317,166 @@
       "deliverables": {
         "ecommerce": {
           "small": [
-            "Product catalog - up to 50 products, categories & filters",
-            "Shopping cart & single-step checkout",
-            "Paymob / Fawry payment integration",
-            "Basic inventory tracking dashboard",
-            "Order confirmation & shipping emails",
-            "Customer-facing order status page",
-            "Mobile-first responsive UI",
-            "On-page SEO: meta, OG tags, sitemap",
-            "Domain (.com or .eg) + Hosting - Year 1 included",
-            "SSL certificate & CDN setup",
-            "1 month post-launch support"
+            "Catalog setup for a focused store (up to 50 SKUs)",
+            "Product pages, categories, and basic filtering",
+            "Checkout with one payment method such as Paymob or cash on delivery",
+            "Order notifications and a simple order-status flow",
+            "Mobile-first storefront implementation",
+            "Essential SEO, analytics, and launch tracking",
+            "Arabic-ready structure where the scope requires it",
+            "30-day launch assurance for critical fixes"
           ],
           "medium": [
-            "Unlimited product catalog with variants & bundles",
-            "Advanced multi-step checkout with address book",
-            "Multiple payment gateways (Paymob, Fawry, COD)",
-            "Full inventory management & low-stock alerts",
-            "Customer accounts, order history & returns",
-            "Discount codes, vouchers & flash sale engine",
-            "Advanced SEO + structured data (rich snippets)",
-            "Google Analytics 4 + Meta Pixel integration",
-            "Blog / content hub with CMS",
-            "Domain + Hosting - Year 1 included",
-            "SSL, CDN & automated backups",
-            "3 months post-launch support"
+            "Larger catalog with variants, bundles, or collections",
+            "Improved checkout flow and customer account basics",
+            "One core operational integration such as payment, shipping, or ERP-lite sync",
+            "Promotions, coupon codes, and merchandising controls",
+            "CMS support for landing pages, blog, or campaign content",
+            "Arabic / English storefront and QA where required",
+            "Analytics, pixels, and search-readiness setup",
+            "30-day launch assurance with structured handover"
           ],
           "large": [
-            "Everything in Professional +",
-            "Custom storefront animations (GSAP / Framer Motion)",
-            "Multi-currency & multi-language storefront",
-            "Loyalty & rewards points system",
-            "Abandoned cart recovery (email + SMS)",
-            "Product recommendations engine",
-            "Advanced analytics dashboard (custom KPIs)",
-            "Performance engineering - Core Web Vitals 95+",
-            "Load-tested to 5,000 concurrent users",
-            "Domain + Hosting - Year 1 included",
-            "6 months post-launch support + monitoring"
+            "Everything in Professional",
+            "Richer storefront UX, search, and merchandising logic",
+            "Multiple operational workflows such as payments, shipping, and inventory coordination",
+            "Customer accounts, returns, or post-purchase flows where required",
+            "Custom reporting surfaces for key commerce metrics",
+            "Performance pass for higher traffic and heavier catalogs",
+            "Infrastructure planning for scale, CDN, and backup strategy",
+            "30-day launch assurance plus rollout support"
           ],
           "enterprise": [
-            "Everything in Premium +",
-            "Headless commerce architecture (Next.js + custom API)",
-            "ERP / POS / WMS integration",
-            "Custom PWA mobile app (app-store ready)",
-            "Dedicated server infrastructure with auto-scaling",
-            "24/7 uptime monitoring & alerting",
-            "SLA: 99.9% uptime guarantee",
-            "Security audit & penetration testing",
-            "Domain + Hosting - Year 1 included",
-            "12 months dedicated engineering support"
+            "Custom commerce architecture for complex operational needs",
+            "ERP, POS, warehouse, or multi-system integration planning",
+            "Role-based back-office workflows and approvals",
+            "Multi-brand, multi-store, or regional rollout requirements",
+            "Security review, release process, and environment strategy",
+            "Infrastructure design quoted to actual traffic and operational load",
+            "Phased roadmap for post-launch expansion",
+            "Hypercare window after launch, then ongoing support quoted separately"
           ]
         },
         "corporate": {
           "small": [
-            "Up to 6 pages (Home, About, Services, Contact + 2 custom)",
-            "Custom design fully matching your brand guidelines",
-            "Contact form with email notifications",
-            "Google Maps embed & directions",
-            "Basic SEO foundation (meta, sitemap, robots.txt)",
-            "Mobile-first responsive design",
-            "Domain (.com or .eg) + Hosting - Year 1 included",
-            "SSL certificate",
-            "1 month post-launch support"
+            "Discovery-led sitemap and page structure",
+            "Up to 6 core pages with custom UI implementation",
+            "Contact or lead form with email routing",
+            "Responsive build with strong performance fundamentals",
+            "Basic SEO setup, analytics, and search console readiness",
+            "Arabic-ready structure where the scope calls for it",
+            "Deployment and launch checklist",
+            "30-day launch assurance for critical fixes"
           ],
           "medium": [
-            "Up to 15 pages with consistent design system",
-            "Blog / News section with headless CMS",
-            "Lead generation forms with CRM-ready data export",
-            "Full SEO setup: technical + on-page + sitemap",
-            "Google Analytics 4 + Search Console integration",
-            "Arabic + English (RTL/LTR) bilingual support",
-            "Social media feeds & sharing integration",
-            "Domain + Hosting - Year 1 included",
-            "SSL, CDN & automated backups",
-            "3 months post-launch support"
+            "Everything in Essential",
+            "Expanded page system with reusable sections",
+            "CMS or blog setup for ongoing content updates",
+            "One lead-flow integration such as CRM, booking, or advanced forms",
+            "Full Arabic / English implementation and QA where required",
+            "Tracking, SEO, and conversion event setup",
+            "Structured handover for internal marketing teams",
+            "30-day launch assurance with post-launch review"
           ],
           "large": [
-            "Everything in Professional +",
-            "Custom micro-animations (GSAP ScrollTrigger)",
-            "Team directory with filterable bios",
-            "Case studies & portfolio showcase section",
-            "Integrated meeting booking (Cal.com or custom)",
-            "Performance engineering - Lighthouse 95+",
-            "Core Web Vitals optimization & audit",
-            "Domain + Hosting - Year 1 included",
-            "6 months post-launch support + performance monitoring"
+            "Everything in Professional",
+            "Richer storytelling sections, motion, and case-study structure",
+            "Advanced lead routing, gated content, or light account workflows",
+            "Calendar, CRM, or operations integration where needed",
+            "Performance hardening for heavier content and higher traffic",
+            "Reusable design system for future landing pages",
+            "Launch planning across environments and stakeholders",
+            "30-day launch assurance plus rollout support"
           ],
           "enterprise": [
-            "Everything in Premium +",
-            "Client-facing portal with secure login",
-            "Document management & sharing system",
-            "Custom CRM / ERP integration",
-            "Multi-site or multi-brand architecture",
-            "Dedicated server infrastructure",
-            "Security audit & compliance review",
-            "Domain + Hosting - Year 1 included",
-            "12 months dedicated engineering support"
+            "Custom corporate platform with portal or secure stakeholder areas",
+            "Role-based access, document flows, or approval workflows",
+            "Multi-site or multi-brand architecture planning",
+            "Deeper CRM / ERP / internal system integration",
+            "Security review, permissions model, and environment strategy",
+            "Infrastructure quoted to real traffic and operational needs",
+            "Phased roadmap for future modules and rollout",
+            "Hypercare window after launch, then ongoing support quoted separately"
           ]
         },
         "custom": {
           "small": [
-            "Core application features scoped in discovery",
-            "User authentication & account management",
-            "Basic role-based access (admin / user)",
-            "Responsive dashboard UI",
-            "REST API with documentation",
-            "PostgreSQL database with schema design",
-            "Domain + Hosting - Year 1 included",
-            "SSL certificate & environment setup",
-            "1 month post-launch support"
+            "Discovery-scoped MVP around one core workflow",
+            "Authentication, basic roles, and protected routes",
+            "Admin-facing screens for essential operations",
+            "Core data model, API, and database setup",
+            "Responsive web app UI for desktop and mobile",
+            "Basic notifications or status updates where required",
+            "Deployment, environment setup, and documentation baseline",
+            "30-day launch assurance for critical fixes"
           ],
           "medium": [
-            "Full-stack custom web application",
-            "Advanced role-based access control (RBAC)",
-            "Admin dashboard with data tables & charts",
-            "Up to 3 third-party API integrations",
-            "Email notification system (transactional)",
-            "File upload & media management",
-            "Automated testing for critical user flows",
-            "Full API documentation (Swagger / Postman)",
-            "Domain + Hosting - Year 1 included",
-            "3 months post-launch support"
+            "Everything in Essential",
+            "Multi-role workflows and richer admin controls",
+            "One or two business-critical integrations",
+            "Reporting, exports, uploads, or dashboard modules where needed",
+            "QA coverage for key business flows",
+            "Documentation and handover for product ownership",
+            "Launch plan with staging and production readiness",
+            "30-day launch assurance with post-launch review"
           ],
           "large": [
-            "Everything in Professional +",
-            "Real-time features (WebSockets / SSE)",
-            "Advanced analytics & exportable reports",
-            "Webhook system for third-party triggers",
-            "Background job processing & queues",
-            "Full security audit & OWASP compliance check",
-            "Performance optimization & load testing",
-            "Domain + Hosting - Year 1 included",
-            "6 months post-launch support + monitoring"
+            "Everything in Professional",
+            "Advanced workflow logic, approvals, or automation rules",
+            "Background jobs, queues, or webhook-driven processes where required",
+            "Audit logs, exports, and operational reporting",
+            "Performance and security hardening for heavier usage",
+            "Multi-environment rollout with CI/CD planning",
+            "Technical roadmap for phase-two growth",
+            "Hypercare window after launch"
           ],
           "enterprise": [
-            "Everything in Premium +",
-            "Microservices or modular monolith architecture",
-            "Multi-tenant SaaS with isolated data per tenant",
-            "CI/CD pipeline (GitHub Actions / Railway)",
-            "Auto-scaling infrastructure (containerised)",
-            "White-label capability",
-            "Compliance & security audit (ISO-aligned)",
-            "Domain + Hosting - Year 1 included",
-            "12 months dedicated engineering retainer"
+            "Platform architecture for multi-team or multi-tenant operation",
+            "Advanced permissions, auditability, and operational controls",
+            "Multiple integrations, data pipelines, or system-to-system workflows",
+            "Infrastructure, CI/CD, and release management design",
+            "Security review and deployment governance",
+            "Phased rollout across teams, regions, or business units",
+            "Operational documentation and training handover",
+            "Ongoing product support quoted separately after launch"
           ]
         },
         "performance": {
           "small": [
-            "Full Lighthouse audit across all key pages",
-            "Core Web Vitals baseline measurement (LCP, INP, CLS)",
-            "Image optimization report & implementation",
-            "Up to 10 critical performance fixes applied",
-            "Bundle analysis & dead-code report",
-            "Detailed written technical report (PDF)",
-            "Prioritized recommendations roadmap",
-            "1 follow-up Q&A session (45 min)"
+            "Baseline Lighthouse and Core Web Vitals audit",
+            "Findings summary across the highest-impact pages",
+            "Image, asset, and script bottleneck review",
+            "Up to 5 priority fixes applied",
+            "Clear before/after measurements",
+            "Written remediation roadmap",
+            "One debrief session"
           ],
           "medium": [
-            "Everything in Essential +",
-            "Code splitting & lazy loading implementation",
-            "Server-side rendering / ISR review & setup",
-            "CDN configuration & edge caching strategy",
-            "Third-party script audit & defer strategy",
-            "Database query analysis report",
-            "2 follow-up sessions + 30-day email support"
+            "Everything in Essential",
+            "Up to 10 priority fixes across frontend performance issues",
+            "Caching, script loading, and rendering-path improvements",
+            "Third-party tag audit and cleanup recommendations",
+            "Analytics review to protect measurement accuracy",
+            "Validation pass after implementation",
+            "Short post-audit support window"
           ],
           "large": [
-            "Everything in Professional +",
-            "Full performance implementation (not just audit)",
-            "Load testing up to 10,000 concurrent users",
-            "Server & infrastructure optimization",
-            "Custom real-time monitoring dashboard",
-            "3 months active performance monitoring",
-            "Monthly performance report delivery"
+            "Everything in Professional",
+            "Broader implementation across frontend, server, and delivery layers",
+            "Load testing and performance budgeting for key flows",
+            "Database or API bottleneck review where relevant",
+            "Monitoring baseline for ongoing performance visibility",
+            "Stakeholder-ready report with next-phase priorities",
+            "30-day observation period after optimization"
           ],
           "enterprise": [
-            "Everything in Premium +",
-            "Dedicated performance engineer (part-time retainer)",
-            "Continuous optimization cycles (bi-weekly sprints)",
-            "SLA performance guarantees (LCP / TTI targets)",
-            "Full stack - frontend, backend, infrastructure",
-            "6 months monitoring & optimization retainer"
+            "Performance program for complex or high-traffic systems",
+            "Cross-stack review spanning frontend, backend, and infrastructure",
+            "SLA-oriented benchmarking and target definition",
+            "Release-risk review for major traffic or launch events",
+            "Operational reporting for engineering and leadership",
+            "Optimization roadmap phased by business impact",
+            "Retainer or ongoing monitoring quoted separately"
           ]
         }
       }
@@ -1508,9 +1492,9 @@
       "subtitle": "ONE LAST THING",
       "description": "Most projects fail in the first conversation - not the build. A 30-minute call is enough to know if we're the right fit.",
       "phoneLabel": "Phone (WhatsApp)",
-      "phonePlaceholder": "01XXXXXXXXX",
+      "phonePlaceholder": "+201... or +971...",
       "phoneHint": "Used only for follow-up. Never shared.",
-      "phoneError": "Enter a valid Egyptian mobile number (01XXXXXXXXX).",
+      "phoneError": "Enter a valid phone or WhatsApp number.",
       "buttonText": "Book a Free Call",
       "secondaryButtonText": "No thanks",
       "submitting": "Sending...",
@@ -1546,10 +1530,10 @@
     "step2": {
       "question": "What is your allocated budget range?",
       "options": {
-        "small": "50,000 – 150,000 EGP - Essential Stack",
-        "medium": "150,000 – 450,000 EGP - Professional Stack",
-        "large": "450,000 – 1,200,000 EGP - Premium Stack",
-        "enterprise": "1,200,000+ EGP - Enterprise Stack"
+        "small": "75,000 – 160,000 EGP - Essential / focused custom builds",
+        "medium": "160,000 – 320,000 EGP - Professional / connected systems",
+        "large": "320,000 – 750,000 EGP - Flagship products and heavier custom systems",
+        "enterprise": "750,000+ EGP - Enterprise architecture and multi-system delivery"
       }
     },
     "step3": {
@@ -1574,18 +1558,18 @@
       "badge": "Estimate Ready",
       "rangeCopy": "Projects like yours typically range between {min} – {max}, taking {weeksMin}–{weeksMax} weeks to complete.",
       "rangeCtaLabel": "Engineering Note",
-      "rangeCta": "This is a baseline estimate. If you have a firm deadline, we engineer the scope and timeline around your launch date - not the other way around.",
+      "rangeCta": "This is a baseline estimate for premium custom delivery. It accounts for engineering complexity, bilingual scope, and delivery speed without pretending every project needs enterprise spend.",
       "timeline": "Estimated Timeline",
       "weeks": "weeks",
       "investment": "Investment Range",
-      "vatExcluded": "Excl. VAT",
-      "hostingIncluded": "Incl. domain + hosting - full year",
+      "vatExcluded": "Excl. 14% VAT",
+      "hostingIncluded": "Domain + base hosting included where scoped",
       "whatYouGet": "What you get",
       "moreInPdf": "+ {count} more deliverables in the PDF",
       "infraLabel": "Infrastructure",
-      "infraDescription": "Domain + Production hosting included in Year 1. Renewal from Year 2: {amount}/year.",
-      "consultationGate": "Want an exact quote? Book a free 30-min scoping call.",
-      "ctaPrimary": "Book Scoping Call",
+      "infraDescription": "Year 1 includes domain, SSL, and base hosting where this scope requires them. Renewal from Year 2 starts at {amount}/year. Paid third-party tools are separate.",
+      "consultationGate": "Need an exact number? Book a technical call and pressure-test the scope with us.",
+      "ctaPrimary": "Book a Technical Call",
       "or": "Or",
       "cta": "Schedule Consultation",
       "disclaimer": "This is a preliminary estimate. Final pricing depends on detailed requirements."
@@ -1600,7 +1584,7 @@
       "q1": "Why custom code instead of WordPress or Shopify?",
       "a1": "Custom development gives you complete ownership, no platform constraints, and fundamentally better performance. A system built for your business logic loads faster, ranks higher, and converts more visitors than any plugin-dependent platform can.",
       "q2": "How accurate is this estimate?",
-      "a2": "This estimator is based on historical data from past projects. The range aligns closely with our typical engagements. Final numbers are confirmed after a detailed discovery session where we map your exact requirements.",
+    "a2": "This estimator is calibrated against recent custom-development pricing and our own delivery history. It is directionally accurate for scope planning; final pricing is confirmed after discovery.",
       "q3": "Do you offer ongoing support?",
       "a3": "Yes. All enterprise and large-scale projects include optional retainer packages for maintenance, feature development, and priority support. Every project also includes a 30-day post-launch warranty for critical fixes.",
       "q4": "What happens after I request the PDF?",
@@ -1619,7 +1603,7 @@
     "label": "Pricing",
     "title": "Scoped to what you actually need.",
     "titleItalic": "Nothing more.",
-    "description": "Each tier is a different class of system - not a different page count. We scope precisely before anything is built, so you never pay for complexity your project doesn't require.",
+    "description": "Priced for teams buying real custom work, not template packages. The difference between tiers is system complexity, integrations, and operational depth - not inflated page counts.",
     "recommended": "Most common starting point",
     "faq": {
       "title": "Pricing Questions",
@@ -1627,11 +1611,11 @@
       "questions": {
         "01": {
           "q": "How do you determine the investment range?",
-          "a": "We price by the class of system, not the page count. Underlying architecture, data complexity, and integration requirements drive the number - not arbitrary metrics like 'number of pages' or 'estimated hours.'"
+    "a": "We price against current custom-development ranges and the engineering complexity of the system itself. Architecture, workflows, integrations, and bilingual requirements drive the number - not arbitrary metrics like page count."
         },
         "02": {
           "q": "Are there hidden recurring costs?",
-          "a": "No. Year 1 includes domain registration, production hosting, SSL, and CDN. From Year 2, you pay a transparent infrastructure renewal fee. Optional maintenance retainers are agreed separately and always opt-in."
+          "a": "No hidden fees. All project prices shown are before 14% VAT. Year 1 includes domain, SSL, deployment, and base hosting where relevant. Renewals, paid third-party tools, and channels like SMS are only billed if your scope actually uses them."
         },
         "03": {
           "q": "What does the payment schedule look like?",
@@ -1643,56 +1627,54 @@
         },
         "05": {
           "q": "Do you work with early-stage startups?",
-          "a": "Yes. Our Static System tier is designed for founders who need a flagship-quality web presence at a fixed, predictable cost. For more complex needs, we can phase the build to align with funding stages."
+          "a": "Yes. Our Essential tier is for companies that need custom work without jumping straight into product-level spend. For more complex systems, we phase the build so the investment matches the business stage."
         }
       }
     },
     "tiers": {
       "essential": {
         "name": "Static System",
-        "priceRange": "50,000 – 150,000 EGP",
-        "originalPrice": "65,000 – 180,000 EGP",
-        "idealFor": "Businesses that need a fast, conversion-focused web presence - no external services, no moving parts.",
-        "cta": "Scope this project",
+        "priceRange": "75,000 – 160,000 EGP",
+        "originalPrice": "95,000 – 180,000 EGP",
+        "idealFor": "Businesses that need a fast, custom-built website with premium presentation and conversion focus, without complex app logic or heavy integrations.",
+        "cta": "Get Pricing for This Scope",
         "features": [
-          "Custom architecture - no templates, no page builders",
-          "Next.js static or SSG build, production-optimized",
-          "Core Web Vitals - target 95+ across all metrics",
-          "Full handoff: source code, docs, deployment guide",
-          "No recurring vendor lock-in"
+          "Custom UI implementation for your core marketing pages",
+          "Responsive build with strong performance and clean deployment",
+          "Lead forms, analytics, and SEO fundamentals",
+          "Arabic-ready structure where the scope calls for it",
+          "Domain, SSL, and base hosting setup for Year 1"
         ],
-        "notIncluded": "No user accounts, payment processing, or external API connections - see Connected System for those."
+        "notIncluded": "No dashboards, payment flows, or heavy operational integrations - see Connected System for those."
       },
       "professional": {
         "name": "Connected System",
-        "priceRange": "150,000 – 450,000 EGP",
-        "originalPrice": "180,000 – 500,000 EGP",
-        "idealFor": "Platforms that need to connect to the world - payment gateways, CRMs, authentication, or any third-party service your business depends on.",
-        "cta": "Scope this project",
+        "priceRange": "160,000 – 320,000 EGP",
+        "originalPrice": "190,000 – 360,000 EGP",
+        "idealFor": "Sites and systems that need one or two real integrations, richer bilingual UX, CMS flexibility, or light account / admin workflows.",
+        "cta": "Plan This Build",
         "features": [
           "Everything in Static System",
-          "Authentication layer (Clerk, NextAuth, or custom)",
-          "Payment gateway integration (Paymob, Stripe, Tap)",
-          "Third-party API connections with error handling",
-          "Multi-language support (EN/AR) where required",
-          "Technical architecture session before build starts"
+          "CMS, blog, landing page system, or editable content workflows",
+          "One key integration such as CRM, booking, auth, or payment",
+          "Full Arabic / English implementation and QA where required",
+          "Structured discovery and architecture before build"
         ],
-        "notIncluded": "No automation pipelines or infrastructure management - see Full Infrastructure for those."
+        "notIncluded": "No custom portals, deep automation, or internal operational products - see Full Infrastructure for those."
       },
       "flagship": {
         "name": "Full Infrastructure",
-        "priceRange": "450,000 EGP+",
-        "originalPrice": "550,000 EGP+",
-        "idealFor": "Organizations that need a complete technical backbone - not a website, but the operational infrastructure behind a growing business.",
-        "cta": "Start a conversation",
+        "priceRange": "320,000 EGP+",
+        "originalPrice": "380,000 EGP+",
+        "idealFor": "Organizations building a serious product or internal system: dashboards, portals, custom workflows, automation, or infrastructure-heavy scopes.",
+        "cta": "Talk Through the Architecture",
         "features": [
           "Everything in Connected System",
-          "Automation pipelines (Zapier, n8n, or custom)",
-          "Multi-tenant or role-based access architecture",
-          "Internal admin systems and dashboards",
-          "Infrastructure setup: hosting, CI/CD, domain management",
-          "Dedicated communication channel throughout the build",
-          "Post-launch architecture retainer available"
+          "Custom dashboards, portals, or operational workflows",
+          "Multiple integrations or data flows",
+          "Role-based logic, automation, or internal tooling where required",
+          "Infrastructure, CI/CD, and launch planning",
+          "Phased roadmap for post-launch growth"
         ],
         "notIncluded": null
       }
@@ -1700,13 +1682,13 @@
     "maintenance": [
       {
         "key": "essential",
-        "price": "7,500 EGP",
+        "price": "3,500 EGP",
         "featured": false,
         "index": "01"
       },
       {
         "key": "professional",
-        "price": "15,000 EGP",
+        "price": "6,500 EGP",
         "featured": true,
         "index": "02"
       },
@@ -1717,13 +1699,50 @@
         "index": "03"
       }
     ],
+    "commercial": {
+      "items": {
+        "vat": {
+          "label": "VAT",
+          "value": "All project pricing shown is before 14% VAT."
+        },
+        "yearOne": {
+          "label": "Year 1 Setup",
+          "value": "Domain, SSL, deployment, and base hosting for Year 1 are included for standard website scopes. Higher-load infrastructure is quoted only when the project needs it."
+        },
+        "exclusions": {
+          "label": "Quoted Separately",
+          "value": "Branding from scratch, copywriting, paid stock, SMS, email credits, premium SaaS tools, and third-party subscriptions are not included unless listed in scope."
+        },
+        "programs": {
+          "label": "Altruvex Tools",
+          "value": "Altruvex products and subscriptions are optional add-ons. They are only included when your scope needs them or they are bundled into a custom support plan."
+        }
+      }
+    },
     "roi": {
       "eyebrow": "Return on Investment",
       "title": "The wrong system compounds in cost.",
       "calculation": "A site rebuilt 18 months after launch because it couldn't handle integrations, user accounts, or traffic typically costs 2–3× the original build - plus the revenue lost while you waited.",
       "question": "The real question isn't what this costs to build. It's what the wrong build costs over two years.",
       "ctaSchedule": "Discuss your scope",
-      "ctaWork": "See relevant projects"
+      "ctaWork": "See relevant projects",
+      "stats": {
+        "timeline": {
+          "label": "Typical Timeline",
+          "value": "4-8 weeks",
+          "sub": "From discovery to launch"
+        },
+        "timeSaved": {
+          "label": "Your Time Saved",
+          "value": "40-60 hours",
+          "sub": "No hiring, managing, or code reviews"
+        },
+        "deliverable": {
+          "label": "What You Get",
+          "value": "Production-ready",
+          "sub": "Deployed, tested, documented"
+        }
+      }
     }
   },
   "how-we-work": {
@@ -1855,13 +1874,69 @@
       "noCommitment": "No Commitment",
       "founderAccess": "Founder Access"
     },
-    "phonePlaceholder": "01XXXXXXXXX",
-    "phoneError": "Please enter a valid Egyptian phone number",
+    "phonePlaceholder": "+201... or +971...",
+    "phoneError": "Please enter a valid phone number",
     "phoneHint": "We'll only call to coordinate the time.",
     "submitting": "Sending...",
     "buttonText": "Request a Call",
     "secondaryButtonText": "Maybe later",
     "successTitle": "Talk soon.",
     "successDescription": "We've received your number. We'll reach out within 2 business hours to coordinate our call."
+  },
+  "authority": {
+    "eyebrow": "WHY CLIENTS CHOOSE US",
+    "title": "What you can verify already.",
+    "subtitle": "Until client testimonials are earned, this is the proof you can inspect directly on the page in front of you.",
+    "cards": {
+      "card1": {
+        "title": "We show our work",
+        "body": "This site is built by us. Every animation, every Arabic line, every interaction. That's what we build for clients."
+      },
+      "card2": {
+        "title": "We price honestly",
+        "body": "Fixed-scope audit at 15,000 EGP. Project ranges published. No discovery surprises."
+      },
+      "card3": {
+        "title": "We build for Arabic first",
+        "body": "RTL is not an afterthought here. Our architecture treats Arabic as a first-class language, not a CSS flip."
+      }
+    }
+  },
+  "caseStudies": {
+    "altruvex-site": {
+      "name": "Altruvex.com — Agency Website",
+      "client": "Internal / Altruvex",
+      "industry": "Web Engineering / Agency",
+      "year": "2025",
+      "summary": "A production-grade agency website built to demonstrate the standard Altruvex holds its client work to — bilingual Arabic/English with full RTL parity, sub-1s load time, and a custom pricing intelligence tool.",
+      "problem": "In a market where many agencies compete almost entirely on price, demonstrating technical superiority without a portfolio of enterprise clients requires the agency's own site to function as the primary proof of capability — every interaction had to be something the market hadn't seen before.",
+      "solution": "Built entirely on a custom stack: Next.js 16 App Router, TypeScript 6, Tailwind CSS v4, GSAP with word-level text splitting for GPU-optimized hero animations, and Lenis for synchronized smooth scroll. The pricing estimator uses in-memory rate limiting pre-launch (Redis queued for scale). Full RTL/LTR parity at the CSS variable level — not mirrored, but architecturally native. Bilingual copy hardcoded with language-specific narrative (no interpolation).",
+      "outcome": "Sub-1s TTI on mobile. Arabic layout switches in under 16ms with zero layout shift. The pricing estimator qualifies leads before any contact — reducing discovery call time by an estimated 40%. Site functions as a live demonstration of Altruvex's production standard.",
+      "techStack": [
+        "Next.js 16",
+        "TypeScript 6",
+        "Tailwind CSS v4",
+        "GSAP",
+        "Lenis",
+        "next-intl",
+        "Prisma",
+        "PostgreSQL",
+        "Vercel"
+      ],
+      "metrics": [
+        {
+          "label": "Mobile TTI",
+          "value": "< 1s"
+        },
+        {
+          "label": "RTL Switch",
+          "value": "< 16ms"
+        },
+        {
+          "label": "Lead Qualification",
+          "value": "Pre-call"
+        }
+      ]
+    }
   }
 }

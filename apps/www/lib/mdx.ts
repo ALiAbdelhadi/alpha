@@ -28,7 +28,6 @@ export const getArticle = cache(async (
         const fileContents = fs.readFileSync(filePath, 'utf8');
         const { data, content } = matter(fileContents);
 
-        // حساب وقت القراءة التقريبي
         const wordsPerMinute = 200;
         const wordCount = content.split(/\s+/).length;
         const readTime = Math.ceil(wordCount / wordsPerMinute);

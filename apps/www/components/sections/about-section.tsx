@@ -1,47 +1,84 @@
-"use client"
+"use client";
 
-import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
-import { useTranslations } from "next-intl"
-import { memo, useRef } from "react"
-import { Container } from "../container"
-import { MagneticButton } from "../magnetic-button"
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
+import { useTranslations } from "next-intl";
+import { memo, useRef } from "react";
+import { Container } from "../container";
+import { MagneticButton } from "../magnetic-button";
 
 export const AboutSection = memo(function AboutSection({
-  scrollToSection
+  scrollToSection,
 }: {
-  scrollToSection?: (sectionId: string) => void
+  scrollToSection?: (sectionId: string) => void;
 }) {
-  const t = useTranslations()
-  const sectionRef = useRef<HTMLElement>(null)
+  const t = useTranslations();
+  const sectionRef = useRef<HTMLElement>(null);
 
-  const eyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
-  const titleRef = useText(DEFAULTS.heading)
+  const eyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 });
+  const titleRef = useText(DEFAULTS.heading);
   const descRef = useReveal<HTMLDivElement>({
     ...DEFAULTS.body,
     ease: MOTION.ease.smooth,
     delay: 0.15,
     distance: MOTION.distance.sm,
-  })
+  });
   const buttonsRef = useReveal<HTMLDivElement>({
     ...DEFAULTS.element,
     ease: MOTION.ease.smooth,
     delay: 0.3,
-  })
+  });
+  const founderCardRef = useReveal<HTMLDivElement>({
+    ...DEFAULTS.body,
+    ease: MOTION.ease.smooth,
+    delay: 0.2,
+  });
+  const founderLinkRef = useReveal<HTMLDivElement>({
+    ...DEFAULTS.element,
+    ease: MOTION.ease.smooth,
+    delay: 0.3,
+  });
 
   const statsEnabled =
-    typeof process !== "undefined" && process.env.NEXT_PUBLIC_STATS_ENABLED === "true"
+    typeof process !== "undefined" &&
+    process.env.NEXT_PUBLIC_STATS_ENABLED === "true";
 
   const items = statsEnabled
     ? [
-      { value: t("about.stat1.value"), label: t("about.stat1.label"), sub: t("about.stat1.sublabel") },
-      { value: t("about.stat2.value"), label: t("about.stat2.label"), sub: t("about.stat2.sublabel") },
-      { value: t("about.stat3.value"), label: t("about.stat3.label"), sub: t("about.stat3.sublabel") },
-    ]
+        {
+          value: t("about.stat1.value"),
+          label: t("about.stat1.label"),
+          sub: t("about.stat1.sublabel"),
+        },
+        {
+          value: t("about.stat2.value"),
+          label: t("about.stat2.label"),
+          sub: t("about.stat2.sublabel"),
+        },
+        {
+          value: t("about.stat3.value"),
+          label: t("about.stat3.label"),
+          sub: t("about.stat3.sublabel"),
+        },
+      ]
     : [
-      { value: null, label: t("about.values.bilingual.label"), sub: t("about.values.bilingual.sublabel") },
-      { value: null, label: t("about.values.noTemplate.label"), sub: t("about.values.noTemplate.sublabel") },
-      { value: null, label: t("about.values.outcome.label"), sub: t("about.values.outcome.sublabel") },
-    ]
+        {
+          value: null,
+          label: t("about.values.bilingual.label"),
+          sub: t("about.values.bilingual.sublabel"),
+        },
+        {
+          value: null,
+          label: t("about.values.noTemplate.label"),
+          sub: t("about.values.noTemplate.sublabel"),
+        },
+        {
+          value: null,
+          label: t("about.values.outcome.label"),
+          sub: t("about.values.outcome.sublabel"),
+        },
+      ];
+  const founderLinkedInUrl = t("about.founder.linkedInUrl");
+  const founderIsPlaceholderLink = founderLinkedInUrl === "#";
 
   return (
     <section
@@ -54,7 +91,10 @@ export const AboutSection = memo(function AboutSection({
         <div className="grid gap-16 md:grid-cols-2 md:gap-20">
           <div className="flex flex-col justify-between gap-12">
             <div className="space-y-3">
-              <p ref={eyebrowRef} className="mono-uppercase text-muted-foreground/70 block">
+              <p
+                ref={eyebrowRef}
+                className="mono-uppercase text-muted-foreground/70 block"
+              >
                 {t("about.eyebrow")}
               </p>
               <h2
@@ -65,7 +105,7 @@ export const AboutSection = memo(function AboutSection({
                 <br />
                 {t("about.title2")}
                 <br />
-                <span className="block text-primary/35 font-display-serif">
+                <span className="block text-display-italic font-display-serif">
                   {t("about.title3")}
                 </span>
               </h2>
@@ -79,10 +119,18 @@ export const AboutSection = memo(function AboutSection({
               </div>
             </div>
             <div ref={buttonsRef} className="flex flex-wrap gap-3">
-              <MagneticButton size="lg" variant="primary" onClick={() => scrollToSection?.("contact")}>
+              <MagneticButton
+                size="lg"
+                variant="primary"
+                onClick={() => scrollToSection?.("contact")}
+              >
                 {t("about.ctaPrimary")}
               </MagneticButton>
-              <MagneticButton size="lg" variant="secondary" onClick={() => scrollToSection?.("work")}>
+              <MagneticButton
+                size="lg"
+                variant="secondary"
+                onClick={() => scrollToSection?.("work")}
+              >
                 {t("about.ctaSecondary")}
               </MagneticButton>
             </div>
@@ -95,10 +143,13 @@ export const AboutSection = memo(function AboutSection({
                 data-stat
                 className="group border-b border-foreground/8 py-8"
               >
-                <div className={statsEnabled
-                  ? "grid grid-cols-[minmax(88px,120px)_1fr] gap-4 md:gap-6"
-                  : "grid grid-cols-[24px_1fr] gap-4 md:gap-6"
-                }>
+                <div
+                  className={
+                    statsEnabled
+                      ? "grid grid-cols-[minmax(88px,120px)_1fr] gap-4 md:gap-6"
+                      : "grid grid-cols-[24px_1fr] gap-4 md:gap-6"
+                  }
+                >
                   {statsEnabled ? (
                     <div
                       data-stat-value
@@ -112,15 +163,68 @@ export const AboutSection = memo(function AboutSection({
                     </div>
                   )}
                   <div className="space-y-2">
-                    <p className="font-sans font-medium text-primary text-base">{item.label}</p>
-                    <p className="mono-uppercase text-muted-foreground">{item.sub}</p>
+                    <p className="font-sans font-medium text-primary text-base">
+                      {item.label}
+                    </p>
+                    <p className="mono-uppercase text-muted-foreground">
+                      {item.sub}
+                    </p>
                   </div>
                 </div>
               </div>
             ))}
+            <div
+              ref={founderCardRef}
+              className="mt-8 rounded-sm border border-foreground/8 bg-foreground/2 p-6 md:p-7"
+            >
+              <p className="mono-uppercase text-muted-foreground/70 block">
+                {t("about.founder.eyebrow")}
+              </p>
+              <div className="mt-5 space-y-5">
+                <div>
+                  <h3 className="font-sans font-medium text-primary text-xl md:text-2xl">
+                    {t("about.founder.name")}
+                  </h3>
+                  <p className="mono-uppercase text-muted-foreground mt-2">
+                    {t("about.founder.role")}
+                  </p>
+                </div>
+                <div className="space-y-3">
+                  <p className="body text-primary/60">
+                    {t("about.founder.philosophy1")}
+                  </p>
+                  <p className="body text-primary/60">
+                    {t("about.founder.philosophy2")}
+                  </p>
+                </div>
+                <div ref={founderLinkRef}>
+                  <a
+                    href={founderLinkedInUrl}
+                    target={founderIsPlaceholderLink ? undefined : "_blank"}
+                    rel={founderIsPlaceholderLink ? undefined : "noreferrer"}
+                    className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-primary/40 hover:text-primary/70 transition-colors duration-300"
+                  >
+                    {t("about.founder.linkedInLabel")}
+                    <svg
+                      className="h-3.5 w-3.5 transition-transform duration-300 ltr:group-hover:translate-x-0.5 rtl:group-hover:-translate-x-0.5 rtl:-rotate-180"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </Container>
     </section>
-  )
-})
+  );
+});

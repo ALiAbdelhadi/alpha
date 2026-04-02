@@ -1,21 +1,7 @@
-// lib/motion/utils/presets.ts
-// ─────────────────────────────────────────────────────────────
-// Named presets for common animation patterns.
-// Use these instead of manually specifying every option.
-//
-// Usage:
-//   useReveal(motion.fadeUp())
-//   useReveal(motion.fadeUp({ delay: 0.2 }))
-//   useText(motion.headline())
-//   useBatch(motion.cardGrid())
-// ─────────────────────────────────────────────────────────────
-
 import { MOTION } from "../config"
 import type { RevealConfig } from "../hooks/use-reveal"
 import type { TextConfig } from "../hooks/use-text"
 import type { BatchConfig } from "../hooks/use-batch"
-
-// ─── Reveal presets ───────────────────────────────────────────
 
 const fadeUp = (overrides: Partial<RevealConfig> = {}): RevealConfig => ({
     direction: "up",
@@ -55,9 +41,6 @@ const scaleIn = (overrides: Partial<RevealConfig> = {}): RevealConfig => ({
     ...overrides,
 })
 
-// ─── Text presets ─────────────────────────────────────────────
-
-/** Large hero/section headings - word-by-word with blur */
 const headline = (overrides: Partial<TextConfig> = {}): TextConfig => ({
     splitBy: "word",
     blur: true,
@@ -68,7 +51,6 @@ const headline = (overrides: Partial<TextConfig> = {}): TextConfig => ({
     ...overrides,
 })
 
-/** Subheadings - line-by-line, subtle */
 const subheading = (overrides: Partial<TextConfig> = {}): TextConfig => ({
     splitBy: "line",
     blur: false,
@@ -79,7 +61,6 @@ const subheading = (overrides: Partial<TextConfig> = {}): TextConfig => ({
     ...overrides,
 })
 
-/** Body text - single fade-up, no split */
 const body = (overrides: Partial<TextConfig> = {}): TextConfig => ({
     splitBy: "char",
     blur: false,
@@ -89,9 +70,6 @@ const body = (overrides: Partial<TextConfig> = {}): TextConfig => ({
     ...overrides,
 })
 
-// ─── Batch presets ────────────────────────────────────────────
-
-/** Service / feature cards grid */
 const cardGrid = (overrides: Partial<BatchConfig> = {}): BatchConfig => ({
     direction: "up",
     duration: MOTION.duration.base,
@@ -101,7 +79,6 @@ const cardGrid = (overrides: Partial<BatchConfig> = {}): BatchConfig => ({
     ...overrides,
 })
 
-/** List items - tight stagger */
 const listItems = (overrides: Partial<BatchConfig> = {}): BatchConfig => ({
     direction: "up",
     duration: MOTION.duration.fast,
@@ -111,20 +88,15 @@ const listItems = (overrides: Partial<BatchConfig> = {}): BatchConfig => ({
     ...overrides,
 })
 
-// ─── Export ───────────────────────────────────────────────────
-
 export const motion = {
-    // Reveal
     fadeUp,
     fadeIn,
     slideLeft,
     slideRight,
     scaleIn,
-    // Text
     headline,
     subheading,
     body,
-    // Batch
     cardGrid,
     listItems,
 } as const

@@ -1,4 +1,3 @@
-// Google Analytics 4 — custom events (gtag loaded from layout)
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void

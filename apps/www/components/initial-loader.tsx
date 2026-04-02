@@ -60,8 +60,7 @@ export const InitialLoader = memo(function InitialLoader() {
         }
 
         if (reduced) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setShowWordmark(true)
+            timeouts.push(window.setTimeout(() => setShowWordmark(true), 0))
             timeouts.push(window.setTimeout(finish, 800))
             return () => timeouts.forEach((id) => window.clearTimeout(id))
         }
