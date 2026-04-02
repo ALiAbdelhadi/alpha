@@ -101,7 +101,7 @@ function HeroSection() {
             ref={ctaRef}
             className="flex flex-col sm:flex-row sm:items-center gap-4"
           >
-            <MagneticButton asChild size="lg" variant="primary" className="group">
+            <MagneticButton size="lg" variant="primary" className="group">
               <Link href={auditCta.href}>
                 <span className="flex items-center gap-2">
                   {auditCta.label}
@@ -121,7 +121,7 @@ function HeroSection() {
                 </span>
               </Link>
             </MagneticButton>
-            <MagneticButton asChild size="lg" variant="secondary">
+            <MagneticButton size="lg" variant="secondary">
               <Link href="#audit-offer">{t("hero.ctaSecondary")}</Link>
             </MagneticButton>
           </div>
@@ -226,7 +226,7 @@ function AuditOfferSection() {
                 {content.description}
               </p>
               <div className="mt-8">
-                <MagneticButton asChild size="lg" variant="primary" className="group">
+                <MagneticButton size="lg" variant="primary" className="group">
                   <Link href="/contact?service=consulting&package=audit">
                     <span className="flex items-center gap-2">
                       {content.cta}
