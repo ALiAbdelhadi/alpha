@@ -3,8 +3,8 @@
 import { Container } from "@/components/container"
 import { ArrowLabel } from "@/components/directional-link"
 import { MagneticButton } from "@/components/magnetic-button"
-import { getCommercialCta } from "@/lib/commercial"
 import { Link } from "@/i18n/navigation"
+import { getCommercialCta } from "@/lib/commercial"
 import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { useLocale, useTranslations } from "next-intl"
 import { memo, useRef } from "react"
@@ -38,14 +38,14 @@ export const ProblemSection = memo(function ProblemSection() {
     >
       <Container>
         <div className="max-w-3xl mb-12 space-y-4">
-          <p ref={eyebrowRef} className="meta-eyebrow text-muted-foreground/60">
+          <p ref={eyebrowRef} className="meta-eyebrow text-muted-foreground">
             01 — {t("problem.badge")}
           </p>
           <h2 ref={titleRef} className="display-h2 font-normal tracking-tight text-foreground">
             {t("problem.title.pre")}{" "}
-            <span className="text-primary/20 line-through decoration-primary/15"> {t("problem.title.crossed")} </span>
+            <span className="text-muted-foreground line-through decoration-border"> {t("problem.title.crossed")} </span>
             <br />
-            <span className="italic font-serif text-foreground/90">
+            <span className="italic font-serif text-muted-foreground">
               {t("problem.title.gradient")}
             </span>
           </h2>
@@ -72,14 +72,14 @@ export const ProblemSection = memo(function ProblemSection() {
               `}
             >
               <div className="flex items-start gap-6 relative z-10">
-                <span className="font-mono text-2xl tracking-widest text-muted-foreground/40 mt-1.5">
+                <span className="font-mono text-2xl tracking-widest text-muted-foreground mt-1.5">
                   {pain.number}
                 </span>
                 <div className="space-y-3">
                   <h3 className="text-lg md:text-xl font-medium text-foreground tracking-tight">
                     {t(pain.titleKey)}
                   </h3>
-                  <p className="body-secondary text-muted-foreground/80 max-w-sm">
+                  <p className="body-secondary text-muted-foreground max-w-sm">
                     {t(pain.bodyKey)}
                   </p>
                 </div>

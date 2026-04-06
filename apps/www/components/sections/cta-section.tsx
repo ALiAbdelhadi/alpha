@@ -3,8 +3,8 @@
 import { Container } from "@/components/container";
 import { ArrowLabel } from "@/components/directional-link";
 import { MagneticButton } from "@/components/magnetic-button";
-import { FINAL_CTA_CONTENT, getCommercialCta, pickCommercialText } from "@/lib/commercial";
 import { Link } from "@/i18n/navigation";
+import { FINAL_CTA_CONTENT, getCommercialCta, pickCommercialText } from "@/lib/commercial";
 import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
 import { useLocale } from "next-intl";
 import { useRef } from "react";
@@ -27,7 +27,7 @@ export function CtaSection() {
     >
       <Container>
         <div className="h-px w-full bg-border mb-16" />
-        <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_320px] md:items-end">
+        <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_320px] md:items-start">
           <div className="min-w-0">
             <p ref={eyebrowRef} className="meta-eyebrow text-muted-foreground/70 mb-6 block">
               {pickCommercialText(locale, FINAL_CTA_CONTENT.eyebrow)}
@@ -41,10 +41,7 @@ export function CtaSection() {
               {pickCommercialText(locale, FINAL_CTA_CONTENT.body)}
             </p>
             <MagneticButton
-              asChild
               size="lg"
-              variant="primary"
-              className="group w-full justify-center"
             >
               <Link href={callCta.href}>
                 <ArrowLabel>{callCta.label}</ArrowLabel>

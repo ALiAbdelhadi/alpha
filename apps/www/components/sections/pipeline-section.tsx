@@ -4,21 +4,14 @@ import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { useTranslations } from "next-intl"
 import React, { useEffect, useRef, useState } from "react"
 
-const T = {
-    bg: "#0D1117",
-    paper: "247, 248, 250",
-    accent: "74, 110, 212",
-    border: "rgba(247, 248, 250, 0.07)",
-    borderM: "rgba(247, 248, 250, 0.12)",
-    stages: [
-        "74,  110, 212",
-        "93,  202, 165",
-        "248, 163,  50",
-        "96,  165, 250",
-        "167, 139, 250",
-        "52,  211, 153",
-    ],
-} as const
+const STAGE_COLORS = [
+    "74,  110, 212",
+    "93,  202, 165",
+    "248, 163,  50",
+    "96,  165, 250",
+    "167, 139, 250",
+    "52,  211, 153",
+] as const
 
 type StageStatus = "queued" | "running" | "done"
 
@@ -254,18 +247,16 @@ export function PipelineSection() {
             <section
                 ref={sectionRef}
                 id="pipeline"
-                className="font-mono py-16 md:py-20"
-                style={{ background: T.bg }}
+                className="font-mono section-padding"
+                style={{ background: "var(--n-8)" }}
             >
                 <Container>
+                    {/* Eyebrow */}
                     <p
-                        className="transition-[opacity,transform]"
+                        className="meta-eyebrow transition-[opacity,transform]"
                         ref={eyebrowRef}
                         style={{
-                            fontSize: "12px",
-                            letterSpacing: ".28em",
-                            textTransform: "uppercase",
-                            color: `rgba(${T.paper},.22)`,
+                            color: "rgba(var(--pipeline-text, 247, 248, 250), 0.22)",
                             marginBottom: "11px",
                             opacity: revealed ? 1 : 0,
                             transform: revealed ? "translateY(0)" : "translateY(6px)",
@@ -275,13 +266,13 @@ export function PipelineSection() {
                     >
                         {t("eyebrow")}
                     </p>
+
+                    {/* Title */}
                     <h2
                         ref={titleRef}
-                        className="font-sans font-light leading-[1.06] transition-[opacity,transform]"
+                        className="font-sans font-light leading-[1.06] transition-[opacity,transform] display-h2"
                         style={{
-                            fontSize: "clamp(28px, 4.3vw, 51px)",
-                            letterSpacing: "-.03em",
-                            color: `rgb(${T.paper})`,
+                            color: "var(--n-0)",
                             marginBottom: "32px",
                             opacity: revealed ? 1 : 0,
                             transform: revealed ? "translateY(0)" : "translateY(10px)",
@@ -292,28 +283,20 @@ export function PipelineSection() {
                     >
                         {t("title")}
                         <br />
-                        <span
-                            style={{
-                                fontFamily: "Georgia, serif",
-                                fontStyle: "italic",
-                                fontWeight: 300,
-                                color: `rgba(${T.paper},.26)`,
-                            }}
-                        >
+                        <span className="font-serif italic font-light" style={{ color: "var(--n-5)" }}>
                             {t("titleItalic")}
                         </span>
-                        <p ref={descRef} className="font-mono text-xs md:text-sm text-muted-foreground leading-relaxed">
+                        <p ref={descRef} className="font-mono text-xs md:text-sm leading-relaxed" style={{ color: "var(--n-5)" }}>
                             {t("description")}
                         </p>
                     </h2>
+
+                    {/* Terminal container */}
                     <div
-                    dir="ltr"
-                        className="transition-[opacity,transform] overflow-hidden"
+                        dir="ltr"
+                        className="transition-[opacity,transform] overflow-hidden rounded-sm"
                         style={{
-                            border: T.border,
-                            borderWidth: "0.5px",
-                            borderStyle: "solid",
-                            borderRadius: "2px",
+                            border: "0.5px solid var(--border)",
                             opacity: revealed ? 1 : 0,
                             transform: revealed ? "translateY(0)" : "translateY(16px)",
                             transitionDuration: dur(MOTION.duration.base),
@@ -321,63 +304,63 @@ export function PipelineSection() {
                             transitionTimingFunction: ease,
                         }}
                     >
+                        {/* Terminal header */}
                         <div
                             className="flex items-center justify-between flex-wrap gap-2"
                             style={{
                                 padding: "9px 16px",
-                                borderBottom: `0.5px solid rgba(${T.paper},.06)`,
+                                borderBottom: "0.5px solid var(--border)",
                             }}
                         >
-                            <span style={{ fontSize: "11px", letterSpacing: ".16em", textTransform: "uppercase", color: `rgba(${T.paper},.28)` }}>
+                            <span className="meta-eyebrow" style={{ color: "var(--n-5)" }}>
                                 system.build.pipeline / production
                             </span>
                             <div className="flex items-center gap-3 sm:gap-4">
-                                <span style={{ fontSize: "11px", letterSpacing: ".1em", color: `rgba(${T.paper},.38)` }}>
+                                <span style={{ fontSize: "11px", letterSpacing: ".1em", color: "var(--n-5)" }}>
                                     <span
                                         className="inline-block transition-transform duration-300"
-                                        style={{ color: `rgba(${T.paper},.55)`, transform: doneCount > 0 ? "scale(1.1)" : "scale(1)" }}
+                                        style={{ color: "var(--n-3)", transform: doneCount > 0 ? "scale(1.1)" : "scale(1)" }}
                                     >
                                         {doneCount}
                                     </span>
                                     /6 deployed
                                 </span>
                                 <span
-                                    className="transition-colors duration-300"
+                                    className="transition-colors duration-300 meta-eyebrow"
                                     style={{
-                                        fontSize: "11px",
-                                        letterSpacing: ".18em",
-                                        textTransform: "uppercase",
                                         color: complete
-                                            ? `rgba(${T.stages[1]},.65)`
+                                            ? `rgba(${STAGE_COLORS[1]},.65)`
                                             : running
-                                                ? `rgba(${T.stages[2]},.65)`
-                                                : `rgba(${T.paper},.18)`,
+                                                ? `rgba(${STAGE_COLORS[2]},.65)`
+                                                : "var(--n-6)",
                                     }}
                                 >
                                     {statusLabel}
                                 </span>
                             </div>
                         </div>
+
+                        {/* Stage rows */}
                         {STAGES.map((stage, i) => {
                             const status = statuses[i]
                             const isExp = expanded === i
                             const isRunning = status === "running"
                             const isDone = status === "done"
                             const isActive = isRunning || isDone
-                            const color = T.stages[i]
+                            const color = STAGE_COLORS[i]
                             return (
                                 <React.Fragment key={stage.id}>
                                     <div
                                         className="pl-row relative items-start cursor-pointer overflow-hidden transition-colors duration-300"
                                         style={{
                                             padding: "13px 16px",
-                                            borderBottom: `0.5px solid rgba(${T.paper},.04)`,
+                                            borderBottom: "0.5px solid var(--border)",
                                             backgroundColor: isExp
                                                 ? `rgba(${color},.055)`
                                                 : isRunning
                                                     ? `rgba(${color},.03)`
                                                     : isActive
-                                                        ? `rgba(${T.paper},.008)`
+                                                        ? "rgba(var(--pipeline-text, 247, 248, 250), 0.008)"
                                                         : "transparent",
                                             animation: revealed ? `pl-row-in ${dur(MOTION.duration.fast)} cubic-bezier(.22,1,.36,1) ${dur(i * 0.065)} both` : "none",
                                         }}
@@ -407,7 +390,7 @@ export function PipelineSection() {
                                                 fontSize: "11.5px",
                                                 letterSpacing: ".06em",
                                                 paddingTop: "1px",
-                                                color: isActive ? `rgba(${color},.5)` : `rgba(${T.paper},.16)`,
+                                                color: isActive ? `rgba(${color},.5)` : "var(--n-6)",
                                             }}
                                         >
                                             {times[i]}
@@ -419,18 +402,18 @@ export function PipelineSection() {
                                                 letterSpacing: ".12em",
                                                 textTransform: "uppercase",
                                                 paddingTop: "1px",
-                                                color: isActive ? `rgb(${color})` : `rgba(${T.paper},.28)`,
+                                                color: isActive ? `rgb(${color})` : "var(--n-5)",
                                                 whiteSpace: "nowrap",
                                             }}
                                         >
-                                            <span style={{ color: `rgba(${T.paper},.16)` }}>[{stage.id}]</span>
+                                            <span style={{ color: "var(--n-6)" }}>[{stage.id}]</span>
                                             <span className="hidden sm:inline">{stage.key}</span>
                                             <span className="sm:hidden">{stage.key.slice(0, 4)}</span>
                                             {stage.parallel && (
                                                 <span
                                                     className="text-[9px] border px-1 py-px hidden sm:inline"
                                                     style={{
-                                                        borderRadius: "1px",
+                                                        borderRadius: "var(--radius-xs)",
                                                         color: `rgba(${color},.6)`,
                                                         borderColor: `rgba(${color},.25)`,
                                                     }}
@@ -444,7 +427,7 @@ export function PipelineSection() {
                                             style={{
                                                 letterSpacing: ".01em",
                                                 paddingTop: "1px",
-                                                color: isActive ? `rgba(${T.paper},.48)` : `rgba(${T.paper},.22)`,
+                                                color: isActive ? "var(--n-3)" : "var(--n-6)",
                                             }}
                                         >
                                             {stage.desc}
@@ -460,7 +443,7 @@ export function PipelineSection() {
                                                     ? `rgba(${color},.75)`
                                                     : isDone
                                                         ? `rgba(${color},.55)`
-                                                        : `rgba(${T.paper},.16)`,
+                                                        : "var(--n-6)",
                                             }}
                                         >
                                             <span className="relative flex items-center justify-center shrink-0" style={{ width: 8, height: 8, marginTop: 1 }}>
@@ -475,13 +458,15 @@ export function PipelineSection() {
                                                     style={{
                                                         width: 5,
                                                         height: 5,
-                                                        backgroundColor: isActive ? `rgb(${color})` : `rgba(${T.paper},.14)`,
+                                                        backgroundColor: isActive ? `rgb(${color})` : "var(--n-6)",
                                                     }}
                                                 />
                                             </span>
                                             <span className="hidden sm:inline">{status}</span>
                                         </span>
                                     </div>
+
+                                    {/* Expandable logs panel */}
                                     <div
                                         className="overflow-hidden transition-[max-height,opacity]"
                                         style={{
@@ -495,8 +480,8 @@ export function PipelineSection() {
                                             className="space-y-0.5"
                                             style={{
                                                 padding: "12px 16px 14px",
-                                                borderTop: `0.5px solid rgba(${T.paper},.04)`,
-                                                background: "rgba(0,0,0,.25)",
+                                                borderTop: "0.5px solid var(--border)",
+                                                background: "var(--n-8)",
                                             }}
                                         >
                                             {stage.logs.map((line, li) => (
@@ -509,13 +494,13 @@ export function PipelineSection() {
                                                         letterSpacing: ".04em",
                                                         animationDelay: `${li * 55}ms`,
                                                         color: line.startsWith("[ok]")
-                                                            ? `rgba(${T.stages[1]},.65)`
+                                                            ? `rgba(${STAGE_COLORS[1]},.65)`
                                                             : line.startsWith("[warn]")
-                                                                ? `rgba(${T.stages[2]},.6)`
-                                                                : `rgba(${T.stages[3]},.55)`,
+                                                                ? `rgba(${STAGE_COLORS[2]},.6)`
+                                                                : `rgba(${STAGE_COLORS[3]},.55)`,
                                                     }}
                                                 >
-                                                    <span style={{ color: `rgba(${T.paper},.12)`, marginRight: 8 }}>-</span>
+                                                    <span style={{ color: "var(--n-7)", marginRight: 8 }}>-</span>
                                                     {line}
                                                 </div>
                                             ))}
@@ -524,11 +509,13 @@ export function PipelineSection() {
                                 </React.Fragment>
                             )
                         })}
+
+                        {/* Terminal footer */}
                         <div
                             className="flex items-center justify-between flex-wrap gap-3"
                             style={{
                                 padding: "11px 16px",
-                                borderTop: `0.5px solid rgba(${T.paper},.06)`,
+                                borderTop: "0.5px solid var(--border)",
                             }}
                         >
                             <div className="flex items-center gap-1.5">
@@ -536,7 +523,7 @@ export function PipelineSection() {
                                     className="text-[11.5px] transition-colors duration-500"
                                     style={{
                                         letterSpacing: ".10em",
-                                        color: complete ? `rgba(${T.stages[1]},.65)` : `rgba(${T.paper},.22)`,
+                                        color: complete ? `rgba(${STAGE_COLORS[1]},.65)` : "var(--n-6)",
                                     }}
                                 >
                                     {footerMsg}
@@ -546,7 +533,7 @@ export function PipelineSection() {
                                     style={{
                                         width: "5px",
                                         height: "11px",
-                                        background: `rgba(${T.paper},.4)`,
+                                        background: "var(--n-3)",
                                         opacity: running ? 1 : 0,
                                         transition: `opacity ${dur(MOTION.duration.instant)}`,
                                     }}
@@ -554,37 +541,35 @@ export function PipelineSection() {
                             </div>
 
                             <button
-                                className="cursor-pointer transition-[color,border-color,background-color] disabled:opacity-30 disabled:cursor-not-allowed"
+                                className="cursor-pointer transition-[color,border-color,background-color] disabled:opacity-30 disabled:cursor-not-allowed font-mono rounded-sm"
                                 disabled={running}
                                 onClick={complete ? reset : execute}
                                 style={{
-                                    fontFamily: "monospace",
                                     fontSize: "11.5px",
                                     letterSpacing: ".18em",
                                     textTransform: "uppercase",
                                     background: "transparent",
                                     border: `0.5px solid ${complete
-                                        ? `rgba(${T.stages[1]},.28)`
-                                        : `rgba(${T.paper},.14)`}`,
-                                    borderRadius: "2px",
+                                        ? `rgba(${STAGE_COLORS[1]},.28)`
+                                        : "var(--border)"}`,
                                     padding: "7px 16px",
                                     color: complete
-                                        ? `rgba(${T.stages[1]},.7)`
-                                        : `rgba(${T.paper},.5)`,
+                                        ? `rgba(${STAGE_COLORS[1]},.7)`
+                                        : "var(--n-4)",
                                     transitionDuration: dur(MOTION.duration.instant),
                                 }}
                                 onMouseEnter={e => {
                                     if (!running) {
                                         const btn = e.currentTarget
-                                        btn.style.color = `rgba(${T.paper},.88)`
-                                        btn.style.borderColor = `rgba(${T.paper},.28)`
-                                        btn.style.background = `rgba(${T.paper},.04)`
+                                        btn.style.color = "var(--n-1)"
+                                        btn.style.borderColor = "var(--border-mid)"
+                                        btn.style.background = "rgba(255,255,255,0.04)"
                                     }
                                 }}
                                 onMouseLeave={e => {
                                     const btn = e.currentTarget
-                                    btn.style.color = complete ? `rgba(${T.stages[1]},.7)` : `rgba(${T.paper},.5)`
-                                    btn.style.borderColor = complete ? `rgba(${T.stages[1]},.28)` : `rgba(${T.paper},.14)`
+                                    btn.style.color = complete ? `rgba(${STAGE_COLORS[1]},.7)` : "var(--n-4)"
+                                    btn.style.borderColor = complete ? `rgba(${STAGE_COLORS[1]},.28)` : "var(--border)"
                                     btn.style.background = "transparent"
                                 }}
                             >

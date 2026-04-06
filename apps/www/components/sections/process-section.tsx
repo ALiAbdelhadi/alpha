@@ -5,9 +5,6 @@ import { useTranslations } from "next-intl"
 import { memo, useCallback, useState } from "react"
 import { Container } from "../container"
 
-const MONO = "var(--font-geist-mono), ui-monospace, 'SFMono-Regular', monospace"
-const SERIF = "Georgia, 'Times New Roman', serif"
-
 interface ProcessStep { index: string; key: string }
 
 const steps: ProcessStep[] = [
@@ -20,9 +17,7 @@ const steps: ProcessStep[] = [
 function splitHeadline(value: string) {
   if (!value.trim()) return { first: "", second: "" }
   const sentenceMatch = value.match(/^(.+[.!?،])\s+(.+)$/)
-  if (sentenceMatch) {
-    return { first: sentenceMatch[1], second: sentenceMatch[2] }
-  }
+  if (sentenceMatch) return { first: sentenceMatch[1], second: sentenceMatch[2] }
   const words = value.trim().split(/\s+/)
   if (words.length < 2) return { first: value, second: "" }
   const splitAt = Math.ceil(words.length / 2)
@@ -48,74 +43,52 @@ const ProcessStepItem = memo(function ProcessStepItem({
 
   return (
     <div
-      style={{
-        borderBottom: isLast ? "none" : `1px solid var(--s-border)`,
-        background: isOpen ? "var(--s-high-soft)" : "transparent",
-        transition: `background ${MOTION.duration.fast}s ease, border-color 0.4s ease`,
-      }}
+      className={`transition-colors duration-300 ${isOpen ? "bg-surface" : "bg-transparent"}`}
+      style={{ borderBottom: isLast ? "none" : "1px solid var(--border)" }}
     >
       <button
         type="button"
         onClick={() => onToggle(i)}
-        className="ps-step-btn"
+        className="ps-step-btn w-full flex items-center gap-4 px-6 py-5 cursor-pointer"
         aria-expanded={isOpen}
         aria-controls={`step-panel-${i}`}
       >
+        {/* Step index */}
         <span
-          className="ps-step-index"
-          style={{
-            fontFamily: MONO,
-            fontSize: 13,
-            letterSpacing: "0.15em",
-            color: isOpen ? "var(--s-mid)" : "var(--s-muted)",
-            transition: `color ${MOTION.duration.instant}s ease`,
-          }}
+          className={`font-mono text-[13px] tracking-[0.15em] shrink-0 transition-colors duration-200 ${
+            isOpen ? "text-foreground" : "text-muted-foreground"
+          }`}
         >
           {step.index}
         </span>
+
+        {/* Step title */}
         <span
-          className="ps-step-title"
-          style={{
-            fontFamily: SERIF,
-            fontStyle: "italic",
-            fontSize: "clamp(16px, 2.5vw, 22px)",
-            fontWeight: 400,
-            letterSpacing: "-0.02em",
-            color: isOpen ? "var(--s-high)" : "var(--s-mid)",
-            transition: `color ${MOTION.duration.instant}s ease`,
-            textAlign: "start",
-          }}
+          className={`font-serif italic flex-1 text-start transition-colors duration-200 ${
+            isOpen ? "text-foreground" : "text-muted-foreground"
+          }`}
+          style={{ fontSize: "clamp(16px, 2.5vw, 22px)", letterSpacing: "-0.02em" }}
         >
           {t(`steps.${step.key}.title`)}
         </span>
+
+        {/* Toggle icon */}
         <span
-          className="ps-step-toggle flex items-center justify-center shrink-0"
-          style={{
-            width: 28,
-            height: 28,
-            border: "1px solid",
-            borderColor: isOpen ? "var(--s-border-hover)" : "var(--s-border)",
-            borderRadius: 999,
-            transition: `border-color ${MOTION.duration.instant}s ease`,
-          }}
+          className={`flex items-center justify-center shrink-0 w-7 h-7 rounded-full border transition-colors duration-200 ${
+            isOpen ? "border-border-mid" : "border-border"
+          }`}
         >
           <span
-            className={isOpen ? "ps-toggle-icon-open" : ""}
-            style={{
-              fontFamily: MONO,
-              fontSize: 14,
-              color: isOpen ? "var(--s-mid)" : "var(--s-muted)",
-              lineHeight: 1,
-              display: "block",
-              transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
-              transition: `transform ${MOTION.duration.fast}s ${MOTION.ease.ui}, color ${MOTION.duration.instant}s ease`,
-            }}
+            className={`font-mono text-sm block leading-none transition-transform duration-300 ${
+              isOpen ? "rotate-45 text-foreground" : "rotate-0 text-muted-foreground"
+            }`}
           >
             +
           </span>
         </span>
       </button>
 
+      {/* Expandable panel */}
       <div
         id={`step-panel-${i}`}
         role="region"
@@ -127,72 +100,28 @@ const ProcessStepItem = memo(function ProcessStepItem({
       >
         <div className="overflow-hidden">
           <div className="p-6">
-            <p
-              className="ps-step-description"
-              style={{
-                fontFamily: MONO,
-                fontSize: 13,
-                lineHeight: 1.85,
-                color: "var(--s-low)",
-                transition: "color 0.4s ease",
-              }}
-            >
+            <p className="font-mono text-[13px] leading-[1.85] text-muted-foreground">
               {t(`steps.${step.key}.description`)}
             </p>
 
-            <div className="ps-meta-grid">
+            <div className="ps-meta-grid grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
               {[
-                {
-                  label: t("meta.deliverables"),
-                  value: t(`steps.${step.key}.deliverables`),
-                  large: false,
-                },
-                {
-                  label: t("meta.timeline"),
-                  value: t(`steps.${step.key}.timeline`),
-                  large: true,
-                },
+                { label: t("meta.deliverables"), value: t(`steps.${step.key}.deliverables`), large: false },
+                { label: t("meta.timeline"), value: t(`steps.${step.key}.timeline`), large: true },
               ].map(({ label, value, large }) => (
                 <div
                   key={label}
-                  className="ps-meta-card"
-                  style={{
-                    padding: "20px 24px",
-                    border: `1px solid var(--s-border)`,
-                    borderRadius: 2,
-                    background: "var(--s-high-soft)",
-                    transition: "border-color 0.4s ease, background 0.4s ease",
-                  }}
+                  className="p-5 border border-border rounded-sm bg-surface"
                 >
-                  <p
-                    className="ps-meta-label"
-                    style={{
-                      fontFamily: MONO,
-                      fontSize: 11,
-                      letterSpacing: "0.25em",
-                      textTransform: "uppercase",
-                      color: "var(--s-muted)",
-                      marginBottom: 10,
-                      marginTop: 0,
-                      transition: "color 0.4s ease",
-                    }}
-                  >
+                  <p className="meta-eyebrow text-muted-foreground mb-2.5">
                     {label}
                   </p>
                   <p
-                    className={large ? undefined : "ps-meta-value-sm"}
-                    style={{
-                      fontFamily: large
-                        ? "var(--font-outfit), sans-serif"
-                        : MONO,
-                      fontSize: large ? 18 : 12,
-                      fontWeight: large ? 500 : 400,
-                      letterSpacing: large ? "-0.02em" : "normal",
-                      lineHeight: large ? 1.2 : 1.7,
-                      color: large ? "var(--s-high)" : "var(--s-mid)",
-                      margin: 0,
-                      transition: "color 0.4s ease",
-                    }}
+                    className={
+                      large
+                        ? "text-[18px] font-medium text-foreground leading-[1.2] tracking-tight font-sans"
+                        : "font-mono text-xs text-muted-foreground leading-[1.7]"
+                    }
                   >
                     {value}
                   </p>
@@ -213,134 +142,68 @@ export const ProcessSection = memo(function ProcessSection() {
   const { first: firstTitle, second: secondTitle } = splitHeadline(t("title"))
 
   const eyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 })
-  const titleRef = useText<HTMLHeadingElement>({
-    ...DEFAULTS.heading,
-    ease: MOTION.ease.text,
-  })
+  const titleRef = useText<HTMLHeadingElement>({ ...DEFAULTS.heading, ease: MOTION.ease.text })
   const descRef = useReveal({ ...DEFAULTS.body, delay: 0.15 })
 
-  const handleToggle = useCallback((index: number) => {
-    setActive(index)
-  }, [])
+  const handleToggle = useCallback((index: number) => setActive(index), [])
 
   return (
-    <div
-      id="process"
-      className="relative pb-36"
-      style={{ color: "var(--s-high)", transition: "color 0.4s ease" }}
-    >
+    <div id="process" className="relative pb-36 section-padding">
       <Container className="relative">
+
+        {/* Section header */}
         <div className="mb-14">
-          <p
-            ref={eyebrowRef}
-            style={{
-              fontFamily: MONO,
-              fontSize: 11,
-              letterSpacing: "0.25em",
-              textTransform: "uppercase",
-              color: "var(--s-muted)",
-              marginBottom: 16,
-              marginTop: 0,
-              transition: "color 0.4s ease",
-            }}
-          >
+          <p ref={eyebrowRef} className="meta-eyebrow text-muted-foreground mb-4">
             {t("eyebrow")}
           </p>
-          <div className="ps-header-row">
+          <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8">
             <h2
               ref={titleRef}
-              className="ps-heading"
-              style={{
-                fontFamily: "var(--font-outfit), sans-serif",
-                fontSize: "clamp(32px, 5vw, 52px)",
-                fontWeight: 400,
-                letterSpacing: "-0.02em",
-                lineHeight: 1.05,
-                color: "var(--s-high)",
-                margin: 0,
-                transition: "color 0.4s ease",
-              }}
+              className="display-h2 font-normal text-foreground m-0"
             >
               {firstTitle}
               {secondTitle ? (
                 <>
                   <br />
-                  <span
-                    className="ps-heading-italic"
-                    style={{
-                      fontFamily: SERIF,
-                      fontStyle: "italic",
-                      color: "var(--s-low)",
-                      transition: "color 0.4s ease",
-                    }}
-                  >
+                  <span className="font-serif italic text-muted-foreground">
                     {secondTitle}
                   </span>
                 </>
               ) : null}
             </h2>
-            <p
-              ref={descRef}
-              style={{
-                fontFamily: MONO,
-                fontSize: 13,
-                lineHeight: 1.8,
-                color: "var(--s-low)",
-                maxWidth: 260,
-                margin: 0,
-                transition: "color 0.4s ease",
-              }}
-            >
+            <p ref={descRef} className="font-mono text-[13px] leading-[1.8] text-muted-foreground max-w-[260px] m-0">
               {t("subtitle")}
             </p>
           </div>
         </div>
 
-        <div style={{ height: 1, background: "var(--s-border)", marginBottom: 4 }} />
+        {/* Top divider */}
+        <div className="h-px bg-border mb-1" />
 
-        <div className="ps-tabs-grid">
+        {/* Step progress tabs */}
+        <div className="grid grid-cols-4 gap-0 mb-1">
           {steps.map((step, i) => (
             <button
               key={i}
               type="button"
               onClick={() => handleToggle(i)}
-              className="cursor-pointer text-center"
-              style={{ all: "unset", cursor: "pointer", padding: "10px 0", textAlign: "center" }}
+              className="cursor-pointer p-0 bg-transparent border-none text-center py-2.5"
             >
               <div
-                style={{
-                  height: 2,
-                  background: i <= active ? "var(--s-mid)" : "var(--s-border)",
-                  borderRadius: 2,
-                  transition: `background ${MOTION.duration.fast}s ease`,
-                  marginBottom: 10,
-                }}
+                className="h-0.5 rounded-[2px] mb-2.5 transition-colors duration-300"
+                style={{ background: i <= active ? "var(--brand)" : "var(--border)" }}
               />
-              <span
-                style={{
-                  fontFamily: MONO,
-                  fontSize: 10,
-                  letterSpacing: "0.25em",
-                  textTransform: "uppercase",
-                  color: i === active ? "var(--s-mid)" : "var(--s-muted)",
-                  transition: `color ${MOTION.duration.instant}s ease`,
-                  display: "block",
-                }}
-              >
+              <span className={`meta-eyebrow block transition-colors duration-200 ${
+                i === active ? "text-foreground" : "text-muted-foreground"
+              }`}>
                 {t(`steps.${step.key}.tag`)}
               </span>
             </button>
           ))}
         </div>
 
-        <div
-          className="overflow-hidden"
-          style={{
-            border: `1px solid var(--s-border)`,
-            borderRadius: 2,
-            transition: "border-color 0.4s ease",
-          }}
-        >
+        {/* Accordion */}
+        <div className="overflow-hidden border border-border rounded-sm">
           {steps.map((step, i) => (
             <ProcessStepItem
               key={i}
@@ -353,21 +216,14 @@ export const ProcessSection = memo(function ProcessSection() {
           ))}
         </div>
 
-        <div className="ps-footer flex items-center gap-4 mt-6">
-          <span
-            style={{
-              fontFamily: MONO,
-              fontSize: 11,
-              letterSpacing: "0.25em",
-              textTransform: "uppercase",
-              color: "var(--s-muted)",
-              transition: "color 0.4s ease",
-            }}
-          >
+        {/* Footer */}
+        <div className="flex items-center gap-4 mt-6">
+          <span className="meta-eyebrow text-muted-foreground">
             {t("footer")}
           </span>
-          <div className="flex-1" style={{ height: 1, background: "var(--s-border)" }} />
+          <div className="flex-1 h-px bg-border" />
         </div>
+
       </Container>
     </div>
   )

@@ -74,16 +74,16 @@ export const ProposalNarrativeBlock = memo(function ProposalNarrativeBlock({
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-3">
-        <span className="font-mono text-[10px] text-muted-foreground/70 uppercase tracking-[0.22em] whitespace-nowrap">
+        <span className="meta-eyebrow text-muted-foreground whitespace-nowrap">
           {L({ ar: narrative.headline.ar, en: narrative.headline.en })}
         </span>
         <div className="flex-1 h-px bg-border" />
       </div>
-      <div className="flex gap-3 p-4 rounded-sm bg-muted/20 border border-border">
-        <div className="w-0.5 self-stretch rounded-full bg-primary/20 shrink-0" />
+      <div className="flex gap-3 p-4 rounded-sm bg-surface border border-border">
+        <div className="w-0.5 self-stretch rounded-full bg-border-mid shrink-0" />
         <p
           className={cn(
-            "text-base text-muted-foreground leading-relaxed",
+            "body-secondary text-muted-foreground leading-relaxed",
             isRtl ? "font-sans" : "font-mono",
           )}
         >
@@ -108,19 +108,16 @@ export const EstimatorSection = memo(function EstimatorSection() {
     ...DEFAULTS.heading,
     ease: MOTION.ease.text,
   });
-
   const badgeRef = useReveal<HTMLParagraphElement>({
     ...DEFAULTS.body,
     ease: MOTION.ease.smooth,
     delay: 0.2,
   });
-
   const descriptionRef = useReveal<HTMLParagraphElement>({
     ...DEFAULTS.body,
     ease: MOTION.ease.smooth,
     delay: 0.35,
   });
-
   const formRef = useReveal<HTMLDivElement>({
     ...DEFAULTS.body,
     ease: MOTION.ease.smooth,
@@ -130,7 +127,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
 
   useIsomorphicLayoutEffect(() => {
     if (!formContainerRef.current) return;
-    tweenCtxRef.current = gsap.context(() => {}, formContainerRef);
+    tweenCtxRef.current = gsap.context(() => { }, formContainerRef);
     return () => {
       tweenCtxRef.current?.revert();
       tweenCtxRef.current = null;
@@ -156,11 +153,8 @@ export const EstimatorSection = memo(function EstimatorSection() {
     (dir: "forward" | "back", cb: () => void) => {
       if (!formContainerRef.current || isAnimating) return;
       setIsAnimating(true);
-
-      const fromY =
-        dir === "forward" ? MOTION.distance.md : -MOTION.distance.md;
+      const fromY = dir === "forward" ? MOTION.distance.md : -MOTION.distance.md;
       const toY = dir === "forward" ? -MOTION.distance.md : MOTION.distance.md;
-
       gsap.killTweensOf(formContainerRef.current);
       tweenCtxRef.current?.add(() => {
         gsap.to(formContainerRef.current!, {
@@ -205,11 +199,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
   const selection = useMemo(
     () =>
       sel.projectType && sel.tier && sel.timeline
-        ? {
-            projectType: sel.projectType,
-            tier: sel.tier,
-            timeline: sel.timeline,
-          }
+        ? { projectType: sel.projectType, tier: sel.tier, timeline: sel.timeline }
         : null,
     [sel.projectType, sel.tier, sel.timeline],
   );
@@ -267,7 +257,6 @@ export const EstimatorSection = memo(function EstimatorSection() {
   const handleDownloadPDF = useCallback(async () => {
     if (!selection || !estimate) return;
     setIsGen(true);
-
     try {
       const html = buildPDFHtml({
         locale,
@@ -282,7 +271,6 @@ export const EstimatorSection = memo(function EstimatorSection() {
         phone: normalisePhone(sel.phone),
         name: sel.name,
       });
-
       await generateEstimatePdf(html, `altruvex-estimate-${Date.now()}.pdf`);
     } catch (err) {
       console.error("PDF generation failed:", err);
@@ -292,13 +280,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
   }, [estimate, locale, sel.name, sel.phone, selection, translate]);
 
   useIsomorphicLayoutEffect(() => {
-    if (
-      !leadCaptured ||
-      hasAutoDownloadedRef.current ||
-      !estimate ||
-      !sel.phone
-    )
-      return;
+    if (!leadCaptured || hasAutoDownloadedRef.current || !estimate || !sel.phone) return;
     hasAutoDownloadedRef.current = true;
     void handleDownloadPDF();
   }, [leadCaptured, handleDownloadPDF, estimate, sel.phone]);
@@ -312,8 +294,8 @@ export const EstimatorSection = memo(function EstimatorSection() {
     cn(
       "relative p-5 rounded-sm border text-start transition-all duration-300",
       selected
-        ? "border-foreground/40 bg-foreground/4 ring-1 ring-foreground/30"
-        : "border-border bg-foreground/[0.015] hover:border-foreground/20 hover:bg-foreground/[0.03]",
+        ? "border-foreground/40 bg-surface ring-1 ring-foreground/30"
+        : "border-border bg-surface/50 hover:border-foreground/20 hover:bg-surface",
     );
 
   return (
@@ -324,77 +306,56 @@ export const EstimatorSection = memo(function EstimatorSection() {
       className="flex w-full items-center section-padding"
     >
       <Container>
-        <div className="mb-12 space-y-3 text-center max-w-3xl mx-auto ">
-          <p
-            ref={badgeRef}
-            className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground/70 block"
-          >
+        {/* Section header */}
+        <div className="mb-12 space-y-3 text-center max-w-3xl mx-auto">
+          <p ref={badgeRef} className="meta-eyebrow text-muted-foreground block">
             {t("badge")}
           </p>
-          <h2
-            ref={titleRef}
-            className="font-sans font-normal text-primary leading-[1.05]"
-            style={{
-              fontSize: "clamp(28px, 4.5vw, 52px)",
-              letterSpacing: "-0.02em",
-            }}
-          >
+          <h2 ref={titleRef} className="display-h2 font-normal text-foreground leading-[1.05]">
             {t("title")}
           </h2>
-          <p
-            ref={descriptionRef}
-            className="text-base text-muted-foreground leading-relaxed"
-          >
+          <p ref={descriptionRef} className="body-copy text-muted-foreground leading-relaxed">
             {t("description")}
           </p>
         </div>
+
         <div className="h-px w-full bg-border mb-12 max-w-3xl mx-auto" />
+
+        {/* Form card */}
         <div
           ref={formRef}
           className="max-w-3xl mx-auto bg-background rounded-sm border border-border p-6 md:p-10 shadow-sm relative overflow-hidden"
         >
+          {/* Progress bar */}
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-border">
             <div
-              className="h-full bg-primary/60 transition-all duration-500 ease-out"
+              className="h-full bg-brand transition-all duration-500 ease-out"
               style={{ width: `${(step / 5) * 100}%` }}
             />
           </div>
+
           <div ref={formContainerRef} className="pt-4">
+            {/* Step 1 — Project type */}
             {step === 1 && (
               <div className="space-y-6">
-                <h3
-                  className="font-sans font-normal text-primary"
-                  style={{
-                    fontSize: "clamp(18px,3vw,24px)",
-                    letterSpacing: "-0.015em",
-                  }}
-                >
+                <h3 className="display-h3 font-normal text-foreground">
                   {t("step1.question")}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {(
-                    [
-                      "ecommerce",
-                      "corporate",
-                      "custom",
-                      "performance",
-                    ] as DeliverableProject[]
-                  ).map((type) => (
+                  {(["ecommerce", "corporate", "custom", "performance"] as DeliverableProject[]).map((type) => (
                     <button
                       key={type}
-                      onClick={() =>
-                        setSel((s) => ({ ...s, projectType: type }))
-                      }
+                      onClick={() => setSel((s) => ({ ...s, projectType: type }))}
                       className={optCls(sel.projectType === type)}
                     >
-                      <h4 className="font-medium text-primary mb-1 text-base">
-                          {translate(`step1.options.${type}.title`)}
-                        </h4>
-                      <p className="text-xs text-primary/50 leading-relaxed">
+                      <h4 className="font-medium text-foreground mb-1 text-base">
+                        {translate(`step1.options.${type}.title`)}
+                      </h4>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
                         {translate(`step1.options.${type}.desc`)}
                       </p>
                       {sel.projectType === type && (
-                        <div className="absolute top-4 ltr:right-4 rtl:left-4 text-primary/60">
+                        <div className="absolute top-4 ltr:right-4 rtl:left-4 text-muted-foreground">
                           <Check className="h-4 w-4" />
                         </div>
                       )}
@@ -403,37 +364,26 @@ export const EstimatorSection = memo(function EstimatorSection() {
                 </div>
               </div>
             )}
+
+            {/* Step 2 — Tier */}
             {step === 2 && (
               <div className="space-y-6">
-                <h3
-                  className="font-sans font-normal text-primary"
-                  style={{
-                    fontSize: "clamp(18px,3vw,24px)",
-                    letterSpacing: "-0.015em",
-                  }}
-                >
+                <h3 className="display-h3 font-normal text-foreground">
                   {t("step2.question")}
                 </h3>
                 <div className="flex flex-col gap-3">
-                  {(
-                    [
-                      "small",
-                      "medium",
-                      "large",
-                      "enterprise",
-                    ] as DeliverableTier[]
-                  ).map((tier) => (
+                  {(["small", "medium", "large", "enterprise"] as DeliverableTier[]).map((tier) => (
                     <button
                       key={tier}
                       onClick={() => setSel((s) => ({ ...s, tier }))}
                       className={optCls(sel.tier === tier)}
                     >
                       <div className="flex items-center justify-between">
-                        <h4 className="font-medium text-primary text-base">
+                        <h4 className="font-medium text-foreground text-base">
                           {translate(`step2.options.${tier}`)}
                         </h4>
                         {sel.tier === tier && (
-                          <Check className="h-4 w-4 text-primary/60" />
+                          <Check className="h-4 w-4 text-muted-foreground" />
                         )}
                       </div>
                     </button>
@@ -441,67 +391,57 @@ export const EstimatorSection = memo(function EstimatorSection() {
                 </div>
               </div>
             )}
+
+            {/* Step 3 — Timeline */}
             {step === 3 && (
               <div className="space-y-6">
-                <h3
-                  className="font-sans font-normal text-primary"
-                  style={{
-                    fontSize: "clamp(18px,3vw,24px)",
-                    letterSpacing: "-0.015em",
-                  }}
-                >
+                <h3 className="display-h3 font-normal text-foreground">
                   {t("step3.question")}
                 </h3>
                 <div className="flex flex-col gap-3">
-                  {(["urgent", "soon", "flexible"] as SectionTimeline[]).map(
-                    (timeline) => (
-                      <button
-                        key={timeline}
-                        onClick={() => setSel((s) => ({ ...s, timeline }))}
-                        className={optCls(sel.timeline === timeline)}
-                      >
-                        <h4 className="font-medium text-primary text-base">
-                          {translate(`step3.options.${timeline}.title`)}
-                        </h4>
-                        <p className="text-base text-primary/50 mt-0.5">
-                          {translate(`step3.options.${timeline}.desc`)}
-                        </p>
-                        {sel.timeline === timeline && (
-                          <div className="absolute top-1/2 -translate-y-1/2 ltr:right-4 rtl:left-4 text-primary/60">
-                            <Check className="h-4 w-4" />
-                          </div>
-                        )}
-                      </button>
-                    ),
-                  )}
+                  {(["urgent", "soon", "flexible"] as SectionTimeline[]).map((timeline) => (
+                    <button
+                      key={timeline}
+                      onClick={() => setSel((s) => ({ ...s, timeline }))}
+                      className={optCls(sel.timeline === timeline)}
+                    >
+                      <h4 className="font-medium text-foreground text-base">
+                        {translate(`step3.options.${timeline}.title`)}
+                      </h4>
+                      <p className="body-secondary text-muted-foreground mt-0.5">
+                        {translate(`step3.options.${timeline}.desc`)}
+                      </p>
+                      {sel.timeline === timeline && (
+                        <div className="absolute top-1/2 -translate-y-1/2 ltr:right-4 rtl:left-4 text-muted-foreground">
+                          <Check className="h-4 w-4" />
+                        </div>
+                      )}
+                    </button>
+                  ))}
                 </div>
               </div>
             )}
+
+            {/* Step 4 — Phone capture */}
             {step === 4 && (
               <div className="space-y-6">
                 <div>
-                  <h3
-                    className="font-sans font-normal text-primary mb-2"
-                    style={{
-                      fontSize: "clamp(18px,3vw,24px)",
-                      letterSpacing: "-0.015em",
-                    }}
-                  >
+                  <h3 className="display-h3 font-normal text-foreground mb-2">
                     {t("phoneCapture.title")}
                   </h3>
-                  <p className="text-base text-muted-foreground leading-relaxed">
+                  <p className="body-copy text-muted-foreground leading-relaxed">
                     {t("phoneCapture.subtitle")}
                   </p>
                 </div>
                 <div className="space-y-4">
                   <div>
-                    <Label className="font-mono text-xs text-primary/40 uppercase tracking-[0.18em] mb-2 block">
+                    <Label className="meta-eyebrow text-muted-foreground mb-2 block">
                       {t("phoneCapture.phoneLabel")}{" "}
                       <span className="text-destructive">*</span>
                     </Label>
                     <div className="relative">
                       <div className="absolute inset-y-0 ltr:left-3 rtl:right-3 flex items-center pointer-events-none">
-                        <Phone className="h-4 w-4 text-primary/30" />
+                        <Phone className="h-4 w-4 text-muted-foreground" />
                       </div>
                       <Input
                         type="tel"
@@ -518,7 +458,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
                           handlePhoneSubmit()
                         }
                         placeholder={t("phoneCapture.phonePlaceholder")}
-                        className={`ltr:pl-10 rtl:pr-10 text-primary bg-transparent placeholder:text-primary/30 ${phoneError ? "border-destructive" : ""}`}
+                        className={`ltr:pl-10 rtl:pr-10 text-foreground bg-transparent placeholder:text-muted-foreground ${phoneError ? "border-destructive" : ""}`}
                       />
                     </div>
                     {phoneError && (
@@ -526,12 +466,12 @@ export const EstimatorSection = memo(function EstimatorSection() {
                         {phoneError}
                       </p>
                     )}
-                    <p className="mt-2 font-mono text-[10px] text-muted-foreground/70 uppercase tracking-[0.12em]">
+                    <p className="mt-2 meta-eyebrow text-muted-foreground">
                       {t("phoneCapture.phoneHint")}
                     </p>
                   </div>
                   <div>
-                    <Label className="font-mono text-xs text-primary/40 uppercase tracking-[0.18em] mb-2 block">
+                    <Label className="meta-eyebrow text-muted-foreground mb-2 block">
                       {t("phoneCapture.nameLabel")}
                     </Label>
                     <Input
@@ -541,11 +481,10 @@ export const EstimatorSection = memo(function EstimatorSection() {
                         setSel((s) => ({ ...s, name: e.target.value }))
                       }
                       placeholder={t("phoneCapture.namePlaceholder")}
-                      className="text-primary bg-transparent placeholder:text-primary/30"
+                      className="text-foreground bg-transparent placeholder:text-muted-foreground"
                     />
                   </div>
                 </div>
-
                 <MagneticButton
                   variant="primary"
                   size="lg"
@@ -553,82 +492,54 @@ export const EstimatorSection = memo(function EstimatorSection() {
                   onClick={handlePhoneSubmit}
                   disabled={isSubmitting || !sel.phone}
                 >
-                  {isSubmitting
-                    ? t("phoneCapture.submitting")
-                    : t("phoneCapture.button")}
+                  {isSubmitting ? t("phoneCapture.submitting") : t("phoneCapture.button")}
                 </MagneticButton>
               </div>
             )}
+
+            {/* Step 5 — Results */}
             {step === 5 && (
               <div className="space-y-7 py-2">
                 <div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/20 px-3 py-1 mb-4">
-                    <Check
-                      className="h-3 w-3 text-primary/40"
-                      strokeWidth={2.5}
-                    />
-                    <span className="font-mono text-[10px] text-primary/40 uppercase tracking-[0.15em]">
+                  <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 mb-4">
+                    <Check className="h-3 w-3 text-muted-foreground" strokeWidth={2.5} />
+                    <span className="meta-eyebrow text-muted-foreground">
                       {t("results.badge")}
                     </span>
                   </div>
-                  <h3
-                    className="font-sans font-normal text-primary"
-                    style={{
-                      fontSize: "clamp(20px,3.5vw,30px)",
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
+                  <h3 className="display-h3 font-normal text-foreground">
                     {t("results.title")}
                   </h3>
                 </div>
                 {estimate && (
                   <>
                     <div className="grid gap-3 md:grid-cols-2">
-                      <div className="p-6 rounded-sm bg-primary text-primary-foreground">
-                        <p className="font-mono text-xs uppercase tracking-[0.2em] opacity-40 mb-3">
+                      <div className="p-6 rounded-sm bg-foreground text-background">
+                        <p className="meta-eyebrow opacity-40 mb-3">
                           {t("results.investment")}
                         </p>
                         <p
                           className="font-sans font-light leading-none mb-1"
-                          style={{
-                            fontSize: "clamp(18px,3.5vw,26px)",
-                            letterSpacing: "-0.03em",
-                          }}
+                          style={{ fontSize: "clamp(18px,3.5vw,26px)", letterSpacing: "-0.03em" }}
                         >
-                          {formatEGP(estimate.priceMin)} –{" "}
-                          {formatEGP(estimate.priceMax)}
+                          {formatEGP(estimate.priceMin)} – {formatEGP(estimate.priceMax)}
                         </p>
-                        <p className="font-mono text-xs opacity-40">
-                          {t("results.vatExcluded")}
-                        </p>
-                        <p className="font-mono text-xs uppercase tracking-[0.12em] opacity-30 mt-3">
-                          {t("results.hostingIncluded")}
-                        </p>
+                        <p className="font-mono text-xs opacity-40">{t("results.vatExcluded")}</p>
+                        <p className="meta-eyebrow opacity-30 mt-3">{t("results.hostingIncluded")}</p>
                       </div>
-                      <div className="p-6 rounded-sm bg-muted/20 border border-border">
-                        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">
+                      <div className="p-6 rounded-sm bg-surface border border-border">
+                        <p className="meta-eyebrow text-muted-foreground mb-3">
                           {t("results.timeline")}
                         </p>
                         <p
-                          className="font-sans font-light text-primary leading-none mb-1"
-                          style={{
-                            fontSize: "clamp(18px,3.5vw,26px)",
-                            letterSpacing: "-0.03em",
-                          }}
+                          className="font-sans font-light text-foreground leading-none mb-1"
+                          style={{ fontSize: "clamp(18px,3.5vw,26px)", letterSpacing: "-0.03em" }}
                         >
-                          {localizeNumbers(
-                            estimate.weeksMin.toString(),
-                            locale,
-                          )}
+                          {localizeNumbers(estimate.weeksMin.toString(), locale)}
                           –
-                          {localizeNumbers(
-                            estimate.weeksMax.toString(),
-                            locale,
-                          )}
+                          {localizeNumbers(estimate.weeksMax.toString(), locale)}
                         </p>
-                        <p className="font-mono text-xs text-primary/35">
-                          {t("results.weeks")}
-                        </p>
+                        <p className="font-mono text-xs text-muted-foreground">{t("results.weeks")}</p>
                       </div>
                     </div>
                     {selection && (
@@ -640,7 +551,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
                       />
                     )}
                     <div>
-                      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70 mb-3">
+                      <p className="meta-eyebrow text-muted-foreground mb-3">
                         {t("results.whatYouGet")}
                       </p>
                       <div className="space-y-2.5">
@@ -649,28 +560,20 @@ export const EstimatorSection = memo(function EstimatorSection() {
                           const rawItems = translate.raw?.(
                             `pdfContent.deliverables.${selection.projectType}.${selection.tier}`,
                           );
-                          const items =
-                            Array.isArray(rawItems)
-                              ? rawItems.filter(
-                                  (item): item is string =>
-                                    typeof item === "string",
-                                )
-                              : [];
+                          const items = Array.isArray(rawItems)
+                            ? rawItems.filter((item): item is string => typeof item === "string")
+                            : [];
                           return (
                             <>
                               {items.slice(0, 5).map((d: string, i: number) => (
                                 <div key={i} className="flex items-start gap-3">
-                                  <div className="h-1.5 w-1.5 rounded-full bg-muted-foreground/25 mt-[7px] shrink-0" />
-                                  <p className="text-base text-muted-foreground leading-relaxed">
-                                    {d}
-                                  </p>
+                                  <div className="h-1.5 w-1.5 rounded-full bg-border-mid mt-[7px] shrink-0" />
+                                  <p className="body-secondary text-muted-foreground leading-relaxed">{d}</p>
                                 </div>
                               ))}
                               {items.length > 5 && (
-                                <p className="font-mono text-[10px] text-muted-foreground/70 uppercase tracking-[0.12em] ltr:pl-5 rtl:pr-5 pt-1">
-                                  {t("results.moreInPdf", {
-                                    count: items.length - 5,
-                                  })}
+                                <p className="meta-eyebrow text-muted-foreground ltr:pl-5 rtl:pr-5 pt-1">
+                                  {t("results.moreInPdf", { count: items.length - 5 })}
                                 </p>
                               )}
                             </>
@@ -678,28 +581,22 @@ export const EstimatorSection = memo(function EstimatorSection() {
                         })()}
                       </div>
                     </div>
-                    <div className="flex gap-3 p-4 rounded-sm bg-muted/20 border border-border">
-                      <div className="h-1.5 w-1.5 rounded-full bg-primary/30 mt-2 shrink-0" />
+                    <div className="flex gap-3 p-4 rounded-sm bg-surface border border-border">
+                      <div className="h-1.5 w-1.5 rounded-full bg-border-mid mt-2 shrink-0" />
                       <p className="font-mono text-xs text-muted-foreground leading-relaxed">
-                        <span className="text-primary/60 font-medium">
-                          {t("results.infraLabel")}:
-                        </span>{" "}
+                        <span className="text-foreground font-medium">{t("results.infraLabel")}:</span>{" "}
                         {selection
-                          ? t("results.infraDescription", {
-                              amount: formatEGP(
-                                HOSTING_RENEWAL[selection.tier],
-                              ),
-                            })
+                          ? t("results.infraDescription", { amount: formatEGP(HOSTING_RENEWAL[selection.tier]) })
                           : null}
                       </p>
                     </div>
-                    <div className="p-6 rounded-sm border border-border bg-muted/20 flex gap-5 items-start">
-                      <div className="w-1.5 self-stretch rounded-full bg-primary/30 shrink-0" />
+                    <div className="p-6 rounded-sm border border-border bg-surface flex gap-5 items-start">
+                      <div className="w-1.5 self-stretch rounded-full bg-border-mid shrink-0" />
                       <div>
-                        <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary/40 mb-2">
+                        <p className="meta-eyebrow text-muted-foreground mb-2">
                           {t("results.rangeCtaLabel")}
                         </p>
-                        <p className="text-base text-muted-foreground leading-relaxed font-sans">
+                        <p className="body-copy text-muted-foreground leading-relaxed font-sans">
                           {t("results.rangeCta")}
                         </p>
                       </div>
@@ -737,7 +634,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
                         </Link>
                       </MagneticButton>
                     </div>
-                    <p className="font-mono text-xs text-muted-foreground/30 text-center uppercase tracking-[0.15em]">
+                    <p className="meta-eyebrow text-muted-foreground text-center">
                       {t("results.disclaimer")}
                     </p>
                   </>
@@ -746,13 +643,14 @@ export const EstimatorSection = memo(function EstimatorSection() {
             )}
           </div>
 
+          {/* Navigation — steps 1–3 */}
           {step < 5 && step !== 4 && (
             <div className="mt-8 flex justify-between items-center border-t border-border pt-6">
               {step > 1 ? (
                 <button
                   onClick={goPrev}
                   disabled={isAnimating}
-                  className="text-primary/40 hover:text-primary/70 transition-colors flex items-center gap-2 text-base font-mono group disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 text-base font-mono group disabled:opacity-30 disabled:cursor-not-allowed"
                 >
                   <ArrowLeft className="h-3.5 w-3.5 ltr:group-hover:-translate-x-1 rtl:group-hover:translate-x-1 transition-transform rtl:-rotate-180" />
                   {t("back")}
@@ -760,13 +658,11 @@ export const EstimatorSection = memo(function EstimatorSection() {
               ) : (
                 <div />
               )}
-              <span className="font-mono text-primary/20 text-xs tracking-[0.15em]">
-                {step} / 5
-              </span>
+              <span className="meta-eyebrow text-muted-foreground">{step} / 5</span>
               <button
                 onClick={goNext}
                 disabled={!canProceed || isAnimating}
-                className="text-primary/40 hover:text-primary/70 transition-colors flex items-center gap-2 text-base font-mono disabled:opacity-20 disabled:cursor-not-allowed group"
+                className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 text-base font-mono disabled:opacity-20 disabled:cursor-not-allowed group"
               >
                 {t("next")}
                 <ArrowRight className="h-3.5 w-3.5 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform rtl:-rotate-180" />
@@ -774,18 +670,19 @@ export const EstimatorSection = memo(function EstimatorSection() {
             </div>
           )}
 
+          {/* Navigation — step 5 */}
           {step === 5 && (
             <div className="mt-6 border-t border-border pt-6 flex justify-between items-center">
               <button
                 onClick={() => animateStep("back", () => setStep(4))}
                 disabled={isAnimating}
-                className="text-primary/40 hover:text-primary/70 transition-colors flex items-center gap-2 text-base font-mono group"
+                className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 text-base font-mono group"
               >
                 <ArrowLeft className="h-3.5 w-3.5 ltr:group-hover:-translate-x-1 rtl:group-hover:translate-x-1 transition-transform rtl:-rotate-180" />
                 {t("back")}
               </button>
               <Link href="/estimator">
-                <button className="text-primary/40 hover:text-primary/70 transition-colors flex items-center gap-2 text-base font-mono group">
+                <button className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 text-base font-mono group">
                   {t("startOver")}
                 </button>
               </Link>
@@ -793,54 +690,32 @@ export const EstimatorSection = memo(function EstimatorSection() {
           )}
         </div>
 
+        {/* FAQ block */}
         <div className="mt-32 max-w-3xl mx-auto">
           <div className="text-center mb-10">
-            <h3
-              className="font-sans font-normal text-primary mb-3"
-              style={{
-                fontSize: "clamp(24px, 4vw, 36px)",
-                letterSpacing: "-0.02em",
-              }}
-            >
+            <h3 className="display-h3 font-normal text-foreground mb-3">
               {t("faq.title")}
             </h3>
-            <p className="text-muted-foreground text-base">
+            <p className="body-copy text-muted-foreground">
               {t("faq.subtitle")}
             </p>
           </div>
           <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="item-1" className="border-border">
-              <AccordionTrigger className="text-primary font-sans text-base">
-                {t("faq.q1")}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground text-base leading-relaxed">
-                {t("faq.a1")}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2" className="border-border">
-              <AccordionTrigger className="text-primary font-sans text-base">
-                {t("faq.q2")}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground text-base leading-relaxed">
-                {t("faq.a2")}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3" className="border-border">
-              <AccordionTrigger className="text-primary font-sans text-base">
-                {t("faq.q3")}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground text-base leading-relaxed">
-                {t("faq.a3")}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-4" className="border-border">
-              <AccordionTrigger className="text-primary font-sans text-base">
-                {t("faq.q4")}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground text-base leading-relaxed">
-                {t("faq.a4")}
-              </AccordionContent>
-            </AccordionItem>
+            {[
+              { q: t("faq.q1"), a: t("faq.a1") },
+              { q: t("faq.q2"), a: t("faq.a2") },
+              { q: t("faq.q3"), a: t("faq.a3") },
+              { q: t("faq.q4"), a: t("faq.a4") },
+            ].map((item, i) => (
+              <AccordionItem key={i + 1} value={`item-${i + 1}`} className="border-border">
+                <AccordionTrigger className="text-foreground font-sans body-copy">
+                  {item.q}
+                </AccordionTrigger>
+                <AccordionContent className="body-secondary text-muted-foreground leading-relaxed">
+                  {item.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
           </Accordion>
         </div>
       </Container>

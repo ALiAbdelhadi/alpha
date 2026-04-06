@@ -44,39 +44,40 @@ export const AboutSection = memo(function AboutSection({
 
   const items = statsEnabled
     ? [
-        {
-          value: t("about.stat1.value"),
-          label: t("about.stat1.label"),
-          sub: t("about.stat1.sublabel"),
-        },
-        {
-          value: t("about.stat2.value"),
-          label: t("about.stat2.label"),
-          sub: t("about.stat2.sublabel"),
-        },
-        {
-          value: t("about.stat3.value"),
-          label: t("about.stat3.label"),
-          sub: t("about.stat3.sublabel"),
-        },
-      ]
+      {
+        value: t("about.stat1.value"),
+        label: t("about.stat1.label"),
+        sub: t("about.stat1.sublabel"),
+      },
+      {
+        value: t("about.stat2.value"),
+        label: t("about.stat2.label"),
+        sub: t("about.stat2.sublabel"),
+      },
+      {
+        value: t("about.stat3.value"),
+        label: t("about.stat3.label"),
+        sub: t("about.stat3.sublabel"),
+      },
+    ]
     : [
-        {
-          value: null,
-          label: t("about.values.bilingual.label"),
-          sub: t("about.values.bilingual.sublabel"),
-        },
-        {
-          value: null,
-          label: t("about.values.noTemplate.label"),
-          sub: t("about.values.noTemplate.sublabel"),
-        },
-        {
-          value: null,
-          label: t("about.values.outcome.label"),
-          sub: t("about.values.outcome.sublabel"),
-        },
-      ];
+      {
+        value: null,
+        label: t("about.values.bilingual.label"),
+        sub: t("about.values.bilingual.sublabel"),
+      },
+      {
+        value: null,
+        label: t("about.values.noTemplate.label"),
+        sub: t("about.values.noTemplate.sublabel"),
+      },
+      {
+        value: null,
+        label: t("about.values.outcome.label"),
+        sub: t("about.values.outcome.sublabel"),
+      },
+    ];
+
   const founderLinkedInUrl = t("about.founder.linkedInUrl");
   const founderIsPlaceholderLink = founderLinkedInUrl === "#";
 
@@ -91,29 +92,23 @@ export const AboutSection = memo(function AboutSection({
         <div className="grid gap-16 md:grid-cols-2 md:gap-20">
           <div className="flex flex-col justify-between gap-12">
             <div className="space-y-3">
-              <p
-                ref={eyebrowRef}
-                className="mono-uppercase text-muted-foreground/70 block"
-              >
+              <p ref={eyebrowRef} className="meta-eyebrow text-muted-foreground block">
                 {t("about.eyebrow")}
               </p>
-              <h2
-                ref={titleRef}
-                className="font-sans font-normal text-primary leading-[1.05] section-heading"
-              >
+              <h2 ref={titleRef} className="display-h2 font-normal text-foreground leading-[1.05]">
                 {t("about.title")}
                 <br />
                 {t("about.title2")}
                 <br />
-                <span className="block text-display-italic font-display-serif">
+                <span className="block font-serif italic text-muted-foreground">
                   {t("about.title3")}
                 </span>
               </h2>
               <div ref={descRef} className="space-y-4">
-                <p className="body text-primary/60 max-w-[44ch]">
+                <p className="body-copy text-muted-foreground max-w-[44ch]">
                   {t("about.description1")}
                 </p>
-                <p className="body text-primary/60 max-w-[44ch]">
+                <p className="body-copy text-muted-foreground max-w-[44ch]">
                   {t("about.description2")}
                 </p>
               </div>
@@ -136,12 +131,12 @@ export const AboutSection = memo(function AboutSection({
             </div>
           </div>
           <div className="flex flex-col justify-center">
-            <div className="h-px w-full bg-foreground/8 mb-0" />
+            <div className="h-px w-full bg-border mb-0" />
             {items.map((item, i) => (
               <div
                 key={i}
                 data-stat
-                className="group border-b border-foreground/8 py-8"
+                className="group border-b border-border py-8"
               >
                 <div
                   className={
@@ -153,20 +148,20 @@ export const AboutSection = memo(function AboutSection({
                   {statsEnabled ? (
                     <div
                       data-stat-value
-                      className="stat-value font-sans font-light text-primary tabular-nums leading-none pt-0.5"
+                      className="display-h2 font-light text-foreground tabular-nums leading-none pt-0.5"
                     >
                       {item.value}
                     </div>
                   ) : (
                     <div className="pt-3">
-                      <div className="h-px w-5 bg-foreground/8 group-hover:w-8 group-hover:bg-foreground/25 transition-all duration-400" />
+                      <div className="h-px w-5 bg-border group-hover:w-8 group-hover:bg-border-mid transition-all duration-400" />
                     </div>
                   )}
                   <div className="space-y-2">
-                    <p className="font-sans font-medium text-primary text-base">
+                    <p className="font-sans font-medium text-foreground text-base">
                       {item.label}
                     </p>
-                    <p className="mono-uppercase text-muted-foreground">
+                    <p className="meta-eyebrow text-muted-foreground">
                       {item.sub}
                     </p>
                   </div>
@@ -175,25 +170,25 @@ export const AboutSection = memo(function AboutSection({
             ))}
             <div
               ref={founderCardRef}
-              className="mt-8 rounded-sm border border-foreground/8 bg-foreground/2 p-6 md:p-7"
+              className="mt-8 rounded-2xl border border-border bg-surface p-6 md:p-7"
             >
-              <p className="mono-uppercase text-muted-foreground/70 block">
+              <p className="meta-eyebrow text-muted-foreground block">
                 {t("about.founder.eyebrow")}
               </p>
               <div className="mt-5 space-y-5">
                 <div>
-                  <h3 className="font-sans font-medium text-primary text-xl md:text-2xl">
+                  <h3 className="display-h3 font-medium text-foreground">
                     {t("about.founder.name")}
                   </h3>
-                  <p className="mono-uppercase text-muted-foreground mt-2">
+                  <p className="meta-eyebrow text-muted-foreground mt-2">
                     {t("about.founder.role")}
                   </p>
                 </div>
                 <div className="space-y-3">
-                  <p className="body text-primary/60">
+                  <p className="body-copy text-muted-foreground">
                     {t("about.founder.philosophy1")}
                   </p>
-                  <p className="body text-primary/60">
+                  <p className="body-copy text-muted-foreground">
                     {t("about.founder.philosophy2")}
                   </p>
                 </div>
@@ -202,7 +197,7 @@ export const AboutSection = memo(function AboutSection({
                     href={founderLinkedInUrl}
                     target={founderIsPlaceholderLink ? undefined : "_blank"}
                     rel={founderIsPlaceholderLink ? undefined : "noreferrer"}
-                    className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-primary/40 hover:text-primary/70 transition-colors duration-300"
+                    className="group inline-flex items-center gap-2 meta-eyebrow text-muted-foreground hover:text-foreground transition-colors duration-300"
                   >
                     {t("about.founder.linkedInLabel")}
                     <svg

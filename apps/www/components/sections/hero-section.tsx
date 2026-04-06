@@ -4,6 +4,7 @@ import { Container } from "@/components/container";
 import { MagneticButton } from "@/components/magnetic-button";
 import { useLoading } from "@/components/providers/loading-provider";
 import { useGSAPSection } from "@/hooks/use-gsap-section";
+import { Link } from "@/i18n/navigation";
 import {
   FLAGSHIP_METRICS,
   getCommercialCta,
@@ -14,6 +15,7 @@ import { DEFAULTS, MOTION, useReveal } from "@/lib/motion";
 import { isRTLText } from "@/lib/motion/utils/splite";
 import { useLocale, useTranslations } from "next-intl";
 import { type ReactNode, memo, useEffect, useMemo, useRef } from "react";
+import { ArrowLabel } from "../directional-link";
 
 function splitTextTokens(text: string): { nodes: ReactNode; isRTL: boolean } {
   const rtl = isRTLText(text);
@@ -244,7 +246,6 @@ export const HeroSection = memo(function HeroSection() {
   }, [isInitialLoadComplete, headlineIsRTL, title1, title2]);
 
   const primaryCta = getCommercialCta(locale, "projectRange");
-  const secondaryCta = getCommercialCta(locale, "realBuild");
 
   return (
     <section
@@ -253,6 +254,14 @@ export const HeroSection = memo(function HeroSection() {
       className="hero-watermark relative z-10 flex lg:min-h-screen w-full flex-col justify-end section-padding overflow-hidden"
       aria-label="Hero section"
     >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 40% at 50% -10%, var(--brand-soft), transparent)",
+        }}
+      />
       <span ref={srTextRef} className="sr-only">
         {title1} {title2}
       </span>
@@ -281,10 +290,10 @@ export const HeroSection = memo(function HeroSection() {
           <h1
             ref={headlineRef}
             aria-hidden
-            className="display-h1 mb-8 font-sans font-light text-primary select-none"
+            className="display-h1 mb-8 font-sans font-light text-foreground select-none"
           >
             <span className="block">{split1.nodes}</span>
-            <span className="block text-primary/40 font-display-serif">
+            <span className="block text-display-italic font-display-serif">
               {split2.nodes}
             </span>
           </h1>
@@ -292,13 +301,10 @@ export const HeroSection = memo(function HeroSection() {
             ref={subRef}
             className="mb-12 grid gap-6 md:grid-cols-[96px_1fr] md:gap-8 items-start"
           >
-            <div className="h-px w-full bg-foreground/8 mt-3 hidden md:block" />
+            <div className="h-px w-full bg-border mt-3 hidden md:block" />
             <div className="space-y-3 max-w-xl">
               <p className="body-copy text-muted-foreground">
                 {t("hero.problem")}
-              </p>
-              <p className="body-secondary text-muted-foreground/72">
-                {t("hero.description")}
               </p>
             </div>
           </div>
@@ -311,20 +317,21 @@ export const HeroSection = memo(function HeroSection() {
               variant="primary"
               className="group"
             >
-              {primaryCta.label}
-            </MagneticButton>
-            <MagneticButton size="lg" variant="secondary" className="group">
-              {secondaryCta.label}
+              <ArrowLabel>
+                <Link href={primaryCta.href}>
+                  {primaryCta.label}
+                </Link>
+              </ArrowLabel>
             </MagneticButton>
           </div>
           <div
             ref={statsRef}
-            className="mt-16 grid gap-6 border-t border-foreground/8 pt-10 sm:grid-cols-3 sm:gap-0"
+            className="mt-16 grid gap-6 border-t border-border pt-10 sm:grid-cols-3 sm:gap-0"
           >
             {FLAGSHIP_METRICS.map((s, i, arr) => (
               <div
                 key={s.value.en}
-                className="sm:not-last:border-r sm:not-last:border-foreground/10"
+                className="sm:not-last:border-r sm:not-last:border-border"
                 style={{
                   paddingLeft: i > 0 ? "clamp(16px, 3vw, 36px)" : 0,
                   paddingRight:
@@ -336,7 +343,7 @@ export const HeroSection = memo(function HeroSection() {
                 >
                   {s.value[commercialLocale]}
                 </span>
-                <span className="meta-eyebrow mt-2 block text-foreground/48">
+                <span className="meta-eyebrow mt-2 block text-muted-foreground">
                   {s.label[commercialLocale]}
                 </span>
               </div>
@@ -344,7 +351,7 @@ export const HeroSection = memo(function HeroSection() {
           </div>
           <p
             ref={proofRef}
-            className="meta-eyebrow mt-6 max-w-2xl text-primary/45"
+            className="meta-eyebrow mt-6 max-w-2xl text-muted-foreground"
           >
             {t("hero.productionCallout")}
           </p>
@@ -355,11 +362,11 @@ export const HeroSection = memo(function HeroSection() {
         className="pointer-events-none absolute bottom-7 ltr:left-1/2 rtl:right-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2 mt-6"
         aria-hidden
       >
-        <p className="font-mono text-xs uppercase text-muted-foreground/60 tracking-[0.25em]">
+        <p className="meta-eyebrow text-muted-foreground">
           {t("hero.scrollHint")}
         </p>
-        <div className="relative h-10 w-px overflow-hidden bg-foreground/8">
-          <div className="absolute top-0 h-1/2 w-full bg-foreground/40 animate-slide-down" />
+        <div className="relative h-10 w-px overflow-hidden bg-border">
+          <div className="absolute top-0 h-1/2 w-full bg-border-mid animate-slide-down" />
         </div>
       </div>
     </section>

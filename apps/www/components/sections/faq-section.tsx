@@ -21,7 +21,6 @@ export const FaqSection = memo(function FaqSection({ namespace, className }: Faq
   const t = useTranslations(namespace)
 
   const headerRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, delay: 0 })
-
   const contentRef = useReveal<HTMLDivElement>({
     ...DEFAULTS.body,
     delay: 0.15,
@@ -32,26 +31,26 @@ export const FaqSection = memo(function FaqSection({ namespace, className }: Faq
   const questionKeys = ["01", "02", "03", "04", "05"]
 
   return (
-    <section className={cn("border-t border-border py-20 md:py-24", className)}>
+    <section className={cn("border-t border-border section-padding", className)}>
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1fr_1.5fr] lg:gap-24">
           <div ref={headerRef} className="max-w-md">
-            <p className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground/70 mb-4 block">
+            <p className="meta-eyebrow text-muted-foreground mb-4 block">
               {t("faq.title")}
             </p>
-            <h2 className="text-4xl md:text-5xl font-sans font-normal text-primary leading-[1.1] tracking-tight mb-6">
+            <h2 className="display-h2 font-normal text-foreground leading-[1.1] mb-6">
               {t("faq.subtitle")}
             </h2>
           </div>
 
-          <div ref={contentRef} className="rounded-2xl border border-border bg-muted/5 px-5 md:px-8">
+          <div ref={contentRef} className="rounded-2xl border border-border bg-surface px-5 md:px-8">
             <Accordion type="single" collapsible className="w-full">
               {questionKeys.map((key) => (
                 <AccordionItem key={key} value={key} className="border-border">
-                  <AccordionTrigger className="text-lg md:text-xl font-sans font-light hover:text-primary transition-colors py-6">
+                  <AccordionTrigger className="body-copy font-sans font-light hover:text-foreground transition-colors py-6 text-start">
                     {t(`faq.questions.${key}.q`)}
                   </AccordionTrigger>
-                  <AccordionContent className="text-base text-muted-foreground leading-relaxed pb-8">
+                  <AccordionContent className="body-secondary text-muted-foreground leading-relaxed pb-8">
                     {t(`faq.questions.${key}.a`)}
                   </AccordionContent>
                 </AccordionItem>
