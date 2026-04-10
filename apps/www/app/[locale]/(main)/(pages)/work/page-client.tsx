@@ -35,13 +35,13 @@ export default memo(function WorkIndexPage() {
   const projects = useMemo(() => CASE_STUDIES, []);
 
   return (
-    <section className="flex min-h-screen items-center pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+    <section className="flex min-h-screen items-center pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
         <div className="py-16 md:py-24">
           <div className="mb-16">
             <p
               ref={eyebrowRef}
-              className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
+              className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
             >
               {t("selectedWork")}
             </p>
@@ -75,7 +75,7 @@ export default memo(function WorkIndexPage() {
             ))}
           </div>
           <div className="mt-6 flex items-center gap-4">
-            <span className="font-mono text-sm leading-normal tracking-wider text-xs uppercase text-primary/20 tracking-[0.25em]">
+            <span className="font-mono text-sm leading-normal tracking-wider uppercase text-primary/20">
               {String(projects.length).padStart(2, "0")} {t("projectsLabel")}
             </span>
             <div className="flex-1 h-px bg-foreground/5" />
@@ -109,7 +109,7 @@ const WorkItem = memo(function WorkItem({
             <div className="flex items-start justify-between gap-6 mb-4">
               <div className="flex items-baseline gap-6 md:gap-10">
                 <span
-                  className="font-mono text-sm leading-normal tracking-wider font-light text-primary/20 group-hover:text-primary/55 transition-colors duration-300 leading-none"
+                  className="font-mono text-sm leading-normal tracking-wider font-light text-primary/20 group-hover:text-primary/55 transition-colors duration-300"
                   style={{
                     fontSize: "clamp(20px, 2.5vw, 28px)",
                     letterSpacing: "-0.02em",
@@ -128,14 +128,14 @@ const WorkItem = memo(function WorkItem({
                   >
                     {cs.name[locale]}
                   </h2>
-                  <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-foreground/35">
+                  <p className="font-mono text-sm leading-normal tracking-wider  uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-foreground/35">
                     {cs.client[locale]} · {cs.industry[locale]}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-3 shrink-0">
-                <span className="font-mono text-sm leading-normal tracking-wider text-xs text-muted-foreground/70 hidden md:block">
+                <span className="font-mono text-sm leading-normal tracking-wider text-muted-foreground/70 hidden md:block">
                   {cs.year}
                 </span>
                 <svg
@@ -166,16 +166,16 @@ const WorkItem = memo(function WorkItem({
                       key={metric.label[locale]}
                       className="inline-flex items-center gap-2 border border-foreground/8 bg-foreground/2 rounded-full px-3 py-1"
                     >
-                      <span className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-foreground/35">
+                      <span className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-foreground/35">
                         {metric.label[locale]}
                       </span>
-                      <span className="font-mono text-sm leading-normal tracking-wider text-xs text-primary/60">
+                      <span className="font-mono text-sm leading-normal tracking-wider text-primary/60">
                         {metric.value}
                       </span>
                     </div>
                   ))}
                 </div>
-                <span className="hidden md:inline-flex items-center gap-2 font-mono text-sm leading-normal tracking-wider text-xs text-primary/40 group-hover:text-primary/70 transition-colors duration-300">
+                <span className="hidden md:inline-flex items-center gap-2 font-mono text-sm leading-normal tracking-wider text-primary/70 group-hover:text-primary/70 transition-colors duration-300">
                   {t("viewCaseStudy")}
                 </span>
               </div>

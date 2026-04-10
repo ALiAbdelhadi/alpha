@@ -8,6 +8,7 @@ import {
 } from "@repo/database"
 import { NextRequest, NextResponse } from "next/server"
 import { ZodError } from "zod"
+import { enforceRateLimit } from "@/lib/rate-limit"
 
 const SERVICE_TYPE_MAP: Record<NonNullable<Prisma.ContactSubmissionCreateInput["serviceInterest"]>, ServiceType> = {
     WEB_DEVELOPMENT: ServiceType.WEB_DEVELOPMENT,
@@ -33,23 +34,33 @@ const BUDGET_RANGE_MAP: Record<NonNullable<Prisma.ContactSubmissionCreateInput["
 
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json()
-
-        const origin = request.headers.get("origin")
-        const allowedOrigins = [process.env.NEXT_PUBLIC_APP_URL].filter(
-            (value): value is string => !!value
-        )
-
-        if (allowedOrigins.length > 0 && (!origin || !allowedOrigins.includes(origin))) {
+        const rl = await enforceRateLimit(request, {
+            scope: "public_api",
+            route: "contact",
+            limit: 3,
+            windowSeconds: 10 * 60,
+        })
+        if (!rl.ok) {
             return NextResponse.json(
-                { success: false, message: "Forbidden" },
-                { status: 403 }
+                { success: false, message: "Too many requests. Please try again later." },
+                {
+                    status: 429,
+                    headers: { "Retry-After": rl.retryAfterSeconds.toString() },
+                },
             )
         }
+
+        const body = await request.json()
 
         const validatedData = contactFormSchema.parse(body)
 
         if (validatedData.website && validatedData.website.length > 0) {
+            if (process.env.NODE_ENV !== "production") {
+                console.warn("Honeypot triggered on contact form", {
+                    ip: request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown",
+                    userAgent: request.headers.get("user-agent") ?? undefined,
+                })
+            }
             return NextResponse.json(
                 { success: true, message: "Thank you for your submission" },
                 { status: 200 }
@@ -94,16 +105,29 @@ export async function POST(request: NextRequest) {
 
         await Promise.all(
             admins.map((admin: { id: string }) =>
-                prisma.notification.create({
-                    data: {
-                        type: "NEW_CONTACT",
-                        title: "New Contact Submission",
-                        message: `${validatedData.name} submitted a contact form`,
-                        userId: admin.id,
-                        entityType: "contact",
-                        entityId: submission.id,
-                    },
-                })
+                prisma.notification
+                    .findFirst({
+                        where: {
+                            userId: admin.id,
+                            type: "NEW_CONTACT",
+                            entityType: "contact",
+                            entityId: submission.id,
+                        },
+                        select: { id: true },
+                    })
+                    .then((existing) => {
+                        if (existing) return null
+                        return prisma.notification.create({
+                            data: {
+                                type: "NEW_CONTACT",
+                                title: "New Contact Submission",
+                                message: `${validatedData.name} submitted a contact form`,
+                                userId: admin.id,
+                                entityType: "contact",
+                                entityId: submission.id,
+                            },
+                        })
+                    })
             )
         )
 
@@ -130,16 +154,29 @@ export async function POST(request: NextRequest) {
 
             await Promise.all(
                 admins.map((admin: { id: string }) =>
-                    prisma.notification.create({
-                        data: {
-                            type: "NEW_MEETING",
-                            title: "New Meeting Request",
-                            message: `${validatedData.name} requested a meeting`,
-                            userId: admin.id,
-                            entityType: "meeting",
-                            entityId: submission.id,
-                        },
-                    })
+                    prisma.notification
+                        .findFirst({
+                            where: {
+                                userId: admin.id,
+                                type: "NEW_MEETING",
+                                entityType: "meeting",
+                                entityId: submission.id,
+                            },
+                            select: { id: true },
+                        })
+                        .then((existing) => {
+                            if (existing) return null
+                            return prisma.notification.create({
+                                data: {
+                                    type: "NEW_MEETING",
+                                    title: "New Meeting Request",
+                                    message: `${validatedData.name} requested a meeting`,
+                                    userId: admin.id,
+                                    entityType: "meeting",
+                                    entityId: submission.id,
+                                },
+                            })
+                        })
                 )
             )
         }

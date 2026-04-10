@@ -6,7 +6,7 @@ import { Link } from "@/i18n/navigation";
 
 export default function NotFoundPage() {
     return (
-        <div className="flex min-h-screen items-center justify-center bg-background pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+        <div className="flex min-h-screen items-center justify-center bg-background pt-(--section-y-top) pb-(--section-y-bottom)">
             <div
                 aria-hidden
                 className="pointer-events-none select-none absolute bottom-0 ltr:right-0 rtl:left-0 font-sans font-semibold leading-none"
@@ -21,7 +21,7 @@ export default function NotFoundPage() {
             </div>
             <Container>
                 <main className="relative z-10 max-w-2xl">
-                    <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/60 mb-6 block">
+                    <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/60 mb-6 block">
                         404 — Page not found
                     </p>
                     <h1
@@ -34,7 +34,7 @@ export default function NotFoundPage() {
                         This page
                         <br />
                         <span
-                            className="font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold text-primary/40"
+                            className="font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold text-primary/70"
                         >
                             doesn&apos;t exist.
                         </span>

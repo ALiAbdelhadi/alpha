@@ -376,7 +376,7 @@ export function PipelineSection() {
                                             />
                                         )}
                                         <div
-                                            className="absolute inset-y-0 start-0 transition-opacity duration-300"
+                                            className="absolute inset-y-0 inset-s-0 transition-opacity duration-300"
                                             style={{
                                                 width: "2.5px",
                                                 backgroundColor: `rgb(${color})`,

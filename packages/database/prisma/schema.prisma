@@ -41,14 +41,14 @@ model User {
 
 
 enum SubmissionStatus {
-    NEW // Just submitted
-    VIEWED // Admin viewed
-    CONTACTED // Initial outreach made
-    QUALIFIED // Real opportunity
-    PROPOSAL_SENT // Proposal sent
-    WON // Converted to client
-    LOST // Not a fit
-    SPAM // Filtered out
+    NEW
+    VIEWED 
+    CONTACTED 
+    QUALIFIED 
+    PROPOSAL_SENT
+    WON
+    LOST
+    SPAM
 }
 
 enum Priority {
@@ -67,10 +67,10 @@ enum ServiceType {
 }
 
 enum ProjectTimeline {
-    IMMEDIATE // < 1 month
-    SOON // 1-3 months
-    PLANNING // 3-6 months
-    EXPLORING // 6+ months
+    IMMEDIATE 
+    SOON 
+    PLANNING 
+    EXPLORING
 }
 
 enum BudgetRange {
@@ -82,8 +82,6 @@ enum BudgetRange {
 
 model ContactSubmission {
     id String @id @default(uuid())
-
-    // Form Data
     name            String
     phone           String
     message         String
@@ -91,15 +89,12 @@ model ContactSubmission {
     projectTimeline ProjectTimeline?
     budget          BudgetRange?
 
-    // Status & Priority
     status   SubmissionStatus @default(NEW)
     priority Priority         @default(MEDIUM)
 
-    // Assignment
     assignedTo   User?   @relation("AssignedTo", fields: [assignedToId], references: [id])
     assignedToId String?
 
-    // Metadata
     locale      String  @default("en")
     userAgent   String?
     ipAddress   String?
@@ -108,7 +103,6 @@ model ContactSubmission {
     utmMedium   String?
     utmCampaign String?
 
-    // Relations
     user   User?   @relation(fields: [userId], references: [id])
     userId String?
 
@@ -116,7 +110,6 @@ model ContactSubmission {
     tags     ContactTag[]
     meetings Meeting[]
 
-    // Timestamps
     submittedAt      DateTime  @default(now())
     lastUpdatedAt    DateTime  @updatedAt
     firstViewedAt    DateTime?
@@ -133,7 +126,7 @@ model ContactSubmission {
 model ContactNote {
     id      String @id @default(uuid())
     content String
-    type    String @default("internal") // "internal" | "client-visible"
+    type    String @default("internal")
 
     submission   ContactSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
     submissionId String
@@ -162,10 +155,6 @@ model ContactTag {
     @@map("contact_tags")
 }
 
-// ============================================================================
-// SCHEDULING SYSTEM
-// ============================================================================
-
 enum MeetingStatus {
     PENDING
     APPROVED
@@ -185,40 +174,32 @@ enum MeetingType {
 model Meeting {
     id String @id @default(uuid())
 
-    // Meeting Details
     title       String
     description String?
     type        MeetingType   @default(DISCOVERY)
     status      MeetingStatus @default(PENDING)
 
-    // Timing
     scheduledDate   DateTime
-    scheduledTime   String // "morning" | "afternoon" | "evening"
+    scheduledTime   String 
     durationMinutes Int      @default(30)
 
-    // Participants
     requestedBy   User?   @relation("RequestedBy", fields: [requestedById], references: [id])
     requestedById String?
 
     assignedTo   User?   @relation(fields: [assignedToId], references: [id])
     assignedToId String?
 
-    // Relations
     contactSubmission ContactSubmission? @relation(fields: [submissionId], references: [id])
     submissionId      String?
 
-    // Guest Details (if not logged in)
     guestName  String?
     guestEmail String?
 
-    // Meeting Link (Zoom/Google Meet)
     meetingUrl String?
 
-    // Notes
     notes      String?
     adminNotes String?
 
-    // Timestamps
     createdAt   DateTime  @default(now())
     updatedAt   DateTime  @updatedAt
     approvedAt  DateTime?
@@ -230,10 +211,6 @@ model Meeting {
     @@index([submissionId])
     @@map("meetings")
 }
-
-// ============================================================================
-// NOTIFICATIONS (PWA Support)
-// ============================================================================
 
 enum NotificationType {
     NEW_CONTACT
@@ -248,14 +225,11 @@ model Notification {
     title   String
     message String
 
-    // Target
     userId String
 
-    // Related Entity
-    entityType String // "contact" | "meeting"
+    entityType String
     entityId   String
 
-    // Status
     read   Boolean   @default(false)
     readAt DateTime?
 
@@ -265,10 +239,6 @@ model Notification {
     @@index([createdAt])
     @@map("notifications")
 }
-
-// ============================================================================
-// ESTIMATOR LEADS (from scoping tool email capture)
-// ============================================================================
 
 model EstimatorLead {
     id          String    @id @default(uuid())
@@ -287,4 +257,18 @@ model EstimatorLead {
     @@index([phone])
     @@index([createdAt])
     @@map("estimator_leads")
+}
+
+model RateLimitBucket {
+    id String @id @default(uuid())
+    key String @unique
+    windowStart   DateTime
+    windowSeconds Int
+    count         Int      @default(0)
+
+    updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+
+    @@index([windowStart])
+    @@map("rate_limit_buckets")
 }

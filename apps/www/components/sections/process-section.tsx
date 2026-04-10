@@ -138,10 +138,9 @@ export const ProcessSection = memo(function ProcessSection() {
   return (
     <div
       id="process"
-      className="relative pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]"
+      className="relative pt-(--section-y-top) pb-(--section-y-bottom)"
     >
       <Container className="relative">
-
         <div className="mb-14">
           <p
             ref={eyebrowRef}
@@ -196,7 +195,6 @@ export const ProcessSection = memo(function ProcessSection() {
             </button>
           ))}
         </div>
-
         <div className="overflow-hidden rounded-sm border border-s-border">
           {steps.map((step, i) => (
             <ProcessStepItem
@@ -209,14 +207,12 @@ export const ProcessSection = memo(function ProcessSection() {
             />
           ))}
         </div>
-
         <div className="mt-6 flex items-center gap-4">
           <span className={cn(monoCaps, "text-s-low")}>
             {t("footer")}
           </span>
           <div className="flex-1 h-px bg-s-border" />
         </div>
-
       </Container>
     </div>
   )

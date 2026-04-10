@@ -26,12 +26,12 @@ function OpeningSection() {
   const descRef = useReveal({ ...DEFAULTS.body, delay: 0.15 });
 
   return (
-    <section className="flex min-h-screen items-center pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] pb-24">
+    <section className="flex min-h-screen items-center pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
         <div className="max-w-5xl">
           <p
             ref={eyebrowRef}
-            className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-6 block"
+            className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-6 block"
           >
             {t("eyebrow")}
           </p>
@@ -105,7 +105,7 @@ function PhasesList() {
   return (
     <section
       ref={sectionRef}
-      className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] border-t border-foreground/8"
+      className="pt-(--section-y-top) pb-(--section-y-bottom) border-t border-foreground/8"
     >
       <Container>
         <div>
@@ -118,7 +118,7 @@ function PhasesList() {
               <div>
                 <div
                   aria-hidden
-                  className="font-mono text-sm leading-normal tracking-wider font-light text-primary/[0.07] leading-none select-none mb-3"
+                  className="font-mono text-sm leading-normal tracking-wider font-light text-primary/[0.07] select-none mb-3"
                   style={{
                     fontSize: "clamp(64px, 9vw, 96px)",
                     letterSpacing: "-0.04em",
@@ -126,7 +126,7 @@ function PhasesList() {
                 >
                   {localizeNumbers(phase.number, locale)}
                 </div>
-                <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
+                <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
                   {localizeNumbers(t(`${phase.key}.timeline`), locale)}
                 </p>
               </div>
@@ -146,7 +146,7 @@ function PhasesList() {
               </div>
               <div className="space-y-5">
                 <div>
-                  <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-2">
+                  <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-2">
                     {t("deliverables")}
                   </p>
                   <p className="text-sm text-primary/60 leading-relaxed">
@@ -154,7 +154,7 @@ function PhasesList() {
                   </p>
                 </div>
                 <div>
-                  <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-2">
+                  <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-2">
                     {t("yourRole")}
                   </p>
                   <p className="text-sm text-primary/60 leading-relaxed">
@@ -177,7 +177,7 @@ function ClosingSection() {
   const ctaRef = useReveal({ ...DEFAULTS.element, delay: 0.25 });
 
   return (
-    <section className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] border-t border-foreground/8">
+    <section className="pt-(--section-y-top) pb-(--section-y-bottom) border-t border-foreground/8">
       <Container>
         <div className="max-w-3xl">
           <div ref={titleRef} className="mb-12">

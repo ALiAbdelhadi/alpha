@@ -252,11 +252,11 @@ export function TechDNASection() {
     <section
       ref={sectionRef}
       id="tech-dna"
-      className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] border-t border-foreground/8"
+      className="pt-(--section-y-top) pb-(--section-y-bottom) border-t border-foreground/8"
     >
       <Container>
         <div ref={titleRef} className="mb-16">
-          <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block">
+          <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block">
             {t("techStack.eyebrow")}
           </p>
           <div className="flex items-end justify-between gap-8 flex-wrap">
@@ -276,7 +276,7 @@ export function TechDNASection() {
                 {t("techStack.titleItalic")}
               </span>
             </h2>
-            <p className="font-mono text-sm leading-normal tracking-wider text-sm text-primary/35 max-w-[32ch] hidden lg:block tracking-[0.05em]">
+            <p className="font-mono leading-normal tracking-wider text-sm text-primary/35 max-w-[32ch] hidden lg:block">
               {t("techStack.subtitle")}
             </p>
           </div>
@@ -457,7 +457,7 @@ export function TechDNASection() {
 
           <div className="md:hidden flex items-center justify-center gap-3 mt-4 pointer-events-none transition-opacity group-hover/scroll:opacity-5">
             <div className="h-px flex-1 bg-border" />
-            <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 whitespace-nowrap">
+            <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 whitespace-nowrap">
               {t("techStack.dragHint")}
             </p>
             <div className="h-px flex-1 bg-border" />
@@ -471,7 +471,7 @@ export function TechDNASection() {
                 transition: "opacity 0.18s ease",
               }}
             >
-              <p className="font-mono text-sm leading-normal tracking-wider text-xs md:text-sm uppercase tracking-[0.22em] text-muted-foreground text-center px-6">
+              <p className="font-mono text-sm leading-normal tracking-wider md:text-sm uppercase text-muted-foreground text-center px-6">
                 {t("techStack.inspect")}
               </p>
             </div>
@@ -528,7 +528,7 @@ export function TechDNASection() {
                       </span>
                     </div>
                     <p
-                      className="text-sm leading-relaxed text-primary/60 md:text-primary/45"
+                      className="text-sm leading-relaxed text-primary/60 md:text-primary/75"
                       style={{ maxWidth: "54ch" }}
                     >
                       {t(`techStack.nodes.${activeNode.id}.description`)}
@@ -560,7 +560,7 @@ export function TechDNASection() {
           </div>
         </div>
         <div className="mt-8 border-t border-foreground/8 pt-4 flex items-center gap-4">
-          <span className="font-mono text-sm leading-normal tracking-wider text-xs uppercase text-primary/20 tracking-[0.25em]">
+          <span className="font-mono text-sm leading-normal tracking-wider uppercase text-primary/20">
             {t("techStack.footer")}
           </span>
           <div className="flex-1 h-px bg-foreground/4" />

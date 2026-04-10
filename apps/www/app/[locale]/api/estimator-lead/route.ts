@@ -2,22 +2,27 @@ import { estimatorLeadSchema } from "@/lib/validations/estimator-lead"
 import { prisma } from "@repo/database"
 import { NextRequest, NextResponse } from "next/server"
 import { ZodError } from "zod"
+import { enforceRateLimit } from "@/lib/rate-limit"
 
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json()
-
-        const origin = request.headers.get("origin")
-        const allowedOrigins = [process.env.NEXT_PUBLIC_APP_URL].filter(
-            (value): value is string => !!value
-        )
-
-        if (allowedOrigins.length > 0 && (!origin || !allowedOrigins.includes(origin))) {
+        const rl = await enforceRateLimit(request, {
+            scope: "public_api",
+            route: "estimator_lead",
+            limit: 5,
+            windowSeconds: 60 * 60,
+        })
+        if (!rl.ok) {
             return NextResponse.json(
-                { success: false, message: "Forbidden" },
-                { status: 403 }
+                { success: false, message: "Too many requests. Please try again later." },
+                {
+                    status: 429,
+                    headers: { "Retry-After": rl.retryAfterSeconds.toString() },
+                },
             )
         }
+
+        const body = await request.json()
 
         const validatedData = estimatorLeadSchema.parse(body)
 

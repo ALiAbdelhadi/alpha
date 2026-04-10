@@ -93,7 +93,7 @@ export const ExitIntentModal = () => {
         </button>
         {isSuccess ? (
           <div className="p-8 text-center">
-            <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-foreground/40 mb-4">
+            <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-foreground/40 mb-4">
               {t("successTitle")}
             </p>
             <p className="text-foreground/70 text-sm leading-relaxed">
@@ -103,7 +103,7 @@ export const ExitIntentModal = () => {
         ) : (
           <div className="p-8">
             <div className="mb-8">
-              <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-foreground/40 mb-3">
+              <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-foreground/40 mb-3">
                 {t("subtitle")}
               </p>
               <h2 className="text-2xl font-medium text-foreground tracking-tight mb-3">
@@ -120,7 +120,7 @@ export const ExitIntentModal = () => {
                 { value: "Free", label: t("stats.noCommitment") },
                 { value: "Direct", label: t("stats.founderAccess") },
               ].map(({ value, label }) => (
-                <div key={label} className="rounded-xl border border-foreground/8 bg-foreground/[0.02] px-3 py-3">
+                <div key={label} className="rounded-xl border border-foreground/8 bg-foreground/2 px-3 py-3">
                   <p className="text-sm font-medium text-foreground">{value}</p>
                   <p className="text-xs text-foreground/40 mt-0.5">{label}</p>
                 </div>

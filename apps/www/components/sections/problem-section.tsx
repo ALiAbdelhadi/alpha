@@ -34,14 +34,14 @@ export const ProblemSection = memo(function ProblemSection() {
     <section
       id="problem"
       ref={sectionRef}
-      className="relative border-y border-border bg-background pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]"
+      className="relative border-y border-border bg-background pt-(--section-y-top) pb-(--section-y-bottom)"
     >
       <Container>
         <div className="max-w-3xl mb-12 space-y-4">
           <p ref={eyebrowRef} className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
             01 — {t("problem.badge")}
           </p>
-          <h2 ref={titleRef} className="text-[clamp(2.125rem,4vw,3.25rem)] leading-[1.08] tracking-[-0.02em] font-normal tracking-tight text-foreground">
+          <h2 ref={titleRef} className="text-[clamp(2.125rem,4vw,3.25rem)] leading-[1.08] font-normal tracking-tight text-foreground">
             {t("problem.title.pre")}{" "}
             <span className="text-muted-foreground line-through decoration-border"> {t("problem.title.crossed")} </span>
             <br />

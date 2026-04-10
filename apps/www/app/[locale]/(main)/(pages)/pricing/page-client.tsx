@@ -4,10 +4,9 @@ import { Container } from "@/components/container";
 import { ArrowLabel } from "@/components/directional-link";
 import { MagneticButton } from "@/components/magnetic-button";
 import { FaqSection } from "@/components/sections/faq-section";
-import { getCommercialCta } from "@/lib/commercial";
 import { Link } from "@/i18n/navigation";
 import { DEFAULTS, useBatch, useReveal, useText } from "@/lib/motion";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
 const TIER_DESTINATION = {
   essential: "/estimator?tier=essential",
@@ -18,8 +17,7 @@ const TIER_DESTINATION = {
 export default function PricingPage() {
   const t = useTranslations("pricing");
   const tp = useTranslations("commercial.pricing");
-  const locale = useLocale();
-
+  
   const heroEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 });
   const heroTitleRef = useText<HTMLHeadingElement>(DEFAULTS.heading);
   const heroDescRef = useReveal({ ...DEFAULTS.body, delay: 0.15 });
@@ -136,13 +134,13 @@ export default function PricingPage() {
   ];
 
   return (
-    <section className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+    <section className="pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
         <div className="py-12 md:py-24">
           <div className="mb-16 max-w-5xl">
             <p
               ref={heroEyebrowRef}
-              className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
+              className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
             >
               {t("label")}
             </p>
@@ -185,14 +183,14 @@ export default function PricingPage() {
                   <>
                     <div className="absolute top-0 left-0 right-0 h-[2px] bg-foreground/60 rounded-t-sm" />
                     <div className="mb-3">
-                      <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
+                      <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
                         {t("recommended")}
                       </p>
                     </div>
                   </>
                 )}
                 <span
-                  className="font-mono text-sm leading-normal tracking-wider font-light text-primary/10 leading-none select-none mb-4 block"
+                  className="font-mono text-sm leading-normal tracking-wider font-light text-primary/10 select-none mb-4 block"
                   style={{
                     fontSize: "clamp(40px, 4vw, 52px)",
                     letterSpacing: "-0.03em",
@@ -209,7 +207,7 @@ export default function PricingPage() {
                 >
                   {tier.buyerLabel}
                 </h2>
-                <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-primary/35 mb-2">
+                <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-primary/35 mb-2">
                   {tier.internalLabel}
                 </p>
                 {tier.highlight && tier.originalPrice && (
@@ -217,7 +215,7 @@ export default function PricingPage() {
                     {tier.originalPrice}
                   </div>
                 )}
-                <p className="font-mono text-sm leading-normal tracking-wider text-xs text-primary/40 uppercase tracking-[0.15em] mb-4">
+                <p className="font-mono text-sm leading-normal tracking-wider text-primary/70 uppercase mb-4">
                   {tier.priceRange}
                 </p>
                 <p className="text-sm text-primary/60 leading-relaxed mb-6">
@@ -239,7 +237,7 @@ export default function PricingPage() {
                     {tier.notIncluded}
                   </p>
                 )}
-                <p className="text-xs text-primary/45 leading-relaxed mb-4">
+                <p className="text-xs text-primary/75 leading-relaxed mb-4">
                   {tier.nextStep}
                 </p>
                 <MagneticButton
@@ -264,7 +262,7 @@ export default function PricingPage() {
                 key={note.key}
                 className="commercial-note rounded-sm border border-foreground/8 bg-foreground/2 p-5 md:p-6"
               >
-                <p className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase tracking-[0.2em] text-primary/40 mb-3">
+                <p className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase text-primary/70 mb-3">
                   {note.label}
                 </p>
                 <p className="text-sm text-primary/60 leading-relaxed">
@@ -277,7 +275,7 @@ export default function PricingPage() {
           <section className="pt-16">
             <p
               ref={roiEyebrowRef}
-              className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
+              className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
             >
               {t("roi.eyebrow")}
             </p>
@@ -314,13 +312,13 @@ export default function PricingPage() {
                       i > 0 ? "md:border-l border-foreground/8 md:pl-6" : ""
                     }
                   >
-                    <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-2">
+                    <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-2">
                       {stat.label}
                     </p>
                     <p className="text-2xl font-light text-primary mb-1">
                       {stat.value}
                     </p>
-                    <p className="text-xs text-primary/40">{stat.sub}</p>
+                    <p className="text-xs text-primary/70">{stat.sub}</p>
                   </div>
                 ))}
               </div>

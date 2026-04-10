@@ -71,7 +71,7 @@ function HeroSection() {
   ];
 
   return (
-    <section className="relative overflow-hidden pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+    <section className="relative overflow-hidden pt-(--section-y-top) pb-(--section-y-bottom)">
       <SectionWatermark>06</SectionWatermark>
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute top-0 ltr:left-1/4 rtl:right-1/4 h-full w-px bg-foreground/6" />
@@ -147,7 +147,7 @@ function HeroSection() {
                 </ExternalDirectionalLink>
               </div>
             </div>
-            <div className="rounded-2xl border border-border bg-background/70 px-6 py-5">
+            <div className="rounded-2xl border border-border bg-surface px-6 py-5">
               <p className={cn(monoCaps, "mb-4 text-muted-foreground/70")}>
                 {heroT("scrollHint")}
               </p>
@@ -200,7 +200,7 @@ function PrinciplesSection() {
   ];
 
   return (
-    <section className="border-t border-border pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+    <section className="border-t border-border pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14">
           <div>
@@ -211,7 +211,7 @@ function PrinciplesSection() {
               ref={titleRef}
               className="text-[clamp(2.125rem,4vw,3.25rem)] tracking-[-0.02em] font-normal text-foreground leading-[1.08]"
             >
-              {t("founderNote")}
+              {t("founder.name")}
             </h2>
             <div className="mt-6 max-w-[42ch] space-y-4">
               <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground">
@@ -245,7 +245,7 @@ function PrinciplesSection() {
             ))}
             <article
               data-principle-card
-              className="rounded-2xl border border-border bg-background/70 p-6 md:col-span-2 md:p-8"
+              className="rounded-2xl border border-border bg-surface p-6 md:col-span-2 md:p-8"
             >
               <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                 <div>
@@ -287,7 +287,7 @@ function OperatingModelSection() {
   }));
 
   return (
-    <section className="border-t border-border pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+    <section className="border-t border-border pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
         <div className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
@@ -368,7 +368,7 @@ function PathwaysSection({ routeCards }: PageClientProps) {
   });
 
   return (
-    <section className="border-t border-border pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+    <section className="border-t border-border pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16">
           <div className="max-w-xl">

@@ -5,7 +5,7 @@ import { useIsomorphicLayoutEffect } from "@/lib/dom-utils"
 import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
 import { useLocale, useTranslations } from "next-intl"
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react"
 
 const INK = {
   red: "rgba(210, 68,  68,  0.82)",
@@ -31,7 +31,7 @@ export function ConsultingBriefSection() {
   const locale = useLocale()
   const isRtl = locale === "ar"
 
-  const STAGES: Stage[] = [
+  const STAGES: Stage[] = useMemo(() => [
     {
       key: "discovery", label: t("brief.stages.discovery"),
       actions: [
@@ -69,15 +69,15 @@ export function ConsultingBriefSection() {
         { type: "note", target: "note-action", delay: 660 },
       ],
     },
-  ]
+  ], [t])
 
-  const NOTES: Note[] = [
+  const NOTES: Note[] = useMemo(() => [
     { id: "note-symptom", color: "red", label: t("brief.notes.symptom.label"), body: t("brief.notes.symptom.body") },
     { id: "note-rflag", color: "red", label: t("brief.notes.rflag.label"), body: t("brief.notes.rflag.body") },
     { id: "note-question", color: "amber", label: t("brief.notes.question.label"), body: t("brief.notes.question.body") },
     { id: "note-connected", color: "amber", label: t("brief.notes.connected.label"), body: t("brief.notes.connected.body") },
     { id: "note-finding", color: "green", label: t("brief.notes.finding.label"), body: t("brief.notes.finding.body") },
-  ]
+  ], [t])
 
   function getPrimaryNote(stageIndex: number): Note | null {
     if (stageIndex < 0) return null
@@ -87,13 +87,13 @@ export function ConsultingBriefSection() {
     return NOTES.find(n => n.id === id) ?? null
   }
 
-  function collectTargets(upToIndex: number): Set<string> {
+  const collectTargets = useCallback((upToIndex: number): Set<string> => {
     const targets = new Set<string>()
     for (let i = 0; i <= upToIndex; i++) {
       STAGES[i].actions.forEach(a => targets.add(a.target))
     }
     return targets
-  }
+  }, [STAGES])
 
   const wrapperRef = useRef<HTMLDivElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
@@ -169,7 +169,7 @@ export function ConsultingBriefSection() {
       tl.call(() => setActiveTargets(collectTargets(index)))
       tlRef.current = tl
     }
-  }, [STAGES])
+  }, [STAGES, collectTargets])
 
   useIsomorphicLayoutEffect(() => {
     if (!mounted || !wrapperRef.current || !stickyRef.current) return
@@ -343,10 +343,10 @@ export function ConsultingBriefSection() {
 
       <div ref={wrapperRef} style={{ height: "415vh" }} id="brief" className="p-0 m-0 w-full">
         <Container>
-          <div ref={stickyRef} className="cb-sticky-inner pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+          <div ref={stickyRef} className="cb-sticky-inner pt-(--section-y-top) pb-(--section-y-bottom)">
 
             <div ref={headerRef} style={{ flexShrink: 0, marginBottom: "clamp(6px, 1.2vh, 20px)" }}>
-              <p className="font-mono text-sm leading-normal tracking-wider text-xs uppercase tracking-[0.25em] text-foreground/40 mb-2 md:mb-3 block">
+              <p className="font-mono text-sm leading-normal tracking-wider uppercase text-foreground/40 mb-2 md:mb-3 block">
                 {t("brief.eyebrow")}
               </p>
               <div className="flex items-end justify-between gap-4 md:gap-6 flex-wrap">
@@ -361,7 +361,7 @@ export function ConsultingBriefSection() {
                     {t("brief.titleItalic")}
                   </span>
                 </h2>
-                <p className="font-mono text-sm leading-normal tracking-wider text-xs text-foreground/45 max-w-[38ch] hidden lg:block leading-relaxed">
+                <p className="font-mono text-sm leading-normal tracking-wider text-foreground/45 max-w-[38ch] hidden lg:block">
                   {t("brief.subtitle")}
                 </p>
               </div>

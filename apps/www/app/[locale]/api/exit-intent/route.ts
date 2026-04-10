@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 import { prisma } from "@repo/database"
+import { enforceRateLimit } from "@/lib/rate-limit"
 
 const exitIntentSchema = z.object({
     phone: z.string(),
@@ -9,6 +10,22 @@ const exitIntentSchema = z.object({
 
 export async function POST(request: NextRequest) {
     try {
+        const rl = await enforceRateLimit(request, {
+            scope: "public_api",
+            route: "exit_intent",
+            limit: 5,
+            windowSeconds: 60 * 60,
+        })
+        if (!rl.ok) {
+            return NextResponse.json(
+                { success: false, message: "Too many requests. Please try again later." },
+                {
+                    status: 429,
+                    headers: { "Retry-After": rl.retryAfterSeconds.toString() },
+                },
+            )
+        }
+
         const body = await request.json()
         const { phone, source } = exitIntentSchema.parse(body)
 

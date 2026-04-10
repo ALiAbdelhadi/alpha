@@ -60,12 +60,12 @@ export default function HowWeWorkPage() {
   const ctaButtonsRef = useReveal({ ...DEFAULTS.element, delay: 0.25 });
 
   return (
-    <main className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+    <main className="pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
         <section className="py-16 md:py-24">
           <p
             ref={heroEyebrowRef}
-            className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-6 block"
+            className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-6 block"
           >
             {tNav("how-we-work")}
           </p>
@@ -104,7 +104,7 @@ export default function HowWeWorkPage() {
         <section className="max-w-5xl mx-auto py-16 md:py-20">
           <p
             ref={archEyebrowRef}
-            className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
+            className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
           >
             {t("architecture.eyebrow")}
           </p>
@@ -136,7 +136,7 @@ export default function HowWeWorkPage() {
             <div>
               <p
                 ref={processEyebrowRef}
-                className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
+                className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
               >
                 {t("phasedProcess.eyebrow")}
               </p>
@@ -157,7 +157,7 @@ export default function HowWeWorkPage() {
                 {t("phasedProcess.description")}
               </p>
             </div>
-            <p className="font-mono text-sm leading-normal tracking-wider text-xs text-muted-foreground/70 uppercase tracking-[0.2em] shrink-0">
+            <p className="font-mono text-sm leading-normal tracking-wider text-muted-foreground/70 uppercase shrink-0">
               {tPhases("deliverables")} · {tPhases("timeline")}
             </p>
           </div>
@@ -169,7 +169,7 @@ export default function HowWeWorkPage() {
               >
                 <div className="flex items-start justify-between mb-4">
                   <span
-                    className="font-mono text-sm leading-normal tracking-wider font-light text-primary/20 leading-none select-none"
+                    className="font-mono text-sm leading-normal tracking-wider font-light text-primary/20 select-none"
                     style={{
                       fontSize: "clamp(40px, 5vw, 56px)",
                       letterSpacing: "-0.03em",
@@ -177,7 +177,7 @@ export default function HowWeWorkPage() {
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 pt-1">
+                  <span className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 pt-1">
                     {tPhases(`${key}.timeline`)}
                   </span>
                 </div>
@@ -193,7 +193,7 @@ export default function HowWeWorkPage() {
                 <p className="text-base text-primary/60 leading-relaxed mb-4">
                   {tPhases(`${key}.description`)}
                 </p>
-                <p className="font-mono text-sm leading-normal tracking-wider text-xs text-primary/35 uppercase tracking-[0.18em]">
+                <p className="font-mono text-sm leading-normal tracking-wider text-primary/35 uppercase">
                   {tPhases(`${key}.deliverables`)}
                 </p>
               </article>
@@ -207,7 +207,7 @@ export default function HowWeWorkPage() {
         <section className="max-w-5xl mx-auto py-16 md:py-20">
           <p
             ref={standardsEyebrowRef}
-            className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
+            className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
           >
             {t("standards.eyebrow")}
           </p>
@@ -257,7 +257,7 @@ export default function HowWeWorkPage() {
                 key={key}
                 className="standard-card border border-foreground/8 rounded-sm bg-foreground/2 p-5"
               >
-                <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-3">
+                <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-3">
                   {label}
                 </p>
                 <p className="text-base text-primary/60 leading-relaxed">
@@ -269,7 +269,7 @@ export default function HowWeWorkPage() {
           <div ref={standardsLinkRef}>
             <Link
               href="/standards"
-              className="group inline-flex items-center gap-2 text-muted-foreground transition-colors duration-300 hover:text-foreground font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal gap-3"
+              className="group inline-flex items-center gap-3 text-muted-foreground transition-colors duration-300 hover:text-foreground font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal"
             >
               <span className="border-b border-transparent group-hover:border-foreground/30 transition-colors duration-300 pb-0.5">
                 {locale === "ar"
@@ -298,7 +298,7 @@ export default function HowWeWorkPage() {
             <div>
               <p
                 ref={ctaEyebrowRef}
-                className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
+                className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
               >
                 {t("cta.eyebrow")}
               </p>

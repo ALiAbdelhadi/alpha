@@ -86,7 +86,7 @@ export const AboutSection = memo(function AboutSection({
       suppressHydrationWarning
       id="about"
       ref={sectionRef}
-      className="flex w-full items-center pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]"
+      className="flex w-full items-center pt-(--section-y-top) pb-(--section-y-bottom)"
     >
       <Container>
         <div className="grid gap-16 md:grid-cols-2 md:gap-20">

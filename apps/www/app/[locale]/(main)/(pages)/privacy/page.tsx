@@ -33,7 +33,7 @@ export default async function PrivacyPolicyPage({
       <JsonLd schemas={buildPageSchemas(locale, "privacy")} />
       <section
         id="privacy-content"
-        className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] py-32"
+        className="pt-(--section-y-top) pb-(--section-y-bottom) py-32"
         aria-labelledby="privacy-heading"
       >
         <Container className="max-w-3xl mx-auto">

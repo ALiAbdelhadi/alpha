@@ -47,13 +47,19 @@ export function DirectionalLink({
   href,
   children,
   className,
+  ariaLabel,
 }: {
   href: string
   children: ReactNode
   className?: string
+  ariaLabel?: string
 }) {
   return (
-    <Link href={href} className={cn("group inline-flex items-center gap-2", className)}>
+    <Link
+      href={href}
+      aria-label={ariaLabel}
+      className={cn("group inline-flex items-center gap-2", className)}
+    >
       <span>{children}</span>
       <ArrowIcon />
     </Link>

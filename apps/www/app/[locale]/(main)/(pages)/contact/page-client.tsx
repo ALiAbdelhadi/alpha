@@ -7,8 +7,8 @@ import { DEFAULTS, useReveal, useText } from "@/lib/motion"
 import { contactFormSchema } from "@/lib/validations/contact"
 import { AlertCircle, CheckCircle2, Mail, MapPin, Phone } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
+import { useEffect, useState } from "react"
 
 type FormErrors = Record<string, string>
 
@@ -114,7 +114,7 @@ export default function ContactPage() {
                             className="mb-8 inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-foreground/10 px-4 py-2 backdrop-blur-sm"
                         >
                             <div className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-pulse" />
-                            <p className="font-mono text-sm leading-normal tracking-wider text-xs text-primary/90 tracking-wide uppercase">
+                            <p className="font-mono text-sm leading-normal tracking-wider text-primary/90 uppercase">
                                 {t("badge")}
                             </p>
                         </div>
@@ -148,7 +148,7 @@ export default function ContactPage() {
                                     <br />
                                     <span className="text-primary/75">{t("infoTitleHighlight")}</span>
                                 </h2>
-                                <p className="font-mono text-sm leading-normal tracking-wider text-sm text-primary/60 tracking-wide sm:text-base">
+                                <p className="font-mono leading-normal tracking-wider text-sm text-primary/60 sm:text-base">
                                     {t("infoSubtitle")}
                                 </p>
                             </div>
@@ -156,7 +156,7 @@ export default function ContactPage() {
                                 <a href={`mailto:${tContact("emailValue")}`} className="group block">
                                     <div className="mb-2 flex items-center gap-2">
                                         <Mail className="h-3.5 w-3.5 text-primary/60" />
-                                        <span className="font-mono text-sm leading-normal tracking-wider text-xs text-primary/60 tracking-wide">
+                                        <span className="font-mono text-sm leading-normal tracking-wider text-primary/60">
                                             {t("emailLabel")}
                                         </span>
                                     </div>
@@ -167,7 +167,7 @@ export default function ContactPage() {
                                 <a href={`tel:${t("phoneValue").replace(/\s/g, "")}`} className="group block">
                                     <div className="mb-2 flex items-center gap-2">
                                         <Phone className="h-3.5 w-3.5 text-primary/60" />
-                                        <span className="font-mono text-sm leading-normal tracking-wider text-xs text-primary/60 tracking-wide">
+                                        <span className="font-mono text-sm leading-normal tracking-wider text-primary/60">
                                             {t("phoneLabel")}
                                         </span>
                                     </div>
@@ -178,7 +178,7 @@ export default function ContactPage() {
                                 <div>
                                     <div className="mb-2 flex items-center gap-2">
                                         <MapPin className="h-3.5 w-3.5 text-primary/60" />
-                                        <span className="font-mono text-sm leading-normal tracking-wider text-xs text-primary/60 tracking-wide">
+                                        <span className="font-mono text-sm leading-normal tracking-wider text-primary/60">
                                             {t("locationLabel")}
                                         </span>
                                     </div>
@@ -193,7 +193,7 @@ export default function ContactPage() {
                                         <a
                                             key={social}
                                             href="#"
-                                            className="border-b border-transparent font-mono text-sm leading-normal tracking-wider text-xs text-primary/60 transition-all hover:border-foreground/60 hover:text-primary/85 sm:text-sm"
+                                            className="border-b border-transparent font-mono text-sm leading-normal tracking-wider text-primary/60 transition-all hover:border-foreground/60 hover:text-primary/85 sm:text-sm"
                                         >
                                             {t(`social.${social}`)}
                                         </a>
@@ -213,7 +213,7 @@ export default function ContactPage() {
                                             </span>
                                         </MagneticButton>
                                     </Link>
-                                    <p className="mt-3 text-xs text-primary/60 font-mono text-sm leading-normal tracking-wider">
+                                    <p className="mt-3 text-primary/60 font-mono text-sm leading-normal tracking-wider">
                                         {t("responseTime")}
                                     </p>
                                 </div>
@@ -223,7 +223,7 @@ export default function ContactPage() {
                             <div className="p-8 rounded-2xl border border-foreground/10 bg-foreground/3 backdrop-blur-md">
                                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                                     <div>
-                                        <label className="mb-2 block font-mono text-sm leading-normal tracking-wider text-xs text-primary/60 tracking-wide sm:text-sm">
+                                        <label className="mb-2 block font-mono text-sm leading-normal tracking-wider text-primary/60 sm:text-sm">
                                             {t("form.nameLabel")} <span className="text-red-500">*</span>
                                         </label>
                                         <input
@@ -237,14 +237,14 @@ export default function ContactPage() {
                                             disabled={isSubmitting}
                                         />
                                         {formErrors.name && (
-                                            <p id="contact-name-error" className="mt-1.5 flex items-center gap-1 font-mono text-sm leading-normal tracking-wider text-xs text-red-500">
+                                            <p id="contact-name-error" className="mt-1.5 flex items-center gap-1 font-mono text-sm leading-normal tracking-wider text-red-500">
                                                 <AlertCircle className="h-3 w-3" aria-hidden="true" />
                                                 {formErrors.name}
                                             </p>
                                         )}
                                     </div>
                                     <div>
-                                        <label className="mb-2 block font-mono text-sm leading-normal tracking-wider text-xs text-primary/60 tracking-wide sm:text-sm">
+                                        <label className="mb-2 block font-mono text-sm leading-normal tracking-wider text-primary/60 sm:text-sm">
                                             {t("form.phoneLabel")} <span className="text-red-500">*</span>
                                         </label>
                                         <input
@@ -259,14 +259,14 @@ export default function ContactPage() {
                                             disabled={isSubmitting}
                                         />
                                         {formErrors.phone && (
-                                            <p id="contact-phone-error" className="mt-1.5 flex items-center gap-1 font-mono text-sm leading-normal tracking-wider text-xs text-red-500">
+                                            <p id="contact-phone-error" className="mt-1.5 flex items-center gap-1 font-mono text-sm leading-normal tracking-wider text-red-500">
                                                 <AlertCircle className="h-3 w-3" aria-hidden="true" />
                                                 {formErrors.phone}
                                             </p>
                                         )}
                                     </div>
                                     <div>
-                                        <label className="mb-2 block font-mono text-sm leading-normal tracking-wider text-xs text-primary/60 tracking-wide sm:text-sm">
+                                        <label className="mb-2 block font-mono text-sm leading-normal tracking-wider text-primary/60 sm:text-sm">
                                             {t("form.serviceLabel")}
                                         </label>
                                         <select
@@ -283,7 +283,7 @@ export default function ContactPage() {
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="mb-2 block font-mono text-sm leading-normal tracking-wider text-xs text-primary/60 tracking-wide sm:text-sm">
+                                        <label className="mb-2 block font-mono text-sm leading-normal tracking-wider text-primary/60 sm:text-sm">
                                             {t("form.messageLabel")} <span className="text-red-500">*</span>
                                         </label>
                                         <textarea
@@ -297,13 +297,21 @@ export default function ContactPage() {
                                             disabled={isSubmitting}
                                         />
                                         {formErrors.message && (
-                                            <p id="contact-message-error" className="mt-1.5 flex items-center gap-1 font-mono text-sm leading-normal tracking-wider text-xs text-red-500">
+                                            <p id="contact-message-error" className="mt-1.5 flex items-center gap-1 font-mono text-sm leading-normal tracking-wider text-red-500">
                                                 <AlertCircle className="h-3 w-3" aria-hidden="true" />
                                                 {formErrors.message}
                                             </p>
                                         )}
                                     </div>
-                                    <input type="text" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+                                    <input
+                                        type="text"
+                                        name="website"
+                                        className="hidden"
+                                        tabIndex={-1}
+                                        autoComplete="off"
+                                        aria-hidden="true"
+                                        defaultValue=""
+                                    />
                                     <div className="pt-3 space-y-3">
                                         <MagneticButton
                                             type="submit" variant="primary" size="lg"
@@ -311,12 +319,12 @@ export default function ContactPage() {
                                         >
                                             {isSubmitting ? t("form.submitting") : t("form.submit")}
                                         </MagneticButton>
-                                        <p className="text-center font-mono text-sm leading-normal tracking-wider text-xs text-primary/60">
+                                        <p className="text-center font-mono text-sm leading-normal tracking-wider text-primary/60">
                                             {t("form.riskReversal")}
                                         </p>
                                         {submitSuccess && (
                                             <div className="mt-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2.5 text-center">
-                                                <p className="flex items-center justify-center gap-2 font-mono text-sm leading-normal tracking-wider text-xs text-primary">
+                                                <p className="flex items-center justify-center gap-2 font-mono text-sm leading-normal tracking-wider text-primary">
                                                     <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
                                                     {t("form.success")}
                                                 </p>
@@ -324,7 +332,7 @@ export default function ContactPage() {
                                         )}
                                         {submitError && (
                                             <div className="mt-2 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2.5 text-center">
-                                                <p className="flex items-center justify-center gap-2 font-mono text-sm leading-normal tracking-wider text-xs text-primary">
+                                                <p className="flex items-center justify-center gap-2 font-mono text-sm leading-normal tracking-wider text-primary">
                                                     <AlertCircle className="h-3.5 w-3.5 text-red-500" />
                                                     {submitError}
                                                 </p>
@@ -334,7 +342,6 @@ export default function ContactPage() {
                                 </form>
                             </div>
                         </div>
-
                     </div>
                 </Container>
             </section>

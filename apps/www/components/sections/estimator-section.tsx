@@ -303,7 +303,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
       suppressHydrationWarning
       id="estimator"
       ref={sectionRef}
-      className="flex w-full items-center pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]"
+      className="flex w-full items-center pt-(--section-y-top) pb-(--section-y-bottom)"
     >
       <Container>
 

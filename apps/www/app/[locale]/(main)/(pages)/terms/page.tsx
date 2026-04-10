@@ -33,7 +33,7 @@ export default async function TermsOfServicePage({
       <JsonLd schemas={buildPageSchemas(locale, "terms")} />
       <section
         id="terms-content"
-        className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] py-32"
+        className="pt-(--section-y-top) pb-(--section-y-bottom) py-32"
         aria-labelledby="terms-heading"
       >
         <Container className="max-w-3xl mx-auto">

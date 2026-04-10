@@ -1,15 +1,15 @@
 "use client";
 
 import { Container } from "@/components/container";
-import { SectionWatermark } from "@/components/section-watermark";
 import { DesignCompareSection } from "@/components/design-compare-section";
 import { MagneticButton } from "@/components/magnetic-button";
-import { getCommercialCta } from "@/lib/commercial";
-import { monoCaps } from "@/lib/mono-caps";
+import { SectionWatermark } from "@/components/section-watermark";
 import { Link } from "@/i18n/navigation";
-import { cn } from "@/lib/utils";
+import { getCommercialCta } from "@/lib/commercial";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { monoCaps } from "@/lib/mono-caps";
 import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
+import { cn } from "@/lib/utils";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef } from "react";
 
@@ -56,7 +56,6 @@ function HeroSection() {
         ref={eyebrowRef}
         className="absolute top-24 ltr:right-8 rtl:left-8 hidden md:flex items-center gap-2"
       >
-        {/* توحيد لون النقطة مع الهوية (يمكنك تغيير emerald-500 إذا كان لا يطابق لون علامتك التجارية) */}
         <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
         <span className={cn(monoCaps, "text-foreground/20")}>
           {t("subtitle")}
@@ -80,7 +79,6 @@ function HeroSection() {
           >
             {t("title")}
             <br />
-            {/* توحيد كلاسات الخط المائل (Italic) لتطابق قسم Showcase */}
             <span className="font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold text-foreground/45">
               {t("titleItalic")}
             </span>
@@ -353,7 +351,7 @@ const FeatureCard = ({
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute start-0 bottom-0 z-10 h-[1px] w-0 bg-gradient-to-r from-(--lc) to-transparent transition-[width] duration-500 ease-in-out group-hover:w-full"
+        className="pointer-events-none absolute inset-s-0 bottom-0 z-10 h-px w-0 bg-linear-to-r from-(--lc) to-transparent transition-[width] duration-500 ease-in-out group-hover:w-full"
       />
       {isHero ? (
         <div ref={innerRef} className="relative z-10 transition-transform duration-100 ease-out translate-x-(--tx,0px) translate-y-(--ty,0px)">
@@ -617,7 +615,7 @@ function CtaSection() {
               >
                 Aa
               </div>
-              <div className="text-sm text-primary/40 font-sans">
+              <div className="text-sm text-primary/70 font-sans">
                 Body regular
               </div>
               <div className="font-mono text-xs uppercase tracking-[0.22em] text-foreground/20 rtl:font-sans rtl:normal-case">

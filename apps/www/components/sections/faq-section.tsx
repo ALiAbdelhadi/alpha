@@ -31,7 +31,7 @@ export const FaqSection = memo(function FaqSection({ namespace, className }: Faq
   const questionKeys = ["01", "02", "03", "04", "05"]
 
   return (
-    <section className={cn("border-t border-border pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]", className)}>
+    <section className={cn("border-t border-border pt-(--section-y-top) pb-(--section-y-bottom)", className)}>
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1fr_1.5fr] lg:gap-24">
           <div ref={headerRef} className="max-w-md">

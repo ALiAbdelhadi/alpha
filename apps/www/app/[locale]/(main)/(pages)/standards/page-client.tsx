@@ -24,12 +24,12 @@ function OpeningSection() {
   const metricsRef = useReveal({ ...DEFAULTS.element, delay: 0.35 });
 
   return (
-    <section className="flex min-h-screen items-center pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] pb-24">
+    <section className="flex min-h-screen items-center pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
         <div className="max-w-5xl">
           <p
             ref={eyebrowRef}
-            className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-6 block"
+            className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-6 block"
           >
             {t("eyebrow")}
           </p>
@@ -74,7 +74,7 @@ function OpeningSection() {
                 key={i}
                 className="border border-foreground/8 rounded-sm bg-foreground/2 p-5"
               >
-                <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-3">
+                <p className="font-mono text-sm leading-normal tracking-wider  uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-3">
                   {label}
                 </p>
                 {value ? (
@@ -86,7 +86,7 @@ function OpeningSection() {
                     }}
                   >
                     {value}
-                    <span className="font-mono text-sm leading-normal tracking-wider text-xs text-primary/35 uppercase tracking-[0.15em] ml-2">
+                    <span className="font-mono text-sm leading-normal tracking-wider  text-primary/35 uppercase ml-2">
                       {sub}
                     </span>
                   </p>
@@ -133,7 +133,7 @@ function CategoriesSection() {
   return (
     <section
       ref={sectionRef}
-      className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] border-t border-foreground/8"
+      className="pt-(--section-y-top) pb-(--section-y-bottom) border-t border-foreground/8"
     >
       <Container>
         <div>
@@ -143,7 +143,7 @@ function CategoriesSection() {
               data-category
               className="border-b border-foreground/8 py-12 md:py-16 grid gap-8 md:grid-cols-[56px_1fr] items-start"
             >
-              <span className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase text-foreground/20 rtl:font-sans rtl:normal-case rtl:tracking-normal tracking-[0.2em] pt-2">
+              <span className="font-mono text-sm leading-normal tracking-wider uppercase text-foreground/20 rtl:font-sans rtl:normal-case rtl:tracking-normal pt-2">
                 {String(i + 1).padStart(2, "0")}
               </span>
               <div className="max-w-4xl">
@@ -174,7 +174,7 @@ function CategoriesSection() {
                       key={heading}
                       className="border border-foreground/8 rounded-sm bg-foreground/2 p-6"
                     >
-                      <h3 className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4">
+                      <h3 className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4">
                         {heading}
                       </h3>
                       <div className="space-y-3">
@@ -209,7 +209,7 @@ function ClosingSection() {
   });
 
   return (
-    <section className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] border-t border-foreground/8">
+    <section className="pt-(--section-y-top) pb-(--section-y-bottom) border-t border-foreground/8">
       <Container>
         <div className="max-w-3xl">
           <div className="mb-10">

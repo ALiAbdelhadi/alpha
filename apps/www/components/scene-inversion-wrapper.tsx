@@ -81,7 +81,7 @@ export function SceneInversionWrapper() {
         <div
             id="services-wrapper"
             ref={wrapperRef}
-            className="ps-section relative overflow-hidden transition-colors duration-[420ms] ease-in-out rtl:text-right"
+            className="ps-section relative overflow-hidden transition-colors duration-420 ease-in-out rtl:text-right"
             data-scene={entered ? "inverted" : undefined}
         >
             <div

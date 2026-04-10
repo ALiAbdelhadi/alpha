@@ -1,5 +1,6 @@
 import { generateRouteMetadata } from "@/lib/metadata"
 import { HomeClient } from "./home-client"
+import { HeroSectionServer } from "@/components/sections/hero-section.server";
 
 export async function generateMetadata({
   params,
@@ -10,10 +11,16 @@ export async function generateMetadata({
   return generateRouteMetadata(locale, "home", "")
 }
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   return (
     <>
-      <HomeClient />
+      <HeroSectionServer locale={locale} />
+      <HomeClient locale={locale} />
     </>
-  )
+  );
 }

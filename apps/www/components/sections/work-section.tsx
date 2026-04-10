@@ -48,7 +48,7 @@ export const WorkSection = memo(function WorkSection() {
   const flagshipMetrics = tCS.raw("altruvex-site.metrics") as Array<{ label: string; value: string }>;
 
   return (
-    <section id="work" className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+    <section id="work" className="pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
         
         <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 md:gap-12 mb-16">
@@ -188,6 +188,11 @@ export const WorkSection = memo(function WorkSection() {
                 <DirectionalLink
                   href={`/work/${slug}`}
                   className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal inline-flex text-foreground transition-colors hover:text-muted-foreground"
+                  ariaLabel={
+                    locale === "ar"
+                      ? `اقرأ دراسة الحالة: ${name}`
+                      : `Read the case study: ${name}`
+                  }
                 >
                   {tW("labels.viewCaseStudy") || (locale === "ar" ? "اقرأ دراسة الحالة" : "Read the Case Study")}
                 </DirectionalLink>
@@ -195,7 +200,6 @@ export const WorkSection = memo(function WorkSection() {
             );
           })}
         </div>
-        
         <div className="flex items-center gap-4 mt-6">
           <div className="flex-1 h-px bg-border" />
           <span className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">

@@ -107,20 +107,20 @@ export default function SchedulePage() {
     }
 
     return (
-        <section className="flex min-h-screen items-center pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+        <section className="flex min-h-screen items-center pt-(--section-y-top) pb-(--section-y-bottom)">
             <Container>
                 <div className="mx-auto max-w-2xl">
                     <div ref={backRef}>
                         <button
                             onClick={() => router.back()}
-                            className="group inline-flex items-center gap-2 text-muted-foreground transition-colors duration-300 hover:text-foreground font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal mb-10"
+                            className="group inline-flex items-center gap-2 text-muted-foreground transition-colors duration-300 hover:text-foreground font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal mb-10"
                         >
                             <ArrowLeft className="h-3.5 w-3.5 transition-transform duration-300 ltr:group-hover:-translate-x-1 rtl:group-hover:translate-x-1 rtl:-rotate-180" />
                             {t("back")}
                         </button>
                     </div>
                     <div ref={headerRef} className="mb-12">
-                        <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block">
+                        <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block">
                             {t("eyebrow")}
                         </p>
                         <h1
@@ -129,14 +129,14 @@ export default function SchedulePage() {
                         >
                             {t("title")}
                         </h1>
-                        <p className="font-mono text-sm leading-normal tracking-wider text-sm text-primary/40">
+                        <p className="font-mono text-sm leading-normal tracking-wider text-primary/70">
                             {t("subtitle")}
                         </p>
                     </div>
                     <div className="h-px w-full bg-foreground/8 mb-10" />
                     <form onSubmit={onSubmit} className="space-y-7" noValidate>
                         <div className="form-field">
-                            <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
+                            <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
                                 {t("form.name.label")} <span className="text-destructive">*</span>
                             </Label>
                             <Input
@@ -149,7 +149,7 @@ export default function SchedulePage() {
                             {errors.name && <FieldError msg={errors.name} />}
                         </div>
                         <div className="form-field">
-                            <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
+                            <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
                                 {t("form.phone.label")} <span className="text-destructive">*</span>
                             </Label>
                             <div className="relative">
@@ -167,7 +167,7 @@ export default function SchedulePage() {
                             {errors.phone && <FieldError msg={errors.phone} />}
                         </div>
                         <div className="form-field">
-                            <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
+                            <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
                                 {t("form.message.label")}
                             </Label>
                             <Textarea
@@ -180,7 +180,7 @@ export default function SchedulePage() {
                         </div>
                         <div className="grid md:grid-cols-2 gap-7">
                             <div className="form-field">
-                                <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal flex items-center gap-1.5">
+                                <Label className="mb-2 text-muted-foreground font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal flex items-center gap-1.5">
                                     <Calendar className="h-3 w-3" />
                                     {t("form.date.label")} <span className="text-destructive">*</span>
                                 </Label>
@@ -196,7 +196,7 @@ export default function SchedulePage() {
                                 {errors.date && <FieldError msg={errors.date} />}
                             </div>
                             <div className="form-field">
-                                <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal flex items-center gap-1.5">
+                                <Label className="mb-2 text-muted-foreground font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal flex items-center gap-1.5">
                                     <Clock className="h-3 w-3" />
                                     {t("form.time.label")} <span className="text-destructive">*</span>
                                 </Label>
@@ -207,7 +207,7 @@ export default function SchedulePage() {
                                     className={cn(errors.time && "border-destructive")}
                                 />
                                 {errors.time && <FieldError msg={errors.time} />}
-                                <p className="mt-1.5 text-muted-foreground/80 font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
+                                <p className="mt-1.5 text-muted-foreground/80 font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
                                     {t("form.time.availableHours")}
                                 </p>
                             </div>
@@ -219,12 +219,12 @@ export default function SchedulePage() {
                             >
                                 {isSubmitting ? t("submit.submitting") : t("submit.button")}
                             </MagneticButton>
-                            <p className="mt-1.5 text-muted-foreground/80 font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-center">
+                            <p className="mt-1.5 text-muted-foreground/80 font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-center">
                                 {t("form.riskReversal")}
                             </p>
                             {submitSuccess && (
                                 <div className="p-4 rounded-sm bg-emerald-500/8 border border-emerald-500/15">
-                                    <p className="text-center font-mono text-sm leading-normal tracking-wider text-sm text-primary flex items-center justify-center gap-2">
+                                    <p className="text-center font-mono leading-normal tracking-wider text-sm text-primary flex items-center justify-center gap-2">
                                         <CheckCircle2 className="h-4 w-4 text-emerald-500" />
                                         {t("submit.success")}
                                     </p>
@@ -232,7 +232,7 @@ export default function SchedulePage() {
                             )}
                             {submitError && (
                                 <div className="p-4 rounded-sm bg-red-500/8 border border-red-500/15">
-                                    <p className="text-center font-mono text-sm leading-normal tracking-wider text-sm text-primary flex items-center justify-center gap-2">
+                                    <p className="text-center font-mono leading-normal tracking-wider text-sm text-primary flex items-center justify-center gap-2">
                                         <AlertCircle className="h-4 w-4 text-red-400" />
                                         {submitError}
                                     </p>
@@ -248,7 +248,7 @@ export default function SchedulePage() {
 
 function FieldError({ msg }: { msg: string }) {
     return (
-        <p role="alert" className="mt-1.5 font-mono text-sm leading-normal tracking-wider text-xs text-destructive flex items-center gap-1">
+        <p role="alert" className="mt-1.5 font-mono text-sm leading-normal tracking-wider text-destructive flex items-center gap-1">
             <AlertCircle className="h-3 w-3" aria-hidden />
             {msg}
         </p>

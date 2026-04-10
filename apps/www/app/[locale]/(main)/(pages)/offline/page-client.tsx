@@ -32,7 +32,7 @@ export default function OfflinePage() {
                     </div>
                     <div className="inline-flex items-center gap-2 rounded-full border border-foreground/8 bg-foreground/2 px-3 py-1.5 mb-8">
                         <div className="h-1.5 w-1.5 rounded-full bg-destructive animate-pulse" />
-                        <span className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
+                        <span className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
                             {t("status")}
                         </span>
                     </div>
@@ -48,7 +48,7 @@ export default function OfflinePage() {
                     </p>
                     {stillOffline && (
                         <div className="mb-6 px-4 py-2.5 rounded-sm border border-destructive/30 bg-destructive/8">
-                            <p className="font-mono text-sm leading-normal tracking-wider text-xs text-destructive/80 uppercase tracking-[0.15em]">
+                            <p className="font-mono text-sm leading-normal tracking-wider text-destructive/80 uppercase">
                                 Still offline — please check your connection
                             </p>
                         </div>

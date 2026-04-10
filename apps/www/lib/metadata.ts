@@ -41,7 +41,7 @@ export const SITE_CONFIG = {
   social: {
     linkedin: "https://www.linkedin.com/in/ali-abdelhadi-65094b283/",
   },
-  url: process.env.NEXT_PUBLIC_APP_URL || "https://altruvex.com",
+  url: process.env.NEXT_PUBLIC_APP_URL,
 } as const;
 
 export const METADATA_DEFAULTS = {
@@ -751,7 +751,7 @@ export function generateRouteMetadata(
     creator: SITE_CONFIG.name,
     description,
     keywords,
-    metadataBase: new URL(SITE_CONFIG.url),
+    metadataBase: new URL(SITE_CONFIG.url ?? "https://altruvex.com"),
     openGraph,
     publisher: SITE_CONFIG.name,
     robots,

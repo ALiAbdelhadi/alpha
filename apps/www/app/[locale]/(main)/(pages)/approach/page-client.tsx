@@ -26,7 +26,7 @@ function OpeningSection() {
     const descRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth })
 
     return (
-        <section className="flex min-h-screen items-center pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+        <section className="flex min-h-screen items-center pt-(--section-y-top) pb-(--section-y-bottom)">
             <Container>
                 <div className="max-w-4xl py-16 md:py-24">
                     <h1 ref={titleRef} className="mb-8 font-sans font-normal text-primary">
@@ -74,7 +74,7 @@ function ProblemSection() {
     ]
 
     return (
-        <section ref={sectionRef} className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+        <section ref={sectionRef} className="pt-(--section-y-top) pb-(--section-y-bottom)">
             <Container>
                 <div className="mb-16">
                     <h2 ref={titleRef} className="mb-3 font-sans font-normal text-primary">
@@ -142,7 +142,7 @@ function DecisionsSection() {
     ]
 
     return (
-        <section ref={sectionRef} className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+        <section ref={sectionRef} className="pt-(--section-y-top) pb-(--section-y-bottom)">
             <Container>
                 <div ref={titleRef} className="mb-16">
                     <h2 className="mb-3 font-sans font-normal text-primary">
@@ -176,7 +176,7 @@ function ConstraintsSection() {
     const descRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0.15 })
 
     return (
-        <section className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+        <section className="pt-(--section-y-top) pb-(--section-y-bottom)">
             <Container>
                 <div className="mb-12">
                     <h2 ref={titleRef} className="mb-3 font-sans font-normal text-primary">
@@ -203,7 +203,7 @@ function BilingualSection() {
     const demoRef = useReveal({ ...DEFAULTS.element, ease: MOTION.ease.smooth, delay: 0.25 })
 
     return (
-        <section className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+        <section className="pt-(--section-y-top) pb-(--section-y-bottom)">
             <Container>
                 <div className="mb-12">
                     <h2 ref={titleRef} className="mb-3 font-sans font-normal text-primary">
@@ -274,7 +274,7 @@ function BoundariesSection() {
     const boundaries = ["1", "2", "3", "4", "5"]
 
     return (
-        <section ref={sectionRef} className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+        <section ref={sectionRef} className="pt-(--section-y-top) pb-(--section-y-bottom)">
             <Container>
                 <div className="mb-12">
                     <h2 ref={titleRef} className="mb-6 font-sans font-normal text-primary">
@@ -306,7 +306,7 @@ function ClosingSection() {
     const ctaRef = useReveal({ ...DEFAULTS.element, ease: MOTION.ease.smooth, delay: 0.25 })
 
     return (
-        <section className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+        <section className="pt-(--section-y-top) pb-(--section-y-bottom)">
             <Container>
                 <div className="max-w-3xl">
                     <div className="mb-12">
@@ -322,7 +322,7 @@ function ClosingSection() {
                     <div ref={ctaRef}>
                         <a
                             href="mailto:hello@altruvex.com"
-                            className="inline-flex items-center gap-2 font-mono text-sm leading-normal tracking-wider text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-primary transition-colors duration-300 hover:text-primary/70"
+                            className="inline-flex items-center gap-2 font-mono text-sm leading-normal tracking-wider text-[clamp(1.0625rem,1.05vw,1.125rem)] text-primary transition-colors duration-300 hover:text-primary/70"
                         >
                             {t("cta")}
                             <svg className="h-4 w-4 rtl:-rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">

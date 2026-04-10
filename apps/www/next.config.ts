@@ -1,5 +1,5 @@
 import { NextConfig } from 'next';
-import createNextIntlPlugin from 'next-intl/plugin';
+import createNextIntlPlugin from 'next-intl/plugin';
 const withPWA = require("@ducanh2912/next-pwa").default({
     dest: "public",
     disable: process.env.NODE_ENV === "development",
@@ -59,7 +59,10 @@ const nextConfig: NextConfig = {
     reactStrictMode: true,
     transpilePackages: ["@repo/database"],
     compress: true,
-    poweredByHeader: false,
+    poweredByHeader: false,
+    env: {
+        NEXT_PUBLIC_APP_VERSION: require('./package.json').version,
+    },
     images: {
         formats: ['image/avif', 'image/webp'],
         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
@@ -71,11 +74,6 @@ const nextConfig: NextConfig = {
     },
     allowedDevOrigins: ['192.168.1.15'],
     async headers() {
-        const isDev = process.env.NODE_ENV === "development";
-        const scriptSrc = isDev
-            ? "'self' 'unsafe-inline' 'unsafe-eval' https://www.clarity.ms https://www.googletagmanager.com https://va.vercel-scripts.com"
-            : "'self' 'unsafe-inline' https://www.clarity.ms https://www.googletagmanager.com https://va.vercel-scripts.com";
-
         return [
             {
                 source: '/:path*\\.(svg|jpg|jpeg|png|gif|ico|webp|avif|woff2)',
@@ -90,12 +88,12 @@ const nextConfig: NextConfig = {
                 source: '/(.*)',
                 headers: [
                     {
-                        key: 'Content-Security-Policy',
-                        value: `default-src 'self'; script-src ${scriptSrc}; worker-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; connect-src 'self' https://www.clarity.ms https://www.google-analytics.com https://analytics.google.com https://vitals.vercel-insights.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';`,
-                    },
-                    {
                         key: 'Strict-Transport-Security',
                         value: 'max-age=31536000; includeSubDomains; preload',
+                    },
+                    {
+                        key: 'Cross-Origin-Opener-Policy',
+                        value: 'same-origin',
                     },
                     {
                         key: 'X-Content-Type-Options',
@@ -121,7 +119,7 @@ const nextConfig: NextConfig = {
             },
         ];
     },
-};
+};
 const withMDX = require('@next/mdx')({
     extension: /\.mdx?$/,
     options: {
@@ -130,7 +128,7 @@ const withMDX = require('@next/mdx')({
     },
 });
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = createNextIntlPlugin();
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: process.env.ANALYZE === "true",
 });

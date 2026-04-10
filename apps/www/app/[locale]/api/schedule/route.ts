@@ -2,23 +2,28 @@ import { meetingRequestSchema, standaloneMeetingSchema } from "@/lib/validations
 import { prisma } from "@repo/database"
 import { NextRequest, NextResponse } from "next/server"
 import { ZodError } from "zod"
+import { enforceRateLimit } from "@/lib/rate-limit"
 
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json()
-        const locale = typeof body.locale === "string" ? body.locale : "en"
-
-        const origin = request.headers.get("origin")
-        const allowedOrigins = [process.env.NEXT_PUBLIC_APP_URL].filter(
-            (value): value is string => !!value
-        )
-
-        if (allowedOrigins.length > 0 && (!origin || !allowedOrigins.includes(origin))) {
+        const rl = await enforceRateLimit(request, {
+            scope: "public_api",
+            route: "schedule",
+            limit: 3,
+            windowSeconds: 10 * 60,
+        })
+        if (!rl.ok) {
             return NextResponse.json(
-                { success: false, message: "Forbidden" },
-                { status: 403 }
+                { success: false, message: "Too many requests. Please try again later." },
+                {
+                    status: 429,
+                    headers: { "Retry-After": rl.retryAfterSeconds.toString() },
+                },
             )
         }
+
+        const body = await request.json()
+        const locale = typeof body.locale === "string" ? body.locale : "en"
 
         if (body.name && body.phone && body.scheduledDate && body.scheduledTime) {
             const validatedData = standaloneMeetingSchema.parse(body)
@@ -78,16 +83,29 @@ export async function POST(request: NextRequest) {
 
             await Promise.all(
                 admins.map((admin: { id: string }) =>
-                    prisma.notification.create({
-                        data: {
-                            type: "NEW_MEETING",
-                            title: "New Meeting Request",
-                            message: `${validatedData.name} scheduled a meeting on ${scheduledDate.toLocaleDateString()} at ${validatedData.scheduledTime}`,
-                            userId: admin.id,
-                            entityType: "meeting",
-                            entityId: meeting.id,
-                        },
-                    })
+                    prisma.notification
+                        .findFirst({
+                            where: {
+                                userId: admin.id,
+                                type: "NEW_MEETING",
+                                entityType: "meeting",
+                                entityId: meeting.id,
+                            },
+                            select: { id: true },
+                        })
+                        .then((existing) => {
+                            if (existing) return null
+                            return prisma.notification.create({
+                                data: {
+                                    type: "NEW_MEETING",
+                                    title: "New Meeting Request",
+                                    message: `${validatedData.name} scheduled a meeting on ${scheduledDate.toLocaleDateString()} at ${validatedData.scheduledTime}`,
+                                    userId: admin.id,
+                                    entityType: "meeting",
+                                    entityId: meeting.id,
+                                },
+                            })
+                        })
                 )
             )
 
@@ -159,16 +177,29 @@ export async function POST(request: NextRequest) {
 
             await Promise.all(
                 admins.map((admin: { id: string }) =>
-                    prisma.notification.create({
-                        data: {
-                            type: "NEW_MEETING",
-                            title: "New Meeting Request",
-                            message: `${submission.name} requested a meeting on ${requestedDate.toLocaleDateString()}`,
-                            userId: admin.id,
-                            entityType: "meeting",
-                            entityId: meeting.id,
-                        },
-                    })
+                    prisma.notification
+                        .findFirst({
+                            where: {
+                                userId: admin.id,
+                                type: "NEW_MEETING",
+                                entityType: "meeting",
+                                entityId: meeting.id,
+                            },
+                            select: { id: true },
+                        })
+                        .then((existing) => {
+                            if (existing) return null
+                            return prisma.notification.create({
+                                data: {
+                                    type: "NEW_MEETING",
+                                    title: "New Meeting Request",
+                                    message: `${submission.name} requested a meeting on ${requestedDate.toLocaleDateString()}`,
+                                    userId: admin.id,
+                                    entityType: "meeting",
+                                    entityId: meeting.id,
+                                },
+                            })
+                        })
                 )
             )
 

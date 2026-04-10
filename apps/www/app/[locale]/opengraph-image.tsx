@@ -8,6 +8,8 @@ export const size = {
   width: 1200,
 };
 
+export const revalidate = 86400;
+
 export default async function OpenGraphImage({
   params,
 }: {
@@ -144,7 +146,7 @@ export default async function OpenGraphImage({
           }}
         >
           <div style={{ display: "flex" }}>
-            {SITE_CONFIG.url.replace(/^https?:\/\//, "")}
+            {(SITE_CONFIG.url ?? "altruvex.com").replace(/^https?:\/\//, "")}
           </div>
           <div style={{ display: "flex" }}>
             {isArabic ? "العربية + English" : "English + العربية"}

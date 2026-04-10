@@ -186,6 +186,15 @@ export function pickLang(
   return locale.startsWith("ar") ? obj.ar : obj.en;
 }
 
+function escapeHtml(input: string): string {
+  return input
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
 const PROJECT_COPY: Record<DeliverableProject, { ar: string; en: string }> = {
   ecommerce: {
     ar: "اخترت المتجر الإلكتروني - هدفك الأساسي تحويل الزوار إلى عملاء يدفعون. سنبني نظاماً يدعم بوابات الدفع المناسبة لسوقك، وإدارة مخزون حقيقية، وتجربة شراء سلسة على الجوال تُقلل معدل التخلي عن السلة.",
@@ -605,7 +614,8 @@ export function buildPDFHtml(p: PDFParams): string {
 
   const fontBody = isRtl ? "'Tajawal', sans-serif" : "'Inter', sans-serif";
   const fontDisplay = isRtl ? "'Tajawal', sans-serif" : "'Outfit', sans-serif";
-  const clientName = p.name || p.t("pdfContent.prospectiveClient");
+  const safeName = p.name ? escapeHtml(p.name) : "";
+  const clientName = safeName || escapeHtml(p.t("pdfContent.prospectiveClient"));
 
   const mkCol = (arr: string[]) =>
     arr
@@ -692,7 +702,7 @@ export function buildPDFHtml(p: PDFParams): string {
 </head>
 <body>
 <div class="page">
-  ${hdr(p.t("pdf.label"), `${today}${p.name ? ` · ${p.name}` : ""}`)}
+  ${hdr(p.t("pdf.label"), `${today}${safeName ? ` · ${safeName}` : ""}`)}
   <div style="background:#0A0A0A;border-radius:5px;padding:20px 24px;margin-bottom:18px;">
     <span style="font-family:monospace;font-size:8px;letter-spacing:.25em;text-transform:uppercase;color:#73726C;display:block;margin-bottom:8px;">${p.t("pdfContent.engineeringBeyond")}</span>
     <div style="font-family:${fontDisplay};font-size:24px;font-weight:500;color:#FAFAF7;line-height:1.2;margin-bottom:6px;">${lblProjectType}</div>
@@ -797,7 +807,7 @@ export function buildPDFHtml(p: PDFParams): string {
     </div>
   </div>
 
-  ${foot("ALTRUVEX · 2 / 2", p.t("pdfContent.confidential", { name: clientName }))}
+  ${foot("ALTRUVEX · 2 / 2", escapeHtml(p.t("pdfContent.confidential", { name: clientName })))}
 </div>
 
 <script>window.addEventListener('load',()=>setTimeout(()=>window.print(),600))</script>

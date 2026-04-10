@@ -5,11 +5,10 @@ import { routing } from "@/i18n/routing";
 import "@/lib/env";
 import { buildGlobalSchemas } from "@/lib/schema";
 import { cn } from "@/lib/utils";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Inter, Outfit, Vazirmatn } from "next/font/google";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import "../globals.css";
@@ -18,7 +17,7 @@ const vazirmatn = Vazirmatn({
   subsets: ["arabic"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-vazirmatn",
-  display: "optional",
+  display: "swap",
   preload: false,
 });
 
@@ -26,7 +25,7 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-inter",
-  display: "optional",
+  display: "swap",
   preload: true,
 });
 
@@ -34,8 +33,8 @@ const outfit = Outfit({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-outfit",
-  display: "optional",
-  preload: false,
+  display: "swap",
+  preload: true,
 });
 
 type Props = {
@@ -47,6 +46,14 @@ export default async function RootLayout({ children, params }: Props) {
   const { locale } = await params;
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const isVercel = process.env.VERCEL === "1";
+
+  const SpeedInsights = isVercel
+    ? (await import("@vercel/speed-insights/next")).SpeedInsights
+    : null;
+  const Analytics = isVercel
+    ? (await import("@vercel/analytics/next")).Analytics
+    : null;
 
   if (!hasLocale(routing.locales, locale)) {
     notFound();
@@ -65,16 +72,20 @@ export default async function RootLayout({ children, params }: Props) {
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Altruvex" />
-        <link
-          rel="preconnect"
-          href="https://www.googletagmanager.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          rel="preconnect"
-          href="https://www.clarity.ms"
-          crossOrigin="anonymous"
-        />
+        {gaId ? (
+          <link
+            rel="preconnect"
+            href="https://www.googletagmanager.com"
+            crossOrigin="anonymous"
+          />
+        ) : null}
+        {clarityId ? (
+          <link
+            rel="preconnect"
+            href="https://www.clarity.ms"
+            crossOrigin="anonymous"
+          />
+        ) : null}
       </head>
       <body
         suppressHydrationWarning
@@ -102,11 +113,11 @@ export default async function RootLayout({ children, params }: Props) {
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="afterInteractive"
+              strategy="lazyOnload"
             />
             <Script
               id="google-analytics"
-              strategy="afterInteractive"
+              strategy="lazyOnload"
               dangerouslySetInnerHTML={{
                 __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}',{page_path:window.location.pathname,send_page_view:true});`,
               }}
@@ -128,8 +139,8 @@ export default async function RootLayout({ children, params }: Props) {
             <LayoutEffects>{children}</LayoutEffects>
           </Providers>
         </NextIntlClientProvider>
-        <SpeedInsights />
-        <Analytics />
+        {SpeedInsights ? <SpeedInsights /> : null}
+        {Analytics ? <Analytics /> : null}
       </body>
     </html>
   );

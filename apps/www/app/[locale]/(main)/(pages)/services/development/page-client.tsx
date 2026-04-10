@@ -1,13 +1,15 @@
 "use client";
 
 import { Container } from "@/components/container";
-import { SectionWatermark } from "@/components/section-watermark";
 import { MagneticButton } from "@/components/magnetic-button";
+import { SectionWatermark } from "@/components/section-watermark";
 import { PipelineSection } from "@/components/sections/pipeline-section";
 import { TechDNASection } from "@/components/tech-dna-section";
-import { getCommercialCta } from "@/lib/commercial";
 import { Link } from "@/i18n/navigation";
+import { getCommercialCta } from "@/lib/commercial";
+import { monoCaps } from "@/lib/mono-caps";
 import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
+import { cn } from "@/lib/utils";
 import { useLocale, useTranslations } from "next-intl";
 
 export default function DevelopmentPage() {
@@ -38,7 +40,7 @@ function HeroSection() {
   });
 
   return (
-    <section className="relative flex min-h-screen w-full flex-col justify-end overflow-hidden pt-[var(--section-y-top)] pb-24 pb-[var(--section-y-bottom)]">
+    <section className="relative flex min-h-screen w-full flex-col justify-end overflow-hidden pt-(--section-y-top)  pb-(--section-y-bottom)">
       <SectionWatermark>02</SectionWatermark>
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute top-0 ltr:left-1/4 rtl:right-1/4 h-full w-px bg-foreground/6" />
@@ -50,7 +52,7 @@ function HeroSection() {
         className="absolute top-24 ltr:right-8 rtl:left-8 hidden md:flex items-center gap-2"
       >
         <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-        <span className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase text-foreground/20 rtl:font-sans rtl:normal-case rtl:tracking-normal">
+        <span className={cn(monoCaps, "text-foreground/20")}>
           {t("subtitle")}
         </span>
       </div>
@@ -58,7 +60,7 @@ function HeroSection() {
         <div className="max-w-5xl">
           <div className="mb-8 flex items-center gap-2 md:hidden">
             <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase text-foreground/20 rtl:font-sans rtl:normal-case rtl:tracking-normal">
+            <span className={cn(monoCaps, "text-foreground/20")}>
               {t("subtitle")}
             </span>
           </div>
@@ -72,13 +74,7 @@ function HeroSection() {
           >
             {t("title")}
             <br />
-            <span
-              className="text-foreground/45"
-              style={{
-                fontFamily: "Georgia,'Times New Roman',serif",
-                fontStyle: "italic",
-              }}
-            >
+            <span className="font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold text-foreground/45">
               {t("titleItalic")}
             </span>
           </h1>
@@ -126,9 +122,7 @@ function HeroSection() {
         className="pointer-events-none absolute bottom-7 ltr:left-1/2 rtl:right-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2"
         aria-hidden
       >
-        <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
-          Scroll
-        </p>
+        <p className={cn(monoCaps, "text-muted-foreground/70")}>Scroll</p>
         <div className="relative h-10 w-px overflow-hidden bg-foreground/8">
           <div className="absolute top-0 h-1/2 w-full bg-foreground/40 animate-slide-down" />
         </div>
@@ -147,7 +141,7 @@ function CtaSection() {
   });
 
   return (
-    <section className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] border-t border-foreground/8">
+    <section className="pt-(--section-y-top) pb-(--section-y-bottom) border-t border-foreground/8">
       <Container>
         <div
           ref={cardRef}
@@ -159,16 +153,15 @@ function CtaSection() {
               <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
               <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
             </div>
-            <span className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mx-auto">
+            <span className={cn(monoCaps, "text-muted-foreground/70 mx-auto")}>
               new-project — bash
             </span>
           </div>
-
           <div className="grid md:grid-cols-2">
-            <div className="p-8 md:p-10 border-b border-foreground/8 md:border-b-0 ltr:md:border-r rtl:md:border-l font-mono text-sm leading-normal tracking-wider text-sm space-y-3">
-              <div className="flex gap-3 text-primary/40">
+            <div className="p-8 md:p-10 border-b border-foreground/8 md:border-b-0 ltr:md:border-r rtl:md:border-l font-mono text-sm leading-normal tracking-wider space-y-3">
+              <div className="flex gap-3 text-primary/70">
                 <span className="select-none">~</span>
-                <span className="text-primary/50">$</span>
+                <span className="text-primary/70">$</span>
                 <span className="text-primary/70">npx start-project</span>
               </div>
               <div className="pl-6 space-y-1.5 text-primary/30">
@@ -176,9 +169,9 @@ function CtaSection() {
                 <div>✓ Timeline estimated</div>
                 <div>✓ Team assigned</div>
               </div>
-              <div className="flex gap-3 text-primary/40">
+              <div className="flex gap-3 text-primary/70">
                 <span className="select-none">~</span>
-                <span className="text-primary/50">$</span>
+                <span className="text-primary/70">$</span>
                 <span className="text-primary/70">contact --team</span>
               </div>
               <div className="flex gap-2 text-primary/55">
@@ -189,7 +182,7 @@ function CtaSection() {
             </div>
             <div className="p-8 md:p-10 flex flex-col justify-between gap-8">
               <div>
-                <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-5 block">
+                <p className={cn(monoCaps, "text-muted-foreground/70 mb-5 block")}>
                   {t("cta.eyebrow")}
                 </p>
                 <h2
@@ -212,7 +205,7 @@ function CtaSection() {
                   variant="primary"
                   className="group w-full justify-center"
                 >
-                  <Link href={projectRangeCta.href} className="w-full">
+                  <Link href={projectRangeCta.href}>
                     <span className="flex items-center gap-2">
                       {projectRangeCta.label}
                       <svg
@@ -232,7 +225,7 @@ function CtaSection() {
                   </Link>
                 </MagneticButton>
                 <MagneticButton asChild size="lg" variant="secondary" className="w-full justify-center">
-                  <Link href="/services" className="w-full">
+                  <Link href="/services">
                     {t("cta.back")}
                   </Link>
                 </MagneticButton>

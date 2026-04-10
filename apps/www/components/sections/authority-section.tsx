@@ -22,7 +22,7 @@ export const AuthoritySection = memo(function AuthoritySection() {
   return (
     <section
       id="authority"
-      className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]"
+      className="pt-(--section-y-top) pb-(--section-y-bottom)"
       aria-label={t("title")}
     >
       <Container>

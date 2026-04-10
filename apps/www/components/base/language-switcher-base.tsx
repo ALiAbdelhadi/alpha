@@ -127,7 +127,7 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
               onClick={() => switchLocale(lang.code)}
               data-cursor-pointer
               className={cn(
-                "relative z-10 px-3 py-1.5 font-mono text-sm leading-normal tracking-wider text-xs uppercase transition-all duration-300 ",
+                "relative z-10 px-3 py-1.5 font-mono text-sm leading-normal tracking-wider uppercase transition-all duration-300 ",
                 isActive
                   ? "bg-foreground/90 text-background shadow-md"
                   : "text-primary/60 hover:bg-foreground/20 hover:text-primary"
@@ -166,7 +166,7 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
             <Globe className="h-4 w-4 mx-auto text-primary/80" strokeWidth={2.5} />
             <span
               className={cn(
-                "absolute -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-background text-xs font-mono text-sm leading-normal tracking-wider font-semibold",
+                "absolute -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-background font-mono text-sm leading-normal tracking-wider font-semibold",
                 isRTL ? "-left-1" : "-right-1"
               )}
             >
@@ -175,7 +175,7 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
           </>
         ) : (
           <>
-            <span className="font-mono text-sm leading-normal tracking-wider text-xs text-primary/80 uppercase">
+            <span className="font-mono text-sm leading-normal tracking-wider text-primary/80 uppercase">
               {currentLang.code}
             </span>
             <ChevronDown
@@ -227,7 +227,7 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
                 ) : (
                   <div className="flex flex-col">
                     <span className="text-sm font-medium">{lang.nativeName}</span>
-                    <span className="font-mono text-sm leading-normal tracking-wider text-xs text-primary/50">
+                    <span className="font-mono text-sm leading-normal tracking-wider text-primary/70">
                       {lang.name}
                     </span>
                   </div>

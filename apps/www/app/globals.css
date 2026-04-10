@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @custom-variant dark (&:is(.dark *));
-@import "lenis/dist/lenis.css";
 
 @theme inline {
   --color-background: hsl(var(--background));
@@ -280,6 +279,10 @@
     contain: layout;
   }
 
+  [data-watermark]::after {
+    content: attr(data-watermark);
+  }
+
   h1 {
     font-family: var(--font-outfit), sans-serif;
     font-size: clamp(3rem, 5vw, 4.5rem);
@@ -326,7 +329,51 @@
     font-family: var(--font-vazirmatn), var(--font-outfit), sans-serif;
     line-height: 1.28;
   }
+}
 
+/* 
+  Initial load synchronization:
+  Pre-hide hero elements while the loader is active to prevent FOUC.
+  We hide the specific animated targets so they don't "flash" before GSAP sets them to 0.
+*/
+html:not([data-initial-load="complete"]) [data-hero-root] [data-token],
+html:not([data-initial-load="complete"]) [data-hero-root] [data-hero-badge],
+html:not([data-initial-load="complete"]) [data-hero-root] [data-hero-sub],
+html:not([data-initial-load="complete"]) [data-hero-root] [data-hero-cta],
+html:not([data-initial-load="complete"]) [data-hero-root] [data-hero-stats],
+html:not([data-initial-load="complete"]) [data-hero-root] [data-hero-proof],
+html:not([data-initial-load="complete"]) [data-hero-root] [data-hero-scroll] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Clear visibility once animation is ready to start */
+[data-initial-load="complete"] [data-hero-root] [data-token],
+[data-initial-load="complete"] [data-hero-root] [data-hero-badge],
+[data-initial-load="complete"] [data-hero-root] [data-hero-sub],
+[data-initial-load="complete"] [data-hero-root] [data-hero-cta],
+[data-initial-load="complete"] [data-hero-root] [data-hero-stats],
+[data-initial-load="complete"] [data-hero-root] [data-hero-proof],
+[data-initial-load="complete"] [data-hero-root] [data-hero-scroll] {
+  visibility: visible;
+}
+
+/* Minimal Lenis styles... */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
 

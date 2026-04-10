@@ -24,7 +24,7 @@ export function CtaSection() {
     <section
       ref={sectionRef}
       id="cta"
-      className="relative overflow-hidden pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]"
+      className="relative overflow-hidden pt-(--section-y-top) pb-(--section-y-bottom)"
       aria-label="Call to action"
     >
       <Container>

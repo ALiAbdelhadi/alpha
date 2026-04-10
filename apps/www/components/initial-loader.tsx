@@ -55,6 +55,7 @@ export const InitialLoader = memo(function InitialLoader() {
 
         const finish = () => {
             sessionStorage.setItem(INITIAL_LOAD_KEY, "true")
+            document.documentElement.setAttribute("data-initial-load", "complete")
             setShouldRender(false)
             setIsLoading(false)
         }
@@ -134,7 +135,7 @@ export const InitialLoader = memo(function InitialLoader() {
                     className="font-mono text-sm leading-normal tracking-wider"
                     style={{ fontSize: "9px", letterSpacing: "0.18em", color: "var(--foreground)" }}
                 >
-                    v2.4
+                    v{process.env.NEXT_PUBLIC_APP_VERSION}
                 </span>
             </div>
 

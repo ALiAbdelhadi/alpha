@@ -2,13 +2,14 @@
 
 import { ConsultingBriefSection } from "@/components/consulting-brief-section";
 import { Container } from "@/components/container";
-import { SectionWatermark } from "@/components/section-watermark";
 import { MagneticButton } from "@/components/magnetic-button";
-import { getCommercialCta } from "@/lib/commercial";
+import { SectionWatermark } from "@/components/section-watermark";
 import { Link } from "@/i18n/navigation";
+import { getCommercialCta } from "@/lib/commercial";
 import { gsap } from "@/lib/gsap";
+import { monoCaps } from "@/lib/mono-caps";
 import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
-import { localizeNumbers } from "@/lib/number";
+import { cn } from "@/lib/utils";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
 
@@ -42,7 +43,7 @@ function HeroSection() {
 
   return (
     <section
-      className="relative flex w-full flex-col justify-end overflow-hidden pt-[var(--section-y-top)] pb-24 pb-[var(--section-y-bottom)]"
+      className="relative flex w-full flex-col justify-end overflow-hidden pt-(--section-y-top)  pb-(--section-y-bottom)"
       style={{ minHeight: "100vh" }}
     >
       <SectionWatermark>03</SectionWatermark>
@@ -57,7 +58,7 @@ function HeroSection() {
       >
         <div className="flex items-center gap-2">
           <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase text-foreground/20 rtl:font-sans rtl:normal-case rtl:tracking-normal">
+          <span className={cn(monoCaps, "text-foreground/20")}>
             {t("subtitle")}
           </span>
         </div>
@@ -66,7 +67,7 @@ function HeroSection() {
         <div className="max-w-5xl">
           <div className="mb-8 flex items-center gap-2 md:hidden">
             <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase text-foreground/20 rtl:font-sans rtl:normal-case rtl:tracking-normal">
+            <span className={cn(monoCaps, "text-foreground/20")}>
               {t("subtitle")}
             </span>
           </div>
@@ -80,13 +81,8 @@ function HeroSection() {
           >
             {t("title")}
             <br />
-            <span
-              className="text-foreground/45"
-              style={{
-                fontFamily: "Georgia, 'Times New Roman', serif",
-                fontStyle: "italic",
-              }}
-            >
+            {/* ✅ Fixed: use Tailwind class instead of inline style */}
+            <span className="font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold text-foreground/45">
               {t("titleItalic")}
             </span>
           </h1>
@@ -103,7 +99,8 @@ function HeroSection() {
             ref={ctaRef}
             className="flex flex-col sm:flex-row sm:items-center gap-4"
           >
-            <MagneticButton size="lg" variant="primary" className="group">
+            {/* ✅ Fixed: added asChild so <Link> becomes the root element */}
+            <MagneticButton asChild size="lg" variant="primary" className="group">
               <Link href={auditCta.href}>
                 <span className="flex items-center gap-2">
                   {auditCta.label}
@@ -123,7 +120,7 @@ function HeroSection() {
                 </span>
               </Link>
             </MagneticButton>
-            <MagneticButton size="lg" variant="secondary">
+            <MagneticButton asChild size="lg" variant="secondary">
               <Link href="#audit-offer">{t("hero.ctaSecondary")}</Link>
             </MagneticButton>
           </div>
@@ -134,9 +131,7 @@ function HeroSection() {
         className="pointer-events-none absolute bottom-7 ltr:left-1/2 rtl:right-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2"
         aria-hidden="true"
       >
-        <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
-          Scroll
-        </p>
+        <p className={cn(monoCaps, "text-muted-foreground/70")}>Scroll</p>
         <div className="relative h-10 w-px overflow-hidden bg-foreground/8">
           <div className="absolute top-0 h-1/2 w-full bg-foreground/40 animate-slide-down" />
         </div>
@@ -156,7 +151,7 @@ function AuditOfferSection() {
   const included = t.raw("included") as string[];
 
   return (
-    <section id="audit-offer" className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] border-t border-foreground/8 pt-0">
+    <section id="audit-offer" className="pt-(--section-y-top) pb-(--section-y-bottom) border-t border-foreground/8">
       <Container>
         <div
           ref={panelRef}
@@ -168,13 +163,13 @@ function AuditOfferSection() {
             <div>
               <p
                 ref={eyebrowRef}
-                className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-s-muted mb-4 block"
+                className={cn(monoCaps, "text-s-muted mb-4 block")}
               >
                 {t("eyebrow")}
               </p>
               <h2
                 ref={titleRef}
-                className="font-sans font-normal leading-[1.05] text-[color:var(--s-high)]"
+                className="font-sans font-normal leading-[1.05] text-s-high"
                 style={{
                   fontSize: "clamp(28px, 4.5vw, 52px)",
                   letterSpacing: "-0.02em",
@@ -184,12 +179,12 @@ function AuditOfferSection() {
               </h2>
               <p
                 ref={bodyRef}
-                className="mt-6 max-w-[48ch] text-base leading-relaxed text-[color:var(--s-mid)]"
+                className="mt-6 max-w-[48ch] text-base leading-relaxed text-s-mid"
               >
                 {t("description")}
               </p>
               <div className="mt-8">
-                <MagneticButton size="lg" variant="primary" className="group">
+                <MagneticButton asChild size="lg" variant="primary" className="group">
                   <Link href="/contact?service=consulting&package=audit">
                     <span className="flex items-center gap-2">
                       {t("cta")}
@@ -211,14 +206,14 @@ function AuditOfferSection() {
                 </MagneticButton>
               </div>
             </div>
-            <div className="border border-white/10 bg-white/[0.03] p-5 md:p-6">
+            <div className="border border-white/10 bg-white/3 p-5 md:p-6">
               <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-1">
                 <div className="border-b border-white/10 pb-4">
-                  <p className="font-mono text-sm leading-normal tracking-wider text-xs uppercase tracking-[0.2em] text-[color:var(--s-muted)] mb-2">
+                  <p className={cn(monoCaps, "text-s-muted mb-2")}>
                     {t("priceLabel")}
                   </p>
                   <p
-                    className="font-sans font-light leading-none text-[color:var(--s-high)]"
+                    className="font-sans font-light leading-none text-s-high"
                     style={{
                       fontSize: "clamp(28px, 4vw, 40px)",
                       letterSpacing: "-0.03em",
@@ -228,23 +223,23 @@ function AuditOfferSection() {
                   </p>
                 </div>
                 <div className="border-b border-white/10 pb-4">
-                  <p className="font-mono text-sm leading-normal tracking-wider text-xs uppercase tracking-[0.2em] text-[color:var(--s-muted)] mb-2">
+                  <p className={cn(monoCaps, "text-s-muted mb-2")}>
                     {t("durationLabel")}
                   </p>
-                  <p className="text-base leading-relaxed text-[color:var(--s-high)]">
+                  <p className="text-base leading-relaxed text-s-high">
                     {t("duration")}
                   </p>
                 </div>
               </div>
               <div className="mt-5">
-                <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-s-muted mb-4">
+                <p className={cn(monoCaps, "text-s-muted mb-4")}>
                   {t("includedLabel")}
                 </p>
                 <ul className="space-y-3">
                   {included.map((item) => (
                     <li
                       key={item}
-                      className="flex items-start gap-3 text-sm leading-relaxed text-[color:var(--s-mid)]"
+                      className="flex items-start gap-3 text-sm leading-relaxed text-s-mid"
                     >
                       <div className="h-px w-3 bg-white/20 mt-2 shrink-0" />
                       {item}
@@ -259,7 +254,6 @@ function AuditOfferSection() {
     </section>
   );
 }
-
 
 function CtaSection() {
   const t = useTranslations("serviceDetails.consulting");
@@ -313,12 +307,12 @@ function CtaSection() {
   return (
     <section
       ref={sectionRef}
-      className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] border-t border-foreground/8"
+      className="pt-(--section-y-top) pb-(--section-y-bottom) border-t border-foreground/8"
     >
       <Container>
         <div className="grid md:grid-cols-[1fr_360px] gap-12 items-start">
           <div>
-            <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-6 block">
+            <p className={cn(monoCaps, "text-muted-foreground/70 mb-6 block")}>
               {t("cta.eyebrow")}
             </p>
             <h2
@@ -336,13 +330,10 @@ function CtaSection() {
             <p className="text-base text-primary/60 leading-relaxed">
               {t("cta.description")}
             </p>
+            {/* ✅ Fixed: asChild pattern — no wrapping Link around MagneticButton */}
             <div ref={ctaRef} className="flex flex-col gap-3">
-              <Link href="/schedule" className="w-full">
-                <MagneticButton
-                  size="lg"
-                  variant="primary"
-                  className="group w-full justify-center"
-                >
+              <MagneticButton asChild size="lg" variant="primary" className="group w-full justify-center">
+                <Link href="/schedule">
                   <span className="flex items-center gap-2">
                     {t("cta.button")}
                     <svg
@@ -359,17 +350,13 @@ function CtaSection() {
                       />
                     </svg>
                   </span>
-                </MagneticButton>
-              </Link>
-              <Link href="/services" className="w-full">
-                <MagneticButton
-                  size="lg"
-                  variant="secondary"
-                  className="w-full justify-center"
-                >
+                </Link>
+              </MagneticButton>
+              <MagneticButton asChild size="lg" variant="secondary" className="w-full justify-center">
+                <Link href="/services">
                   {t("cta.back")}
-                </MagneticButton>
-              </Link>
+                </Link>
+              </MagneticButton>
             </div>
           </div>
         </div>

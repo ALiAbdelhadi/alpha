@@ -208,7 +208,7 @@ export default function EstimatorPage() {
 
   return (
     <div className="relative min-h-screen w-full">
-      <section className="min-h-screen flex items-center pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+      <section className="min-h-screen flex items-center pt-(--section-y-top) pb-(--section-y-bottom)">
         <Container>
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-12">
@@ -226,10 +226,10 @@ export default function EstimatorPage() {
                   ref={badgeRef}
                   className="inline-flex items-center gap-2 mt-4 px-3 py-1.5 rounded-sm border border-foreground/12 bg-foreground/4"
                 >
-                  <span className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase tracking-[0.2em] text-primary/40">
+                  <span className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase text-primary/70">
                     {t("preselected")}
                   </span>
-                  <span className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase tracking-[0.2em] text-primary/70">
+                  <span className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase text-primary/70">
                     {t(`tierNames.${incomingTier}`)}
                   </span>
                 </div>
@@ -388,7 +388,7 @@ function EstimatorFaqSection({ t }: StepProps) {
   }));
 
   return (
-    <section className="border-t border-border pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
+    <section className="border-t border-border pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1fr_1.5fr] lg:gap-24">
           <div ref={headerRef} className="max-w-md">
@@ -449,13 +449,13 @@ function StepPhoneCapture({
         <h2 className="text-2xl font-normal text-primary mb-2">
           {t("phoneCapture.title")}
         </h2>
-        <p className="text-sm text-primary/50 leading-relaxed">
+        <p className="text-sm text-primary/70 leading-relaxed">
           {t("phoneCapture.subtitle")}
         </p>
       </div>
       <div className="space-y-4">
         <div>
-          <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
+          <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
             {t("phoneCapture.phoneLabel")}{" "}
             <span className="text-red-400">*</span>
           </Label>
@@ -477,14 +477,14 @@ function StepPhoneCapture({
             />
           </div>
           {error && (
-            <p className="mt-1.5 font-mono text-sm leading-normal tracking-wider text-xs text-destructive">{error}</p>
+            <p className="mt-1.5 font-mono text-sm leading-normal tracking-wider text-destructive">{error}</p>
           )}
-          <p className="mt-2 font-mono text-sm leading-normal tracking-wider text-[10px] text-muted-foreground/70 uppercase tracking-[0.12em]">
+          <p className="mt-2 font-mono text-sm leading-normal tracking-wider text-[10px] text-muted-foreground/70 uppercase">
             {t("phoneCapture.phoneHint")}
           </p>
         </div>
         <div>
-          <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
+          <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
             {t("phoneCapture.nameLabel")}
           </Label>
           <Input
@@ -522,7 +522,7 @@ function PDFDownload({
     <div className="mt-8 rounded-sm border border-foreground/20 bg-foreground/5 p-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <p className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase tracking-[0.2em] text-primary/40 mb-1">
+          <p className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase text-primary/40 mb-1">
             {t("pdf.label")}
           </p>
           <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-primary/70">{t("pdf.description")}</p>
@@ -617,7 +617,7 @@ function StepResults({
       </p>
       <div className="grid sm:grid-cols-2 gap-6 mb-8">
         <div className="p-8 rounded-sm border border-foreground/25 bg-foreground/5">
-          <p className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase tracking-[0.2em] text-primary/40 mb-3">
+          <p className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase text-primary/40 mb-3">
             {t("results.timeline")}
           </p>
           <p className="text-3xl font-light text-primary">
@@ -626,14 +626,14 @@ function StepResults({
           </p>
         </div>
         <div className="p-8 rounded-sm border border-foreground/50 bg-foreground/10">
-          <p className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase tracking-[0.2em] text-primary/40 mb-3">
+          <p className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase text-primary/40 mb-3">
             {t("results.investment")}
           </p>
           <p className="text-3xl font-light text-primary">
             {formatCurrency(estimate.minPrice)} -{" "}
             {formatCurrency(estimate.maxPrice)}
           </p>
-          <p className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase tracking-[0.2em] text-primary/35 mt-2">
+          <p className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase text-primary/35 mt-2">
             {t("results.vatExcluded")}
           </p>
         </div>
@@ -652,7 +652,7 @@ function StepResults({
       <div className="mb-8 p-6 rounded-sm border border-foreground/20 bg-foreground/5 text-start flex gap-4 items-start">
         <div className="w-1 self-stretch rounded-full bg-primary shrink-0" />
         <div>
-          <p className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase tracking-[0.2em] text-primary mb-2">
+          <p className="font-mono text-sm leading-normal tracking-wider uppercase text-primary mb-2">
             {t("results.rangeCtaLabel")}
           </p>
           <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-relaxed text-primary/80">
@@ -660,7 +660,7 @@ function StepResults({
           </p>
         </div>
       </div>
-      <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/50 mb-8 text-center">
+      <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/70 mb-8 text-center">
         {t("results.consultationGate")}
       </p>
       <div className="flex flex-col gap-4 justify-center items-center mb-6">
@@ -970,7 +970,7 @@ function StepComplexity({
           >
             <div
               className={cn(
-                "w-10 h-10 rounded-sm flex items-center justify-center shrink-0 font-mono text-sm leading-normal tracking-wider text-sm",
+                "w-10 h-10 rounded-sm flex items-center justify-center shrink-0 font-mono text-sm leading-normal tracking-wider",
                 selected === option
                   ? "bg-foreground/20 text-primary"
                   : "bg-foreground/10 text-primary/70",

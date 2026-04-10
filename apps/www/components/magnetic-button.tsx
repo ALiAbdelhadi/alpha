@@ -31,7 +31,7 @@ function useMergedRef<T>(...refs: (React.Ref<T> | null | undefined)[]) {
         if (typeof ref === "function") ref(node)
         else if (ref) (ref as React.MutableRefObject<T>).current = node
       })
-    },
+    },
     refs
   )
 }
@@ -147,8 +147,8 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
     }
 
     const sizes: Record<ButtonSize, string> = {
-      default: "px-6 py-2.5 text-sm",
-      lg: "px-8 py-3.5 text-base",
+      default: "min-h-11 min-w-11 px-6 py-2.5 text-sm",
+      lg: "min-h-11 min-w-11 px-8 py-3.5 text-base",
     }
 
     return (
@@ -160,7 +160,7 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
         onMouseDown={prefersReducedMotion ? undefined : handleMouseDown}
         onMouseUp={prefersReducedMotion ? undefined : handleMouseUp}
         className={`
-          relative overflow-hidden rounded-full font-medium
+          relative inline-flex items-center justify-center overflow-hidden rounded-full font-medium
           transition-all duration-300 ease-out will-change-transform
           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground/50
           ${variants[variant]}

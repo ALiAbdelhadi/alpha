@@ -23,12 +23,12 @@ function OpeningSection() {
   const descRef = useReveal({ ...DEFAULTS.body, delay: 0.15 });
 
   return (
-    <section className="flex min-h-screen items-center pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] pb-24">
+    <section className="flex min-h-screen items-center pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
         <div className="max-w-5xl">
           <p
             ref={eyebrowRef}
-            className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-6 block"
+            className="font-mono text-sm leading-normal tracking-wider  uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-6 block"
           >
             {t("eyebrow")}
           </p>
@@ -105,7 +105,7 @@ function ListSection() {
   return (
     <section
       ref={sectionRef}
-      className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] border-t border-foreground/8"
+      className="pt-(--section-y-top) pb-(--section-y-bottom) border-t border-foreground/8"
     >
       <Container>
         <div className="h-px w-full bg-foreground/8 mb-0" />
@@ -123,7 +123,7 @@ function ListSection() {
               />
               <div className="relative z-10 grid gap-6 md:grid-cols-[56px_1fr_auto] items-start">
                 <span
-                  className="font-mono text-sm leading-normal tracking-wider font-light text-primary/20 group-hover:text-primary/50 transition-colors duration-300 leading-none pt-1"
+                  className="font-mono text-sm leading-normal tracking-wider font-light text-primary/20 group-hover:text-primary/50 transition-colors duration-300 pt-1"
                   style={{
                     fontSize: "clamp(16px, 1.5vw, 20px)",
                     letterSpacing: "-0.02em",
@@ -145,7 +145,7 @@ function ListSection() {
                     {tArticles(`${article.slug}.excerpt`)}
                   </p>
                 </div>
-                <div className="flex items-center gap-3 font-mono text-sm leading-normal tracking-wider text-xs uppercase tracking-[0.15em] text-muted-foreground/70 shrink-0 pt-1">
+                <div className="flex items-center gap-3 font-mono text-sm leading-normal tracking-wider uppercase text-muted-foreground/70 shrink-0 pt-1">
                   <span>{article.date}</span>
                   <span>·</span>
                   <span>{article.readTime}</span>

@@ -74,7 +74,6 @@ const ServiceCard = memo(function ServiceCard({
         aria-hidden
         className="pointer-events-none absolute inset-s-0 top-0 bottom-0 z-2 w-0.5 origin-top scale-y-0 bg-s-border opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:scale-y-100"
       />
-
       <span
         className={cn(
           "pointer-events-none absolute -top-[0.05em] inset-e-0 z-0 select-none pe-[clamp(12px,2vw,28px)] font-mono font-extrabold leading-[0.85] tracking-[-0.06em] text-transparent opacity-0 transition-[opacity,transform] duration-400 translate-x-2 [-webkit-text-stroke-width:1px] [-webkit-text-stroke-color:var(--s-border)] group-hover:translate-x-0 group-hover:opacity-[0.55]",
@@ -86,7 +85,6 @@ const ServiceCard = memo(function ServiceCard({
       >
         {service.index}
       </span>
-
       <div
         className={cn(
           "relative z-1 mb-[clamp(20px,2.5vw,32px)] flex items-center gap-2.5",
@@ -96,7 +94,6 @@ const ServiceCard = memo(function ServiceCard({
         <div className="inline-flex size-[22px] items-center justify-center rounded-full border border-s-border font-mono text-[9px] tabular-nums text-s-muted transition-[border-color,color,background-color] duration-300 group-hover:border-s-mid group-hover:bg-s-border group-hover:text-s-high">
           {service.index}
         </div>
-
         <span
           className={cn(
             monoCaps,
@@ -105,9 +102,7 @@ const ServiceCard = memo(function ServiceCard({
         >
           {t(`${service.key}.tag`)}
         </span>
-
         <div className="h-px flex-1 bg-s-border opacity-50" />
-
         <svg
           className="translate-x-[-4px] translate-y-1 text-s-mid opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 rtl:scale-x-[-1]"
           width="14"
@@ -125,12 +120,10 @@ const ServiceCard = memo(function ServiceCard({
           />
         </svg>
       </div>
-
       <div className={cn("relative z-1", isLarge ? "max-w-[560px]" : "max-w-full")}>
         <p className={cn(monoCaps, "mb-2.5 text-s-muted")}>
           {service.index}
         </p>
-
         <h3
           className={cn(
             "font-serif text-s-high italic font-light rtl:font-sans rtl:not-italic rtl:font-bold",
@@ -141,7 +134,6 @@ const ServiceCard = memo(function ServiceCard({
         >
           {t(`${service.key}.title`)}
         </h3>
-
         <p
           className={cn(
             "font-mono text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.95] text-s-low transition-colors duration-200 group-hover:text-s-mid",
@@ -196,7 +188,6 @@ const ProcessRail = memo(function ProcessRail() {
               {t(`${service.key}.tag`)}
             </span>
           </div>
-
           {i < SERVICES.length - 1 && (
             <div
               style={{ animationDelay: `${i * 0.2}s` }}
@@ -229,9 +220,7 @@ function SectionHeader() {
           {SERVICES.length.toString().padStart(2, "0")}
         </span>
       </div>
-
       <div className="h-px bg-s-border" />
-
       <div className="flex flex-wrap items-end justify-between gap-[clamp(20px,4vw,56px)]">
         <h2
           ref={headRef}
@@ -247,7 +236,6 @@ function SectionHeader() {
             </>
           ) : null}
         </h2>
-
         <p
           ref={subtitleRef}
           className="m-0 max-w-[280px] self-end font-mono text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.9] text-s-low"
@@ -269,20 +257,15 @@ export const ServicesSection = memo(function ServicesSection() {
     >
       <Container>
         <SectionHeader />
-
         <div className="grid grid-cols-1 gap-px bg-s-border ring-1 ring-s-border">
           <ServiceCard service={SERVICES[0]} isLarge revealDelay={0} />
-
           <div className="grid grid-cols-1 gap-px bg-s-border md:grid-cols-[2fr_3fr]">
             <ServiceCard service={SERVICES[1]} isLarge={false} revealDelay={0.1} />
             <ServiceCard service={SERVICES[2]} isLarge={false} revealDelay={0.15} />
           </div>
-
           <ServiceCard service={SERVICES[3]} isLarge revealDelay={0.2} />
         </div>
-
         <ProcessRail />
-
         <div className="mt-5 flex items-center gap-4">
           <div className="h-px flex-1 bg-s-border" />
           <span className={cn(monoCaps, "whitespace-nowrap text-s-muted")}>

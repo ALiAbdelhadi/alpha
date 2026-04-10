@@ -1,6 +1,7 @@
 import { prisma } from "@repo/database"
 import { NextRequest, NextResponse } from "next/server"
 import { z, ZodError } from "zod"
+import { enforceRateLimit } from "@/lib/rate-limit"
 
 const estimatorLeadSchema = z.object({
     phone: z.string().regex(/^\+?\d{8,15}$/, "Invalid phone number"),
@@ -14,35 +15,25 @@ const estimatorLeadSchema = z.object({
     weeksMax: z.number().positive(),
 })
 
-const rateMap = new Map<string, { count: number; reset: number }>()
-
-function checkRate(ip: string): boolean {
-    const now = Date.now()
-    const rec = rateMap.get(ip)
-    if (!rec || now > rec.reset) { rateMap.set(ip, { count: 1, reset: now + 3_600_000 }); return true }
-    if (rec.count >= 5) return false
-    rec.count++
-    return true
-}
-
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json()
-
-        const origin = request.headers.get("origin")
-        const allowed = [process.env.NEXT_PUBLIC_APP_URL].filter((v): v is string => !!v)
-        if (allowed.length > 0 && (!origin || !allowed.includes(origin))) {
-            return NextResponse.json({ success: false, message: "Forbidden" }, { status: 403 })
-        }
-
-        const ip = request.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown"
-        if (!checkRate(ip)) {
+        const rl = await enforceRateLimit(request, {
+            scope: "public_api",
+            route: "estimator",
+            limit: 10,
+            windowSeconds: 60 * 60,
+        })
+        if (!rl.ok) {
             return NextResponse.json(
                 { success: false, message: "Too many requests. Please try again later." },
-                { status: 429 },
+                {
+                    status: 429,
+                    headers: { "Retry-After": rl.retryAfterSeconds.toString() },
+                },
             )
         }
 
+        const body = await request.json()
         const data = estimatorLeadSchema.parse(body)
 
         await prisma.estimatorLead.create({

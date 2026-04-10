@@ -489,7 +489,7 @@ function AltruvexSide({ t }: { t: TFn }) {
                         {t("axFooter")}
                     </span>
                     <div style={{ flex: 1, height: .5, background: "rgba(255,255,255,.06)" }} />
-                    <span style={{ fontSize: 7.5, letterSpacing: ".1em", textTransform: "uppercase" as const, color: "rgba(37,99,235,.7)", border: ".5px solid rgba(37,99,235,.3)", padding: "2px 7px", borderRadius: 10 }}>v2.4.1</span>
+                    <span style={{ fontSize: 7.5, letterSpacing: ".1em", textTransform: "uppercase" as const, color: "rgba(37,99,235,.7)", border: ".5px solid rgba(37,99,235,.3)", padding: "2px 7px", borderRadius: 10 }}>v{process.env.NEXT_PUBLIC_APP_VERSION}</span>
                 </div>
             </div>
         </>
