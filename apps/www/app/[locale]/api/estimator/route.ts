@@ -2,7 +2,6 @@ import { prisma } from "@repo/database"
 import { NextRequest, NextResponse } from "next/server"
 import { z, ZodError } from "zod"
 
-
 const estimatorLeadSchema = z.object({
     phone: z.string().regex(/^\+?\d{8,15}$/, "Invalid phone number"),
     name: z.string().max(120).optional(),
@@ -14,7 +13,6 @@ const estimatorLeadSchema = z.object({
     weeksMin: z.number().positive(),
     weeksMax: z.number().positive(),
 })
-
 
 const rateMap = new Map<string, { count: number; reset: number }>()
 

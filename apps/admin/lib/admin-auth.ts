@@ -13,4 +13,3 @@ export async function isAdminAuthed(request: NextRequest): Promise<boolean> {
 
   return adminSession.value === expectedToken
 }
-

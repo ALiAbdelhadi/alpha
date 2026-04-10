@@ -1,6 +1,8 @@
 "use client"
 
+import { monoCaps } from "@/lib/mono-caps"
 import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
+import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
 import { memo, useCallback, useState } from "react"
 import { Container } from "../container"
@@ -39,88 +41,74 @@ const ProcessStepItem = memo(function ProcessStepItem({
   i, active, step, t, onToggle,
 }: StepItemProps) {
   const isOpen = active === i
-  const isLast = i === steps.length - 1
 
   return (
     <div
-      className={`transition-colors duration-300 ${isOpen ? "bg-surface" : "bg-transparent"}`}
-      style={{ borderBottom: isLast ? "none" : "1px solid var(--border)" }}
+      data-open={isOpen}
+      className="group border-b border-s-border transition-colors duration-300 last:border-b-0 data-[open=true]:bg-s-surface"
     >
       <button
         type="button"
         onClick={() => onToggle(i)}
-        className="ps-step-btn w-full flex items-center gap-4 px-6 py-5 cursor-pointer"
+        className="grid w-full cursor-pointer grid-cols-[40px_1fr_auto] items-center gap-3 border-0 bg-transparent p-4 text-start sm:grid-cols-[48px_1fr_auto] sm:gap-3.5 sm:p-5 lg:grid-cols-[72px_1fr_auto] lg:gap-6 lg:px-8 lg:py-6"
         aria-expanded={isOpen}
         aria-controls={`step-panel-${i}`}
       >
-        {/* Step index */}
         <span
-          className={`font-mono text-[13px] tracking-[0.15em] shrink-0 transition-colors duration-200 ${
-            isOpen ? "text-foreground" : "text-muted-foreground"
-          }`}
+          className={cn(
+            monoCaps,
+            "shrink-0 tabular-nums text-s-low transition-colors duration-200 group-data-[open=true]:text-s-high rtl:text-center rtl:[direction:ltr] rtl:[unicode-bidi:embed]",
+          )}
         >
           {step.index}
         </span>
 
-        {/* Step title */}
         <span
-          className={`font-serif italic flex-1 text-start transition-colors duration-200 ${
-            isOpen ? "text-foreground" : "text-muted-foreground"
-          }`}
-          style={{ fontSize: "clamp(16px, 2.5vw, 22px)", letterSpacing: "-0.02em" }}
+          className="flex-1 text-start font-serif text-[clamp(16px,2.5vw,22px)] font-light italic leading-none tracking-[-0.02em] text-s-mid transition-colors duration-200 group-data-[open=true]:text-s-high rtl:font-sans rtl:not-italic rtl:font-bold"
         >
           {t(`steps.${step.key}.title`)}
         </span>
 
-        {/* Toggle icon */}
         <span
-          className={`flex items-center justify-center shrink-0 w-7 h-7 rounded-full border transition-colors duration-200 ${
-            isOpen ? "border-border-mid" : "border-border"
-          }`}
+          className="flex size-7 shrink-0 items-center justify-center rounded-full border border-s-border transition-colors duration-200 group-data-[open=true]:border-s-border-hover"
         >
           <span
-            className={`font-mono text-sm block leading-none transition-transform duration-300 ${
-              isOpen ? "rotate-45 text-foreground" : "rotate-0 text-muted-foreground"
-            }`}
+            className="block font-mono text-sm leading-none text-s-low transition-transform duration-300 group-data-[open=true]:rotate-45 group-data-[open=true]:text-s-high rtl:group-data-[open=true]:-rotate-45"
           >
             +
           </span>
         </span>
       </button>
 
-      {/* Expandable panel */}
       <div
         id={`step-panel-${i}`}
         role="region"
-        style={{
-          display: "grid",
-          gridTemplateRows: isOpen ? "1fr" : "0fr",
-          transition: `grid-template-rows ${MOTION.duration.fast}s ${MOTION.ease.ui}`,
-        }}
+        data-open={isOpen}
+        className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-320 ease-in-out data-[open=true]:grid-rows-[1fr]"
       >
         <div className="overflow-hidden">
           <div className="p-6">
-            <p className="font-mono text-[13px] leading-[1.85] text-muted-foreground">
+            <p className="font-mono text-[13px] leading-[1.85] text-s-low">
               {t(`steps.${step.key}.description`)}
             </p>
 
-            <div className="ps-meta-grid grid grid-cols-1 sm:grid-cols-2 gap-3 mt-5">
+            <div className="mt-5 grid max-w-full grid-cols-1 gap-3 ps-0 sm:grid-cols-2 md:ps-[62px] lg:max-w-[620px] lg:ps-[72px]">
               {[
                 { label: t("meta.deliverables"), value: t(`steps.${step.key}.deliverables`), large: false },
                 { label: t("meta.timeline"), value: t(`steps.${step.key}.timeline`), large: true },
               ].map(({ label, value, large }) => (
                 <div
                   key={label}
-                  className="p-5 border border-border rounded-sm bg-surface"
+                  className="rounded-sm border border-s-border bg-s-surface p-5"
                 >
-                  <p className="meta-eyebrow text-muted-foreground mb-2.5">
+                  <p className={cn(monoCaps, "mb-2.5 text-s-muted")}>
                     {label}
                   </p>
                   <p
                     className={
                       large
-                        ? "text-[18px] font-medium text-foreground leading-[1.2] tracking-tight font-sans"
-                        : "font-mono text-xs text-muted-foreground leading-[1.7]"
+                        ? "text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-medium text-s-high"
+                        : "text-[clamp(0.9375rem,0.98vw,1rem)] leading-relaxed text-s-low"
                     }
                   >
                     {value}
@@ -148,40 +136,46 @@ export const ProcessSection = memo(function ProcessSection() {
   const handleToggle = useCallback((index: number) => setActive(index), [])
 
   return (
-    <div id="process" className="relative pb-36 section-padding">
+    <div
+      id="process"
+      className="relative pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]"
+    >
       <Container className="relative">
 
-        {/* Section header */}
         <div className="mb-14">
-          <p ref={eyebrowRef} className="meta-eyebrow text-muted-foreground mb-4">
+          <p
+            ref={eyebrowRef}
+            className={cn(monoCaps, "mb-4 text-s-low")}
+          >
             {t("eyebrow")}
           </p>
           <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8">
             <h2
               ref={titleRef}
-              className="display-h2 font-normal text-foreground m-0"
+              className="text-[clamp(2.125rem,4vw,3.25rem)] leading-[1.08] tracking-[-0.02em] m-0 font-normal text-s-high"
             >
               {firstTitle}
               {secondTitle ? (
                 <>
                   <br />
-                  <span className="font-serif italic text-muted-foreground">
+                  <span className="font-serif italic font-light text-s-mid rtl:font-sans rtl:not-italic rtl:font-bold">
                     {secondTitle}
                   </span>
                 </>
               ) : null}
             </h2>
-            <p ref={descRef} className="font-mono text-[13px] leading-[1.8] text-muted-foreground max-w-[260px] m-0">
+            <p
+              ref={descRef}
+              className="m-0 max-w-sm text-[clamp(0.9375rem,0.98vw,1rem)] leading-relaxed text-s-low"
+            >
               {t("subtitle")}
             </p>
           </div>
         </div>
 
-        {/* Top divider */}
-        <div className="h-px bg-border mb-1" />
+        <div className="mb-1 h-px bg-s-border" />
 
-        {/* Step progress tabs */}
-        <div className="grid grid-cols-4 gap-0 mb-1">
+        <div className="mb-1 grid grid-cols-4 gap-0">
           {steps.map((step, i) => (
             <button
               key={i}
@@ -190,20 +184,20 @@ export const ProcessSection = memo(function ProcessSection() {
               className="cursor-pointer p-0 bg-transparent border-none text-center py-2.5"
             >
               <div
-                className="h-0.5 rounded-[2px] mb-2.5 transition-colors duration-300"
-                style={{ background: i <= active ? "var(--brand)" : "var(--border)" }}
+                className="mb-2.5 h-0.5 rounded-xs transition-colors duration-300"
+                style={{ background: i <= active ? "hsl(var(--brand))" : "var(--s-border)" }}
               />
-              <span className={`meta-eyebrow block transition-colors duration-200 ${
-                i === active ? "text-foreground" : "text-muted-foreground"
-              }`}>
+              <span
+                className={cn(monoCaps, "block transition-colors duration-200")}
+                style={{ color: i === active ? "var(--s-high)" : "var(--s-low)" }}
+              >
                 {t(`steps.${step.key}.tag`)}
               </span>
             </button>
           ))}
         </div>
 
-        {/* Accordion */}
-        <div className="overflow-hidden border border-border rounded-sm">
+        <div className="overflow-hidden rounded-sm border border-s-border">
           {steps.map((step, i) => (
             <ProcessStepItem
               key={i}
@@ -216,12 +210,11 @@ export const ProcessSection = memo(function ProcessSection() {
           ))}
         </div>
 
-        {/* Footer */}
-        <div className="flex items-center gap-4 mt-6">
-          <span className="meta-eyebrow text-muted-foreground">
+        <div className="mt-6 flex items-center gap-4">
+          <span className={cn(monoCaps, "text-s-low")}>
             {t("footer")}
           </span>
-          <div className="flex-1 h-px bg-border" />
+          <div className="flex-1 h-px bg-s-border" />
         </div>
 
       </Container>

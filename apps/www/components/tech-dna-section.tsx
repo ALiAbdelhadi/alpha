@@ -227,13 +227,13 @@ export function TechDNASection() {
   };
 
   const getConnStroke = (conn: Connection): string => {
-    if (!activeId) return "var(--foreground)";
+    if (!activeId) return "hsl(var(--foreground))";
     if (conn.from === activeId || conn.to === activeId) {
       return (
-        NODES.find((n) => n.id === conn.from)?.accent ?? "var(--foreground)"
+        NODES.find((n) => n.id === conn.from)?.accent ?? "hsl(var(--foreground))"
       );
     }
-    return "var(--foreground)";
+    return "hsl(var(--foreground))";
   };
 
   const getConnOpacity = (conn: Connection): number => {
@@ -252,17 +252,17 @@ export function TechDNASection() {
     <section
       ref={sectionRef}
       id="tech-dna"
-      className="section-padding border-t border-foreground/8"
+      className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)] border-t border-foreground/8"
     >
       <Container>
         <div ref={titleRef} className="mb-16">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground/70 mb-4 block">
+          <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block">
             {t("techStack.eyebrow")}
           </p>
           <div className="flex items-end justify-between gap-8 flex-wrap">
             <h2
               ref={headingRef}
-              className="font-sans font-normal text-primary leading-[1.05]"
+              className="font-sans font-normal text-foreground leading-[1.05]"
               style={{
                 fontSize: "clamp(28px, 4.5vw, 52px)",
                 letterSpacing: "-0.02em",
@@ -271,13 +271,12 @@ export function TechDNASection() {
               {t("techStack.title")}
               <br />
               <span
-                className="text-display-italic"
-                style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}
+                className="font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold text-foreground/45"
               >
                 {t("techStack.titleItalic")}
               </span>
             </h2>
-            <p className="font-mono text-sm text-primary/35 max-w-[32ch] hidden lg:block tracking-[0.05em]">
+            <p className="font-mono text-sm leading-normal tracking-wider text-sm text-primary/35 max-w-[32ch] hidden lg:block tracking-[0.05em]">
               {t("techStack.subtitle")}
             </p>
           </div>
@@ -290,7 +289,7 @@ export function TechDNASection() {
                 className="absolute inset-0 pointer-events-none rounded-sm"
                 style={{
                   backgroundImage:
-                    "radial-gradient(circle, var(--foreground) 1px, transparent 1px)",
+                    "radial-gradient(circle, hsl(var(--foreground)) 1px, transparent 1px)",
                   backgroundSize: "28px 28px",
                   opacity: 0.04,
                 }}
@@ -302,7 +301,7 @@ export function TechDNASection() {
                   width="100%"
                   height="100%"
                   className="absolute inset-0"
-                  style={{ overflow: "visible", color: "var(--foreground)" }}
+                  style={{ overflow: "visible", color: "hsl(var(--foreground))" }}
                   role="img"
                   aria-label={t("techStack.diagramLabel")}
                 >
@@ -375,10 +374,10 @@ export function TechDNASection() {
                             fill={
                               isActive
                                 ? `${node.accent}0D`
-                                : "var(--background)"
+                                : "hsl(var(--background))"
                             }
                             stroke={
-                              isActive ? node.accent : "var(--foreground)"
+                              isActive ? node.accent : "hsl(var(--foreground))"
                             }
                             strokeWidth={isActive ? 1 : 0.5}
                             strokeOpacity={isActive ? 0.6 : 0.16}
@@ -412,7 +411,7 @@ export function TechDNASection() {
                             textAnchor="middle"
                             dominantBaseline="middle"
                             style={{
-                              fill: "var(--foreground)",
+                              fill: "hsl(var(--foreground))",
                               fontSize: isPrimary ? "11px" : "10px",
                               fontFamily:
                                 "var(--font-mono, 'JetBrains Mono', monospace)",
@@ -433,7 +432,7 @@ export function TechDNASection() {
                             style={{
                               fill: isActive
                                 ? node.accent
-                                : "var(--foreground)",
+                                : "hsl(var(--foreground))",
                               fontSize: "7px",
                               fontFamily: "var(--font-mono, monospace)",
                               letterSpacing: "0.12em",
@@ -458,7 +457,7 @@ export function TechDNASection() {
 
           <div className="md:hidden flex items-center justify-center gap-3 mt-4 pointer-events-none transition-opacity group-hover/scroll:opacity-5">
             <div className="h-px flex-1 bg-border" />
-            <p className="font-mono text-xs uppercase tracking-[0.3em] whitespace-nowrap text-muted-foreground/70">
+            <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 whitespace-nowrap">
               {t("techStack.dragHint")}
             </p>
             <div className="h-px flex-1 bg-border" />
@@ -472,7 +471,7 @@ export function TechDNASection() {
                 transition: "opacity 0.18s ease",
               }}
             >
-              <p className="font-mono text-xs md:text-sm uppercase tracking-[0.22em] text-muted-foreground text-center px-6">
+              <p className="font-mono text-sm leading-normal tracking-wider text-xs md:text-sm uppercase tracking-[0.22em] text-muted-foreground text-center px-6">
                 {t("techStack.inspect")}
               </p>
             </div>
@@ -506,7 +505,7 @@ export function TechDNASection() {
                   <div className="flex flex-col">
                     <div className="flex items-center gap-2.5 mb-2.5 flex-wrap">
                       <h3
-                        className="font-mono font-semibold text-primary"
+                        className="font-mono text-sm leading-normal tracking-wider font-semibold text-primary"
                         style={{
                           fontSize: "clamp(14px, 1.5vw, 16px)",
                           letterSpacing: "-0.01em",
@@ -515,7 +514,7 @@ export function TechDNASection() {
                         {activeNode.name}
                       </h3>
                       <span
-                        className="font-mono uppercase"
+                        className="font-mono text-sm leading-normal tracking-wider uppercase"
                         style={{
                           fontSize: 8,
                           letterSpacing: "0.2em",
@@ -543,7 +542,7 @@ export function TechDNASection() {
                     ).map((h, i) => (
                       <span
                         key={h}
-                        className="font-mono uppercase text-primary/38 border border-foreground/8 bg-foreground/3 rounded-sm whitespace-nowrap"
+                        className="font-mono text-sm leading-normal tracking-wider uppercase text-primary/38 border border-foreground/8 bg-foreground/3 rounded-sm whitespace-nowrap"
                         style={{
                           fontSize: 9,
                           letterSpacing: "0.13em",
@@ -561,7 +560,7 @@ export function TechDNASection() {
           </div>
         </div>
         <div className="mt-8 border-t border-foreground/8 pt-4 flex items-center gap-4">
-          <span className="font-mono text-xs uppercase text-primary/20 tracking-[0.25em]">
+          <span className="font-mono text-sm leading-normal tracking-wider text-xs uppercase text-primary/20 tracking-[0.25em]">
             {t("techStack.footer")}
           </span>
           <div className="flex-1 h-px bg-foreground/4" />

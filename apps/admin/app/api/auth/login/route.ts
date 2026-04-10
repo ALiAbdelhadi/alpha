@@ -64,7 +64,6 @@ export async function POST(request: NextRequest) {
 
         const response = NextResponse.json({ success: true })
 
-        // Set secure cookie
         response.cookies.set('admin-session', sessionToken, {
             httpOnly: true,
             secure: true,

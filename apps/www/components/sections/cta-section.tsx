@@ -4,14 +4,16 @@ import { Container } from "@/components/container";
 import { ArrowLabel } from "@/components/directional-link";
 import { MagneticButton } from "@/components/magnetic-button";
 import { Link } from "@/i18n/navigation";
-import { FINAL_CTA_CONTENT, getCommercialCta, pickCommercialText } from "@/lib/commercial";
+import { getCommercialCta } from "@/lib/commercial";
 import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRef } from "react";
 
 export function CtaSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const locale = useLocale();
+  const t = useTranslations("commercial.cta");
+  const tCTAs = useTranslations("commercial.ctas");
   const callCta = getCommercialCta(locale, "technicalCall");
 
   const eyebrowRef = useReveal({ ...DEFAULTS.body, ease: MOTION.ease.smooth, delay: 0 });
@@ -22,33 +24,33 @@ export function CtaSection() {
     <section
       ref={sectionRef}
       id="cta"
-      className="relative overflow-hidden section-padding"
+      className="relative overflow-hidden pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]"
       aria-label="Call to action"
     >
       <Container>
         <div className="h-px w-full bg-border mb-16" />
         <div className="grid gap-10 md:grid-cols-[minmax(0,1fr)_320px] md:items-start">
           <div className="min-w-0">
-            <p ref={eyebrowRef} className="meta-eyebrow text-muted-foreground/70 mb-6 block">
-              {pickCommercialText(locale, FINAL_CTA_CONTENT.eyebrow)}
+            <p ref={eyebrowRef} className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-6 block">
+              {t("eyebrow")}
             </p>
-            <h2 ref={titleRef} className="display-h2 max-w-4xl font-normal text-primary">
-              {pickCommercialText(locale, FINAL_CTA_CONTENT.title)}
+            <h2 ref={titleRef} className="text-[clamp(2.125rem,4vw,3.25rem)] leading-[1.08] tracking-[-0.02em] max-w-4xl font-normal text-primary">
+              {t("title")}
             </h2>
           </div>
           <div ref={contentRef} className="flex min-w-0 flex-col gap-6">
-            <p className="body-copy text-muted-foreground">
-              {pickCommercialText(locale, FINAL_CTA_CONTENT.body)}
+            <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground">
+              {t("body")}
             </p>
             <MagneticButton
               size="lg"
             >
               <Link href={callCta.href}>
-                <ArrowLabel>{callCta.label}</ArrowLabel>
+                <ArrowLabel>{tCTAs("technicalCall")}</ArrowLabel>
               </Link>
             </MagneticButton>
-            <p className="meta-eyebrow text-muted-foreground/55 text-center">
-              {pickCommercialText(locale, FINAL_CTA_CONTENT.footnote)}
+            <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/55 text-center">
+              {t("footnote")}
             </p>
           </div>
         </div>

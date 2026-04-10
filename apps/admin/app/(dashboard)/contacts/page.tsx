@@ -18,7 +18,6 @@ export default async function ContactsPage() {
         prisma.contactSubmission.count()
     ])
 
-    // Explicitly cast to match the shared interface in contacts-client
     const contacts = contactsRaw as unknown as ContactSubmission[]
 
     return (

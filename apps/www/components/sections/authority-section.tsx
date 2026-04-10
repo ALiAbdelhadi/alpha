@@ -21,23 +21,23 @@ export const AuthoritySection = memo(function AuthoritySection() {
 
   return (
     <section
-      id="social-proof"
-      className="section-padding"
+      id="authority"
+      className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]"
       aria-label={t("title")}
     >
       <Container>
         <div className="mb-16 flex items-end justify-between gap-8 flex-wrap">
           <div className="space-y-3">
-            <p ref={eyebrowRef} className="meta-eyebrow text-muted-foreground block">
+            <p ref={eyebrowRef} className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground block">
               {t("eyebrow")}
             </p>
-            <h2 ref={titleRef} className="display-h2 font-normal text-foreground leading-[1.05]">
+            <h2 ref={titleRef} className="text-[clamp(2.125rem,4vw,3.25rem)] leading-[1.08] tracking-[-0.02em] font-normal text-foreground">
               {t("title")}
             </h2>
           </div>
           <p
             ref={descRef}
-            className="max-w-xs font-mono text-[13px] leading-[1.8] text-muted-foreground ltr:text-right rtl:text-left md:block"
+            className="text-[clamp(0.9375rem,0.98vw,1rem)] text-muted-foreground max-w-sm leading-relaxed md:max-w-xs lg:max-w-[20rem] text-end md:block"
           >
             {t("subtitle")}
           </p>
@@ -45,20 +45,20 @@ export const AuthoritySection = memo(function AuthoritySection() {
 
         <div
           ref={gridRef}
-          className="grid gap-0 border-l border-r border-border md:grid-cols-3"
+          className="grid gap-0 border-x border-border md:grid-cols-3"
         >
           {cards.map((card) => (
             <div
               key={card.key}
-              className="authority-card border-r border-b border-border px-6 py-8 group hover:bg-surface transition-colors duration-300"
+              className="authority-card border-e border-b border-border px-6 py-8 group hover:bg-surface transition-colors duration-300"
             >
-              <p className="meta-eyebrow text-muted-foreground mb-6">
+              <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mb-6">
                 {card.number}
               </p>
-              <h3 className="display-h3 font-medium text-foreground mb-3">
+              <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-medium text-foreground mb-3">
                 {card.title}
               </h3>
-              <p className="body-copy text-muted-foreground leading-relaxed">
+              <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] text-muted-foreground leading-relaxed">
                 {card.body}
               </p>
             </div>

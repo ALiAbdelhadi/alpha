@@ -64,11 +64,17 @@ export function SectionHeader({
       )}
     >
       {eyebrow ? (
-        <p className="section-kicker mb-4">{resolveText(locale, eyebrow)}</p>
+        <p className="mb-4 font-mono text-xs leading-normal tracking-[0.22em] uppercase text-muted-foreground rtl:font-sans rtl:normal-case rtl:tracking-normal">
+          {resolveText(locale, eyebrow)}
+        </p>
       ) : null}
-      <h2 className="section-title">{resolveText(locale, title)}</h2>
+      <h2 className="font-sans text-[clamp(2.125rem,4vw,3.25rem)] font-normal leading-[1.08] tracking-[-0.02em] text-foreground">
+        {resolveText(locale, title)}
+      </h2>
       {description ? (
-        <p className="section-copy mt-5">{resolveText(locale, description)}</p>
+        <p className="mt-5 text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground">
+          {resolveText(locale, description)}
+        </p>
       ) : null}
     </div>
   );
@@ -113,8 +119,13 @@ export function MetricGrid({
   return (
     <div className={cn("grid gap-4 md:grid-cols-3", className)}>
       {items.map((item) => (
-        <div key={item.label.en} className="surface-card">
-          <p className="metric-value">{resolveText(locale, item.value)}</p>
+        <div
+          key={item.label.en}
+          className="rounded-md border border-border bg-card p-5 md:p-6"
+        >
+          <p className="text-[clamp(22px,2.8vw,34px)] tracking-[-0.03em] tabular-nums">
+            {resolveText(locale, item.value)}
+          </p>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
             {resolveText(locale, item.label)}
           </p>
@@ -147,9 +158,13 @@ export function PageHero({
     <PageSection className={cn("pt-32 md:pt-40", className)}>
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
         <div className="max-w-4xl">
-          <p className="section-kicker mb-5">{resolveText(locale, eyebrow)}</p>
-          <h1 className="hero-title">{resolveText(locale, title)}</h1>
-          <p className="hero-copy mt-6 max-w-3xl">
+          <p className="mb-5 font-mono text-xs leading-normal tracking-[0.22em] uppercase text-muted-foreground rtl:font-sans rtl:normal-case rtl:tracking-normal">
+            {resolveText(locale, eyebrow)}
+          </p>
+          <h1 className="font-sans text-[clamp(3rem,5vw,4.5rem)] font-light leading-[1.02] tracking-[-0.03em] text-foreground">
+            {resolveText(locale, title)}
+          </h1>
+          <p className="mt-6 max-w-3xl text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground">
             {resolveText(locale, description)}
           </p>
           <ActionRow
@@ -159,8 +174,8 @@ export function PageHero({
             className="mt-8"
           />
         </div>
-        <div className="surface-panel lg:ml-auto lg:max-w-[320px]">
-          <p className="section-kicker mb-3">
+        <div className="rounded-md border border-border bg-card/80 p-6 backdrop-blur-sm lg:ml-auto lg:max-w-[320px]">
+          <p className="mb-3 font-mono text-xs leading-normal tracking-[0.22em] uppercase text-muted-foreground rtl:font-sans rtl:normal-case rtl:tracking-normal">
             {locale.startsWith("ar") ? "كيف نعمل" : "How we work"}
           </p>
           <p className="text-sm leading-6 text-muted-foreground">
@@ -193,11 +208,21 @@ export function LinkCard({
   className?: string;
 }) {
   return (
-    <Link href={href} className={cn("surface-link-card group block", className)}>
+    <Link
+      href={href}
+      className={cn(
+        "group block rounded-md border border-border bg-card p-6 transition-colors hover:bg-muted/40",
+        className,
+      )}
+    >
       <div className="flex items-start justify-between gap-4">
         <div>
-          {index ? <p className="section-kicker mb-4">{index}</p> : null}
-          <h3 className="text-[1.35rem] font-medium tracking-[-0.03em] text-foreground">
+          {index ? (
+            <p className="mb-4 font-mono text-xs leading-normal tracking-[0.22em] uppercase text-muted-foreground rtl:font-sans rtl:normal-case rtl:tracking-normal">
+              {index}
+            </p>
+          ) : null}
+          <h3 className="font-medium text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] text-foreground">
             {resolveText(locale, title)}
           </h3>
         </div>
@@ -234,11 +259,17 @@ export function ActionPanel({
 }) {
   return (
     <PageSection tone="muted">
-      <div className="surface-panel grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+      <div className="grid gap-8 rounded-md border border-border bg-card/80 p-6 backdrop-blur-sm lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
         <div className="max-w-2xl">
-          <p className="section-kicker mb-4">{resolveText(locale, eyebrow)}</p>
-          <h2 className="section-title">{resolveText(locale, title)}</h2>
-          <p className="section-copy mt-5">{resolveText(locale, description)}</p>
+          <p className="mb-4 font-mono text-xs leading-normal tracking-[0.22em] uppercase text-muted-foreground rtl:font-sans rtl:normal-case rtl:tracking-normal">
+            {resolveText(locale, eyebrow)}
+          </p>
+          <h2 className="font-sans text-[clamp(2.125rem,4vw,3.25rem)] font-normal leading-[1.08] tracking-[-0.02em] text-foreground">
+            {resolveText(locale, title)}
+          </h2>
+          <p className="mt-5 text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground">
+            {resolveText(locale, description)}
+          </p>
           {note ? (
             <p className="mt-6 text-sm leading-6 text-muted-foreground">
               {resolveText(locale, note)}

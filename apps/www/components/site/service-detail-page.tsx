@@ -5,48 +5,56 @@ import {
   PageSection,
   SectionHeader,
 } from "@/components/site/marketing-primitives";
-import {
-  resolveText,
-  siteActions,
-  type LocalizedText,
-  type SiteAction,
-} from "@/lib/site-content";
+import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
+
+type ActionItem = {
+  href: string;
+  label: ReactNode;
+};
 
 type ServicePageProps = {
-  locale: string;
   hero: {
-    eyebrow: LocalizedText;
-    title: LocalizedText;
-    description: LocalizedText;
+    eyebrow: ReactNode;
+    title: ReactNode;
+    description: ReactNode;
   };
   sections: {
-    deliverablesTitle: LocalizedText;
-    deliverables: LocalizedText[];
-    fitTitle: LocalizedText;
-    fitItems: LocalizedText[];
+    deliverablesTitle: ReactNode;
+    deliverables: ReactNode[];
+    fitTitle: ReactNode;
+    fitItems: ReactNode[];
   };
-  primary?: SiteAction | null;
-  secondary?: SiteAction | null;
+  primary: ActionItem;
+  secondary: ActionItem;
   proofCard?: {
     href: string;
-    title: LocalizedText;
-    description: LocalizedText;
-    cta: LocalizedText;
+    title: ReactNode;
+    description: ReactNode;
+    cta: ReactNode;
+  };
+  labels?: {
+    scopeEyebrow?: ReactNode;
+    fitEyebrow?: ReactNode;
+    nextStepEyebrow?: ReactNode;
+    nextStepTitle?: ReactNode;
+    nextStepDescription?: ReactNode;
   };
 };
 
 export function ServiceDetailPage({
-  locale,
   hero,
   sections,
-  primary = siteActions.schedule,
-  secondary = siteActions.work,
+  primary,
+  secondary,
   proofCard,
+  labels,
 }: ServicePageProps) {
+  const t = useTranslations("serviceDetails");
+
   return (
     <>
       <PageHero
-        locale={locale}
         eyebrow={hero.eyebrow}
         title={hero.title}
         description={hero.description}
@@ -58,21 +66,17 @@ export function ServiceDetailPage({
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
           <div>
             <SectionHeader
-              locale={locale}
-              eyebrow={{
-                en: "Scope",
-                ar: "النطاق",
-              }}
+              eyebrow={labels?.scopeEyebrow || t("scopeLabel")}
               title={sections.deliverablesTitle}
             />
             <div className="mt-8 grid gap-4">
               {sections.deliverables.map((item, index) => (
-                <div key={item.en} className="surface-card flex gap-4">
-                  <p className="section-kicker mt-1 shrink-0">
+                <div key={index} className="rounded-md border border-border bg-card p-5 md:p-6 flex gap-4">
+                  <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mt-1 shrink-0">
                     {String(index + 1).padStart(2, "0")}
                   </p>
                   <p className="text-sm leading-6 text-foreground/85">
-                    {resolveText(locale, item)}
+                    {item}
                   </p>
                 </div>
               ))}
@@ -80,25 +84,20 @@ export function ServiceDetailPage({
           </div>
           <div>
             <SectionHeader
-              locale={locale}
-              eyebrow={{
-                en: "Fit",
-                ar: "المناسبة",
-              }}
+              eyebrow={labels?.fitEyebrow || t("fitLabel")}
               title={sections.fitTitle}
             />
             <div className="mt-8 grid gap-4">
-              {sections.fitItems.map((item) => (
-                <div key={item.en} className="surface-card">
+              {sections.fitItems.map((item, index) => (
+                <div key={index} className="rounded-md border border-border bg-card p-5 md:p-6">
                   <p className="text-sm leading-6 text-muted-foreground">
-                    {resolveText(locale, item)}
+                    {item}
                   </p>
                 </div>
               ))}
             </div>
             {proofCard ? (
               <LinkCard
-                locale={locale}
                 href={proofCard.href}
                 title={proofCard.title}
                 description={proofCard.description}
@@ -111,22 +110,13 @@ export function ServiceDetailPage({
       </PageSection>
 
       <ActionPanel
-        locale={locale}
-        eyebrow={{
-          en: "Next Step",
-          ar: "الخطوة التالية",
-        }}
-        title={{
-          en: "Move from evaluation to a real technical decision.",
-          ar: "انتقل من التقييم إلى قرار تقني حقيقي.",
-        }}
-        description={{
-          en: "If this service matches the problem, the best next move is either a project range or a direct technical call.",
-          ar: "إذا كانت هذه الخدمة تطابق المشكلة، فأفضل خطوة تالية هي نطاق مشروع أو مكالمة تقنية مباشرة.",
-        }}
+        eyebrow={labels?.nextStepEyebrow || t("nextStepEyebrow")}
+        title={labels?.nextStepTitle || t("nextStepTitle")}
+        description={labels?.nextStepDescription || t("nextStepDescription")}
         primary={primary}
         secondary={secondary}
       />
     </>
   );
 }
+

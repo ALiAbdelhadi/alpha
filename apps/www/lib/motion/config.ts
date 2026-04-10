@@ -34,7 +34,6 @@ export const DEFAULTS = {
 
 } as const
 
-
 export const MOTION = {
     ease: {
         text: "cubic-bezier(0.2, 0, 0, 1)",

@@ -31,8 +31,7 @@ function useMergedRef<T>(...refs: (React.Ref<T> | null | undefined)[]) {
         if (typeof ref === "function") ref(node)
         else if (ref) (ref as React.MutableRefObject<T>).current = node
       })
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
     refs
   )
 }

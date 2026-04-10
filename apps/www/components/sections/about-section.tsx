@@ -86,29 +86,29 @@ export const AboutSection = memo(function AboutSection({
       suppressHydrationWarning
       id="about"
       ref={sectionRef}
-      className="flex w-full items-center section-padding"
+      className="flex w-full items-center pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]"
     >
       <Container>
         <div className="grid gap-16 md:grid-cols-2 md:gap-20">
           <div className="flex flex-col justify-between gap-12">
             <div className="space-y-3">
-              <p ref={eyebrowRef} className="meta-eyebrow text-muted-foreground block">
+              <p ref={eyebrowRef} className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground block">
                 {t("about.eyebrow")}
               </p>
-              <h2 ref={titleRef} className="display-h2 font-normal text-foreground leading-[1.05]">
+              <h2 ref={titleRef} className="text-[clamp(2.125rem,4vw,3.25rem)] tracking-[-0.02em] font-normal text-foreground leading-[1.05]">
                 {t("about.title")}
                 <br />
                 {t("about.title2")}
                 <br />
-                <span className="block font-serif italic text-muted-foreground">
+                <span className="block font-serif italic font-light text-foreground/45 rtl:font-sans rtl:not-italic rtl:font-bold">
                   {t("about.title3")}
                 </span>
               </h2>
               <div ref={descRef} className="space-y-4">
-                <p className="body-copy text-muted-foreground max-w-[44ch]">
+                <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground max-w-[44ch]">
                   {t("about.description1")}
                 </p>
-                <p className="body-copy text-muted-foreground max-w-[44ch]">
+                <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground max-w-[44ch]">
                   {t("about.description2")}
                 </p>
               </div>
@@ -135,7 +135,7 @@ export const AboutSection = memo(function AboutSection({
             {items.map((item, i) => (
               <div
                 key={i}
-                data-stat
+                data-stat-value
                 className="group border-b border-border py-8"
               >
                 <div
@@ -147,8 +147,7 @@ export const AboutSection = memo(function AboutSection({
                 >
                   {statsEnabled ? (
                     <div
-                      data-stat-value
-                      className="display-h2 font-light text-foreground tabular-nums leading-none pt-0.5"
+                      className="font-sans text-[clamp(28px,4vw,40px)] font-light leading-none tracking-[-0.03em] text-foreground tabular-nums pt-0.5"
                     >
                       {item.value}
                     </div>
@@ -161,7 +160,7 @@ export const AboutSection = memo(function AboutSection({
                     <p className="font-sans font-medium text-foreground text-base">
                       {item.label}
                     </p>
-                    <p className="meta-eyebrow text-muted-foreground">
+                    <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase text-muted-foreground rtl:font-sans rtl:normal-case rtl:tracking-normal">
                       {item.sub}
                     </p>
                   </div>
@@ -172,23 +171,23 @@ export const AboutSection = memo(function AboutSection({
               ref={founderCardRef}
               className="mt-8 rounded-2xl border border-border bg-surface p-6 md:p-7"
             >
-              <p className="meta-eyebrow text-muted-foreground block">
+              <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground block">
                 {t("about.founder.eyebrow")}
               </p>
               <div className="mt-5 space-y-5">
                 <div>
-                  <h3 className="display-h3 font-medium text-foreground">
+                  <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-medium text-foreground">
                     {t("about.founder.name")}
                   </h3>
-                  <p className="meta-eyebrow text-muted-foreground mt-2">
+                  <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mt-2">
                     {t("about.founder.role")}
                   </p>
                 </div>
                 <div className="space-y-3">
-                  <p className="body-copy text-muted-foreground">
+                  <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground">
                     {t("about.founder.philosophy1")}
                   </p>
-                  <p className="body-copy text-muted-foreground">
+                  <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground">
                     {t("about.founder.philosophy2")}
                   </p>
                 </div>
@@ -197,7 +196,7 @@ export const AboutSection = memo(function AboutSection({
                     href={founderLinkedInUrl}
                     target={founderIsPlaceholderLink ? undefined : "_blank"}
                     rel={founderIsPlaceholderLink ? undefined : "noreferrer"}
-                    className="group inline-flex items-center gap-2 meta-eyebrow text-muted-foreground hover:text-foreground transition-colors duration-300"
+                    className="group inline-flex items-center gap-2 font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground hover:text-foreground transition-colors duration-300"
                   >
                     {t("about.founder.linkedInLabel")}
                     <svg

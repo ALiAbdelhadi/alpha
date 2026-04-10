@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 import { prisma } from "@repo/database"
@@ -83,10 +83,6 @@ export async function GET(request: NextRequest) {
     }
 }
 
-/**
- * PATCH /api/admin/contacts
- * Update contact submission (status, priority, assignment)
- */
 const updateContactSchema = z.object({
     id: z.string().uuid(),
     status: z.enum(["NEW", "VIEWED", "CONTACTED", "QUALIFIED", "PROPOSAL_SENT", "WON", "LOST", "SPAM"]).optional(),
@@ -107,7 +103,7 @@ export async function PATCH(request: NextRequest) {
 
         if (validatedData.status) {
             updateData.status = validatedData.status
-            // Auto-set firstViewedAt when status changes from NEW
+
             if (validatedData.status === "VIEWED") {
                 const existing = await prisma.contactSubmission.findUnique({
                     where: { id: validatedData.id },
@@ -117,7 +113,7 @@ export async function PATCH(request: NextRequest) {
                     updateData.firstViewedAt = new Date()
                 }
             }
-            // Auto-set firstContactedAt when status changes to CONTACTED
+
             if (validatedData.status === "CONTACTED") {
                 const existing = await prisma.contactSubmission.findUnique({
                     where: { id: validatedData.id },
@@ -200,7 +196,6 @@ export async function DELETE(request: NextRequest) {
             )
         }
 
-        // Check if contact exists
         const contact = await prisma.contactSubmission.findUnique({
             where: { id },
         })
@@ -215,7 +210,6 @@ export async function DELETE(request: NextRequest) {
             )
         }
 
-        // Delete the contact (cascade will handle notes, tags, meetings)
         await prisma.contactSubmission.delete({
             where: { id },
         })

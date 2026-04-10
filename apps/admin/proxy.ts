@@ -5,7 +5,6 @@ export async function proxy(request: NextRequest) {
   const session = request.cookies.get('admin-session')
   const adminSecret = process.env.ADMIN_SECRET
 
-  // Public paths that don't require authentication
   const publicPaths = ['/login', '/api/auth/login', '/offline']
   const isPublicPath = publicPaths.some(path => 
     request.nextUrl.pathname === path || 
@@ -16,7 +15,6 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next()
   }
 
-  // Check if admin is configured
   if (!adminSecret) {
     return NextResponse.json(
       { error: 'Admin access not configured' },
@@ -29,7 +27,6 @@ export async function proxy(request: NextRequest) {
   const hashArray = Array.from(new Uint8Array(hashBuffer))
   const expectedToken = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
 
-  // Check session
   if (!session || session.value !== expectedToken) {
     const loginUrl = new URL('/login', request.url)
     loginUrl.searchParams.set('redirect', request.nextUrl.pathname)

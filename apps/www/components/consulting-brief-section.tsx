@@ -24,76 +24,76 @@ interface StageAction {
 interface Stage { key: string; label: string; actions: StageAction[] }
 interface Note { id: string; label: string; body: string; color: InkColor }
 
-const STAGES: Stage[] = [
-  {
-    key: "discovery", label: "Discovery",
-    actions: [
-      { type: "underline", target: "ul-release", delay: 0 },
-      { type: "note", target: "note-symptom", delay: 280 },
-      { type: "underline", target: "ul-monolith", delay: 520 },
-    ],
-  },
-  {
-    key: "audit", label: "Arch Audit",
-    actions: [
-      { type: "underline", target: "ul-decompose", delay: 0 },
-      { type: "strike", target: "st-decompose", delay: 240 },
-      { type: "note", target: "note-rflag", delay: 460 },
-      { type: "connector", target: "conn-1", delay: 680 },
-      { type: "note", target: "note-question", delay: 900 },
-    ],
-  },
-  {
-    key: "roadmap", label: "Decomp Plan",
-    actions: [
-      { type: "underline", target: "ul-shareddb", delay: 0 },
-      { type: "highlight", target: "hl-tracing", delay: 240 },
-      { type: "note", target: "note-connected", delay: 460 },
-      { type: "connector", target: "conn-2", delay: 680 },
-      { type: "note", target: "note-finding", delay: 900 },
-    ],
-  },
-  {
-    key: "delivery", label: "Migration",
-    actions: [
-      { type: "underline", target: "ul-load", delay: 0 },
-      { type: "highlight", target: "hl-release", delay: 240 },
-      { type: "highlight", target: "hl-decompose", delay: 440 },
-      { type: "note", target: "note-action", delay: 660 },
-    ],
-  },
-]
-
-const NOTES: Note[] = [
-  { id: "note-symptom", color: "red", label: "Symptom", body: "Release coupling, not microservices. Teams move at the speed of the slowest deploy - investigate topology before decomposition." },
-  { id: "note-rflag", color: "red", label: "Red flag", body: "Premature decomposition creates a distributed monolith with identical coupling - 14 services, same problems." },
-  { id: "note-question", color: "amber", label: "Question", body: "How many cross-domain joins in the shared schema? That count determines extraction sequence per service." },
-  { id: "note-connected", color: "amber", label: "Connected", body: "Shared database and missing tracing are the same root: no service owns its data, so none can be independently deployed." },
-  { id: "note-finding", color: "green", label: "Finding \u2192 Action", body: "Instrument first - you cannot safely extract a service whose failure modes you cannot trace. Then Strangler Fig: Auth \u2192 Inventory \u2192 Orders last." },
-]
-
 const D = (n: number) => `${Math.round(n * 1000)}ms`
-
-function getPrimaryNote(stageIndex: number): Note | null {
-  if (stageIndex < 0) return null
-  const noteActions = STAGES[stageIndex].actions.filter(a => a.type === "note")
-  if (!noteActions.length) return null
-  const id = noteActions[noteActions.length - 1].target
-  return NOTES.find(n => n.id === id) ?? null
-}
-
-function collectTargets(upToIndex: number): Set<string> {
-  const targets = new Set<string>()
-  for (let i = 0; i <= upToIndex; i++) {
-    STAGES[i].actions.forEach(a => targets.add(a.target))
-  }
-  return targets
-}
 
 export function ConsultingBriefSection() {
   const t = useTranslations("serviceDetails.consulting")
   const locale = useLocale()
   const isRtl = locale === "ar"
+
+  const STAGES: Stage[] = [
+    {
+      key: "discovery", label: t("brief.stages.discovery"),
+      actions: [
+        { type: "underline", target: "ul-release", delay: 0 },
+        { type: "note", target: "note-symptom", delay: 280 },
+        { type: "underline", target: "ul-monolith", delay: 520 },
+      ],
+    },
+    {
+      key: "audit", label: t("brief.stages.audit"),
+      actions: [
+        { type: "underline", target: "ul-decompose", delay: 0 },
+        { type: "strike", target: "st-decompose", delay: 240 },
+        { type: "note", target: "note-rflag", delay: 460 },
+        { type: "connector", target: "conn-1", delay: 680 },
+        { type: "note", target: "note-question", delay: 900 },
+      ],
+    },
+    {
+      key: "roadmap", label: t("brief.stages.roadmap"),
+      actions: [
+        { type: "underline", target: "ul-shareddb", delay: 0 },
+        { type: "highlight", target: "hl-tracing", delay: 240 },
+        { type: "note", target: "note-connected", delay: 460 },
+        { type: "connector", target: "conn-2", delay: 680 },
+        { type: "note", target: "note-finding", delay: 900 },
+      ],
+    },
+    {
+      key: "delivery", label: t("brief.stages.delivery"),
+      actions: [
+        { type: "underline", target: "ul-load", delay: 0 },
+        { type: "highlight", target: "hl-release", delay: 240 },
+        { type: "highlight", target: "hl-decompose", delay: 440 },
+        { type: "note", target: "note-action", delay: 660 },
+      ],
+    },
+  ]
+
+  const NOTES: Note[] = [
+    { id: "note-symptom", color: "red", label: t("brief.notes.symptom.label"), body: t("brief.notes.symptom.body") },
+    { id: "note-rflag", color: "red", label: t("brief.notes.rflag.label"), body: t("brief.notes.rflag.body") },
+    { id: "note-question", color: "amber", label: t("brief.notes.question.label"), body: t("brief.notes.question.body") },
+    { id: "note-connected", color: "amber", label: t("brief.notes.connected.label"), body: t("brief.notes.connected.body") },
+    { id: "note-finding", color: "green", label: t("brief.notes.finding.label"), body: t("brief.notes.finding.body") },
+  ]
+
+  function getPrimaryNote(stageIndex: number): Note | null {
+    if (stageIndex < 0) return null
+    const noteActions = STAGES[stageIndex].actions.filter(a => a.type === "note")
+    if (!noteActions.length) return null
+    const id = noteActions[noteActions.length - 1].target
+    return NOTES.find(n => n.id === id) ?? null
+  }
+
+  function collectTargets(upToIndex: number): Set<string> {
+    const targets = new Set<string>()
+    for (let i = 0; i <= upToIndex; i++) {
+      STAGES[i].actions.forEach(a => targets.add(a.target))
+    }
+    return targets
+  }
 
   const wrapperRef = useRef<HTMLDivElement>(null)
   const stickyRef = useRef<HTMLDivElement>(null)
@@ -169,7 +169,7 @@ export function ConsultingBriefSection() {
       tl.call(() => setActiveTargets(collectTargets(index)))
       tlRef.current = tl
     }
-  }, [])
+  }, [STAGES])
 
   useIsomorphicLayoutEffect(() => {
     if (!mounted || !wrapperRef.current || !stickyRef.current) return
@@ -240,7 +240,7 @@ export function ConsultingBriefSection() {
         .cb-strike {
           position: absolute; top: 50%; left: 0; right: 0;
           height: 1.5px; pointer-events: none;
-          background: color-mix(in srgb, var(--foreground) 45%, transparent);
+          background: color-mix(in srgb, hsl(var(--foreground)) 45%, transparent);
           transform-origin: left;
           transform: scaleX(0);
           transition: transform 0.36s cubic-bezier(0.4, 0, 0.2, 1);
@@ -343,10 +343,10 @@ export function ConsultingBriefSection() {
 
       <div ref={wrapperRef} style={{ height: "415vh" }} id="brief" className="p-0 m-0 w-full">
         <Container>
-          <div ref={stickyRef} className="cb-sticky-inner section-padding">
+          <div ref={stickyRef} className="cb-sticky-inner pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
 
             <div ref={headerRef} style={{ flexShrink: 0, marginBottom: "clamp(6px, 1.2vh, 20px)" }}>
-              <p className="font-mono text-xs uppercase tracking-[0.25em] text-foreground/40 mb-2 md:mb-3 block">
+              <p className="font-mono text-sm leading-normal tracking-wider text-xs uppercase tracking-[0.25em] text-foreground/40 mb-2 md:mb-3 block">
                 {t("brief.eyebrow")}
               </p>
               <div className="flex items-end justify-between gap-4 md:gap-6 flex-wrap">
@@ -357,11 +357,11 @@ export function ConsultingBriefSection() {
                 >
                   {t("brief.title")}
                   <br />
-                  <span className="text-foreground/45" style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}>
+                  <span className="font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold text-foreground/45">
                     {t("brief.titleItalic")}
                   </span>
                 </h2>
-                <p className="font-mono text-xs text-foreground/45 max-w-[38ch] hidden lg:block leading-relaxed">
+                <p className="font-mono text-sm leading-normal tracking-wider text-xs text-foreground/45 max-w-[38ch] hidden lg:block leading-relaxed">
                   {t("brief.subtitle")}
                 </p>
               </div>
@@ -379,19 +379,19 @@ export function ConsultingBriefSection() {
               {STAGES.map((s, i) => (
                 <button
                   key={s.key}
-                  className="flex-1 relative font-mono uppercase"
+                  className="flex-1 relative font-mono text-sm leading-normal tracking-wider uppercase"
                   style={{
                     padding: "8px 4px",
                     fontSize: "clamp(9px, 0.80vw, 14px)",
                     letterSpacing: "0.12em",
                     background: i === activeStage
-                      ? "color-mix(in srgb, var(--foreground) 6%, transparent)"
+                      ? "color-mix(in srgb, hsl(var(--foreground)) 6%, transparent)"
                       : "transparent",
                     color: i <= activeStage
-                      ? "var(--foreground)"
-                      : "color-mix(in srgb, var(--foreground) 28%, transparent)",
+                      ? "hsl(var(--foreground))"
+                      : "color-mix(in srgb, hsl(var(--foreground)) 28%, transparent)",
                     borderRight: i < STAGES.length - 1
-                      ? "0.5px solid color-mix(in srgb, var(--foreground) 10%, transparent)"
+                      ? "0.5px solid color-mix(in srgb, hsl(var(--foreground)) 10%, transparent)"
                       : "none",
                     transition: "color 0.22s cubic-bezier(0.4,0,0.2,1), background 0.28s cubic-bezier(0.4,0,0.2,1)",
                   }}
@@ -402,7 +402,7 @@ export function ConsultingBriefSection() {
                     className="absolute inset-x-0 bottom-0"
                     style={{
                       height: "1.5px",
-                      background: "var(--foreground)",
+                      background: "hsl(var(--foreground))",
                       transformOrigin: isRtl ? "right" : "left",
                       transform: i <= activeStage ? "scaleX(1)" : "scaleX(0)",
                       transition: i === activeStage ? `transform 0.48s ${MOTION.ease.smooth}` : "none",
@@ -421,60 +421,60 @@ export function ConsultingBriefSection() {
                   <div
                     className="relative p-3 sm:p-4 md:p-5 lg:p-7"
                     style={{
-                      borderRight: "0.5px solid color-mix(in srgb, var(--foreground) 10%, transparent)",
+                      borderRight: isRtl ? "none" : "0.5px solid color-mix(in srgb, hsl(var(--foreground)) 10%, transparent)",
+                      borderLeft: isRtl ? "0.5px solid color-mix(in srgb, hsl(var(--foreground)) 10%, transparent)" : "none",
                     }}
                   >
                     <ConnectorsSvg conn1Drawn={a.has("conn-1")} conn2Drawn={a.has("conn-2")} />
                     <div className="flex items-center justify-between mb-2 md:mb-3 lg:mb-4">
                       <span
-                        className="font-mono text-foreground/45"
+                        className="font-mono text-sm leading-normal tracking-wider text-foreground/45"
                         style={{ fontSize: "clamp(8px, 0.75vw, 12px)", textTransform: "uppercase", letterSpacing: "0.2em" }}
                       >
                         {t("brief.docMeta")}
                       </span>
                       <span
-                        className="font-mono text-foreground/35 hidden sm:block"
+                        className="font-mono text-sm leading-normal tracking-wider text-foreground/35 hidden sm:block"
                         style={{ fontSize: "clamp(8px, 0.75vw, 12px)", textTransform: "uppercase", letterSpacing: "0.18em" }}
                       >
                         {t("brief.docRef")}
                       </span>
                     </div>
                     <p
-                      className="font-mono text-foreground/55 mb-2 md:mb-3 lg:mb-4 pb-2 md:pb-3"
+                      className="font-mono text-sm leading-normal tracking-wider text-foreground/55 mb-2 md:mb-3 lg:mb-4 pb-2 md:pb-3"
                       style={{
                         fontSize: "clamp(9px, 0.80vw, 14px)",
                         textTransform: "uppercase",
                         letterSpacing: "0.12em",
-                        borderBottom: "0.5px solid color-mix(in srgb, var(--foreground) 8%, transparent)",
+                        borderBottom: "0.5px solid color-mix(in srgb, hsl(var(--foreground)) 8%, transparent)",
                       }}
                     >
                       {t("brief.docTitle")}
                     </p>
                     <div className="cb-body-text text-muted-foreground space-y-2 md:space-y-3">
                       <p>
-                        Our platform has run on a single Django application for six years.
-                        Deployment cycles are 48 minutes end-to-end.{" "}
+                        {t("brief.body.p1")}{" "}
                         <span className="cb-phrase">
                           <span className={`cb-hl${a.has("hl-release") ? " drawn" : ""}`}>
-                            Teams block each other on every release
+                            {t("brief.body.p1_hl1")}
                           </span>
                           <BriefUnderline id="ul-release" color={INK.red} drawn={a.has("ul-release")} />
                         </span>{" "}
-                        because all squads deploy as one unit.{" "}
+                        {t("brief.body.p1_extra")}{" "}
                         <span className="cb-phrase">
-                          The monolith is the bottleneck.
+                          {t("brief.body.p1_hl2")}
                           <BriefUnderline id="ul-monolith" color={INK.red} drawn={a.has("ul-monolith")} />
                         </span>
                       </p>
                       <p>
-                        The solution is clear:{" "}
+                        {t("brief.body.p2")}{" "}
                         <span style={{ position: "relative" }}>
                           <span className={`cb-hl${a.has("hl-decompose") ? " drawn" : ""}`}>
-                            split everything into microservices{" "}
+                            {t("brief.body.p2_hl")}{" "}
                           </span>
                           <span className="cb-phrase">
                             <span className={`cb-hl${a.has("hl-decompose") ? " drawn" : ""}`}>
-                              immediately.
+                              {t("brief.body.p2_strike")}
                             </span>
                             <BriefUnderline id="ul-decompose" color={INK.red} drawn={a.has("ul-decompose")} />
                           </span>
@@ -483,27 +483,26 @@ export function ConsultingBriefSection() {
                             style={{ left: 0, right: 0 }}
                           />
                         </span>{" "}
-                        We have 14 domain areas and just need the extraction sequence.
+                        {t("brief.body.p2_extra")}
                       </p>
                       <p>
-                        All 11 teams write directly to the same{" "}
+                        {t("brief.body.p3")}{" "}
                         <span className="cb-phrase">
-                          PostgreSQL schema.
+                          {t("brief.body.p3_hl")}
                           <BriefUnderline id="ul-shareddb" color={INK.amber} drawn={a.has("ul-shareddb")} />
                         </span>{" "}
-                        No service owns its data. We also have{" "}
+                        {t("brief.body.p3_extra")}{" "}
                         <span className={`cb-hl${a.has("hl-tracing") ? " drawn" : ""}`}>
-                          no distributed tracing across service boundaries.
+                          {t("brief.body.p3_tracing")}
                         </span>
                       </p>
                       <p>
-                        Latency is{" "}
+                        {t("brief.body.p4")}{" "}
                         <span className="cb-phrase">
-                          degrading under peak load
+                          {t("brief.body.p4_hl")}
                           <BriefUnderline id="ul-load" color={INK.green} drawn={a.has("ul-load")} />
                         </span>{" "}
-                        but we can{"'"}t isolate which call chain is responsible.
-                        Budget is not the constraint - time is.
+                        {t("brief.body.p4_extra")}
                       </p>
                     </div>
                   </div>
@@ -511,15 +510,15 @@ export function ConsultingBriefSection() {
                   <div
                     className="hidden md:flex flex-col"
                     style={{
-                      background: "color-mix(in srgb, var(--foreground) 3.5%, transparent)",
+                      background: "color-mix(in srgb, hsl(var(--foreground)) 3.5%, transparent)",
                     }}
                   >
                     <div
                       className="flex-none px-3 pt-3 pb-2"
-                      style={{ borderBottom: "0.5px solid color-mix(in srgb, var(--foreground) 8%, transparent)" }}
+                      style={{ borderBottom: "0.5px solid color-mix(in srgb, hsl(var(--foreground)) 8%, transparent)" }}
                     >
                       <p
-                        className="font-mono text-foreground/30"
+                        className="font-mono text-sm leading-normal tracking-wider text-foreground/30"
                         style={{ fontSize: "clamp(8px, 0.7vw, 10px)", textTransform: "uppercase", letterSpacing: "0.2em" }}
                       >
                         {t("brief.annotationsLabel")}
@@ -554,20 +553,22 @@ export function ConsultingBriefSection() {
                   style={{
                     padding: "10px 14px",
                     borderRadius: "3px",
-                    borderTop: "0.5px solid color-mix(in srgb, var(--foreground) 12%, transparent)",
-                    borderRight: "0.5px solid color-mix(in srgb, var(--foreground) 12%, transparent)",
-                    borderBottom: "0.5px solid color-mix(in srgb, var(--foreground) 12%, transparent)",
-                    borderLeft: `3px solid ${INK[mobileNote.color]}`,
-                    background: "var(--background)",
+                    borderTop: "0.5px solid color-mix(in srgb, hsl(var(--foreground)) 12%, transparent)",
+                    borderRight: "0.5px solid color-mix(in srgb, hsl(var(--foreground)) 12%, transparent)",
+                    borderBottom: "0.5px solid color-mix(in srgb, hsl(var(--foreground)) 12%, transparent)",
+                    borderLeft: isRtl ? "none" : `3px solid ${INK[mobileNote.color]}`,
+                    borderRightColor: isRtl ? INK[mobileNote.color] : undefined,
+                    borderRightWidth: isRtl ? "3px" : undefined,
+                    background: "hsl(var(--background))",
                   }}
                 >
                   <p
-                    className="font-mono mb-1.5"
+                    className="font-mono text-sm leading-normal tracking-wider mb-1.5"
                     style={{ fontSize: "7px", textTransform: "uppercase", letterSpacing: ".18em", color: INK[mobileNote.color] }}
                   >
                     {mobileNote.label}
                   </p>
-                  <p style={{ fontSize: "clamp(12px, 3.2vw, 13px)", color: "color-mix(in srgb, var(--foreground) 68%, transparent)", lineHeight: 1.6 }}>
+                  <p style={{ fontSize: "clamp(12px, 3.2vw, 13px)", color: "color-mix(in srgb, hsl(var(--foreground)) 68%, transparent)", lineHeight: 1.6 }}>
                     {mobileNote.body}
                   </p>
                 </div>
@@ -586,7 +587,7 @@ export function ConsultingBriefSection() {
             aria-hidden="true"
           >
             <p
-              className="font-mono text-foreground/35 inline-flex items-center gap-1.5 whitespace-nowrap"
+              className="font-mono text-sm leading-normal tracking-wider text-foreground/35 inline-flex items-center gap-1.5 whitespace-nowrap"
               style={{ fontSize: "clamp(8px, 0.75vw, 10px)", textTransform: "uppercase", letterSpacing: "0.2em" }}
             >
               <span className="hidden sm:inline">scroll to read through the engagement</span>
@@ -654,15 +655,15 @@ function BriefNote({ note, shown }: { note: Note; shown: boolean }) {
     <div
       id={note.id}
       className={`cb-note${shown ? " shown" : ""}`}
-      style={{ padding: "8px 11px", borderRadius: "4px", borderLeft: `2px solid ${INK[note.color]}`, background: "var(--background)" }}
+      style={{ padding: "8px 11px", borderRadius: "4px", borderLeft: `2px solid ${INK[note.color]}`, background: "hsl(var(--background))" }}
     >
       <p
-        className="font-mono mb-1"
+        className="font-mono text-sm leading-normal tracking-wider mb-1"
         style={{ fontSize: "clamp(7px, 0.72vw, 10px)", textTransform: "uppercase", letterSpacing: ".18em", color: INK[note.color] }}
       >
         {note.label}
       </p>
-      <p style={{ fontSize: "clamp(10px, 0.88vw, 13px)", color: "color-mix(in srgb, var(--foreground) 62%, transparent)", lineHeight: 1.6 }}>
+      <p style={{ fontSize: "clamp(10px, 0.88vw, 13px)", color: "color-mix(in srgb, hsl(var(--foreground)) 62%, transparent)", lineHeight: 1.6 }}>
         {note.body}
       </p>
     </div>

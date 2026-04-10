@@ -4,17 +4,12 @@ import { Container } from "@/components/container"
 import { ArrowLabel, DirectionalLink } from "@/components/directional-link"
 import { MagneticButton } from "@/components/magnetic-button"
 import { Link } from "@/i18n/navigation"
-import { getCaseStudyBySlug } from "@/lib/case-studies"
 import {
-  FLAGSHIP_CASE_STUDY,
-  FLAGSHIP_METRICS,
   HOMEPAGE_SUPPORTING_CASE_STUDIES,
   getCommercialCta,
-  pickCommercialText,
-  resolveCommercialLocale,
 } from "@/lib/commercial"
 import { DEFAULTS, MOTION, useBatch, useReveal, useText } from "@/lib/motion"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { memo } from "react"
 
 function splitHeadline(value: string) {
@@ -30,13 +25,13 @@ function splitHeadline(value: string) {
   }
 }
 
-const SUPPORTING_CASES = HOMEPAGE_SUPPORTING_CASE_STUDIES.map((slug) =>
-  getCaseStudyBySlug(slug),
-).filter(Boolean);
-
 export const WorkSection = memo(function WorkSection() {
   const locale = useLocale();
-  const commercialLocale = resolveCommercialLocale(locale);
+  const tf = useTranslations("commercial.flagship");
+  const tCS = useTranslations("caseStudies");
+  const tW = useTranslations("work");
+  const tCTAs = useTranslations("commercial.ctas");
+
   const flagshipCta = getCommercialCta(locale, "flagshipBuild");
   const genericProofCta = getCommercialCta(locale, "realBuild");
 
@@ -48,87 +43,87 @@ export const WorkSection = memo(function WorkSection() {
   const bodyRef = useReveal({ ...DEFAULTS.body, delay: 0.15 });
   const gridRef = useBatch({ ...DEFAULTS.card, selector: ".work-card" });
 
-  const { first: firstTitle, second: secondTitle } = splitHeadline(
-    pickCommercialText(locale, FLAGSHIP_CASE_STUDY.title),
-  );
+  const { first: firstTitle, second: secondTitle } = splitHeadline(tf("title"));
+
+  const flagshipMetrics = tCS.raw("altruvex-site.metrics") as Array<{ label: string; value: string }>;
 
   return (
-    <section id="work" className="section-padding">
+    <section id="work" className="pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
       <Container>
-        {/* ── Section header — same pattern as services/process ── */}
+        
         <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 md:gap-12 mb-16">
           <div className="space-y-3">
-            <p ref={eyebrowRef} className="meta-eyebrow text-muted-foreground">
-              {pickCommercialText(locale, FLAGSHIP_CASE_STUDY.eyebrow)}
+            <p ref={eyebrowRef} className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
+              {tf("eyebrow")}
             </p>
-            <h2 ref={titleRef} className="display-h2 font-normal text-foreground m-0">
+            <h2 ref={titleRef} className="text-[clamp(2.125rem,4vw,3.25rem)] leading-[1.08] tracking-[-0.02em] font-normal text-foreground m-0">
               {firstTitle}
               {secondTitle ? (
                 <>
                   <br className="hidden md:block" />
-                  <span className="block mt-2 md:mt-0 md:inline font-serif italic text-muted-foreground">
+                  <span className="block mt-2 md:mt-0 md:inline font-serif italic font-light text-foreground/45 rtl:font-sans rtl:not-italic rtl:font-bold">
                     {secondTitle}
                   </span>
                 </>
               ) : null}
             </h2>
           </div>
-          <p ref={bodyRef} className="font-mono text-[13px] leading-[1.8] text-muted-foreground max-w-[320px] m-0">
-            {pickCommercialText(locale, FLAGSHIP_CASE_STUDY.summary)}
+          <p ref={bodyRef} className="text-[clamp(0.9375rem,0.98vw,1rem)] text-muted-foreground max-w-sm leading-relaxed md:max-w-xs lg:max-w-[20rem] m-0">
+            {tf("summary")}
           </p>
         </div>
 
-        {/* ── Divider ── */}
+        
         <div className="h-px bg-border mb-5" />
 
-        {/* ── Flagship metrics — flat border-grid, same as hero stats ── */}
+        
         <div className="grid gap-0 border-t border-border sm:grid-cols-3">
-          {FLAGSHIP_METRICS.map((metric, i, arr) => (
+          {flagshipMetrics.map((metric) => (
             <div
-              key={metric.value.en}
+              key={metric.label}
               className="border-b border-border sm:not-last:border-r px-6 py-8"
             >
-              <span className="display-h3 font-light text-foreground block">
-                {metric.value[commercialLocale]}
+              <span className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-light tabular-nums text-foreground block">
+                {metric.value}
               </span>
-              <span className="meta-eyebrow mt-2 block text-muted-foreground">
-                {metric.label[commercialLocale]}
+              <span className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal mt-2 block text-muted-foreground">
+                {metric.label}
               </span>
             </div>
           ))}
         </div>
 
-        {/* ── Flagship detail — flat editorial blocks ── */}
+        
         <div className="grid gap-0 border-l border-r border-border md:grid-cols-3 mt-0">
           {[
-            { label: FLAGSHIP_CASE_STUDY.problemLabel, body: FLAGSHIP_CASE_STUDY.problem },
-            { label: FLAGSHIP_CASE_STUDY.solutionLabel, body: FLAGSHIP_CASE_STUDY.solution },
-            { label: FLAGSHIP_CASE_STUDY.outcomeLabel, body: FLAGSHIP_CASE_STUDY.outcome },
+            { label: tf("labels.problem"), body: tf("problem") },
+            { label: tf("labels.solution"), body: tf("solution") },
+            { label: tf("labels.outcome"), body: tf("outcome") },
           ].map((item) => (
             <div
-              key={item.label.en}
+              key={item.label}
               className="border-r border-b border-border px-6 py-8 group hover:bg-surface transition-colors duration-300"
             >
-              <p className="meta-eyebrow text-muted-foreground mb-4">
-                {pickCommercialText(locale, item.label)}
+              <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mb-4">
+                {item.label}
               </p>
-              <p className="body-copy text-muted-foreground">
-                {pickCommercialText(locale, item.body)}
+              <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground">
+                {item.body}
               </p>
             </div>
           ))}
         </div>
 
-        {/* ── CTA row — flat, divider-based ── */}
+        
         <div className="mt-10 grid gap-10 md:grid-cols-[minmax(0,1fr)_320px] md:items-start">
           <div className="space-y-3">
-            <p className="meta-eyebrow text-muted-foreground">
-              {locale === "ar" ? "الدليل الحي" : "Live proof"}
+            <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
+              {tW("labels.liveProof") || (locale === "ar" ? "الدليل الحي" : "Live proof")}
             </p>
-            <p className="body-copy text-muted-foreground max-w-xl">
-              {locale === "ar"
+            <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground max-w-xl">
+              {tW("labels.liveProofBody") || (locale === "ar"
                 ? "المشروع الأساسي هنا هو الموقع نفسه، مع دراسة حالة كاملة وتفاصيل التنفيذ."
-                : "The primary proof asset is the site itself, backed by a full case study and build detail."}
+                : "The primary proof asset is the site itself, backed by a full case study and build detail.")}
             </p>
           </div>
           <div className="flex flex-col gap-3">
@@ -139,7 +134,7 @@ export const WorkSection = memo(function WorkSection() {
               className="group"
             >
               <Link href={flagshipCta.href}>
-                <ArrowLabel>{flagshipCta.label}</ArrowLabel>
+                <ArrowLabel>{tCTAs("flagshipBuild")}</ArrowLabel>
               </Link>
             </MagneticButton>
             <MagneticButton
@@ -149,63 +144,62 @@ export const WorkSection = memo(function WorkSection() {
               className="group"
             >
               <Link href={genericProofCta.href}>
-                <ArrowLabel>{genericProofCta.label}</ArrowLabel>
+                <ArrowLabel>{tCTAs("realBuild")}</ArrowLabel>
               </Link>
             </MagneticButton>
           </div>
         </div>
-
-        {/* ── Divider ── */}
         <div className="h-px bg-border mt-10 mb-0" />
+        <div
+          ref={gridRef}
+          className="grid gap-0 border-l border-r border-border md:grid-cols-2"
+        >
+          {HOMEPAGE_SUPPORTING_CASE_STUDIES.map((slug) => {
+            const name = tCS(slug + ".name");
+            const client = tCS(slug + ".client");
+            const year = tCS(slug + ".year");
+            const summary = tCS(slug + ".summary");
+            const metrics = tCS.raw(slug + ".metrics") as Array<{ label: string; value: string }>;
 
-        {/* ── Supporting case studies — border-grid pattern ── */}
-        {SUPPORTING_CASES.length > 0 && (
-          <div
-            ref={gridRef}
-            className="grid gap-0 border-l border-r border-border md:grid-cols-2"
-          >
-            {SUPPORTING_CASES.map((caseStudy) =>
-              caseStudy ? (
-                <div
-                  key={caseStudy.slug}
-                  className="work-card border-r border-b border-border px-6 py-8 group hover:bg-surface transition-colors duration-300"
-                >
-                  <p className="meta-eyebrow text-muted-foreground mb-4">
-                    {caseStudy.client[commercialLocale]} · {caseStudy.year}
-                  </p>
-                  <h3 className="display-h3 font-medium text-foreground mb-3">
-                    {caseStudy.name[commercialLocale]}
-                  </h3>
-                  <p className="body-secondary text-muted-foreground mb-5">
-                    {caseStudy.summary[commercialLocale]}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-5">
-                    {caseStudy.metrics.slice(0, 2).map((metric) => (
-                      <span
-                        key={metric.label[commercialLocale]}
-                        className="rounded-full border border-border px-3 py-1 meta-eyebrow text-muted-foreground"
-                      >
-                        {metric.label[commercialLocale]} · {metric.value}
-                      </span>
-                    ))}
-                  </div>
-                  <DirectionalLink
-                    href={`/work/${caseStudy.slug}`}
-                    className="meta-eyebrow inline-flex text-foreground transition-colors hover:text-muted-foreground"
-                  >
-                    {locale === "ar" ? "اقرأ دراسة الحالة" : "Read the Case Study"}
-                  </DirectionalLink>
+            return (
+              <div
+                key={slug}
+                className="work-card border-r border-b border-border px-6 py-8 group hover:bg-surface transition-colors duration-300"
+              >
+                <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mb-4">
+                  {client} · {year}
+                </p>
+                <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-medium text-foreground mb-3">
+                  {name}
+                </h3>
+                <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-muted-foreground mb-5">
+                  {summary}
+                </p>
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {metrics.slice(0, 2).map((metric) => (
+                    <span
+                      key={metric.label}
+                      className="rounded-full border border-border px-3 py-1 font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground"
+                    >
+                      {metric.label} · {metric.value}
+                    </span>
+                  ))}
                 </div>
-              ) : null,
-            )}
-          </div>
-        )}
-
-        {/* ── Footer — same pattern as services/process ── */}
+                <DirectionalLink
+                  href={`/work/${slug}`}
+                  className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal inline-flex text-foreground transition-colors hover:text-muted-foreground"
+                >
+                  {tW("labels.viewCaseStudy") || (locale === "ar" ? "اقرأ دراسة الحالة" : "Read the Case Study")}
+                </DirectionalLink>
+              </div>
+            );
+          })}
+        </div>
+        
         <div className="flex items-center gap-4 mt-6">
           <div className="flex-1 h-px bg-border" />
-          <span className="meta-eyebrow text-muted-foreground">
-            {locale === "ar" ? "أعمال مبنية على الأداء" : "Built on performance"}
+          <span className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
+            {tW("labels.footer") || (locale === "ar" ? "أعمال مبنية على الأداء" : "Built on performance")}
           </span>
         </div>
       </Container>

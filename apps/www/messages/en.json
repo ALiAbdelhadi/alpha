@@ -18,10 +18,10 @@
     "how-we-work": "How We Work"
   },
   "hero": {
-    "badge": "Custom Web Development",
-    "title": "Built to sell.",
-    "title2": "Not just to look good.",
-    "problem": "Most businesses hire a web agency and get a template with their logo on it. We don't sell templates. We engineer systems — built specifically for what your business needs to do, in Arabic and English, from day one.",
+    "badge": "Custom Web Systems",
+    "title": "Build the site buyers trust.",
+    "title2": "Then build the system your team can scale.",
+    "problem": "Altruvex designs and engineers bilingual websites, portals, and revenue-critical product experiences for teams that have outgrown template work.",
     "description": "Altruvex works with teams that have outgrown generic solutions. If you need something that performs, scales, and works correctly in Arabic and English, that's our exact domain.",
     "ctaPrimary": "Get Your Project Range",
     "ctaSecondary": "See a Real Build",
@@ -34,43 +34,57 @@
     "stat2": "Custom — no templates",
     "stat3": "Bilingual by default",
     "onTime": "100% on-time",
-    "productionCallout": "What you're experiencing right now is a live demonstration of our production standard."
+    "productionCallout": "What you're experiencing right now is a live demonstration of our production standard.",
+    "metrics": [
+      {
+        "value": "Arabic + English",
+        "label": "Engineered from day one"
+      },
+      {
+        "value": "Founder-led",
+        "label": "Strategy, design, and build in one line of ownership"
+      },
+      {
+        "value": "Handoff-ready",
+        "label": "Clear scope, documentation, and clean codebase"
+      }
+    ]
   },
   "process": {
-    "eyebrow": "03 - How We Work",
-    "title": "Zero ambiguity.",
-    "subtitle": "Four phases. Every deliverable defined upfront. No surprises in scope, timeline, or ownership.",
+    "eyebrow": "Delivery Model",
+    "title": "Clear decisions. Clear phases.",
+    "subtitle": "Every project moves through diagnosis, definition, build, and launch with one owner responsible for the outcome.",
     "steps": {
       "step1": {
-        "title": "Discovery & Diagnosis",
+        "title": "Diagnose",
         "tag": "Research",
-        "description": "We audit your systems, map your acquisition flow, and locate where performance is bleeding. Every decision starts with evidence.",
+        "description": "Audit the offer, audience, technical constraints, and current friction.",
         "deliverables": "Technical audit report, Architecture brief, Priority matrix",
         "timeline": "3 – 5 days"
       },
       "step2": {
-        "title": "Architecture & Specification",
+        "title": "Define",
         "tag": "Design",
-        "description": "We design the full system before writing a line of code. Data models, API contracts, component hierarchy - all locked down before build begins.",
+        "description": "Lock hierarchy, flows, scope boundaries, and delivery logic before execution.",
         "deliverables": "System design doc, Component spec, Tech stack decision",
         "timeline": "5 – 7 days"
       },
       "step3": {
-        "title": "Engineering & Build",
+        "title": "Build",
         "tag": "Build",
-        "description": "Frontend, backend, integrations - built against the spec. No shortcuts that create problems six months from now.",
+        "description": "Implement the system with bilingual precision, performance discipline, and clean handoff standards.",
         "deliverables": "Production codebase, Staging environment, QA report",
         "timeline": "2 – 6 weeks"
       },
       "step4": {
-        "title": "Launch & Handover",
+        "title": "Launch",
         "tag": "Deploy",
-        "description": "Deployment, performance benchmarking, and a structured handover. You receive full ownership: documentation, credentials, autonomy.",
+        "description": "Ship with documentation, ownership clarity, and the next operating step already defined.",
         "deliverables": "Live deployment, Documentation, Knowledge transfer",
         "timeline": "3 – 5 days"
       }
     },
-    "footer": "04 Phases - End-to-End Ownership",
+    "footer": "Clear phases. No vague middle.",
     "hero": {
       "eyebrow": "Our Process",
       "title": "How we work.",
@@ -190,29 +204,29 @@
     "footerNote": "Results vary by project — these are real averages."
   },
   "problem": {
-    "badge": "The Real Cost",
+    "badge": "What We Fix",
     "title": {
-      "pre": "Your website is",
-      "crossed": "just sitting there",
-      "gradient": "not converting."
+      "pre": "Most websites lose trust",
+      "crossed": "before the sales",
+      "gradient": "conversation begins."
     },
-    "subtitle": "Most businesses lose leads before the conversation starts. Here's why:",
+    "subtitle": "The common failure is not visual polish. It is weak positioning, slow delivery, and a structure that makes buyers work too hard to understand the value.",
     "issues": {
       "templates": {
-        "title": "Template Trap",
-        "description": "Your site looks identical to your competitor's because you both bought the same $60 theme. Visitors have no reason to choose you."
+        "title": "Unclear hierarchy",
+        "description": "Visitors should know what you do, who it is for, and what to do next within seconds. Confusion is the primary killer of trust."
       },
       "speed": {
-        "title": "3-Second Rule",
-        "description": "53% of mobile users leave if a page takes longer than 3 seconds to load. Slow sites don't lose rankings - they lose customers."
+        "title": "Template behavior",
+        "description": "If every block looks borrowed, buyers assume the thinking behind the offer is borrowed too. You pay for clarity, not just code."
       },
       "confusion": {
-        "title": "Unclear Value",
-        "description": "Visitors land on your page and can't tell what you do, who it's for, or why they should care. Confusion doesn't convert."
+        "title": "Weak conversion flow",
+        "description": "Too many actions, vague calls to action, and no commercial progression create hesitation instead of momentum."
       },
       "amateurs": {
         "title": "Silent Failures",
-        "description": "Broken links, janky scroll, contact forms that fail quietly - without ever notifying you that a lead just disappeared."
+        "description": "Broken links, janky scroll, and performance bottlenecks that drive customers away before they see your value."
       }
     },
     "common": {
@@ -253,6 +267,24 @@
         "link": "/work/art-lighting-store",
         "year": "2024"
       }
+    },
+    "labels": {
+      "caseStudy": "Case study",
+      "challenge": "The challenge",
+      "approach": "Our approach",
+      "results": "Results",
+      "techStack": "Tech stack",
+      "liveSite": "Live site",
+      "visitProj": "Visit project",
+      "clientPersp": "Client perspective",
+      "backLink": "Back to all work",
+      "notFoundTitle": "Case study not found",
+      "notFoundBody": "The case study you are looking for does not exist or is not yet published.",
+      "liveProof": "Live proof",
+      "liveProofBody": "The primary proof asset is the site itself, backed by a full case study and build detail.",
+      "viewCaseStudy": "Read the Case Study",
+      "footer": "Built on performance",
+      "integrity": "Integrity above all"
     }
   },
   "services": {
@@ -369,19 +401,29 @@
     }
   },
   "contactPage": {
-    "badge": "Start the Conversation",
-    "heroTitle": "Tell us what you're building.",
-    "heroDescription": "Have a project in scope, something broken, or a decision to think through? A 30-minute call is enough to know if we're the right fit - no pitch, no pressure.",
+    "badge": "Contact",
+    "heroTitle": "Bring the real problem, not the polished brief.",
+    "heroDescription": "A good first conversation is enough to understand the real blocker, the likely scope, and whether the project deserves a deeper technical step.",
+    "sideNotes": [
+      {
+        "title": "Best for",
+        "description": "Early-stage conversations, technical questions, and scope clarification before scheduling a full working call."
+      },
+      {
+        "title": "Response",
+        "description": "Usually within 24 hours."
+      }
+    ],
     "infoTitle": "Contact",
     "infoTitleHighlight": "Details",
     "infoSubtitle": "Reach us directly",
     "emailLabel": "Email",
     "phoneLabel": "Phone",
-    "locationLabel": "Location",
+    "locationLabel": "Base",
     "address1": "Cairo, Egypt",
     "address2": "Remote worldwide",
-    "scheduleCall": "Book a Technical Call",
-    "responseTime": "We respond within 24 hours",
+    "scheduleCall": "Book a technical call",
+    "responseTime": "Usually within 24 hours.",
     "form": {
       "nameLabel": "Full Name",
       "namePlaceholder": "Your name",
@@ -389,14 +431,14 @@
       "phonePlaceholder": "01XXXXXXXXX",
       "serviceLabel": "Service Interest",
       "servicePlaceholder": "Select a service",
-      "serviceWebDesign": "Interface Design",
-      "serviceDevelopment": "Development",
-      "serviceConsulting": "Consulting",
-      "serviceMaintenance": "Maintenance",
+      "serviceWebDesign": "Website Systems",
+      "serviceDevelopment": "Portals & Product Builds",
+      "serviceConsulting": "Technical Audits",
+      "serviceMaintenance": "Ongoing Support",
       "messageLabel": "Message",
       "messagePlaceholder": "What are you building, what's not working, or what decision do you need clarity on?",
       "submit": "Send Message",
-      "riskReversal": "Free 30-min call · No commitment · Reply within 2 business hours"
+      "riskReversal": "Direct founder access · Usually replies within 24h"
     },
     "social": {
       "twitter": "Twitter",
@@ -407,10 +449,15 @@
     "phoneValue": "+20 102 312 5493"
   },
   "schedule": {
-    "eyebrow": "Book a Technical Call",
+    "eyebrow": "Technical Call",
     "back": "Back",
-    "title": "Schedule a Technical Call",
-    "subtitle": "Choose a time for a 30-minute technical conversation. No pitch. No obligation.",
+    "title": "Use the call to pressure-test the scope live.",
+    "subtitle": "This is the right step when the project is real, the stakes are meaningful, and you need a clearer technical path before moving.",
+    "expectations": [
+      "30 minutes, direct and practical",
+      "Focused on risk, architecture, and next step",
+      "No sales deck, no generic discovery script"
+    ],
     "form": {
       "name": {
         "label": "Name",
@@ -451,10 +498,10 @@
   },
   "approach": {
     "hero": {
-      "eyebrow": "Our Philosophy",
-      "title": "Systems that outlast trends.",
-      "titleItalic": "by design.",
-      "description": "We build to last. The difference isn't the framework - it's the questions asked before the first commit."
+      "eyebrow": "Approach",
+      "title": "We do not design pages first.",
+      "titleItalic": "We design decisions first.",
+      "description": "The interface, architecture, copy, and CTA strategy all come from the same question: what does the buyer need to understand and do next?"
     },
     "contrasts": {
       "1": {
@@ -526,9 +573,10 @@
   },
   "standards": {
     "hero": {
-      "eyebrow": "Quality Standards",
-      "title": "Every project clears these benchmarks.",
-      "description": "We build digital systems designed for growth, performance, and long-term ownership. These are non-negotiable.",
+      "eyebrow": "Standards",
+      "title": "Quality is a delivery requirement,",
+      "titleItalic": "not a bonus round.",
+      "description": "The system has to be fast, readable, accessible, and maintainable enough that the next decision after launch is easier, not harder.",
       "metrics": {
         "performance": {
           "label": "Performance target",
@@ -581,9 +629,9 @@
   "writing": {
     "eyebrow": "Writing",
     "hero": {
-      "title": "Technical writing.",
-      "titleItalic": "without noise.",
-      "description": "Decisions, trade-offs, and systems - examined in depth. Not tutorials. Perspectives from building real products."
+      "title": "Practical thinking for buyers",
+      "titleItalic": "making technical decisions.",
+      "description": "Short, direct pieces on architecture, delivery risk, multilingual UX, and how to buy custom digital work without getting trapped by surface-level signals."
     },
     "articles": {
       "why-not-wordpress": {
@@ -606,7 +654,7 @@
   },
   "articles": {},
   "footer": {
-    "tagline": "Custom web systems. Built to outlast the next trend.",
+    "tagline": "Custom websites, portals, and product systems engineered for teams that need clarity, speed, and bilingual precision.",
     "description": "Altruvex is a custom web development studio in Cairo. We build React/Next.js systems for businesses that need speed, structure, and zero vendor lock-in.",
     "servicesTitle": "Services",
     "companyTitle": "Company",
@@ -626,34 +674,222 @@
     "writing": "Writing",
     "privacy": "Privacy",
     "terms": "Terms",
-    "copyright": "© {year} Altruvex. All rights reserved."
+    "copyright": "© {year} Altruvex. All rights reserved.",
+    "contactLabel": "Contact",
+    "locationLabel": "Base",
+    "locationValue": "Cairo, Egypt",
+    "groups": {
+      "company": {
+        "title": "Company",
+        "links": {
+          "services": "Services",
+          "work": "Work",
+          "approach": "Approach",
+          "process": "Process"
+        }
+      },
+      "explore": {
+        "title": "Explore",
+        "links": {
+          "pricing": "Pricing",
+          "estimator": "Estimator",
+          "writing": "Writing",
+          "contact": "Contact"
+        }
+      },
+      "legal": {
+        "title": "Legal",
+        "links": {
+          "privacy": "Privacy",
+          "terms": "Terms"
+        }
+      }
+    }
   },
   "servicesPage": {
-    "badge": "Custom Web Development",
-    "title": "Four systems.",
-    "titleHighlight": "One engineering standard.",
-    "description": "We build e-commerce stores that convert, web applications that scale, bilingual portals that serve Arabic and English speakers equally, and performance rescues for sites that have stopped working.",
+    "badge": "Services",
+    "title": "Four focused paths.",
+    "titleItalic": "One delivery standard.",
+    "description": "Each service is designed around a single buyer outcome so the page, scope, and CTA all point in the same direction.",
+    "eyebrow": "Services",
     "ctaPrimary": "Get Your Project Range",
     "ctaSecondary": "See a Real Build",
+    "detailLabel": "Capability detail",
+    "comparison": {
+      "eyebrow": "How To Choose",
+      "title": "Start from the problem you need solved, not the deliverable name.",
+      "items": [
+        {
+          "title": "Need a stronger market-facing presence?",
+          "description": "Choose Website Systems."
+        },
+        {
+          "title": "Need custom workflows or product logic?",
+          "description": "Choose Portals & Product Builds."
+        },
+        {
+          "title": "Need clarity before a risky decision?",
+          "description": "Choose Technical Audits."
+        },
+        {
+          "title": "Need reliable execution after launch?",
+          "description": "Choose Ongoing Support."
+        }
+      ]
+    },
+    "comprehensiveSolutions": {
+      "title": "Comprehensive Solutions",
+      "description": "Explore our capability detail pages to understand our technical approach in each domain."
+    },
+    "expectedOutcome": "Expected Outcome",
+    "stats": {
+      "productsShipped": "Products shipped",
+      "industryExperience": "Industry experience",
+      "uptimeAverage": "Uptime average"
+    },
+    "capabilities": {
+      "interfaceDesign": "Website Systems",
+      "development": "Portals & Product Builds",
+      "consulting": "Technical Audits",
+      "maintenance": "Ongoing Support"
+    },
     "gridTitle": "What We Build",
     "gridSubtitle": "Every engagement scoped precisely. You pay for what your system actually needs.",
     "services": {
       "webDesign": {
-        "title": "Interface Design",
-        "description": "Every layout, CTA, and flow designed to move users toward a decision - not just to look polished."
+        "title": "Website Systems",
+        "description": "Sharper positioning, faster pages, and a cleaner conversion path for serious service or product businesses."
       },
       "development": {
-        "title": "Custom Development",
-        "description": "React/Next.js engineering with typed code, automated testing, and architecture your next developer can understand and extend."
+        "title": "Portals & Product Builds",
+        "description": "Dashboards, workflows, portals, and custom logic built around how the business actually operates."
       },
       "consulting": {
-        "title": "Technical Strategy",
-        "description": "Build the right system before you build the wrong one. We map constraints, define architecture, and help you make the decisions that matter most."
+        "title": "Technical Audits",
+        "description": "A fixed-scope decision layer for teams facing a rebuild, a slow platform, or unclear technical direction."
       },
       "maintenance": {
-        "title": "System Maintenance",
-        "description": "Proactive monitoring, security patches, and performance upkeep - so your system keeps working long after launch day."
+        "title": "Ongoing Support",
+        "description": "Structured maintenance for live systems that need releases, monitoring, and a dependable technical partner."
       }
+    }
+  },
+  "commercial": {
+    "ctas": {
+      "projectRange": "Get Your Project Range",
+      "projectRangeHint": "Opens the full estimator so you can answer a few scoping questions and get a realistic range.",
+      "realBuild": "See a Real Build",
+      "realBuildHint": "Opens the flagship case study and shows how the proof was built.",
+      "technicalCall": "Book a Technical Call",
+      "technicalCallHint": "Opens the schedule page so you can pick a time for the working call.",
+      "technicalAudit": "Start with a Technical Audit",
+      "technicalAuditHint": "Opens contact with the audit path already selected.",
+      "architecture": "Talk Through the Architecture",
+      "architectureHint": "Opens contact with the architecture track already selected.",
+      "maintenancePlans": "See Maintenance Plans",
+      "maintenancePlansHint": "Jumps straight to the maintenance plans and support pricing.",
+      "pricingEssential": "Get Pricing for This Scope",
+      "pricingEssentialHint": "Opens the estimator with the essential tier in mind.",
+      "pricingProfessional": "Plan This Build",
+      "pricingProfessionalHint": "Opens the estimator with the professional tier in mind.",
+      "pricingFlagship": "Talk Through the Architecture",
+      "pricingFlagshipHint": "Takes you to a technical call for higher-complexity architecture planning.",
+      "flagshipBuild": "Plan a Build Like This",
+      "flagshipBuildHint": "Starts estimator planning from a connected production-grade build."
+    },
+    "offers": {
+      "website": {
+        "title": "Website Systems",
+        "audience": "Sharper positioning, faster pages, and a cleaner conversion path for serious service or product businesses.",
+        "outcome": "A custom Arabic/English website with strong performance, clear messaging, and conversion-ready structure."
+      },
+      "portal": {
+        "title": "Portals & Product Builds",
+        "audience": "Dashboards, workflows, portals, and custom logic built around how the business actually operates.",
+        "outcome": "A system that removes bottlenecks, supports scale, and fits how the business actually works."
+      },
+      "audit": {
+        "title": "Technical Audits",
+        "audience": "A fixed-scope decision layer for teams facing a rebuild, a slow platform, or unclear technical direction.",
+        "outcome": "A fixed-scope audit, prioritized findings, and an execution-ready roadmap in 5 business days."
+      },
+      "maintenance": {
+        "title": "Ongoing Support",
+        "audience": "Structured maintenance for live systems that need releases, monitoring, and a dependable technical partner.",
+        "outcome": "Predictable maintenance without firefighting."
+      }
+    },
+    "flagship": {
+      "eyebrow": "Flagship Case Study",
+      "title": "Altruvex.com — The Site Itself Had to Be the Proof",
+      "summary": "A bilingual proof build designed to qualify leads, demonstrate engineering quality, and show what custom Arabic/English delivery looks like in production.",
+      "problem": "In a market where many agencies compete on price, Altruvex needed its own site to prove technical quality without leaning on borrowed enterprise credibility.",
+      "solution": "We built a bilingual Arabic/English site on a custom Next.js stack with native RTL architecture, performance-first frontend engineering, and a pricing estimator that qualifies leads before the first conversation.",
+      "outcome": "<1s mobile TTI, <16ms RTL switching with zero layout shift, and an estimated 40% reduction in discovery-call time because leads arrive better qualified.",
+      "labels": {
+        "problem": "Problem",
+        "solution": "Solution",
+        "outcome": "Outcome"
+      }
+    },
+    "trust": {
+      "eyebrow": "Why teams trust Altruvex",
+      "title": "Founder-led delivery, bilingual precision, and zero template shortcuts.",
+      "body": "You work directly with the engineer shaping the system. Strategy, scope, implementation quality, and communication stay in one line of ownership from start to launch.",
+      "points": [
+        {
+          "title": "Bilingual by architecture",
+          "body": "Arabic and English are engineered as equal experiences, not mirrored afterthoughts."
+        },
+        {
+          "title": "No template delivery",
+          "body": "Every scope starts from business needs, not from a recycled theme or plugin stack."
+        },
+        {
+          "title": "Clear commercial guidance",
+          "body": "Pricing, scope, and next steps stay explicit so buyers always know what happens next."
+        }
+      ],
+      "founder": {
+        "eyebrow": "Founder",
+        "name": "Ali Abdelhadi",
+        "role": "Founder & Lead Engineer",
+        "body": "The goal is not to look premium. It is to build work with enough quality, clarity, and positioning that the surface can be copied, but the standard behind it cannot.",
+        "linkLabel": "View LinkedIn"
+      }
+    },
+    "cta": {
+      "eyebrow": "Technical next step",
+      "title": "If the scope is serious, the next move is a technical call.",
+      "body": "Use the call to pressure-test the scope, clarify technical risk, and decide the right build path before committing budget.",
+      "footnote": "Direct founder conversation. No sales script."
+    },
+    "pricing": {
+      "essential": {
+        "buyerLabel": "Business Website",
+        "internalLabel": "Static System",
+        "nextStep": "Next step: open the estimator and scope the right website range."
+      },
+      "professional": {
+        "buyerLabel": "Integrated Website",
+        "internalLabel": "Connected System",
+        "nextStep": "Next step: open the estimator and continue with the integrated build scope."
+      },
+      "flagship": {
+        "buyerLabel": "Custom Product / Portal",
+        "internalLabel": "Full Infrastructure",
+        "nextStep": "Next step: book a technical call to plan the custom architecture."
+      }
+    },
+    "estimator": {
+      "eyebrow": "Estimator",
+      "title": "Get a serious project range before the first call.",
+      "body": "The estimator gives teams a realistic baseline for custom websites, portals, and technical scopes before anyone has to jump onto a sales call.",
+      "checklist": [
+        "3-minute qualification flow",
+        "Range shaped by real custom scope",
+        "Dedicated next step after results"
+      ]
     }
   },
   "pipeline": {
@@ -729,96 +965,93 @@
     "whatWeOfferSubtitle": "Scoped to what your system needs - nothing more.",
     "whatWeOfferEyebrow": "Included",
     "whatWeOfferItalic": "in every engagement.",
+    "scopeLabel": "Scope",
+    "fitLabel": "Fit",
+    "nextStepEyebrow": "Next Step",
+    "nextStepTitle": "Move from evaluation to a real technical decision.",
+    "nextStepDescription": "If this service matches the problem, the best next move is either a project range or a direct technical call.",
     "ctaPrimary": "Get Your Project Range",
     "ctaSecondary": "See a Real Build",
     "webDesign": {
-      "title": "Interface Design",
+      "title": "Website Systems",
       "titleItalic": "built to convert.",
-      "subtitle": "Conversion-First Interface Design",
-      "description": "We design interfaces that move users toward decisions - not interfaces that look good in a Dribbble screenshot. Every layout, color, and CTA placement is deliberate.",
-      "showcaseEyebrow": "Project Types",
-      "showcaseTitle": "Design That Works",
-      "showcaseTitleItalic": "across every context.",
-      "showcaseSubtitle": "From e-commerce to corporate portals - every screen built with conversion and clarity as the brief.",
-      "showcaseEcommerce": "E-Commerce",
-      "showcaseCorporate": "Corporate",
-      "showcasePortfolio": "Portfolio",
-      "showcaseLanding": "Landing",
-      "compareEyebrow": "See the difference",
-      "compareTitle": "Same content.",
-      "compareTitleItalic": "Entirely different result.",
-      "compareSubtitle": "Drag the divider - same copy, same sections, opposite outcomes.",
-      "compareGenericLabel": "Generic template",
-      "compareAltruvexLabel": "Altruvex crafted",
-      "compareStat1Label": "Typography",
-      "compareStat1Sub": "More visual hierarchy",
-      "compareStat2Label": "Whitespace",
-      "compareStat2Sub": "More breathing room",
-      "compareStat3Label": "Visual noise",
-      "compareStat3Sub": "Elements removed",
+      "subtitle": "Design a website people understand in eight seconds.",
+      "description": "We translate your offer into a sharper hierarchy, clearer message, and cleaner conversion flow so the site starts selling before your team gets on the call.",
+      "sections": {
+        "deliverablesTitle": "What this service includes",
+        "deliverables": [
+          "Offer positioning and page hierarchy",
+          "Responsive interface system for desktop and mobile",
+          "Arabic and English page logic with true directional parity",
+          "Conversion-led layouts, CTA placement, and proof structure"
+        ],
+        "fitTitle": "Best fit",
+        "fitItems": [
+          "The current site looks acceptable but fails to convert.",
+          "Your offer is strong but the message and hierarchy are weak.",
+          "You need a custom website, not a template with brand paint."
+        ]
+      },
+      "showcaseEyebrow": "Work Selection",
+      "showcaseTitle": "Design that sells.",
+      "showcaseTitleItalic": "no generic patterns.",
+      "showcaseSubtitle": "Every screen is a conversion opportunity, designed around your actual business metrics.",
+      "showcaseEcommerce": "E-Commerce Systems",
+      "showcaseCorporate": "Corporate Presence",
+      "showcasePortfolio": "Showcase & Portfolio",
+      "showcaseLanding": "High-Conversion Landing",
       "features": {
         "01": {
-          "title": "Conversion-First Layouts",
-          "description": "Every page structure guides the visitor toward a specific action - not just presenting information."
+          "title": "Conversion-Focused Layouts",
+          "description": "Every page structure is designed to guide the visitor toward a specific action - not just present information."
         },
         "02": {
-          "title": "User Flow Architecture",
-          "description": "We map user journeys before designing screens, so every interface decision is grounded in how people actually navigate."
+          "title": "User Flow Engineering",
+          "description": "We map user journeys before designing screens, so every interface decision is based on how people actually navigate."
         },
         "03": {
           "title": "Precise Visual Hierarchy",
-          "description": "Typography, spacing, and contrast calibrated so the most important element always wins the eye first."
+          "description": "Typography, spacing, and contrast are calibrated to ensure the most important element always wins the eye first."
         },
         "04": {
-          "title": "Brand-System Alignment",
-          "description": "Design that extends your brand identity into a consistent system - not a one-off visual that drifts after launch."
+          "title": "Identity System Alignment",
+          "description": "Design that extends your visual identity into a consistent system - not a visual snippet that drifts after launch."
         },
         "05": {
           "title": "Performance-Aware Design",
-          "description": "No bloated assets or animation for its own sake. Every visual choice is weighed against its load cost."
+          "description": "No bloated assets or motion for motion's sake. Every visual choice is measured by its impact on load time."
         },
         "06": {
-          "title": "Accessibility Compliant",
-          "description": "WCAG 2.1 AA compliance built into the design system - not patched in after development ends."
+          "title": "Accessibility Compliance",
+          "description": "WCAG 2.1 AA compliance is built into the design system - not patched in after development is finished."
         }
       },
       "cta": {
         "eyebrow": "Ready to Start",
-        "title": "Need an interface that converts?",
-        "description": "We'll review your current design and scope what needs to change - in a free 30-minute call.",
+        "title": "Need an interface that actually converts?",
+        "description": "We'll review your current design and identify what needs changing - in a free 30-minute call.",
         "back": "View All Services"
       }
     },
     "development": {
-      "title": "Custom Development",
+      "title": "Portals & Product Builds",
       "titleItalic": "built to scale.",
-      "subtitle": "React / Next.js Engineering",
-      "description": "Production-grade web systems built with typed code, tested critical paths, and architecture designed for the next developer - not the next sprint.",
-      "features": {
-        "01": {
-          "title": "React / Next.js Engineering",
-          "description": "Full-stack builds on the stack that leads in performance, SEO, and developer experience - no templating shortcuts."
-        },
-        "02": {
-          "title": "Scalable Architecture",
-          "description": "Systems designed for 10x traffic and feature scope before you need it. Architecture decisions made upfront, not retrofitted under pressure."
-        },
-        "03": {
-          "title": "API & Integration Layer",
-          "description": "RESTful and GraphQL APIs built with clear contracts, error handling, and documentation your team can use."
-        },
-        "04": {
-          "title": "Data Model Design",
-          "description": "Database schemas that won't become technical debt in 18 months. We design data structures before we design screens."
-        },
-        "05": {
-          "title": "Automated Testing",
-          "description": "Critical user flows covered by automated tests. No deployment goes live without passing CI gates."
-        },
-        "06": {
-          "title": "Post-Launch Support",
-          "description": "The system doesn't stop at launch day. We monitor, patch, and support the production environment throughout the agreed period."
-        }
+      "subtitle": "Build the internal system your team actually needs.",
+      "description": "We build custom dashboards, portals, and operational flows that remove human friction from your delivery so your team can focus on growth, not admin.",
+      "sections": {
+        "deliverablesTitle": "What this service includes",
+        "deliverables": [
+          "Custom dashboard and portal engineering",
+          "Operational workflows and internal product logic",
+          "Database architecture and API integrations",
+          "Role-based access control and user management"
+        ],
+        "fitTitle": "Best fit",
+        "fitItems": [
+          "You need a custom portal that doesn't exist off-the-shelf.",
+          "Legacy systems or spreadsheets are slowing down your operations.",
+          "You need a secure, scalable product build with clean handoff."
+        ]
       },
       "techStack": {
         "eyebrow": "The Stack",
@@ -843,19 +1076,35 @@
         "nodes": {
           "nextjs": {
             "description": "Full-stack React framework powering every project. App Router, server components, ISR, and edge runtime in one coherent system.",
-            "highlights": ["App Router", "Server Actions", "Edge Runtime"]
+            "highlights": [
+              "App Router",
+              "Server Actions",
+              "Edge Runtime"
+            ]
           },
           "react": {
             "description": "Component-based UI layer. Every interface is composable, reusable, and predictably state-driven with concurrent rendering.",
-            "highlights": ["Server Components", "Suspense", "Concurrent Mode"]
+            "highlights": [
+              "Server Components",
+              "Suspense",
+              "Concurrent Mode"
+            ]
           },
           "typescript": {
             "description": "Strict type safety across the entire codebase - APIs, database queries, and UI components all share a single type system.",
-            "highlights": ["Strict mode", "Zero implicit any", "Shared types"]
+            "highlights": [
+              "Strict mode",
+              "Zero implicit any",
+              "Shared types"
+            ]
           },
           "nodejs": {
             "description": "Server runtime for API routes, background jobs, webhooks, and serverless functions. Non-blocking I/O at the core.",
-            "highlights": ["API routes", "Edge functions", "Streaming SSR"]
+            "highlights": [
+              "API routes",
+              "Edge functions",
+              "Streaming SSR"
+            ]
           },
           "postgresql": {
             "description": "Production-grade relational database. ACID compliant, with JSON column support, full-text search, and row-level security.",
@@ -867,15 +1116,27 @@
           },
           "prisma": {
             "description": "Type-safe database client - schema is the source of truth, TypeScript types are generated automatically. No raw SQL drift.",
-            "highlights": ["Type-safe queries", "Migrations", "Schema-first"]
+            "highlights": [
+              "Type-safe queries",
+              "Migrations",
+              "Schema-first"
+            ]
           },
           "tailwind": {
             "description": "Utility-first CSS with design tokens baked in. Fast iteration, zero dead styles in production builds, and true dark mode.",
-            "highlights": ["Design tokens", "JIT compiler", "Dark mode"]
+            "highlights": [
+              "Design tokens",
+              "JIT compiler",
+              "Dark mode"
+            ]
           },
           "vercel": {
             "description": "Zero-config deployment with a global edge network, real-time analytics, instant rollbacks, and preview environments per branch.",
-            "highlights": ["Edge Network", "Preview deploys", "Analytics"]
+            "highlights": [
+              "Edge Network",
+              "Preview deploys",
+              "Analytics"
+            ]
           },
           "vps": {
             "description": "Powerful infrastructure for high-traffic platforms. We use custom VPS servers for complex projects requiring maximum performance, dedicated resources, and specialized configurations that go beyond standard hosting.",
@@ -886,94 +1147,104 @@
             ]
           }
         }
-      },
-      "cta": {
-        "eyebrow": "Ready to Ship",
-        "title": "Ready to build on a foundation that lasts?",
-        "description": "Let's scope the system architecture before any code is written.",
-        "back": "View All Services"
       }
     },
     "consulting": {
-      "title": "Technical Strategy",
-      "titleItalic": "before you build.",
-      "subtitle": "Architecture & Decision Consulting",
-      "description": "Make the right technical decisions before you spend six months on the wrong system. We map your constraints, evaluate your options, and give you a clear build direction.",
+      "title": "Technical Audits",
+      "titleItalic": "built for clarity.",
+      "subtitle": "Know exactly why the system is failing before you commit to a rebuild.",
+      "description": "A deep-dive technical audit that examines your architecture, performance, and blockers to give you a clear, evidence-based roadmap for what happens next.",
       "brief": {
-        "eyebrow": "Consulting engagement",
-        "title": "The brief, read",
+        "eyebrow": "Consulting Brief",
+        "title": "The summary, read it",
         "titleItalic": "carefully.",
-        "subtitle": "Every annotation is a decision. No recommendation before the architecture is understood.",
+        "subtitle": "Every note is a decision. No recommendations before fully understanding the debt.",
         "annotationsLabel": "Annotations",
-        "docMeta": "Client brief - Engineering - March 2026",
+        "docMeta": "Client Summary - Engineering - March 2026",
         "docRef": "Ref: ARCH-2026-04",
-        "docTitle": "Re: Monolith-to-microservices migration - Logistics Platform",
-        "next": "Next"
+        "docTitle": "RE: Monolith-to-Microservices Migration - Logistics Platform",
+        "stages": {
+          "discovery": "Discovery",
+          "audit": "Arch Audit",
+          "roadmap": "Decomp Plan",
+          "delivery": "Migration"
+        },
+        "notes": {
+          "symptom": {
+            "label": "Symptom",
+            "body": "Release coupling, not microservices. Teams move at the speed of the slowest deploy - investigate topology before decomposition."
+          },
+          "rflag": {
+            "label": "Red flag",
+            "body": "Premature decomposition creates a distributed monolith with identical coupling - 14 services, same problems."
+          },
+          "question": {
+            "label": "Question",
+            "body": "How many cross-domain joins in the shared schema? That count determines extraction sequence per service."
+          },
+          "connected": {
+            "label": "Connected",
+            "body": "Shared database and missing tracing are the same root: no service owns its data, so none can be independently deployed."
+          },
+          "finding": {
+            "label": "Finding \u2192 Action",
+            "body": "Instrument first - you cannot safely extract a service whose failure modes you cannot trace. Then Strangler Fig: Auth \u2192 Inventory \u2192 Orders last."
+          }
+        },
+        "body": {
+          "p1": "Our platform has run on a single Django application for six years. Deployment cycles are 48 minutes end-to-end.",
+          "p1_hl1": "Teams block each other on every release",
+          "p1_hl2": "The monolith is the bottleneck.",
+          "p1_extra": "because all squads deploy as one unit.",
+          "p2": "The solution is clear:",
+          "p2_hl": "split everything into microservices",
+          "p2_strike": "immediately.",
+          "p2_extra": "We have 14 domain areas and just need the extraction sequence.",
+          "p3": "All 11 teams write directly to the same",
+          "p3_hl": "PostgreSQL schema.",
+          "p3_extra": "No service owns its data. We also have",
+          "p3_tracing": "no distributed tracing across service boundaries.",
+          "p4": "Latency is",
+          "p4_hl": "degrading under peak load",
+          "p4_extra": "but we can't isolate which call chain is responsible. Budget is not the constraint - time is."
+        }
       },
-      "body": {
-        "p1": "We've been growing fast over the past 18 months, but <align>we can't seem to keep the team aligned.</align> Every sprint we're shipping things, but <picture>nothing feels connected to a bigger picture.</picture>",
-        "p2": "<tooling>Our main problem is we need better tooling.</tooling> If we just had the right tools, the team would work better and we'd finally be able to scale."
+      "sections": {
+        "deliverablesTitle": "What this service includes",
+        "deliverables": [
+          "Full architecture and performance audit",
+          "Risk assessment and blocker identification",
+          "Evidence-based technical roadmap",
+          "Decision framework for rebuild vs. refactor"
+        ],
+        "fitTitle": "Best fit",
+        "fitItems": [
+          "You're facing a rebuild but don't know where to start.",
+          "The current system is slow, buggy, or hard to maintain.",
+          "You need an outside expert to pressure-test your technical direction."
+        ]
       },
-      "value": {
-        "eyebrow": "Why It Matters",
-        "title": "Wrong builds cost more than right ones.",
-        "body1": "Every recommendation is grounded in your specific business model, market, and constraints - not a playbook recycled from the last client.",
-        "body2": "We help you make the right technical decisions today, and build the clarity to keep making them without us tomorrow.",
-        "stats": {}
+      "auditOffer": {
+        "eyebrow": "Low-friction entry offer",
+        "title": "Technical Audit — Fixed Scope, Fixed Price",
+        "description": "A clear first engagement before any rebuild or scale-up. We review the current system, isolate the technical risk, and turn the findings into an execution-ready roadmap.",
+        "priceLabel": "Fixed price",
+        "price": "15,000 EGP",
+        "durationLabel": "Duration",
+        "duration": "5 business days",
+        "includedLabel": "What’s included",
+        "included": [
+          "Current stack & architecture review",
+          "Performance bottleneck identification",
+          "Security surface assessment",
+          "Actionable remediation roadmap",
+          "1-hour debrief call"
+        ],
+        "cta": "Start with the audit"
       },
       "hero": {
         "ctaPrimary": "Book a Strategy Session",
         "ctaSecondary": "See Our Approach"
-      },
-      "approach": {
-        "eyebrow": "Our Approach",
-        "title": "How We Work",
-        "titleItalic": "step by step.",
-        "subtitle": "A structured path from problem to decision",
-        "steps": {
-          "01": {
-            "title": "Understand",
-            "description": "Map your current system, team constraints, and the actual problem you're trying to solve."
-          },
-          "02": {
-            "title": "Diagnose",
-            "description": "Identify where the current architecture, stack, or process is creating risk or limiting growth."
-          },
-          "03": {
-            "title": "Recommend",
-            "description": "A clear, opinionated technical direction with trade-offs spelled out honestly."
-          },
-          "04": {
-            "title": "Transfer",
-            "description": "Documentation and a handover that lets your team execute confidently - with or without us."
-          }
-        }
-      },
-      "features": {
-        "01": {
-          "title": "Technical Architecture Review",
-          "description": "We evaluate your current or planned system and identify the decisions with the highest long-term consequence."
-        },
-        "02": {
-          "title": "Performance Audit",
-          "description": "A Lighthouse and Core Web Vitals deep-dive, with fixes ranked by revenue impact."
-        },
-        "03": {
-          "title": "Build-vs-Buy Analysis",
-          "description": "We tell you what to build custom, what to buy off-the-shelf, and where the line is - so you stop paying for complexity you don't need."
-        },
-        "04": {
-          "title": "Code Quality Review",
-          "description": "A structured review of your existing codebase with honest findings on maintainability, security exposure, and refactor priority."
-        },
-        "05": {
-          "title": "Security Assessment",
-          "description": "Systematic review of your authentication, input handling, headers, and dependencies - before a problem surfaces in production."
-        },
-        "06": {
-          "title": "Team Knowledge Transfer",
-          "description": "Structured sessions that leave your internal team more capable, not more dependent."
-        }
       },
       "cta": {
         "eyebrow": "Ready to Decide",
@@ -984,14 +1255,24 @@
       }
     },
     "maintenance": {
-      "title": "System Maintenance",
-      "titleItalic": "always operational.",
-      "subtitle": "Proactive System Support",
-      "description": "Most sites degrade silently after launch - security patches skipped, performance drifting, dependencies aging. We keep the system stable without turning every small fix into a new project.",
-      "hero": {
-        "services": {
-          "website": "Website"
-        }
+      "title": "Ongoing Support",
+      "titleItalic": "built for reliability.",
+      "subtitle": "Focus on the business while we handle the system.",
+      "description": "Dependable, proactive support for live systems that need regular updates, monitoring, and a technical partner who understands the codebase as deeply as the founders.",
+      "sections": {
+        "deliverablesTitle": "What this service includes",
+        "deliverables": [
+          "Proactive monitoring and security updates",
+          "Regular feature updates and maintenance",
+          "Performance optimization and bug fixes",
+          "Stated priority support for critical issues"
+        ],
+        "fitTitle": "Best fit",
+        "fitItems": [
+          "You have a live system that needs dependable maintenance.",
+          "Your team doesn't have the bandwidth for regular tech ops.",
+          "You want a long-term partner for iterative growth after launch."
+        ]
       },
       "stats": {
         "eyebrow": "Uptime Guarantee",
@@ -1034,6 +1315,10 @@
         "title": "Support Plans",
         "titleItalic": "transparent, predictable.",
         "subtitle": "Choose the coverage your system actually needs",
+        "recommended": "Recommended",
+        "customPrice": "Custom",
+        "perMonth": "/ mo",
+        "getStarted": "Get Started",
         "plans": {
           "essential": {
             "name": "Essential",
@@ -1079,30 +1364,28 @@
           },
           "scope": {
             "label": "Scope Limit",
-            "value": "Maintenance covers monitoring, updates, and small iterative changes. Major new features or rebuilds are quoted as separate work."
+            "value": "Maintenance plans cover system stability and small updates. Major features, rebuilds, or new page systems are scoped separately."
           },
           "addons": {
-            "label": "Optional Add-ons",
+            "label": "Third-Party Tools",
             "value": "Optional Altruvex tools or subscriptions can be added when useful, but they are not bundled into every maintenance plan by default."
           }
-        },
-        "perMonth": "/month",
-        "getStarted": "Get Started",
-        "recommended": "Recommended",
-        "customPrice": "Custom"
+        }
       },
       "cta": {
-        "statusTitle": "System Status",
-        "eyebrow": "Protect Your System",
-        "title": "Your system generates revenue. Protect it.",
-        "description": "Most critical failures are predictable. Let's set up the coverage that prevents them before they cost you.",
-        "back": "View All Services",
+        "eyebrow": "05 - Active Support",
+        "statusTitle": "Status",
+        "statusActive": "all systems go",
         "checks": {
-          "uptime": "Uptime tracking",
-          "security": "Security audits",
-          "backups": "Automated backups",
-          "monitoring": "Performance monitoring"
-        }
+          "uptime": "Uptime",
+          "security": "Security",
+          "backups": "Backups",
+          "monitoring": "Monitoring"
+        },
+        "eyebrowContent": "Support Engagement",
+        "title": "Stability shouldn't be a gamble.",
+        "description": "We keep the system stable, secure, and performing so you can focus on scale without being anchored by infrastructure overhead.",
+        "back": "Back to Services"
       }
     }
   },
@@ -1584,7 +1867,7 @@
       "q1": "Why custom code instead of WordPress or Shopify?",
       "a1": "Custom development gives you complete ownership, no platform constraints, and fundamentally better performance. A system built for your business logic loads faster, ranks higher, and converts more visitors than any plugin-dependent platform can.",
       "q2": "How accurate is this estimate?",
-    "a2": "This estimator is calibrated against recent custom-development pricing and our own delivery history. It is directionally accurate for scope planning; final pricing is confirmed after discovery.",
+      "a2": "This estimator is calibrated against recent custom-development pricing and our own delivery history. It is directionally accurate for scope planning; final pricing is confirmed after discovery.",
       "q3": "Do you offer ongoing support?",
       "a3": "Yes. All enterprise and large-scale projects include optional retainer packages for maintenance, feature development, and priority support. Every project also includes a 30-day post-launch warranty for critical fixes.",
       "q4": "What happens after I request the PDF?",
@@ -1600,10 +1883,10 @@
     "status": "Network Status: Offline"
   },
   "pricing": {
-    "label": "Pricing",
-    "title": "Scoped to what you actually need.",
+    "label": "Investment Logic",
+    "title": "Pricing is based on system depth, not inflated page counts.",
     "titleItalic": "Nothing more.",
-    "description": "Priced for teams buying real custom work, not template packages. The difference between tiers is system complexity, integrations, and operational depth - not inflated page counts.",
+    "description": "The tiers below help buyers self-qualify quickly before opening the full estimator.",
     "recommended": "Most common starting point",
     "faq": {
       "title": "Pricing Questions",
@@ -1611,7 +1894,7 @@
       "questions": {
         "01": {
           "q": "How do you determine the investment range?",
-    "a": "We price against current custom-development ranges and the engineering complexity of the system itself. Architecture, workflows, integrations, and bilingual requirements drive the number - not arbitrary metrics like page count."
+          "a": "We price against current custom-development ranges and the engineering complexity of the system itself. Architecture, workflows, integrations, and bilingual requirements drive the number - not arbitrary metrics like page count."
         },
         "02": {
           "q": "Are there hidden recurring costs?",
@@ -1633,10 +1916,10 @@
     },
     "tiers": {
       "essential": {
-        "name": "Static System",
+        "name": "Focused Website",
         "priceRange": "75,000 – 160,000 EGP",
         "originalPrice": "95,000 – 180,000 EGP",
-        "idealFor": "Businesses that need a fast, custom-built website with premium presentation and conversion focus, without complex app logic or heavy integrations.",
+        "idealFor": "Custom marketing site with strong messaging, strong performance, and no template debt.",
         "cta": "Get Pricing for This Scope",
         "features": [
           "Custom UI implementation for your core marketing pages",
@@ -1648,10 +1931,10 @@
         "notIncluded": "No dashboards, payment flows, or heavy operational integrations - see Connected System for those."
       },
       "professional": {
-        "name": "Connected System",
+        "name": "Connected Platform",
         "priceRange": "160,000 – 320,000 EGP",
         "originalPrice": "190,000 – 360,000 EGP",
-        "idealFor": "Sites and systems that need one or two real integrations, richer bilingual UX, CMS flexibility, or light account / admin workflows.",
+        "idealFor": "Integrated website or light product flow with content operations, bilingual UX, and one or two key integrations.",
         "cta": "Plan This Build",
         "features": [
           "Everything in Static System",
@@ -1663,10 +1946,10 @@
         "notIncluded": "No custom portals, deep automation, or internal operational products - see Full Infrastructure for those."
       },
       "flagship": {
-        "name": "Full Infrastructure",
+        "name": "Operational Product",
         "priceRange": "320,000 EGP+",
         "originalPrice": "380,000 EGP+",
-        "idealFor": "Organizations building a serious product or internal system: dashboards, portals, custom workflows, automation, or infrastructure-heavy scopes.",
+        "idealFor": "Portal, dashboard, internal workflow, or product system with real architectural complexity.",
         "cta": "Talk Through the Architecture",
         "features": [
           "Everything in Connected System",
@@ -1904,14 +2187,14 @@
   },
   "caseStudies": {
     "altruvex-site": {
-      "name": "Altruvex.com — Agency Website",
+      "name": "Altruvex.com — The Site Itself Had to Be the Proof",
       "client": "Internal / Altruvex",
       "industry": "Web Engineering / Agency",
       "year": "2025",
-      "summary": "A production-grade agency website built to demonstrate the standard Altruvex holds its client work to — bilingual Arabic/English with full RTL parity, sub-1s load time, and a custom pricing intelligence tool.",
-      "problem": "In a market where many agencies compete almost entirely on price, demonstrating technical superiority without a portfolio of enterprise clients requires the agency's own site to function as the primary proof of capability — every interaction had to be something the market hadn't seen before.",
-      "solution": "Built entirely on a custom stack: Next.js 16 App Router, TypeScript 6, Tailwind CSS v4, GSAP with word-level text splitting for GPU-optimized hero animations, and Lenis for synchronized smooth scroll. The pricing estimator uses in-memory rate limiting pre-launch (Redis queued for scale). Full RTL/LTR parity at the CSS variable level — not mirrored, but architecturally native. Bilingual copy hardcoded with language-specific narrative (no interpolation).",
-      "outcome": "Sub-1s TTI on mobile. Arabic layout switches in under 16ms with zero layout shift. The pricing estimator qualifies leads before any contact — reducing discovery call time by an estimated 40%. Site functions as a live demonstration of Altruvex's production standard.",
+      "summary": "A bilingual Arabic/English proof build designed to demonstrate technical quality, native RTL execution, and lead qualification before the first call.",
+      "problem": "In a market where many agencies compete on price, Altruvex needed its own site to prove technical quality without leaning on borrowed enterprise credibility.",
+      "solution": "We built a bilingual Arabic/English site on a custom Next.js stack with native RTL architecture, performance-first frontend engineering, and a pricing estimator that qualifies leads before the first conversation.",
+      "outcome": "Sub-1s mobile TTI, RTL switching in under 16ms with zero layout shift, and an estimated 40% reduction in discovery-call time because leads arrive better qualified.",
       "techStack": [
         "Next.js 16",
         "TypeScript 6",
@@ -1933,8 +2216,93 @@
           "value": "< 16ms"
         },
         {
-          "label": "Lead Qualification",
-          "value": "Pre-call"
+          "label": "Discovery-call time",
+          "value": "-40%"
+        }
+      ]
+    },
+    "art-lighting-store": {
+      "name": "Art Lighting Store",
+      "client": "Confidential E‑Commerce Brand",
+      "industry": "Premium home lighting",
+      "year": "2024",
+      "summary": "High-resolution product imagery at scale with real-time inventory and fast page loads for a premium lighting retailer.",
+      "problem": "The client sold high-end fixtures where material and detail matter, but their existing platform heavily compressed images and loaded slowly. Customers couldn’t properly inspect finishes or scale, and inventory was fragmented across multiple systems, creating overselling risk.",
+      "solution": "We designed a custom Next.js storefront with an image pipeline tuned for high‑resolution zoom without sacrificing load time. Inventory is synchronized via webhooks into a single source of truth, and pages are statically generated with targeted revalidation for fast, consistent performance.",
+      "outcome": "Within the first month, the new store shipped on schedule, improved conversion rate by 34%, cut perceived load time to nearly instant, and eliminated overselling incidents. The client’s team can now manage products and inventory without engineering support.",
+      "techStack": [
+        "Next.js App Router",
+        "TypeScript",
+        "Tailwind CSS",
+        "PostgreSQL + Prisma",
+        "Image optimization pipeline"
+      ],
+      "metrics": [
+        {
+          "label": "Conversion lift",
+          "value": "+34%"
+        },
+        {
+          "label": "Initial load",
+          "value": "1.2s"
+        },
+        {
+          "label": "Lighthouse score",
+          "value": "98"
+        }
+      ]
+    },
+    "custom-case-builder": {
+      "name": "Custom Case Builder",
+      "client": "CasesCobra",
+      "industry": "Direct‑to‑consumer accessories",
+      "year": "2024",
+      "summary": "A real-time product configurator that lets customers design and preview phone cases in the browser before ordering.",
+      "problem": "The brand’s previous site only offered static photos and a long options list. Customers couldn’t visualize combinations, which led to decision fatigue, abandoned carts, and higher return rates when expectations didn’t match reality.",
+      "solution": "We built a client‑side configurator in React that updates the preview in real time as users change device type, colors, and artwork. All configurations are encoded in a compact URL, allowing customers to share or resume designs, and orders are passed to the backend with a full configuration payload.",
+      "outcome": "The new experience turned the buying process into an interactive flow, significantly increasing engagement and reducing returns. Operations now receive complete, validated configurations, reducing back‑and‑forth and misprints.",
+      "techStack": [
+        "Next.js",
+        "React",
+        "Tailwind CSS",
+        "Canvas/SVG rendering",
+        "Prisma"
+      ],
+      "metrics": [
+        {
+          "label": "Configurator engagement",
+          "value": "3.4×"
+        },
+        {
+          "label": "Return rate",
+          "value": "-18%"
+        }
+      ]
+    },
+    "bilingual-corporate-portal": {
+      "name": "Bilingual Corporate Presence",
+      "client": "NewLight",
+      "industry": "Manufacturing & B2B",
+      "year": "2024",
+      "summary": "A bilingual corporate site with full RTL support, product catalogue, and PWA shell for poor‑network environments.",
+      "problem": "NewLight’s previous site treated Arabic as a simple translation layer, leading to broken layouts, inconsistent typography, and poor readability. Sales teams needed a fast, offline‑friendly way to browse products during client visits with unreliable connectivity.",
+      "solution": "We rebuilt the site on Next.js with next‑intl, designing layouts that adapt structurally for RTL rather than just mirroring. The product catalogue is cached via a PWA shell so sales can browse and search products even on weak connections, with updates pushed on deploy.",
+      "outcome": "The new portal presents a coherent brand in both Arabic and English, reduced confusion on key pages, and gave the sales team a reliable tool in the field. Prospects now understand the offering quickly, in their preferred language and on whatever device they use.",
+      "techStack": [
+        "Next.js App Router",
+        "next-intl (EN/AR)",
+        "Tailwind CSS",
+        "PWA",
+        "PostgreSQL + Prisma"
+      ],
+      "metrics": [
+        {
+          "label": "Time on site",
+          "value": "+27%"
+        },
+        {
+          "label": "Bounce rate",
+          "value": "-22%"
         }
       ]
     }

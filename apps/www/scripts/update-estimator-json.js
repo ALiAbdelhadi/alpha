@@ -430,7 +430,6 @@ const deliverablesAr = {
   }
 };
 
-
 en.estimator.pdfContent.deliverables = deliverablesEn;
 ar.estimator.pdfContent.deliverables = deliverablesAr;
 

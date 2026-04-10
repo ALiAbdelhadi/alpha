@@ -108,7 +108,7 @@ export const InitialLoader = memo(function InitialLoader() {
             ref={containerRef}
             className="fixed inset-0 z-9999 flex flex-col justify-center overflow-hidden "
             style={{
-                background: "var(--background)",
+                background: "hsl(var(--background))",
                 opacity: exiting ? 0 : 1,
                 transition: `opacity ${MOTION.duration.fast}s ${MOTION.ease.ui}`,
             }}
@@ -117,7 +117,7 @@ export const InitialLoader = memo(function InitialLoader() {
         >
             <div
                 className="absolute top-0 left-0 right-0"
-                style={{ height: "0.5px", background: "color-mix(in srgb, var(--foreground) 8%, transparent)" }}
+                style={{ height: "0.5px", background: "color-mix(in srgb, hsl(var(--foreground)) 8%, transparent)" }}
             />
 
             <div
@@ -125,13 +125,13 @@ export const InitialLoader = memo(function InitialLoader() {
                 style={{ opacity: 0.22 }}
             >
                 <span
-                    className="font-mono uppercase"
+                    className="font-mono text-sm leading-normal tracking-wider uppercase"
                     style={{ fontSize: "9px", letterSpacing: "0.28em", color: "var(--foreground)" }}
                 >
                     Altruvex / Init
                 </span>
                 <span
-                    className="font-mono"
+                    className="font-mono text-sm leading-normal tracking-wider"
                     style={{ fontSize: "9px", letterSpacing: "0.18em", color: "var(--foreground)" }}
                 >
                     v2.4
@@ -151,7 +151,7 @@ export const InitialLoader = memo(function InitialLoader() {
                                     line.type === "command"
                                         ? "var(--foreground)"
                                         : line.type === "check"
-                                            ? "color-mix(in srgb, var(--foreground) 55%, transparent)"
+                                            ? "color-mix(in srgb, hsl(var(--foreground)) 55%, transparent)"
                                             : line.type === "ready"
                                                 ? "var(--foreground)"
                                                 : "transparent",
@@ -183,7 +183,7 @@ export const InitialLoader = memo(function InitialLoader() {
                                                 <span
                                                     key={j}
                                                     style={{
-                                                        color: "color-mix(in srgb, var(--foreground) 55%, transparent)",
+                                                        color: "color-mix(in srgb, hsl(var(--foreground)) 55%, transparent)",
                                                     }}
                                                 >
                                                     {part}
@@ -237,7 +237,7 @@ export const InitialLoader = memo(function InitialLoader() {
                         Altruvex
                     </div>
                     <div
-                        className="font-mono text-foreground/25 mt-2"
+                        className="font-mono text-sm leading-normal tracking-wider text-foreground/25 mt-2"
                         style={{ fontSize: "10px", letterSpacing: "0.3em", textTransform: "uppercase" }}
                     >
                         Engineering Beyond Standard.
@@ -247,7 +247,7 @@ export const InitialLoader = memo(function InitialLoader() {
 
             <div
                 className="absolute bottom-0 left-0 right-0"
-                style={{ height: "0.5px", background: "color-mix(in srgb, var(--foreground) 8%, transparent)" }}
+                style={{ height: "0.5px", background: "color-mix(in srgb, hsl(var(--foreground)) 8%, transparent)" }}
             />
 
             <style>{`

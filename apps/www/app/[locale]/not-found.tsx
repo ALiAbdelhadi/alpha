@@ -6,14 +6,14 @@ import { Link } from "@/i18n/navigation";
 
 export default function NotFoundPage() {
     return (
-        <div className="flex min-h-screen items-center justify-center bg-background section-padding">
+        <div className="flex min-h-screen items-center justify-center bg-background pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
             <div
                 aria-hidden
                 className="pointer-events-none select-none absolute bottom-0 ltr:right-0 rtl:left-0 font-sans font-semibold leading-none"
                 style={{
                     fontSize: "clamp(120px, 22vw, 340px)",
                     letterSpacing: "-0.06em",
-                    color: "color-mix(in srgb, var(--foreground) 3%, transparent)",
+                    color: "color-mix(in srgb, hsl(var(--foreground)) 3%, transparent)",
                     lineHeight: 0.85,
                 }}
             >
@@ -21,7 +21,7 @@ export default function NotFoundPage() {
             </div>
             <Container>
                 <main className="relative z-10 max-w-2xl">
-                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground/60 mb-6 block">
+                    <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/60 mb-6 block">
                         404 — Page not found
                     </p>
                     <h1
@@ -34,14 +34,13 @@ export default function NotFoundPage() {
                         This page
                         <br />
                         <span
-                            style={{ fontFamily: "Georgia, serif", fontStyle: "italic" }}
-                            className="text-primary/40"
+                            className="font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold text-primary/40"
                         >
                             doesn&apos;t exist.
                         </span>
                     </h1>
                     <div className="h-px w-24 bg-foreground/8 mb-8" />
-                    <p className="body-copy text-muted-foreground mb-12 max-w-md">
+                    <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground mb-12 max-w-md">
                         The URL may have changed or the page was removed. Head back to
                         explore what we&apos;re building.
                     </p>

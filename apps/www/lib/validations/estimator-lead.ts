@@ -11,4 +11,3 @@ export const estimatorLeadSchema = z.object({
     weeksMin: z.number().int().min(0),
     weeksMax: z.number().int().min(0),
 })
-

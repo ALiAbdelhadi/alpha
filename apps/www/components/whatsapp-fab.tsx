@@ -21,10 +21,10 @@ export function WhatsAppFAB() {
                 cn(
                     "fixed bottom-6 ltr:right-6 rtl:left-6 z-50",
                     "flex items-center gap-2 rounded-full px-4 py-3",
-                    "bg-[#25D366] text-white font-mono text-xs uppercase tracking-[0.15em]",
-                    "shadow-lg shadow-[#25D366]/20",
+                    "bg-messaging-whatsapp text-white font-mono text-sm leading-normal tracking-wider text-xs uppercase tracking-[0.15em]",
+                    "shadow-lg shadow-messaging-whatsapp/20",
                     "transition-all duration-500 ease-out",
-                    "hover:scale-105 hover:shadow-[#25D366]/30",
+                    "hover:scale-105 hover:shadow-messaging-whatsapp/30",
                     "md:hidden",
                     visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
                 )

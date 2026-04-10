@@ -18,11 +18,6 @@ const ProcessSection = lazy(() =>
 
 const NOISE_SVG = `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`
 
-const INVERTED_BG = {
-    dark: "#fcfcfd",
-    light: "#0b0c10",
-}
-
 export function SceneInversionWrapper() {
     const wrapperRef = useRef<HTMLDivElement>(null)
     const mounted = useSyncExternalStore(
@@ -76,15 +71,17 @@ export function SceneInversionWrapper() {
             return
         }
 
-        const theme = isDark ? "dark" : "light"
-        el.style.backgroundColor = INVERTED_BG[theme]
+        const raw = getComputedStyle(document.documentElement)
+            .getPropertyValue("--inverted-bg")
+            .trim()
+        el.style.backgroundColor = raw ? `hsl(${raw})` : "transparent"
     }, [entered, isDark, mounted])
 
     return (
         <div
             id="services-wrapper"
             ref={wrapperRef}
-            className="ps-section relative overflow-hidden"
+            className="ps-section relative overflow-hidden transition-colors duration-[420ms] ease-in-out rtl:text-right"
             data-scene={entered ? "inverted" : undefined}
         >
             <div

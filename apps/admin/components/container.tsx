@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+import React from "react"
 
 interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode
@@ -13,7 +14,7 @@ export function Container({
     return (
         <div
             className={cn(
-                "mx-auto w-full max-w-7xl px-6 sm:px-8 md:px-12 lg:px-16",
+                "mx-auto w-full max-w-352 px-6 sm:px-8 md:px-12 lg:px-16",
                 className
             )}
             {...props}

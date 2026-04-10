@@ -22,12 +22,14 @@ function AnimationController() {
 
 export function MainLayoutContent({ children }: layoutChildren) {
     return (
-        <main className="relative min-h-screen w-full bg-background">
+        <main
+            id="main-content"
+            tabIndex={-1}
+            className="relative min-h-screen w-full bg-background outline-none"
+        >
             <AnimationController />
             <Nav />
-            <div id="main-content" className="relative z-10">
-                {children}
-            </div>
+            <div className="relative z-10">{children}</div>
             <Footer />
         </main>
     )

@@ -67,7 +67,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
   const errorInfo = getErrorInfo();
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-background section-padding">
+    <div className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-background pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]">
       <div
         aria-hidden="true"
         className="pointer-events-none select-none absolute bottom-0 ltr:right-0 rtl:left-0 leading-none font-sans font-semibold tracking-tighter text-foreground/[0.015]"
@@ -89,7 +89,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
           >
             <div className="mb-8 flex items-center gap-2">
               <div className="h-1.5 w-1.5 rounded-full bg-red-500/80 animate-pulse" />
-              <span className="font-mono text-xs text-primary/50 uppercase tracking-[0.25em]">
+              <span className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase text-foreground/20 rtl:font-sans rtl:normal-case rtl:tracking-normal">
                 Error Code {errorInfo.code}
               </span>
             </div>
@@ -103,7 +103,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
               {errorInfo.title1}
               <br />
               <span
-                className="text-display-italic"
+                className="text-foreground/45"
                 style={{
                   fontFamily: "Georgia, 'Times New Roman', serif",
                   fontStyle: "italic",
@@ -120,10 +120,10 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
             {error.digest && (
               <div className="mb-12 w-full max-w-md text-left rtl:text-right">
                 <details className="group rounded-sm border border-foreground/8 bg-foreground/[0.015] p-4 transition-colors hover:border-foreground/20 hover:bg-foreground/[0.03]">
-                  <summary className="cursor-pointer font-mono text-xs uppercase tracking-[0.15em] text-primary/40 group-hover:text-primary/70 transition-colors select-none">
+                  <summary className="cursor-pointer font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 group-hover:text-primary/70 transition-colors select-none">
                     Error Digest
                   </summary>
-                  <pre className="mt-4 overflow-auto rounded-sm bg-foreground/5 p-3 font-mono text-[10px] text-primary/50 leading-relaxed">
+                  <pre className="mt-4 overflow-auto rounded-sm bg-foreground/5 p-3 font-mono text-sm leading-normal tracking-wider text-[10px] text-primary/50 leading-relaxed">
                     <code>{error.digest}</code>
                   </pre>
                 </details>
@@ -179,7 +179,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
                 </MagneticButton>
               </Link>
             </div>
-            <span className="mt-10 font-mono text-[10px] text-primary/20 uppercase tracking-[0.25em]">
+            <span className="mt-10 font-mono text-sm leading-normal tracking-wider text-[10px] text-primary/20 uppercase tracking-[0.25em]">
               System Diagnostics
             </span>
           </div>

@@ -6,9 +6,7 @@ import { useLoading } from "@/components/providers/loading-provider";
 import { useGSAPSection } from "@/hooks/use-gsap-section";
 import { Link } from "@/i18n/navigation";
 import {
-  FLAGSHIP_METRICS,
-  getCommercialCta,
-  resolveCommercialLocale,
+  getCommercialCta
 } from "@/lib/commercial";
 import { gsap } from "@/lib/gsap";
 import { DEFAULTS, MOTION, useReveal } from "@/lib/motion";
@@ -16,6 +14,7 @@ import { isRTLText } from "@/lib/motion/utils/splite";
 import { useLocale, useTranslations } from "next-intl";
 import { type ReactNode, memo, useEffect, useMemo, useRef } from "react";
 import { ArrowLabel } from "../directional-link";
+import { SectionWatermark } from "../section-watermark";
 
 function splitTextTokens(text: string): { nodes: ReactNode; isRTL: boolean } {
   const rtl = isRTLText(text);
@@ -66,7 +65,6 @@ function splitTextTokens(text: string): { nodes: ReactNode; isRTL: boolean } {
 export const HeroSection = memo(function HeroSection() {
   const t = useTranslations();
   const locale = useLocale();
-  const commercialLocale = resolveCommercialLocale(locale);
   const { isInitialLoadComplete } = useLoading();
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -245,15 +243,19 @@ export const HeroSection = memo(function HeroSection() {
     return () => clearTimeout(timeoutId);
   }, [isInitialLoadComplete, headlineIsRTL, title1, title2]);
 
+  const tCTAs = useTranslations("commercial.ctas");
   const primaryCta = getCommercialCta(locale, "projectRange");
+
+  const metrics = t.raw("hero.metrics") as Array<{ value: string; label: string }>;
 
   return (
     <section
       id="home"
       ref={sectionRef}
-      className="hero-watermark relative z-10 flex lg:min-h-screen w-full flex-col justify-end section-padding overflow-hidden"
+      className="relative z-10 flex lg:min-h-screen w-full flex-col justify-end overflow-hidden pt-(--section-y-top) pb-(--section-y-bottom)"
       aria-label="Hero section"
     >
+      <SectionWatermark>{t("hero.watermark")}</SectionWatermark>
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-0"
@@ -267,15 +269,15 @@ export const HeroSection = memo(function HeroSection() {
       </span>
       <div
         ref={badgeRef}
-        className="absolute top-20 ltr:right-8 rtl:left-8 hidden md:flex flex-col ltr:items-end rtl:items-start gap-2"
+        className="absolute top-20 inset-e-8 hidden md:flex flex-col items-end rtl:items-start gap-2"
       >
         <div className="flex items-center gap-2">
           <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
-          <span className="font-mono text-xs text-muted-foreground uppercase tracking-[0.25em]">
+          <span className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
             {t("hero.availability")}
           </span>
         </div>
-        <span className="font-mono text-xs text-muted-foreground/60 uppercase tracking-[0.25em]">
+        <span className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/60">
           {t("hero.badge")}
         </span>
       </div>
@@ -283,17 +285,17 @@ export const HeroSection = memo(function HeroSection() {
         <div className="max-w-5xl">
           <div className="mb-8 flex items-center gap-2 md:hidden">
             <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
-            <span className="font-mono text-xs text-muted-foreground/50 uppercase tracking-[0.25em]">
+            <span className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/50">
               {t("hero.availability")}
             </span>
           </div>
           <h1
             ref={headlineRef}
             aria-hidden
-            className="display-h1 mb-8 font-sans font-light text-foreground select-none"
+            className="text-[clamp(3rem,5vw,4.5rem)] leading-[1.02] tracking-[-0.03em] mb-8 font-sans font-light text-foreground select-none"
           >
             <span className="block">{split1.nodes}</span>
-            <span className="block text-display-italic font-display-serif">
+            <span className="block text-foreground/45 font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold">
               {split2.nodes}
             </span>
           </h1>
@@ -303,7 +305,7 @@ export const HeroSection = memo(function HeroSection() {
           >
             <div className="h-px w-full bg-border mt-3 hidden md:block" />
             <div className="space-y-3 max-w-xl">
-              <p className="body-copy text-muted-foreground">
+              <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground">
                 {t("hero.problem")}
               </p>
             </div>
@@ -319,7 +321,7 @@ export const HeroSection = memo(function HeroSection() {
             >
               <ArrowLabel>
                 <Link href={primaryCta.href}>
-                  {primaryCta.label}
+                  {tCTAs("projectRange")}
                 </Link>
               </ArrowLabel>
             </MagneticButton>
@@ -328,30 +330,30 @@ export const HeroSection = memo(function HeroSection() {
             ref={statsRef}
             className="mt-16 grid gap-6 border-t border-border pt-10 sm:grid-cols-3 sm:gap-0"
           >
-            {FLAGSHIP_METRICS.map((s, i, arr) => (
+            {metrics.map((s, i, arr) => (
               <div
-                key={s.value.en}
-                className="sm:not-last:border-r sm:not-last:border-border"
+                key={s.value}
+                className="sm:border-e sm:border-border sm:last:border-e-0"
                 style={{
-                  paddingLeft: i > 0 ? "clamp(16px, 3vw, 36px)" : 0,
-                  paddingRight:
+                  paddingInlineStart: i > 0 ? "clamp(16px, 3vw, 36px)" : 0,
+                  paddingInlineEnd:
                     i < arr.length - 1 ? "clamp(16px, 3vw, 36px)" : 0,
                 }}
               >
                 <span
-                  className="display-h3 font-light text-foreground block"
+                  className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-light tabular-nums text-foreground block"
                 >
-                  {s.value[commercialLocale]}
+                  {s.value}
                 </span>
-                <span className="meta-eyebrow mt-2 block text-muted-foreground">
-                  {s.label[commercialLocale]}
+                <span className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal mt-2 block text-muted-foreground">
+                  {s.label}
                 </span>
               </div>
             ))}
           </div>
           <p
             ref={proofRef}
-            className="meta-eyebrow mt-6 max-w-2xl text-muted-foreground"
+            className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal mt-6 max-w-2xl text-muted-foreground"
           >
             {t("hero.productionCallout")}
           </p>
@@ -359,10 +361,10 @@ export const HeroSection = memo(function HeroSection() {
       </Container>
       <div
         ref={scrollRef}
-        className="pointer-events-none absolute bottom-7 ltr:left-1/2 rtl:right-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2 mt-6"
+        className="pointer-events-none absolute bottom-7 inset-s-1/2 -translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2 mt-6"
         aria-hidden
       >
-        <p className="meta-eyebrow text-muted-foreground">
+        <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
           {t("hero.scrollHint")}
         </p>
         <div className="relative h-10 w-px overflow-hidden bg-border">

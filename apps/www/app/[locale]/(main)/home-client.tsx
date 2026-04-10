@@ -1,4 +1,5 @@
 import { ErrorBoundary } from "@/components/error-boundary";
+import { SceneInversionWrapper } from "@/components/scene-inversion-wrapper";
 import { CtaSection } from "@/components/sections/cta-section";
 import { EstimatorSection } from "@/components/sections/estimator-section";
 import { HeroSection } from "@/components/sections/hero-section";
@@ -15,14 +16,9 @@ export function HomeClient() {
       <ErrorBoundary>
         <ProblemSection />
       </ErrorBoundary>
-      <ErrorBoundary>
-        <ServicesSection />
-      </ErrorBoundary>
+      <SceneInversionWrapper />
       <ErrorBoundary>
         <WorkSection />
-      </ErrorBoundary>
-      <ErrorBoundary>
-        <ProcessSection />
       </ErrorBoundary>
       <ErrorBoundary>
         <TrustSection />

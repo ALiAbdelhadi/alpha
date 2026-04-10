@@ -20,5 +20,3 @@ export function localizeNumbers(input: string, locale: string): string {
 
     return result
 }
-
-

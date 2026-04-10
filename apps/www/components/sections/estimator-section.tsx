@@ -74,7 +74,7 @@ export const ProposalNarrativeBlock = memo(function ProposalNarrativeBlock({
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-3">
-        <span className="meta-eyebrow text-muted-foreground whitespace-nowrap">
+        <span className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground whitespace-nowrap">
           {L({ ar: narrative.headline.ar, en: narrative.headline.en })}
         </span>
         <div className="flex-1 h-px bg-border" />
@@ -83,8 +83,8 @@ export const ProposalNarrativeBlock = memo(function ProposalNarrativeBlock({
         <div className="w-0.5 self-stretch rounded-full bg-border-mid shrink-0" />
         <p
           className={cn(
-            "body-secondary text-muted-foreground leading-relaxed",
-            isRtl ? "font-sans" : "font-mono",
+            "text-[clamp(0.9375rem,0.98vw,1rem)] text-muted-foreground leading-relaxed",
+            isRtl ? "font-sans" : "font-mono text-sm leading-normal tracking-wider",
           )}
         >
           {L(narrative.closing)}
@@ -303,30 +303,30 @@ export const EstimatorSection = memo(function EstimatorSection() {
       suppressHydrationWarning
       id="estimator"
       ref={sectionRef}
-      className="flex w-full items-center section-padding"
+      className="flex w-full items-center pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]"
     >
       <Container>
-        {/* Section header */}
+
         <div className="mb-12 space-y-3 text-center max-w-3xl mx-auto">
-          <p ref={badgeRef} className="meta-eyebrow text-muted-foreground block">
+          <p ref={badgeRef} className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground block">
             {t("badge")}
           </p>
-          <h2 ref={titleRef} className="display-h2 font-normal text-foreground leading-[1.05]">
+          <h2 ref={titleRef} className="text-[clamp(2.125rem,4vw,3.25rem)] leading-[1.08] tracking-[-0.02em] font-normal text-foreground">
             {t("title")}
           </h2>
-          <p ref={descriptionRef} className="body-copy text-muted-foreground leading-relaxed">
+          <p ref={descriptionRef} className="text-[clamp(1.0625rem,1.05vw,1.125rem)] text-muted-foreground leading-relaxed">
             {t("description")}
           </p>
         </div>
 
         <div className="h-px w-full bg-border mb-12 max-w-3xl mx-auto" />
 
-        {/* Form card */}
+
         <div
           ref={formRef}
           className="max-w-3xl mx-auto bg-background rounded-sm border border-border p-6 md:p-10 shadow-sm relative overflow-hidden"
         >
-          {/* Progress bar */}
+
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-border">
             <div
               className="h-full bg-brand transition-all duration-500 ease-out"
@@ -335,10 +335,10 @@ export const EstimatorSection = memo(function EstimatorSection() {
           </div>
 
           <div ref={formContainerRef} className="pt-4">
-            {/* Step 1 — Project type */}
+
             {step === 1 && (
               <div className="space-y-6">
-                <h3 className="display-h3 font-normal text-foreground">
+                <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-normal text-foreground">
                   {t("step1.question")}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -355,7 +355,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
                         {translate(`step1.options.${type}.desc`)}
                       </p>
                       {sel.projectType === type && (
-                        <div className="absolute top-4 ltr:right-4 rtl:left-4 text-muted-foreground">
+                        <div className="absolute top-4 inset-e-4 text-muted-foreground">
                           <Check className="h-4 w-4" />
                         </div>
                       )}
@@ -365,10 +365,10 @@ export const EstimatorSection = memo(function EstimatorSection() {
               </div>
             )}
 
-            {/* Step 2 — Tier */}
+
             {step === 2 && (
               <div className="space-y-6">
-                <h3 className="display-h3 font-normal text-foreground">
+                <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-normal text-foreground">
                   {t("step2.question")}
                 </h3>
                 <div className="flex flex-col gap-3">
@@ -392,10 +392,10 @@ export const EstimatorSection = memo(function EstimatorSection() {
               </div>
             )}
 
-            {/* Step 3 — Timeline */}
+
             {step === 3 && (
               <div className="space-y-6">
-                <h3 className="display-h3 font-normal text-foreground">
+                <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-normal text-foreground">
                   {t("step3.question")}
                 </h3>
                 <div className="flex flex-col gap-3">
@@ -408,11 +408,11 @@ export const EstimatorSection = memo(function EstimatorSection() {
                       <h4 className="font-medium text-foreground text-base">
                         {translate(`step3.options.${timeline}.title`)}
                       </h4>
-                      <p className="body-secondary text-muted-foreground mt-0.5">
+                      <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-muted-foreground mt-0.5">
                         {translate(`step3.options.${timeline}.desc`)}
                       </p>
                       {sel.timeline === timeline && (
-                        <div className="absolute top-1/2 -translate-y-1/2 ltr:right-4 rtl:left-4 text-muted-foreground">
+                        <div className="absolute top-1/2 -translate-y-1/2 inset-e-4 text-muted-foreground">
                           <Check className="h-4 w-4" />
                         </div>
                       )}
@@ -422,25 +422,25 @@ export const EstimatorSection = memo(function EstimatorSection() {
               </div>
             )}
 
-            {/* Step 4 — Phone capture */}
+
             {step === 4 && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="display-h3 font-normal text-foreground mb-2">
+                  <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-normal text-foreground mb-2">
                     {t("phoneCapture.title")}
                   </h3>
-                  <p className="body-copy text-muted-foreground leading-relaxed">
+                  <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] text-muted-foreground leading-relaxed">
                     {t("phoneCapture.subtitle")}
                   </p>
                 </div>
                 <div className="space-y-4">
                   <div>
-                    <Label className="meta-eyebrow text-muted-foreground mb-2 block">
+                    <Label className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mb-2 block">
                       {t("phoneCapture.phoneLabel")}{" "}
                       <span className="text-destructive">*</span>
                     </Label>
                     <div className="relative">
-                      <div className="absolute inset-y-0 ltr:left-3 rtl:right-3 flex items-center pointer-events-none">
+                      <div className="absolute inset-y-0 inset-s-3 flex items-center pointer-events-none">
                         <Phone className="h-4 w-4 text-muted-foreground" />
                       </div>
                       <Input
@@ -458,7 +458,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
                           handlePhoneSubmit()
                         }
                         placeholder={t("phoneCapture.phonePlaceholder")}
-                        className={`ltr:pl-10 rtl:pr-10 text-foreground bg-transparent placeholder:text-muted-foreground ${phoneError ? "border-destructive" : ""}`}
+                        className={`ps-10 text-foreground bg-transparent placeholder:text-muted-foreground ${phoneError ? "border-destructive" : ""}`}
                       />
                     </div>
                     {phoneError && (
@@ -466,12 +466,12 @@ export const EstimatorSection = memo(function EstimatorSection() {
                         {phoneError}
                       </p>
                     )}
-                    <p className="mt-2 meta-eyebrow text-muted-foreground">
+                    <p className="mt-2 font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
                       {t("phoneCapture.phoneHint")}
                     </p>
                   </div>
                   <div>
-                    <Label className="meta-eyebrow text-muted-foreground mb-2 block">
+                    <Label className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mb-2 block">
                       {t("phoneCapture.nameLabel")}
                     </Label>
                     <Input
@@ -497,17 +497,17 @@ export const EstimatorSection = memo(function EstimatorSection() {
               </div>
             )}
 
-            {/* Step 5 — Results */}
+
             {step === 5 && (
               <div className="space-y-7 py-2">
                 <div>
                   <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 mb-4">
                     <Check className="h-3 w-3 text-muted-foreground" strokeWidth={2.5} />
-                    <span className="meta-eyebrow text-muted-foreground">
+                    <span className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
                       {t("results.badge")}
                     </span>
                   </div>
-                  <h3 className="display-h3 font-normal text-foreground">
+                  <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-normal text-foreground">
                     {t("results.title")}
                   </h3>
                 </div>
@@ -515,7 +515,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
                   <>
                     <div className="grid gap-3 md:grid-cols-2">
                       <div className="p-6 rounded-sm bg-foreground text-background">
-                        <p className="meta-eyebrow opacity-40 mb-3">
+                        <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal opacity-40 mb-3">
                           {t("results.investment")}
                         </p>
                         <p
@@ -525,10 +525,10 @@ export const EstimatorSection = memo(function EstimatorSection() {
                           {formatEGP(estimate.priceMin)} – {formatEGP(estimate.priceMax)}
                         </p>
                         <p className="font-mono text-xs opacity-40">{t("results.vatExcluded")}</p>
-                        <p className="meta-eyebrow opacity-30 mt-3">{t("results.hostingIncluded")}</p>
+                        <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal opacity-30 mt-3">{t("results.hostingIncluded")}</p>
                       </div>
                       <div className="p-6 rounded-sm bg-surface border border-border">
-                        <p className="meta-eyebrow text-muted-foreground mb-3">
+                        <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mb-3">
                           {t("results.timeline")}
                         </p>
                         <p
@@ -551,7 +551,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
                       />
                     )}
                     <div>
-                      <p className="meta-eyebrow text-muted-foreground mb-3">
+                      <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mb-3">
                         {t("results.whatYouGet")}
                       </p>
                       <div className="space-y-2.5">
@@ -568,11 +568,11 @@ export const EstimatorSection = memo(function EstimatorSection() {
                               {items.slice(0, 5).map((d: string, i: number) => (
                                 <div key={i} className="flex items-start gap-3">
                                   <div className="h-1.5 w-1.5 rounded-full bg-border-mid mt-[7px] shrink-0" />
-                                  <p className="body-secondary text-muted-foreground leading-relaxed">{d}</p>
+                                  <p className="text-[clamp(0.9375rem,0.98vw,1rem)] text-muted-foreground leading-relaxed">{d}</p>
                                 </div>
                               ))}
                               {items.length > 5 && (
-                                <p className="meta-eyebrow text-muted-foreground ltr:pl-5 rtl:pr-5 pt-1">
+                                <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground ps-5 pt-1">
                                   {t("results.moreInPdf", { count: items.length - 5 })}
                                 </p>
                               )}
@@ -593,10 +593,10 @@ export const EstimatorSection = memo(function EstimatorSection() {
                     <div className="p-6 rounded-sm border border-border bg-surface flex gap-5 items-start">
                       <div className="w-1.5 self-stretch rounded-full bg-border-mid shrink-0" />
                       <div>
-                        <p className="meta-eyebrow text-muted-foreground mb-2">
+                        <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mb-2">
                           {t("results.rangeCtaLabel")}
                         </p>
-                        <p className="body-copy text-muted-foreground leading-relaxed font-sans">
+                        <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] text-muted-foreground leading-relaxed font-sans">
                           {t("results.rangeCta")}
                         </p>
                       </div>
@@ -634,7 +634,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
                         </Link>
                       </MagneticButton>
                     </div>
-                    <p className="meta-eyebrow text-muted-foreground text-center">
+                    <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground text-center">
                       {t("results.disclaimer")}
                     </p>
                   </>
@@ -643,14 +643,14 @@ export const EstimatorSection = memo(function EstimatorSection() {
             )}
           </div>
 
-          {/* Navigation — steps 1–3 */}
+
           {step < 5 && step !== 4 && (
             <div className="mt-8 flex justify-between items-center border-t border-border pt-6">
               {step > 1 ? (
                 <button
                   onClick={goPrev}
                   disabled={isAnimating}
-                  className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 text-base font-mono group disabled:opacity-30 disabled:cursor-not-allowed"
+                  className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 text-base font-mono leading-normal tracking-wider group disabled:opacity-30 disabled:cursor-not-allowed"
                 >
                   <ArrowLeft className="h-3.5 w-3.5 ltr:group-hover:-translate-x-1 rtl:group-hover:translate-x-1 transition-transform rtl:-rotate-180" />
                   {t("back")}
@@ -658,11 +658,11 @@ export const EstimatorSection = memo(function EstimatorSection() {
               ) : (
                 <div />
               )}
-              <span className="meta-eyebrow text-muted-foreground">{step} / 5</span>
+              <span className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">{step} / 5</span>
               <button
                 onClick={goNext}
                 disabled={!canProceed || isAnimating}
-                className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 text-base font-mono disabled:opacity-20 disabled:cursor-not-allowed group"
+                className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 text-base font-mono leading-normal tracking-wider disabled:opacity-20 disabled:cursor-not-allowed group"
               >
                 {t("next")}
                 <ArrowRight className="h-3.5 w-3.5 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform rtl:-rotate-180" />
@@ -670,19 +670,19 @@ export const EstimatorSection = memo(function EstimatorSection() {
             </div>
           )}
 
-          {/* Navigation — step 5 */}
+
           {step === 5 && (
             <div className="mt-6 border-t border-border pt-6 flex justify-between items-center">
               <button
                 onClick={() => animateStep("back", () => setStep(4))}
                 disabled={isAnimating}
-                className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 text-base font-mono group"
+                className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 text-base font-mono leading-normal tracking-wider group"
               >
                 <ArrowLeft className="h-3.5 w-3.5 ltr:group-hover:-translate-x-1 rtl:group-hover:translate-x-1 transition-transform rtl:-rotate-180" />
                 {t("back")}
               </button>
               <Link href="/estimator">
-                <button className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 text-base font-mono group">
+                <button className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 text-base font-mono leading-normal tracking-wider group">
                   {t("startOver")}
                 </button>
               </Link>
@@ -690,13 +690,13 @@ export const EstimatorSection = memo(function EstimatorSection() {
           )}
         </div>
 
-        {/* FAQ block */}
+
         <div className="mt-32 max-w-3xl mx-auto">
           <div className="text-center mb-10">
-            <h3 className="display-h3 font-normal text-foreground mb-3">
+            <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-normal text-foreground mb-3">
               {t("faq.title")}
             </h3>
-            <p className="body-copy text-muted-foreground">
+            <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground">
               {t("faq.subtitle")}
             </p>
           </div>
@@ -708,10 +708,10 @@ export const EstimatorSection = memo(function EstimatorSection() {
               { q: t("faq.q4"), a: t("faq.a4") },
             ].map((item, i) => (
               <AccordionItem key={i + 1} value={`item-${i + 1}`} className="border-border">
-                <AccordionTrigger className="text-foreground font-sans body-copy">
+                <AccordionTrigger className="text-foreground font-sans text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75]">
                   {item.q}
                 </AccordionTrigger>
-                <AccordionContent className="body-secondary text-muted-foreground leading-relaxed">
+                <AccordionContent className="text-[clamp(0.9375rem,0.98vw,1rem)] text-muted-foreground leading-relaxed">
                   {item.a}
                 </AccordionContent>
               </AccordionItem>

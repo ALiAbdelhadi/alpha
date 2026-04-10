@@ -1,272 +1,239 @@
-export type LocalizedString = {
-  en: string;
-  ar: string;
-};
+import type { SupportedLocale } from "@/lib/metadata";
 
-export type CaseStudyMetric = {
-  label: LocalizedString;
+type LocalizedValue = Record<SupportedLocale, string>;
+
+type CaseStudyMetric = {
+  label: LocalizedValue;
   value: string;
-  description?: LocalizedString;
 };
 
-export type CaseStudy = {
-  slug: string;
-  name: LocalizedString;
-  client: LocalizedString;
-  industry: LocalizedString;
-  year: string;
-  summary: LocalizedString;
-  externalUrl?: string;
+export const CASE_STUDY_SLUGS = [
+  "altruvex-site",
+  "art-lighting-store",
+  "custom-case-builder",
+  "bilingual-corporate-portal",
+] as const;
+
+export type CaseStudySlug = (typeof CASE_STUDY_SLUGS)[number];
+
+export type CaseStudyRecord = {
+  client: LocalizedValue;
+  industry: LocalizedValue;
+  keywords: Record<SupportedLocale, string[]>;
   metrics: CaseStudyMetric[];
-  problem: LocalizedString;
-  solution: LocalizedString;
-  outcome: LocalizedString;
-  techStack: string[];
+  name: LocalizedValue;
+  slug: CaseStudySlug;
+  summary: LocalizedValue;
+  year: string;
 };
 
-export const CASE_STUDIES: CaseStudy[] = [
+export const CASE_STUDIES: CaseStudyRecord[] = [
   {
-    slug: "altruvex-site",
-    name: {
-      en: "Altruvex.com — The Site Itself Had to Be the Proof",
-      ar: "Altruvex.com — كان على الموقع نفسه أن يكون الدليل",
-    },
     client: {
-      en: "Internal / Altruvex",
       ar: "داخلي / ألتروفيكس",
+      en: "Internal / Altruvex",
     },
     industry: {
-      en: "Web Engineering / Agency",
       ar: "هندسة الويب / وكالة",
+      en: "Web Engineering / Agency",
     },
-    year: "2025",
-    externalUrl: "https://altruvex.com",
-    summary: {
-      en: "A bilingual Arabic/English proof build designed to demonstrate technical quality, native RTL execution, and lead qualification before the first call.",
-      ar: "مشروع إثبات عربي/إنجليزي صُمم لإظهار الجودة التقنية والتنفيذ الأصلي لـ RTL وتأهيل العميل المحتمل قبل أول مكالمة.",
+    keywords: {
+      ar: [
+        "دراسة حالة ألتروفيكس",
+        "موقع وكالة Next.js",
+        "موقع ثنائي اللغة",
+        "هندسة ويب تقنية",
+      ],
+      en: [
+        "altruvex case study",
+        "next.js agency website",
+        "bilingual website case study",
+        "technical web engineering",
+      ],
     },
     metrics: [
       {
-        label: { en: "Mobile TTI", ar: "وقت التفاعل على الجوال" },
+        label: {
+          ar: "وقت التفاعل على الجوال",
+          en: "Mobile TTI",
+        },
         value: "< 1s",
       },
       {
-        label: { en: "RTL Switch", ar: "سرعة تبديل العربي" },
+        label: {
+          ar: "سرعة تبديل العربي",
+          en: "RTL Switch",
+        },
         value: "< 16ms",
       },
       {
-        label: { en: "Discovery-call time", ar: "وقت مكالمات الاكتشاف" },
+        label: {
+          ar: "تأهيل العملاء",
+          en: "Discovery-call time",
+        },
         value: "-40%",
       },
     ],
-    problem: {
-      en: "In a market where many agencies compete on price, Altruvex needed its own site to prove technical quality without leaning on borrowed enterprise credibility.",
-      ar: "في سوق تتنافس فيه وكالات كثيرة على السعر، كان على موقع Altruvex نفسه أن يثبت الجودة التقنية دون الاعتماد على مصداقية مستعارة من شعارات شركات كبرى.",
+    name: {
+      ar: "Altruvex.com — كان على الموقع نفسه أن يكون الدليل",
+      en: "Altruvex.com — The Site Itself Had to Be the Proof",
     },
-    solution: {
-      en: "We built a bilingual Arabic/English site on a custom Next.js stack with native RTL architecture, performance-first frontend engineering, and a pricing estimator that qualifies leads before the first conversation.",
-      ar: "بنينا موقعًا عربيًا/إنجليزيًا على بنية Next.js مخصصة مع معمارية RTL أصلية، وهندسة واجهات تركّز على الأداء، ومقدّر أسعار يؤهل العميل المحتمل قبل أول محادثة.",
+    slug: "altruvex-site",
+    summary: {
+      ar: "مشروع إثبات عربي/إنجليزي صُمم لإظهار الجودة التقنية والتنفيذ الأصلي لـ RTL وتأهيل العميل المحتمل قبل أول مكالمة.",
+      en: "A bilingual Arabic/English proof build designed to demonstrate technical quality, native RTL execution, and lead qualification before the first call.",
     },
-    outcome: {
-      en: "Sub-1s mobile TTI, RTL switching in under 16ms with zero layout shift, and an estimated 40% reduction in discovery-call time because leads arrive better qualified.",
-      ar: "أقل من ثانية لوقت التفاعل على الجوال، وتبديل RTL في أقل من 16ms دون أي اهتزاز بصري، وانخفاض تقديري 40٪ في وقت مكالمات الاكتشاف لأن العملاء يصلون أكثر تأهيلاً.",
-    },
-    techStack: [
-      "Next.js 16",
-      "TypeScript 6",
-      "Tailwind CSS v4",
-      "GSAP",
-      "Lenis",
-      "next-intl",
-      "Prisma",
-      "PostgreSQL",
-      "Vercel",
-    ],
+    year: "2025",
   },
   {
-    slug: "art-lighting-store",
-    name: {
-      en: "Art Lighting Store",
-      ar: "متجر آرت للإضاءة",
-    },
     client: {
-      en: "Confidential E‑Commerce Brand",
       ar: "علامة تجارية سرية للتجارة الإلكترونية",
+      en: "Confidential E-Commerce Brand",
     },
     industry: {
-      en: "Premium home lighting",
       ar: "إضاءة منزلية فاخرة",
+      en: "Premium home lighting",
     },
-    year: "2024",
-    externalUrl: "https://eg-artlighting.vercel.app/",
-    summary: {
-      en: "High-resolution product imagery at scale with real-time inventory and fast page loads for a premium lighting retailer.",
-      ar: "صور منتجات عالية الدقة على نطاق واسع مع مخزون في الوقت الفعلي وتحميل سريع للصفحات لبائع تجزئة للإضاءة الفاخرة.",
+    keywords: {
+      ar: [
+        "دراسة حالة متجر مخصص",
+        "واجهة متجر Next.js",
+        "تجارة إلكترونية عالية الأداء",
+      ],
+      en: [
+        "custom storefront case study",
+        "next.js ecommerce build",
+        "high-performance retail website",
+      ],
     },
     metrics: [
       {
-        label: { en: "Conversion lift", ar: "زيادة التحويل" },
+        label: {
+          ar: "زيادة التحويل",
+          en: "Conversion lift",
+        },
         value: "+34%",
-        description: {
-          en: "Increase in completed purchases after launch.",
-          ar: "الزيادة في عمليات الشراء المكتملة بعد الإطلاق.",
-        },
       },
       {
-        label: { en: "Initial load", ar: "التحميل الأولي" },
+        label: {
+          ar: "التحميل الأولي",
+          en: "Initial load",
+        },
         value: "1.2s",
-        description: {
-          en: "Average First Contentful Paint on 4G.",
-          ar: "متوسط أول رسم للمحتوى على شبكة 4G.",
-        },
       },
       {
-        label: { en: "Lighthouse score", ar: "درجة Lighthouse" },
+        label: {
+          ar: "درجة Lighthouse",
+          en: "Lighthouse score",
+        },
         value: "98",
-        description: {
-          en: "Performance, accessibility, and SEO combined.",
-          ar: "الأداء وإمكانية الوصول وSEO مجتمعة.",
-        },
       },
     ],
-    problem: {
-      en: "The client sold high-end fixtures where material and detail matter, but their existing platform heavily compressed images and loaded slowly. Customers couldn’t properly inspect finishes or scale, and inventory was fragmented across multiple systems, creating overselling risk.",
-      ar: "كان العميل يبيع تركيبات راقية حيث تهم المادة والتفاصيل، لكن منصتهم الحالية كانت تضغط الصور بشدة وتحمل ببطء. لم يتمكن العملاء من فحص التشطيبات أو الحجم بشكل صحيح، وكان المخزون مجزأً عبر أنظمة متعددة، مما خلق خطر البيع المفرط.",
+    name: {
+      ar: "متجر آرت للإضاءة",
+      en: "Art Lighting Store",
     },
-    solution: {
-      en: "We designed a custom Next.js storefront with an image pipeline tuned for high‑resolution zoom without sacrificing load time. Inventory is synchronized via webhooks into a single source of truth, and pages are statically generated with targeted revalidation for fast, consistent performance.",
-      ar: "لقد صممنا واجهة متجر Next.js مخصصة مع خط أنابيب صور مضبوط للتكبير عالي الدقة دون التضحية بوقت التحميل. يتم مزامنة المخزون عبر webhooks في مصدر واحد للحقيقة، ويتم إنشاء الصفحات بشكل ثابت مع إعادة التحقق المستهدفة لأداء سريع ومتسق.",
+    slug: "art-lighting-store",
+    summary: {
+      ar: "صور منتجات عالية الدقة على نطاق واسع مع مخزون في الوقت الفعلي وتحميل سريع للصفحات لبائع تجزئة للإضاءة الفاخرة.",
+      en: "High-resolution product imagery at scale with real-time inventory and fast page loads for a premium lighting retailer.",
     },
-    outcome: {
-      en: "Within the first month, the new store shipped on schedule, improved conversion rate by 34%, cut perceived load time to nearly instant, and eliminated overselling incidents. The client’s team can now manage products and inventory without engineering support.",
-      ar: "في غضون الشهر الأول، تم شحن المتجر الجديد في الموعد المحدد، وتحسن معدل التحويل بنسبة 34٪، وتم تقليل وقت التحميل الملحوظ إلى فوري تقريباً، والقضاء على حوادث البيع المفرط. يمكن لفريق العميل الآن إدارة المنتجات والمخزون دون الحاجة لدعم هندسي.",
-    },
-    techStack: [
-      "Next.js App Router",
-      "TypeScript",
-      "Tailwind CSS",
-      "PostgreSQL + Prisma",
-      "Image optimization pipeline",
-    ],
+    year: "2024",
   },
   {
-    slug: "custom-case-builder",
-    name: {
-      en: "Custom Case Builder",
-      ar: "منشئ حافظات مخصص",
-    },
     client: {
-      en: "CasesCobra",
       ar: "كيسز كوبرا",
+      en: "CasesCobra",
     },
     industry: {
-      en: "Direct‑to‑consumer accessories",
       ar: "إكسسوارات مباشرة للمستهلك",
+      en: "Direct-to-consumer accessories",
     },
-    year: "2024",
-    externalUrl: "https://casescobra.vercel.app/",
-    summary: {
-      en: "A real-time product configurator that lets customers design and preview phone cases in the browser before ordering.",
-      ar: "أداة تكوين منتج في الوقت الفعلي تتيح للعملاء تصميم ومعاينة حافظات الهاتف في المتصفح قبل الطلب.",
+    keywords: {
+      ar: ["مكوّن منتجات تفاعلي", "أداة تخصيص منتجات", "دراسة حالة React"],
+      en: [
+        "product configurator case study",
+        "custom ecommerce configurator",
+        "react product builder",
+      ],
     },
     metrics: [
       {
-        label: { en: "Configurator engagement", ar: "تفاعل أداة التكوين" },
-        value: "3.4×",
-        description: {
-          en: "More time spent interacting vs. previous catalogue.",
-          ar: "مزيد من الوقت الذي يقضيه العميل في التفاعل مقارنة بالكتالوج السابق.",
+        label: {
+          ar: "تفاعل أداة التكوين",
+          en: "Configurator engagement",
         },
+        value: "3.4×",
       },
       {
-        label: { en: "Return rate", ar: "معدل الإرجاع" },
-        value: "-18%",
-        description: {
-          en: "Drop in returns due to clearer visual expectations.",
-          ar: "انخفاض في المرتجعات بسبب التوقعات البصرية الأكثر وضوحاً.",
+        label: {
+          ar: "معدل الإرجاع",
+          en: "Return rate",
         },
+        value: "-18%",
       },
     ],
-    problem: {
-      en: "The brand’s previous site only offered static photos and a long options list. Customers couldn’t visualize combinations, which led to decision fatigue, abandoned carts, and higher return rates when expectations didn’t match reality.",
-      ar: "كان موقع العلامة التجارية السابق يقدم فقط صوراً ثابتة وقائمة طويلة من الخيارات. لم يتمكن العملاء من تصور التركيبات، مما أدى إلى إرهاق اتخاذ القرار، وسلال المهملات المتروكة، وارتفاع معدلات الإرجاع عندما لم تتطابق التوقعات مع الواقع.",
+    name: {
+      ar: "منشئ حافظات مخصص",
+      en: "Custom Case Builder",
     },
-    solution: {
-      en: "We built a client‑side configurator in React that updates the preview in real time as users change device type, colors, and artwork. All configurations are encoded in a compact URL, allowing customers to share or resume designs, and orders are passed to the backend with a full configuration payload.",
-      ar: "لقد بنينا أداة تكوين من جانب العميل في React تقوم بتحديث المعاينة في الوقت الفعلي مع تغيير المستخدمين لنوع الجهاز والألوان والرسومات. يتم تشفير جميع التكوينات في عنوان URL مضغوط، مما يسمح للعملاء بمشاركة التصاميم أو استئنافها، ويتم تمرير الطلبات إلى الخلفية مع حمولة تكوين كاملة.",
+    slug: "custom-case-builder",
+    summary: {
+      ar: "أداة تكوين منتج في الوقت الفعلي تتيح للعملاء تصميم ومعاينة حافظات الهاتف في المتصفح قبل الطلب.",
+      en: "A real-time product configurator that lets customers design and preview phone cases in the browser before ordering.",
     },
-    outcome: {
-      en: "The new experience turned the buying process into an interactive flow, significantly increasing engagement and reducing returns. Operations now receive complete, validated configurations, reducing back‑and‑forth and misprints.",
-      ar: "حولت التجربة الجديدة عملية الشراء إلى تدفق تفاعلي، مما أدى إلى زيادة التفاعل بشكل كبير وتقليل المرتجعات. تتلقى العمليات الآن تكوينات كاملة ومعتمدة، مما يقلل من الأخذ والرد والأخطاء المطبعية.",
-    },
-    techStack: [
-      "Next.js",
-      "React",
-      "Tailwind CSS",
-      "Canvas/SVG rendering",
-      "Prisma",
-    ],
+    year: "2024",
   },
   {
-    slug: "bilingual-corporate-portal",
-    name: {
-      en: "Bilingual Corporate Presence",
-      ar: "واجهة شركة ثنائية اللغة",
-    },
     client: {
-      en: "NewLight",
       ar: "نيو لايت",
+      en: "NewLight",
     },
     industry: {
-      en: "Manufacturing & B2B",
       ar: "التصنيع وB2B",
+      en: "Manufacturing & B2B",
     },
-    year: "2024",
-    externalUrl: "https://www.newlight-eg.com/",
-    summary: {
-      en: "A bilingual corporate site with full RTL support, product catalogue, and PWA shell for poor‑network environments.",
-      ar: "موقع شركة ثنائي اللغة مع دعم كامل للـ RTL، وكتالوج المنتجات، وPWA لبيئات الشبكة الضعيفة.",
+    keywords: {
+      ar: ["موقع شركة ثنائي اللغة", "معمارية RTL", "بوابة B2B"],
+      en: [
+        "bilingual corporate portal",
+        "rtl web architecture",
+        "b2b website case study",
+      ],
     },
     metrics: [
       {
-        label: { en: "Time on site", ar: "الوقت المستغرق في الموقع" },
-        value: "+27%",
-        description: {
-          en: "Increase in session duration for mobile visitors.",
-          ar: "الزيادة في مدة الجلسة لزوار الهاتف المحمول.",
+        label: {
+          ar: "الوقت المستغرق في الموقع",
+          en: "Time on site",
         },
+        value: "+27%",
       },
       {
-        label: { en: "Bounce rate", ar: "معدل الارتداد" },
-        value: "-22%",
-        description: {
-          en: "Drop in early exits on key landing pages.",
-          ar: "انخفاض الخروج المبكر في صفحات الهبوط الرئيسية.",
+        label: {
+          ar: "معدل الارتداد",
+          en: "Bounce rate",
         },
+        value: "-22%",
       },
     ],
-    problem: {
-      en: "NewLight’s previous site treated Arabic as a simple translation layer, leading to broken layouts, inconsistent typography, and poor readability. Sales teams needed a fast, offline‑friendly way to browse products during client visits with unreliable connectivity.",
-      ar: "كان موقع نيو لايت السابق يعامل اللغة العربية كطبقة ترجمة بسيطة، مما أدى إلى تخطيطات مكسورة، وتيبوغرافيا غير متسقة، وضعف في القراءة. احتاجت فرق المبيعات إلى طريقة سريعة وصديقة للعمل دون اتصال لتصفح المنتجات أثناء زيارات العملاء في ظل اتصال غير موثوق.",
+    name: {
+      ar: "واجهة شركة ثنائية اللغة",
+      en: "Bilingual Corporate Presence",
     },
-    solution: {
-      en: "We rebuilt the site on Next.js with next‑intl, designing layouts that adapt structurally for RTL rather than just mirroring. The product catalogue is cached via a PWA shell so sales can browse and search products even on weak connections, with updates pushed on deploy.",
-      ar: "لقد أعدنا بناء الموقع على Next.js باستخدام next-intl، وصممنا تخطيطات تتكيف بنيوياً مع RTL بدلاً من مجرد الانعكاس. يتم تخزين كتالوج المنتجات مؤقتاً عبر PWA بحيث يمكن للمبيعات تصفح والبحث عن المنتجات حتى في ظل الاتصال الضعيف، مع دفع التحديثات عند النشر.",
+    slug: "bilingual-corporate-portal",
+    summary: {
+      ar: "موقع شركة ثنائي اللغة مع دعم كامل للـ RTL وكتالوج منتجات وPWA لبيئات الشبكة الضعيفة.",
+      en: "A bilingual corporate site with full RTL support, product catalogue, and a PWA shell for poor-network environments.",
     },
-    outcome: {
-      en: "The new portal presents a coherent brand in both Arabic and English, reduced confusion on key pages, and gave the sales team a reliable tool in the field. Prospects now understand the offering quickly, in their preferred language and on whatever device they use.",
-      ar: "يقدم البوابة الجديدة علامة تجارية متماسكة باللغتين العربية والإنجليزية، مما قلل من الارتباك في الصفحات الرئيسية، ومنح فريق المبيعات أداة موثوقة في الميدان. يفهم العملاء المحتملون الآن العرض بسرعة، بلغتهم المفضلة وعلى أي جهاز يستخدمونه.",
-    },
-    techStack: [
-      "Next.js App Router",
-      "next-intl (EN/AR)",
-      "Tailwind CSS",
-      "PWA",
-      "PostgreSQL + Prisma",
-    ],
+    year: "2024",
   },
 ];
 
-export function getCaseStudyBySlug(slug: string): CaseStudy | undefined {
-  return CASE_STUDIES.find((cs) => cs.slug === slug);
+export function getAllCaseStudies() {
+  return CASE_STUDIES;
+}
+
+export function getCaseStudyBySlug(slug: string): CaseStudyRecord | null {
+  return CASE_STUDIES.find((caseStudy) => caseStudy.slug === slug) ?? null;
 }

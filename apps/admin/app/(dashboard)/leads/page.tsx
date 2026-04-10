@@ -33,7 +33,7 @@ export default async function LeadsPage({
       <div className="flex justify-between items-end">
         <div>
           <h1 className="text-3xl font-normal text-primary mb-2">Estimator Leads</h1>
-          <p className="body text-primary/50">Manage and contact all prospective clients who used the estimator.</p>
+          <p className="text-sm text-primary/50">Manage and contact all prospective clients who used the estimator.</p>
         </div>
         <div className="flex gap-3">
           <ExportCsvButton leads={leads} />

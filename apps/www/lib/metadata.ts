@@ -1,194 +1,766 @@
-import { Metadata } from 'next'
+import type { Metadata } from "next";
 
-const siteConfig = {
-  name: 'Altruvex',
-  description: 'Altruvex specializes in creating cutting-edge web applications with innovative interactions, stunning visuals, and exceptional user experiences that set your brand apart.',
-  url: process.env.NEXT_PUBLIC_APP_URL || 'https://altruvex.com',
-  ogImage: '/og/home-en.jpg',
-  twitterHandle: '@altruvex',
-}
+export const SUPPORTED_LOCALES = ["en", "ar"] as const;
 
-const pageMetadata = {
-  home: {
-    en: {
-      title: 'Altruvex - Premium Web Development Agency',
-      description: 'Cutting-edge web applications with innovative interactions, stunning visuals, and exceptional user experiences. Custom development for enterprise clients.',
-      ogImage: '/og/home-en.jpg',
+export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
+
+type LocalizedSeoEntry = {
+  breadcrumb: string;
+  description: string;
+  keywords: string[];
+  title: string;
+};
+
+type PageMetadataEntry = {
+  ar: LocalizedSeoEntry;
+  en: LocalizedSeoEntry;
+  path: string;
+  robots?: Metadata["robots"];
+};
+
+export const SITE_CONFIG = {
+  defaultLocale: "en" as SupportedLocale,
+  description: {
+    ar: "ألتروفيكس تبني أنظمة ويب دقيقة ثنائية اللغة للفرق التي تحتاج أداءً حقيقياً ووضوحاً تقنياً وتجربة عربية/إنجليزية متكافئة.",
+    en: "Altruvex builds precision web systems for teams that need bilingual execution, technical clarity, and performance that holds up in production.",
+  },
+  email: "altruvex@gmail.com",
+  founder: {
+    linkedin: "https://www.linkedin.com/in/ali-abdelhadi-65094b283/",
+    name: "Ali Abdelhadi",
+  },
+  location: {
+    city: "Cairo",
+    country: "Egypt",
+    countryCode: "EG",
+    region: "Cairo Governorate",
+  },
+  locales: SUPPORTED_LOCALES,
+  name: "Altruvex",
+  phone: "+20 102 312 5493",
+  social: {
+    linkedin: "https://www.linkedin.com/in/ali-abdelhadi-65094b283/",
+  },
+  url: process.env.NEXT_PUBLIC_APP_URL || "https://altruvex.com",
+} as const;
+
+export const METADATA_DEFAULTS = {
+  defaultDescription: SITE_CONFIG.description,
+  entityKeywords: {
+    ar: ["ألتروفيكس", "علي عبد الهادي", "القاهرة", "مصر"],
+    en: ["Altruvex", "Ali Abdelhadi", "Cairo", "Egypt"],
+  },
+  keywords: {
+    ar: [
+      "تطوير ويب مخصص",
+      "هندسة ويب تقنية",
+      "وكالة Next.js",
+      "أنظمة ويب دقيقة",
+      "مواقع ثنائية اللغة",
+    ],
+    en: [
+      "custom web development",
+      "technical web engineering",
+      "Next.js development agency",
+      "precision web systems",
+      "bilingual web systems",
+    ],
+  },
+  robots: {
+    follow: true,
+    googleBot: {
+      follow: true,
+      index: true,
+      "max-image-preview": "large" as const,
+      "max-snippet": -1,
+      "max-video-preview": -1,
     },
+    index: true,
+  } satisfies Metadata["robots"],
+  titleTemplate: "%s | Altruvex",
+} as const;
+
+export const PAGE_METADATA = {
+  approach: {
     ar: {
-      title: 'Altruvex - وكالة تطوير مواقع ويب متميزة',
-      description: 'تطبيقات ويب متطورة مع تفاعلات مبتكرة وتصاميم مذهلة وتجارب مستخدم استثنائية. تطوير مخصص للعملاء الكبار.',
-      ogImage: '/og/home-ar.jpg',
+      breadcrumb: "النهج",
+      description:
+        "تعرّف على نهج Altruvex في هندسة الويب الدقيقة والمعمارية ثنائية اللغة والأنظمة التي تبقى قابلة للصيانة مع النمو.",
+      keywords: [
+        "نهج هندسة الويب",
+        "معمارية المواقع متعددة اللغات",
+        "أنظمة ويب دقيقة",
+        "بناء مواقع قابلة للتوسع",
+      ],
+      title: "نهج أنظمة الويب الدقيقة",
     },
+    en: {
+      breadcrumb: "Approach",
+      description:
+        "Understand Altruvex's approach to technical web engineering, bilingual architecture, and systems that stay maintainable under growth.",
+      keywords: [
+        "precision web systems",
+        "technical web engineering approach",
+        "bilingual web architecture",
+        "scalable web systems",
+      ],
+      title: "Precision Web Systems Approach",
+    },
+    path: "/approach",
   },
   about: {
-    en: {
-      title: 'About Us - Altruvex',
-      description: 'Learn about Altruvex, a premium web development agency specializing in custom solutions for enterprise clients.',
-      ogImage: '/og/about-en.jpg',
-    },
     ar: {
-      title: 'من نحن - Altruvex',
-      description: 'تعرف على Altruvex، وكالة تطوير ويب متميزة متخصصة في الحلول المخصصة للعملاء الكبار.',
-      ogImage: '/og/about-ar.jpg',
+      breadcrumb: "من نحن",
+      description:
+        "تعرّف على Altruvex والمؤسس الذي يقود هندسة الويب الدقيقة وبناء أنظمة Next.js ثنائية اللغة من القاهرة إلى مصر والمنطقة.",
+      keywords: [
+        "من هي ألتروفيكس",
+        "علي عبد الهادي",
+        "هندسة ويب من القاهرة",
+        "وكالة Next.js يقودها المؤسس",
+      ],
+      title: "من نحن | هندسة ويب يقودها المؤسس",
     },
-  },
-  services: {
     en: {
-      title: 'Our Services - Altruvex',
-      description: 'Web development, e-commerce, multilingual websites, UI/UX design, and custom solutions for your business.',
-      ogImage: '/og/services-en.jpg',
+      breadcrumb: "About",
+      description:
+        "Meet Altruvex and the founder leading precision web engineering, bilingual Next.js systems, and founder-led delivery from Cairo.",
+      keywords: [
+        "about altruvex",
+        "ali abdelhadi",
+        "founder-led web engineering",
+        "next.js agency cairo",
+      ],
+      title: "About Altruvex | Founder-Led Web Engineering",
     },
-    ar: {
-      title: 'خدماتنا - Altruvex',
-      description: 'تطوير المواقع، التجارة الإلكترونية، المواقع متعددة اللغات، تصميم UI/UX، وحلول مخصصة لعملك.',
-      ogImage: '/og/services-ar.jpg',
-    },
-  },
-  work: {
-    en: {
-      title: 'Our Work - Altruvex',
-      description: 'Explore our portfolio of premium web applications and digital experiences crafted for leading businesses.',
-      ogImage: '/og/work-en.jpg',
-    },
-    ar: {
-      title: 'أعمالنا - Altruvex',
-      description: 'استكشف محفظة أعمالنا من تطبيقات الويب المتميزة والتجارب الرقمية المصممة للشركات الرائدة.',
-      ogImage: '/og/work-ar.jpg',
-    },
+    path: "/about",
   },
   contact: {
-    en: {
-      title: 'Contact Us - Altruvex',
-      description: 'Get in touch with Altruvex. Schedule a consultation and let\'s discuss your next web project.',
-      ogImage: '/og/contact-en.jpg',
-    },
     ar: {
-      title: 'اتصل بنا - Altruvex',
-      description: 'تواصل مع Altruvex. احجز استشارة ودعنا نناقش مشروعك القادم.',
-      ogImage: '/og/contact-ar.jpg',
+      breadcrumb: "تواصل معنا",
+      description:
+        "ابدأ محادثة مباشرة مع Altruvex حول تطوير ويب مخصص أو تدقيق تقني أو تسليم Next.js من القاهرة إلى مصر والمنطقة.",
+      keywords: [
+        "تواصل مع وكالة تطوير ويب",
+        "استشارة Next.js",
+        "فريق هندسة ويب القاهرة",
+        "مكالمة تقنية",
+      ],
+      title: "تحدث مع فريق هندسة ويب في القاهرة",
+    },
+    en: {
+      breadcrumb: "Contact",
+      description:
+        "Talk to Altruvex about custom web development, technical audits, or Next.js delivery. Start with a founder-led conversation from Cairo.",
+      keywords: [
+        "contact next.js agency",
+        "custom web development cairo",
+        "technical web engineering team",
+        "book a technical call",
+      ],
+      title: "Talk to a Cairo Web Engineering Team",
+    },
+    path: "/contact",
+  },
+  estimator: {
+    ar: {
+      breadcrumb: "مقدّر المشروع",
+      description:
+        "قدّر نطاق موقع مخصص أو بوابة أو بناء منتج قبل أول مكالمة. استخدم مقدّر Altruvex المبني على التعقيد الهندسي الحقيقي.",
+      keywords: [
+        "تقدير تكلفة تطوير موقع",
+        "تسعير تطوير ويب مخصص",
+        "مقدّر مشروع Next.js",
+        "نطاق بوابة أعمال",
+      ],
+      title: "قدّر نطاق بناء ويب مخصص",
+    },
+    en: {
+      breadcrumb: "Estimator",
+      description:
+        "Estimate the range for a custom website, portal, or product build before the first call. Use Altruvex's scope-based web project estimator.",
+      keywords: [
+        "web development cost estimator",
+        "custom web project estimate",
+        "next.js project pricing",
+        "portal build estimate",
+      ],
+      title: "Estimate a Custom Web Build",
+    },
+    path: "/estimator",
+  },
+  home: {
+    ar: {
+      breadcrumb: "الرئيسية",
+      description:
+        "تطوير ويب مخصص وهندسة Next.js دقيقة لفرق مصر والمنطقة. نبني أنظمة ثنائية اللغة عالية الأداء يقودها المؤسس من القاهرة.",
+      keywords: [
+        "تطوير ويب مخصص القاهرة",
+        "هندسة ويب دقيقة",
+        "وكالة Next.js مصر",
+        "أنظمة ويب ثنائية اللغة",
+      ],
+      title: "هندسة ويب دقيقة في القاهرة",
+    },
+    en: {
+      breadcrumb: "Home",
+      description:
+        "Custom web development and Next.js engineering for Cairo and MENA brands. Build bilingual, high-performance systems with a founder-led team.",
+      keywords: [
+        "precision web engineering cairo",
+        "custom web development cairo",
+        "next.js development agency",
+        "technical web engineering",
+      ],
+      title: "Precision Web Engineering in Cairo",
+    },
+    path: "/",
+  },
+  howWeWork: {
+    ar: {
+      breadcrumb: "كيف نعمل",
+      description:
+        "تعرّف كيف تتعامل Altruvex مع التعاون والنطاق والتواصل والملكية في مشاريع هندسة الويب الجادة من أول خطوة حتى التسليم.",
+      keywords: [
+        "كيف تعمل وكالة ويب",
+        "ملكية التنفيذ التقني",
+        "عملية تسليم مواقع مخصصة",
+        "تعاون هندسي",
+      ],
+      title: "كيف تسلّم Altruvex الأعمال التقنية",
+    },
+    en: {
+      breadcrumb: "How We Work",
+      description:
+        "Learn how Altruvex handles collaboration, scope, communication, and ownership on serious web engineering engagements.",
+      keywords: [
+        "how a next.js agency works",
+        "technical delivery model",
+        "web engineering collaboration",
+        "founder-led execution",
+      ],
+      title: "How Altruvex Delivers Technical Work",
+    },
+    path: "/how-we-work",
+  },
+  offline: {
+    ar: {
+      breadcrumb: "دون اتصال",
+      description:
+        "هذه الصفحة مخصصة لحالة انقطاع الاتصال ولا تستهدف الظهور في نتائج البحث.",
+      keywords: ["صفحة دون اتصال"],
+      title: "دون اتصال",
+    },
+    en: {
+      breadcrumb: "Offline",
+      description:
+        "This offline state page exists for connection loss and is not intended to rank in search results.",
+      keywords: ["offline page"],
+      title: "Offline",
+    },
+    path: "/offline",
+    robots: {
+      follow: false,
+      googleBot: {
+        follow: false,
+        index: false,
+      },
+      index: false,
     },
   },
+  pricing: {
+    ar: {
+      breadcrumb: "التسعير",
+      description:
+        "شاهد كيف تحدد Altruvex نطاق أنظمة المواقع والبوابات وبناء المنتجات المخصصة. قارن نطاقات التعاون وحدد خطوتك التالية.",
+      keywords: [
+        "تسعير تطوير ويب مخصص",
+        "تسعير وكالة Next.js",
+        "نطاق بناء بوابات",
+        "تكلفة أنظمة المواقع",
+      ],
+      title: "تسعير هندسة الويب ونماذج التعاون",
+    },
+    en: {
+      breadcrumb: "Pricing",
+      description:
+        "See how Altruvex scopes custom website systems, portals, and product builds. Compare engagement ranges and qualify your next step.",
+      keywords: [
+        "web engineering pricing",
+        "custom web development cost",
+        "next.js agency pricing",
+        "portal engagement model",
+      ],
+      title: "Web Engineering Pricing & Engagements",
+    },
+    path: "/pricing",
+  },
+  privacy: {
+    ar: {
+      breadcrumb: "سياسة الخصوصية",
+      description:
+        "اطّلع على كيفية جمع Altruvex للبيانات الشخصية واستخدامها وحمايتها عند استخدام الموقع أو نماذج التواصل الخاصة بنا.",
+      keywords: ["سياسة الخصوصية ألتروفيكس", "بيانات العملاء"],
+      title: "سياسة الخصوصية",
+    },
+    en: {
+      breadcrumb: "Privacy Policy",
+      description:
+        "Review how Altruvex collects, uses, and protects personal data when you use the site or contact forms.",
+      keywords: ["altruvex privacy policy", "website privacy policy"],
+      title: "Privacy Policy",
+    },
+    path: "/privacy",
+  },
+  process: {
+    ar: {
+      breadcrumb: "العملية",
+      description:
+        "شاهد كيف تنتقل Altruvex من الاكتشاف إلى الإطلاق عبر قرارات تقنية واضحة وضبط جودة ثنائي اللغة وتسليم جاهز للإنتاج.",
+      keywords: [
+        "عملية تطوير ويب",
+        "تسليم مشاريع Next.js",
+        "ضبط جودة ثنائي اللغة",
+        "إطلاق مواقع مخصصة",
+      ],
+      title: "عملية تسليم الويب",
+    },
+    en: {
+      breadcrumb: "Process",
+      description:
+        "See how Altruvex moves from discovery to launch with clear technical decisions, bilingual QA, and production-ready delivery.",
+      keywords: [
+        "web delivery process",
+        "next.js project delivery",
+        "bilingual qa process",
+        "custom website launch process",
+      ],
+      title: "Web Delivery Process",
+    },
+    path: "/process",
+  },
+  schedule: {
+    ar: {
+      breadcrumb: "احجز موعداً",
+      description:
+        "احجز مكالمة اكتشاف تقنية مع Altruvex لاختبار النطاق وتوضيح المخاطر وتحديد مسار البناء الصحيح قبل الالتزام بالميزانية.",
+      keywords: [
+        "حجز مكالمة تقنية",
+        "اكتشاف مشروع ويب",
+        "استشارة هندسة ويب",
+        "مكالمة مع وكالة Next.js",
+      ],
+      title: "احجز مكالمة اكتشاف تقنية",
+    },
+    en: {
+      breadcrumb: "Schedule",
+      description:
+        "Book a technical discovery call with Altruvex and pressure-test your scope before you commit budget, team time, or architecture.",
+      keywords: [
+        "schedule technical discovery call",
+        "web engineering consultation",
+        "next.js discovery call",
+        "technical project scoping",
+      ],
+      title: "Schedule a Technical Discovery Call",
+    },
+    path: "/schedule",
+  },
+  serviceConsulting: {
+    ar: {
+      breadcrumb: "الاستشارات التقنية",
+      description:
+        "احصل على تدقيق تقني ومراجعة معمارية وخارطة طريق واضحة قبل إعادة البناء أو النقل أو توسيع نظام ويب شديد الحساسية.",
+      keywords: [
+        "استشارات هندسة ويب",
+        "تدقيق تقني Next.js",
+        "مراجعة معمارية مواقع",
+        "خارطة طريق تقنية",
+      ],
+      title: "استشارات هندسة الويب التقنية",
+    },
+    en: {
+      breadcrumb: "Technical Consulting",
+      description:
+        "Get a technical audit, architecture review, and clear build roadmap before you rebuild, migrate, or scale a revenue-critical web system.",
+      keywords: [
+        "technical web engineering consulting",
+        "next.js architecture review",
+        "web platform audit",
+        "technical audit cairo",
+      ],
+      title: "Technical Web Engineering Consulting",
+    },
+    path: "/services/consulting",
+  },
+  serviceDevelopment: {
+    ar: {
+      breadcrumb: "تطوير Next.js",
+      description:
+        "استعن بوكالة تطوير Next.js لبناء بوابات ومنتجات ولوحات تحكم وأنظمة ويب ثنائية اللغة مهندسة للتوسع والسرعة والتسليم النظيف.",
+      keywords: [
+        "وكالة تطوير Next.js",
+        "بناء بوابات أعمال",
+        "تطوير منتجات ويب مخصصة",
+        "أنظمة ويب ثنائية اللغة",
+      ],
+      title: "وكالة تطوير Next.js",
+    },
+    en: {
+      breadcrumb: "Next.js Development",
+      description:
+        "Hire a Next.js development agency for portals, product builds, dashboards, and bilingual web systems engineered for scale and clean handoff.",
+      keywords: [
+        "next.js development agency",
+        "custom portal development",
+        "technical web engineering agency",
+        "bilingual product development",
+      ],
+      title: "Next.js Development Agency",
+    },
+    path: "/services/development",
+  },
+  serviceInterfaceDesign: {
+    ar: {
+      breadcrumb: "هندسة الواجهات",
+      description:
+        "صمّم واجهات تركّز على التحويل وأنظمة مكونات وتجارب عربية/إنجليزية مع مواصفات جاهزة للتنفيذ وإمكانية وصول مدروسة.",
+      keywords: [
+        "هندسة واجهات مخصصة",
+        "تصميم أنظمة مكونات",
+        "واجهة استخدام ثنائية اللغة",
+        "تصميم UI قابل للتنفيذ",
+      ],
+      title: "خدمات هندسة الواجهات المخصصة",
+    },
+    en: {
+      breadcrumb: "UI Engineering",
+      description:
+        "Design conversion-focused interfaces, component systems, and bilingual website experiences with implementation-ready UI engineering.",
+      keywords: [
+        "custom ui engineering",
+        "interface design cairo",
+        "design systems agency",
+        "bilingual interface design",
+      ],
+      title: "Custom UI Engineering Services",
+    },
+    path: "/services/interface-design",
+  },
+  serviceMaintenance: {
+    ar: {
+      breadcrumb: "الصيانة والتطوير",
+      description:
+        "حافظ على أنظمة الويب المخصصة سريعة وآمنة وجاهزة للإصدارات عبر صيانة مستمرة ومراقبة ودعم منتج تكراري من Altruvex.",
+      keywords: [
+        "صيانة مواقع مخصصة",
+        "دعم Next.js مستمر",
+        "مراقبة أداء الأنظمة",
+        "صيانة بوابات الأعمال",
+      ],
+      title: "صيانة الأنظمة المخصصة وتطويرها",
+    },
+    en: {
+      breadcrumb: "Maintenance & Support",
+      description:
+        "Keep custom web systems fast, secure, and release-ready with ongoing maintenance, monitoring, and iterative product support from Altruvex.",
+      keywords: [
+        "website maintenance for custom systems",
+        "next.js maintenance retainer",
+        "ongoing web engineering support",
+        "product maintenance partner",
+      ],
+      title: "Website Maintenance for Custom Systems",
+    },
+    path: "/services/maintenance",
+  },
+  services: {
+    ar: {
+      breadcrumb: "الخدمات",
+      description:
+        "استكشف تطوير الويب المخصص والاستشارات التقنية وأنظمة الواجهات والصيانة المستمرة للمنتجات ثنائية اللغة والأنظمة الموجهة للأعمال.",
+      keywords: [
+        "خدمات تطوير ويب مخصص",
+        "خدمات Next.js",
+        "استشارات تقنية للمواقع",
+        "صيانة أنظمة ويب",
+      ],
+      title: "خدمات تطوير الويب المخصص",
+    },
+    en: {
+      breadcrumb: "Services",
+      description:
+        "Explore custom web development, technical consulting, interface systems, and ongoing maintenance for bilingual B2B products and websites.",
+      keywords: [
+        "custom web development services",
+        "technical web engineering services",
+        "next.js services",
+        "precision web systems",
+      ],
+      title: "Custom Web Development Services",
+    },
+    path: "/services",
+  },
+  standards: {
+    ar: {
+      breadcrumb: "المعايير",
+      description:
+        "راجع معايير الأداء وإمكانية الوصول والأمان والهندسة التي تطبقها Altruvex على كل نظام ويب مخصص.",
+      keywords: [
+        "معايير هندسة الويب",
+        "أداء المواقع",
+        "إمكانية الوصول",
+        "أمان التطبيقات",
+      ],
+      title: "معايير هندسة الويب",
+    },
+    en: {
+      breadcrumb: "Standards",
+      description:
+        "Review the performance, accessibility, security, and engineering standards Altruvex applies to every custom web system.",
+      keywords: [
+        "web engineering standards",
+        "website performance standards",
+        "accessibility standards",
+        "secure web development",
+      ],
+      title: "Web Engineering Standards",
+    },
+    path: "/standards",
+  },
+  terms: {
+    ar: {
+      breadcrumb: "شروط الخدمة",
+      description:
+        "راجع الشروط التي تحكم استخدامك لموقع Altruvex وخدماته ونماذج التواصل والمحتوى المنشور عليه.",
+      keywords: ["شروط خدمة ألتروفيكس", "الشروط القانونية للموقع"],
+      title: "شروط الخدمة",
+    },
+    en: {
+      breadcrumb: "Terms of Service",
+      description:
+        "Review the terms that govern your use of the Altruvex website, services, contact forms, and published content.",
+      keywords: ["altruvex terms of service", "website terms and conditions"],
+      title: "Terms of Service",
+    },
+    path: "/terms",
+  },
+  work: {
+    ar: {
+      breadcrumb: "دراسات الحالة",
+      description:
+        "راجع دراسات حالة Altruvex في التجارة الإلكترونية والمكوّنات التفاعلية والمنصات الثنائية اللغة مع الأرقام والقرارات التقنية والنتائج.",
+      keywords: [
+        "دراسات حالة هندسة ويب",
+        "مشاريع Next.js",
+        "دراسات حالة مواقع ثنائية اللغة",
+        "أعمال Altruvex",
+      ],
+      title: "دراسات حالة هندسة الويب",
+    },
+    en: {
+      breadcrumb: "Case Studies",
+      description:
+        "Review Altruvex case studies across ecommerce, configurators, and bilingual B2B platforms. See metrics, architecture, and outcomes.",
+      keywords: [
+        "web engineering case studies",
+        "next.js case studies",
+        "bilingual website case studies",
+        "custom web development portfolio",
+      ],
+      title: "Web Engineering Case Studies",
+    },
+    path: "/work",
+  },
+  workCaseStudy: {
+    ar: {
+      breadcrumb: "دراسة حالة",
+      description:
+        "اقرأ دراسة حالة مفصلة من Altruvex تشمل السياق والقرارات التقنية والبنية والنتائج التجارية.",
+      keywords: ["دراسة حالة ويب", "نتائج مشاريع Next.js", "هندسة مواقع مخصصة"],
+      title: "دراسة حالة",
+    },
+    en: {
+      breadcrumb: "Case Study",
+      description:
+        "Read a detailed Altruvex case study covering the context, architecture, delivery choices, and commercial outcomes.",
+      keywords: [
+        "web engineering case study",
+        "next.js delivery case study",
+        "custom web systems proof",
+      ],
+      title: "Case Study",
+    },
+    path: "/work",
+  },
+  writing: {
+    ar: {
+      breadcrumb: "الكتابة",
+      description:
+        "اقرأ مقالات Altruvex حول هندسة الويب التقنية والمعمارية متعددة اللغات والأداء وتسليم المنتجات المخصصة.",
+      keywords: [
+        "مقالات هندسة الويب",
+        "معمارية متعددة اللغات",
+        "أداء الويب",
+        "محتوى Next.js",
+      ],
+      title: "رؤى هندسة الويب",
+    },
+    en: {
+      breadcrumb: "Writing",
+      description:
+        "Read Altruvex articles on technical web engineering, multilingual architecture, performance, and custom product delivery.",
+      keywords: [
+        "web engineering insights",
+        "technical web engineering articles",
+        "multilingual architecture",
+        "next.js performance writing",
+      ],
+      title: "Web Engineering Insights",
+    },
+    path: "/writing",
+  },
+} as const satisfies Record<string, PageMetadataEntry>;
+
+export type RouteMetaKey = keyof typeof PAGE_METADATA;
+
+export type MetadataOverrides = {
+  canonicalPath?: string;
+  description?: string;
+  keywords?: string[];
+  modifiedTime?: string;
+  openGraphType?: "article" | "website";
+  publishedTime?: string;
+  robots?: Metadata["robots"];
+  title?: string;
+};
+
+export function normalizeLocale(locale: string): SupportedLocale {
+  return locale === "ar" ? "ar" : "en";
 }
 
-export function generateMetadata(
-  locale: string = 'en',
-  page: keyof typeof pageMetadata = 'home'
-): Metadata {
-  const isArabic = locale === 'ar'
-  const pageMeta = (pageMetadata[page]?.[locale as 'en' | 'ar']) || pageMetadata.home[locale as 'en' | 'ar']
-  const baseUrl = siteConfig.url
+function normalizePath(pathSuffix: string): string {
+  if (!pathSuffix || pathSuffix === "/") {
+    return "/";
+  }
 
-  const canonicalPath = `/${locale}`
-  const canonicalUrl = `${baseUrl}${canonicalPath}`
+  return pathSuffix.startsWith("/") ? pathSuffix : `/${pathSuffix}`;
+}
+
+export function getLocalizedPath(locale: string, pathSuffix: string): string {
+  const loc = normalizeLocale(locale);
+  const path = normalizePath(pathSuffix);
+
+  return path === "/" ? `/${loc}` : `/${loc}${path}`;
+}
+
+export function getLocalizedUrl(locale: string, pathSuffix: string): string {
+  return `${SITE_CONFIG.url}${getLocalizedPath(locale, pathSuffix)}`;
+}
+
+export function getLocalizedSeoEntry(locale: string, key: RouteMetaKey) {
+  return PAGE_METADATA[key][normalizeLocale(locale)];
+}
+
+export function buildOgImageUrl(locale: string): string {
+  return getLocalizedUrl(locale, "/opengraph-image");
+}
+
+function formatTitle(title: string): string {
+  if (title.includes("|")) {
+    return title;
+  }
+
+  return METADATA_DEFAULTS.titleTemplate.replace("%s", title);
+}
+
+function buildAlternates(pathSuffix: string) {
+  const path = normalizePath(pathSuffix);
+
+  return Object.fromEntries(
+    SUPPORTED_LOCALES.map((locale) => [locale, getLocalizedUrl(locale, path)]),
+  ) as Record<SupportedLocale, string>;
+}
+
+function buildKeywords(locale: SupportedLocale, pageKeywords: string[] = []) {
+  return Array.from(
+    new Set([
+      ...METADATA_DEFAULTS.keywords[locale],
+      ...METADATA_DEFAULTS.entityKeywords[locale],
+      ...pageKeywords,
+    ]),
+  );
+}
+
+export function generateRouteMetadata(
+  locale: string,
+  key: RouteMetaKey,
+  pathSuffix: string,
+  overrides: MetadataOverrides = {},
+): Metadata {
+  const loc = normalizeLocale(locale);
+  const entry = PAGE_METADATA[key][loc];
+  const canonicalPath = overrides.canonicalPath ?? pathSuffix;
+  const canonicalUrl = getLocalizedUrl(loc, canonicalPath);
+  const title = formatTitle(overrides.title ?? entry.title);
+  const description = overrides.description ?? entry.description;
+  const keywords = buildKeywords(loc, [
+    ...entry.keywords,
+    ...(overrides.keywords ?? []),
+  ]);
+  const ogImageUrl = buildOgImageUrl(loc);
+  const pageRobots =
+    "robots" in PAGE_METADATA[key] ? PAGE_METADATA[key].robots : undefined;
+  const robots = overrides.robots ?? pageRobots ?? METADATA_DEFAULTS.robots;
+  const openGraphType = overrides.openGraphType ?? "website";
+
+  const openGraph = {
+    description,
+    images: [
+      {
+        alt: title,
+        height: 630,
+        url: ogImageUrl,
+        width: 1200,
+      },
+    ],
+    locale: loc === "ar" ? "ar_EG" : "en_US",
+    siteName: SITE_CONFIG.name,
+    ...(openGraphType === "article"
+      ? {
+          authors: [SITE_CONFIG.founder.name],
+          modifiedTime: overrides.modifiedTime ?? overrides.publishedTime,
+          publishedTime: overrides.publishedTime,
+          tags: keywords.slice(0, 8),
+        }
+      : {}),
+    title,
+    type: openGraphType,
+    url: canonicalUrl,
+  } as Metadata["openGraph"];
 
   return {
-    title: {
-      default: pageMeta.title,
-      template: `%s | ${siteConfig.name}`,
-    },
-    description: pageMeta.description,
-    keywords: [
-      'web development',
-      'interface design',
-      'React',
-      'Next.js',
-      'TypeScript',
-      'frontend development',
-      'UI/UX design',
-      'digital agency',
-      'custom web development',
-      'enterprise web solutions',
-      'premium interface design',
-      locale === 'ar' ? 'تطوير مواقع' : '',
-      locale === 'ar' ? 'تصميم مواقع' : '',
-    ].filter(Boolean),
-    authors: [{ name: siteConfig.name }],
-    creator: siteConfig.name,
-    publisher: siteConfig.name,
-    metadataBase: new URL(baseUrl),
     alternates: {
       canonical: canonicalUrl,
       languages: {
-        'en': `${baseUrl}/en`,
-        'ar': `${baseUrl}/ar`,
-        'x-default': `${baseUrl}/en`,
+        ...buildAlternates(canonicalPath),
+        "x-default": getLocalizedUrl(SITE_CONFIG.defaultLocale, canonicalPath),
       },
     },
-    openGraph: {
-      type: 'website',
-      locale: isArabic ? 'ar_SA' : 'en_US',
-      url: canonicalUrl,
-      title: pageMeta.title,
-      description: pageMeta.description,
-      siteName: siteConfig.name,
-      images: [
-        {
-          url: pageMeta.ogImage,
-          width: 1200,
-          height: 630,
-          alt: pageMeta.title,
-          type: 'image/jpeg',
-        },
-      ],
-    },
+    authors: [{ name: SITE_CONFIG.founder.name }],
+    creator: SITE_CONFIG.name,
+    description,
+    keywords,
+    metadataBase: new URL(SITE_CONFIG.url),
+    openGraph,
+    publisher: SITE_CONFIG.name,
+    robots,
+    title,
     twitter: {
-      card: 'summary_large_image',
-      title: pageMeta.title,
-      description: pageMeta.description,
-      images: [pageMeta.ogImage],
-      creator: siteConfig.twitterHandle,
+      card: "summary_large_image",
+      description,
+      images: [ogImageUrl],
+      title,
     },
-    robots: {
-      index: true,
-      follow: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
-    },
-    verification: {},
-  }
-}
-
-export function generateStructuredData() {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'ProfessionalService',
-    '@id': siteConfig.url,
-    name: siteConfig.name,
-    description: siteConfig.description,
-    url: siteConfig.url,
-    logo: `${siteConfig.url}/brand/altruvex-logo.png`,
-    image: `${siteConfig.url}${siteConfig.ogImage}`,
-    sameAs: [],
-    contactPoint: {
-      '@type': 'ContactPoint',
-      email: 'altruvex@gmail.com',
-      contactType: 'Customer Service',
-      areaServed: ['Worldwide', 'Egypt', 'UAE', 'Saudi Arabia'],
-      availableLanguage: ['en', 'ar'],
-    },
-    address: {
-      '@type': 'PostalAddress',
-      addressCountry: 'EG',
-    },
-    priceRange: '$$',
-    serviceType: [
-      'Web Development',
-      'Interface Design',
-      'UI/UX Design',
-      'Frontend Development',
-      'Full Stack Development',
-      'E-Commerce Development',
-      'Multilingual Websites',
-    ],
-    areaServed: {
-      '@type': 'Country',
-      name: ['Egypt', 'UAE', 'Saudi Arabia', 'Worldwide'],
-    },
-  }
+  };
 }

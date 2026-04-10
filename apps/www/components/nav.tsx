@@ -19,6 +19,7 @@ import { useLoading } from "./providers/loading-provider"
 const NAV_ITEMS = [
     { key: "work", href: "/work" },
     { key: "services", href: "/services" },
+    { key: "about", href: "/about" },
     { key: "pricing", href: "/pricing" },
     { key: "contact", href: "/contact" },
 ]
@@ -134,7 +135,7 @@ export function Nav() {
                                     <Link
                                         key={item.key}
                                         href={item.href}
-                                        className="group relative rounded-full px-3 py-1.5 font-mono text-sm ltr:font-medium font-bold uppercase tracking-[0.15em] text-nowrap text-primary/60 transition-colors duration-200"
+                                        className="group relative rounded-full px-3 py-1.5 font-mono text-sm leading-normal tracking-wider text-sm ltr:font-medium font-bold uppercase tracking-[0.15em] text-nowrap text-primary/60 transition-colors duration-200"
                                     >
                                         {t(item.key)}
                                         <span className="absolute -bottom-1 left-0 right-0 h-px bg-transparent group-hover:bg-foreground/25 transition-all duration-300" />
@@ -210,13 +211,13 @@ export function Nav() {
                                 <div className="h-px w-full bg-foreground/8" />
                                 <div className="space-y-4">
                                     <div className="mobile-menu-item flex items-center justify-between">
-                                        <span className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground/70">
+                                        <span className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
                                             {t("language")}
                                         </span>
                                         <LanguageChanger />
                                     </div>
                                     <div className="mobile-menu-item flex items-center justify-between">
-                                        <span className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground/70">
+                                        <span className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
                                             {t("theme")}
                                         </span>
                                         <ThemeChanger />

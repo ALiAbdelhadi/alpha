@@ -34,9 +34,7 @@ export function LayoutEffects({ children }: { children: ReactNode }) {
         <Suspense fallback={null}>
           <CustomCursorLazy />
         </Suspense>
-        <div id="main-content" tabIndex={-1} role="main">
-          {children}
-        </div>
+        {children}
         <ExitIntentLazy />
       </ThemeProvider>
     </SmoothScrollLazy>

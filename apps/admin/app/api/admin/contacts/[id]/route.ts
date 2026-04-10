@@ -2,10 +2,6 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@repo/database"
 import { isAdminAuthed } from "@/lib/admin-auth"
 
-/**
- * GET /api/admin/contacts/[id]
- * Get single contact submission with full details
- */
 export async function GET(
     request: NextRequest,
     { params }: { params: Promise<{ id: string }> }
@@ -81,4 +77,3 @@ export async function GET(
         )
     }
 }
-

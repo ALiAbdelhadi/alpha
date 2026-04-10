@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@repo/database"
 import { z } from "zod"
 import { isAdminAuthed } from "@/lib/admin-auth"
-
 
 export async function GET(request: NextRequest) {
     try {
@@ -96,10 +95,6 @@ export async function GET(request: NextRequest) {
     }
 }
 
-/**
- * PATCH /api/admin/meetings
- * Update meeting (status, assignment, notes)
- */
 const updateMeetingSchema = z.object({
     id: z.string().uuid(),
     status: z.enum(["PENDING", "APPROVED", "REJECTED", "COMPLETED", "CANCELLED", "RESCHEDULED"]).optional(),
@@ -121,7 +116,7 @@ export async function PATCH(request: NextRequest) {
 
         if (validatedData.status) {
             updateData.status = validatedData.status
-            // Auto-set approvedAt when status changes to APPROVED
+
             if (validatedData.status === "APPROVED") {
                 const existing = await prisma.meeting.findUnique({
                     where: { id: validatedData.id },
@@ -131,7 +126,7 @@ export async function PATCH(request: NextRequest) {
                     updateData.approvedAt = new Date()
                 }
             }
-            // Auto-set completedAt when status changes to COMPLETED
+
             if (validatedData.status === "COMPLETED") {
                 const existing = await prisma.meeting.findUnique({
                     where: { id: validatedData.id },
@@ -206,7 +201,6 @@ export async function PATCH(request: NextRequest) {
     }
 }
 
-
 export async function DELETE(request: NextRequest) {
     try {
         if (!(await isAdminAuthed(request))) {
@@ -226,7 +220,6 @@ export async function DELETE(request: NextRequest) {
             )
         }
 
-        // Check if meeting exists
         const meeting = await prisma.meeting.findUnique({
             where: { id },
         })
@@ -241,7 +234,6 @@ export async function DELETE(request: NextRequest) {
             )
         }
 
-        // Delete the meeting
         await prisma.meeting.delete({
             where: { id },
         })

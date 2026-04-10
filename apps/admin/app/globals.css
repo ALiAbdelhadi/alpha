@@ -2,18 +2,18 @@
 @import "tw-animate-css";
 
 :root {
-  /* Brand Colors */
+  
   --brand: #4a6ed4;
   --brand-hover: #3b5cbd;
   --brand-soft: #eff3ff;
   --brand-foreground: #f7f8fa;
 
-  /* Semantic Colors */
+  
   --success: #22c55e;
   --warning: #f59e0b;
   --error: #ef4444;
 
-  /* Neutrals (n-0 to n-8) */
+  
   --n-0: #f7f8fa;
   --n-1: #ebedf2;
   --n-2: #d1d5db;
@@ -24,7 +24,7 @@
   --n-7: #1f2937;
   --n-8: #111827;
 
-  /* Shared Radii */
+  
   --radius: 0.375rem;
 }
 

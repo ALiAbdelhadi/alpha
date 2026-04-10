@@ -34,27 +34,27 @@ export const ProblemSection = memo(function ProblemSection() {
     <section
       id="problem"
       ref={sectionRef}
-      className="relative border-y border-border bg-background section-padding"
+      className="relative border-y border-border bg-background pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]"
     >
       <Container>
         <div className="max-w-3xl mb-12 space-y-4">
-          <p ref={eyebrowRef} className="meta-eyebrow text-muted-foreground">
+          <p ref={eyebrowRef} className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
             01 — {t("problem.badge")}
           </p>
-          <h2 ref={titleRef} className="display-h2 font-normal tracking-tight text-foreground">
+          <h2 ref={titleRef} className="text-[clamp(2.125rem,4vw,3.25rem)] leading-[1.08] tracking-[-0.02em] font-normal tracking-tight text-foreground">
             {t("problem.title.pre")}{" "}
             <span className="text-muted-foreground line-through decoration-border"> {t("problem.title.crossed")} </span>
             <br />
-            <span className="italic font-serif text-muted-foreground">
+            <span className="font-serif italic font-light text-foreground/45 rtl:font-sans rtl:not-italic rtl:font-bold">
               {t("problem.title.gradient")}
             </span>
           </h2>
-          <p ref={descRef} className="body-copy text-muted-foreground max-w-2xl">
+          <p ref={descRef} className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground max-w-2xl">
             {t("problem.subtitle")}
           </p>
           <MagneticButton asChild size="lg" variant="secondary" className="group w-fit">
             <Link href={auditCta.href}>
-              <ArrowLabel>{auditCta.label}</ArrowLabel>
+              <ArrowLabel>{t("commercial.ctas.technicalAudit")}</ArrowLabel>
             </Link>
           </MagneticButton>
         </div>
@@ -68,18 +68,18 @@ export const ProblemSection = memo(function ProblemSection() {
               data-pain
               className={`
                 group relative px-6 py-10 md:px-12 md:py-16 border-b border-border
-                ${i % 2 === 0 ? "md:border-r md:rtl:border-r-0 md:rtl:border-l" : ""}
+                ${i % 2 === 0 ? "md:border-e" : ""}
               `}
             >
               <div className="flex items-start gap-6 relative z-10">
-                <span className="font-mono text-2xl tracking-widest text-muted-foreground mt-1.5">
+                <span className="font-mono leading-normal uppercase text-2xl tracking-widest text-muted-foreground tabular-nums rtl:tracking-normal mt-1.5 shrink-0">
                   {pain.number}
                 </span>
                 <div className="space-y-3">
-                  <h3 className="text-lg md:text-xl font-medium text-foreground tracking-tight">
+                  <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-medium text-foreground">
                     {t(pain.titleKey)}
                   </h3>
-                  <p className="body-secondary text-muted-foreground max-w-sm">
+                  <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-muted-foreground max-w-sm">
                     {t(pain.bodyKey)}
                   </p>
                 </div>

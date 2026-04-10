@@ -1,7 +1,5 @@
 import { NextConfig } from 'next';
-import createNextIntlPlugin from 'next-intl/plugin';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+import createNextIntlPlugin from 'next-intl/plugin';
 const withPWA = require("@ducanh2912/next-pwa").default({
     dest: "public",
     disable: process.env.NODE_ENV === "development",
@@ -61,8 +59,7 @@ const nextConfig: NextConfig = {
     reactStrictMode: true,
     transpilePackages: ["@repo/database"],
     compress: true,
-    poweredByHeader: false,
-    // Image optimization for better Core Web Vitals
+    poweredByHeader: false,
     images: {
         formats: ['image/avif', 'image/webp'],
         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
@@ -80,6 +77,15 @@ const nextConfig: NextConfig = {
             : "'self' 'unsafe-inline' https://www.clarity.ms https://www.googletagmanager.com https://va.vercel-scripts.com";
 
         return [
+            {
+                source: '/:path*\\.(svg|jpg|jpeg|png|gif|ico|webp|avif|woff2)',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=31536000, immutable',
+                    },
+                ],
+            },
             {
                 source: '/(.*)',
                 headers: [
@@ -115,9 +121,7 @@ const nextConfig: NextConfig = {
             },
         ];
     },
-};
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+};
 const withMDX = require('@next/mdx')({
     extension: /\.mdx?$/,
     options: {
@@ -126,6 +130,9 @@ const withMDX = require('@next/mdx')({
     },
 });
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = createNextIntlPlugin();
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+    enabled: process.env.ANALYZE === "true",
+});
 
-export default withNextIntl(withPWA(withMDX(nextConfig)));
+export default withBundleAnalyzer(withNextIntl(withPWA(withMDX(nextConfig))));

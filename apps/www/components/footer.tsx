@@ -9,6 +9,7 @@ import { Container } from "./container"
 
 export const Footer = memo(function Footer() {
     const t = useTranslations("footer")
+    const navT = useTranslations("nav")
     const locale = useLocale()
 
     const localizedYear = useMemo(() => {
@@ -24,11 +25,12 @@ export const Footer = memo(function Footer() {
     ], [t])
 
     const companyLinks = useMemo(() => [
+        { href: "/about", label: navT("about") },
         { href: "/approach", label: t("approach") },
         { href: "/work", label: t("work") },
         { href: "/process", label: t("process") },
         { href: "/standards", label: t("standards") },
-    ], [t])
+    ], [navT, t])
 
     const resourceLinks = useMemo(() => [
         { href: "/pricing", label: t("pricing") },
@@ -53,15 +55,6 @@ export const Footer = memo(function Footer() {
             data-animate-section
             className="relative overflow-hidden w-full border-t border-foreground/8"
         >
-            <div
-                aria-hidden
-                data-section-transition
-                className="pointer-events-none absolute inset-x-0 top-0 h-20"
-                style={{
-                    background:
-                        "linear-gradient(180deg, color-mix(in srgb, var(--foreground) 3%, transparent) 0%, transparent 100%)",
-                }}
-            />
             <Container className="py-10 sm:py-12 md:py-16">
                 <div
                     data-reveal
@@ -84,7 +77,7 @@ export const Footer = memo(function Footer() {
                         <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 sm:gap-x-8 md:gap-x-12">
                             {linkColumns.map(({ title, links }) => (
                                 <div key={title}>
-                                    <h3 className="font-mono text-sm lg:text-base uppercase tracking-widest text-primary/25 mb-3">
+                                    <h3 className="font-mono text-sm leading-normal tracking-wider text-sm lg:text-base uppercase tracking-widest text-primary/25 mb-3">
                                         {title}
                                     </h3>
                                     <ul className="flex flex-col gap-2.5">
@@ -133,7 +126,7 @@ export const Footer = memo(function Footer() {
                 >
                     <div className="flex items-center gap-2 order-2 sm:order-1">
                         <AltruvexLogo size="sm" variant="icon" />
-                        <span className="font-mono text-[11px] text-primary/40 uppercase tracking-widest">
+                        <span className="font-mono text-sm leading-normal tracking-wider text-[11px] text-primary/40 uppercase tracking-widest">
                             {t("copyright", { year: localizedYear })}
                         </span>
                     </div>
@@ -143,7 +136,7 @@ export const Footer = memo(function Footer() {
                                 <li key={label}>
                                     <Link
                                         href={href}
-                                        className="font-mono text-[11px] uppercase tracking-[0.18em] text-primary/40 transition-colors duration-200 hover:text-primary"
+                                        className="font-mono text-sm leading-normal tracking-wider text-[11px] uppercase tracking-[0.18em] text-primary/40 transition-colors duration-200 hover:text-primary"
                                     >
                                         {label}
                                     </Link>

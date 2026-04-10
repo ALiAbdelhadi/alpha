@@ -1,11 +1,14 @@
 import { LayoutEffects } from "@/components/layout-effects";
 import { Providers } from "@/components/providers";
+import { JsonLd } from "@/components/seo/json-ld";
 import { routing } from "@/i18n/routing";
 import "@/lib/env";
+import { buildGlobalSchemas } from "@/lib/schema";
 import { cn } from "@/lib/utils";
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { NextIntlClientProvider, hasLocale } from 'next-intl';
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
 import { Inter, Outfit, Vazirmatn } from "next/font/google";
 import { notFound } from "next/navigation";
 import Script from "next/script";
@@ -15,15 +18,15 @@ const vazirmatn = Vazirmatn({
   subsets: ["arabic"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-vazirmatn",
-  display: "swap",
-  preload: true,
+  display: "optional",
+  preload: false,
 });
 
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-inter",
-  display: "swap",
+  display: "optional",
   preload: true,
 });
 
@@ -31,8 +34,8 @@ const outfit = Outfit({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-outfit",
-  display: "swap",
-  preload: true,
+  display: "optional",
+  preload: false,
 });
 
 type Props = {
@@ -40,17 +43,16 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export default async function RootLayout({
-  children,
-  params,
-}: Props) {
+export default async function RootLayout({ children, params }: Props) {
   const { locale } = await params;
-  const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID
-  const gaId = process.env.NEXT_PUBLIC_GA_ID
+  const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
+
+  setRequestLocale(locale);
 
   return (
     <html
@@ -59,12 +61,20 @@ export default async function RootLayout({
       dir={locale === "ar" ? "rtl" : "ltr"}
     >
       <head>
-        <meta name="theme-color" content="#5b5bd6" />
+        <meta name="theme-color" content="#4a6ed4" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Altruvex" />
-        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://www.clarity.ms" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://www.googletagmanager.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preconnect"
+          href="https://www.clarity.ms"
+          crossOrigin="anonymous"
+        />
       </head>
       <body
         suppressHydrationWarning
@@ -72,12 +82,12 @@ export default async function RootLayout({
           "min-h-screen flex flex-col antialiased overflow-x-auto",
           vazirmatn.variable,
           inter.variable,
-          outfit.variable
+          outfit.variable,
         )}
       >
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:p-3 focus:px-5 focus:bg-white focus:text-black dark:focus:bg-black dark:focus:text-white focus:rounded-md focus:shadow-lg focus:border focus:border-border"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:p-3 focus:px-5 focus:rounded-md focus:shadow-lg focus:border focus:border-border focus:bg-background focus:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           Skip to main content
         </a>
@@ -106,33 +116,13 @@ export default async function RootLayout({
         {clarityId && (
           <Script
             id="microsoft-clarity"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
               __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${clarityId}");`,
             }}
           />
         )}
-        <Script
-          id="json-ld"
-          type="application/ld+json"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "ProfessionalService",
-              name: "Altruvex",
-              url: process.env.NEXT_PUBLIC_APP_URL || "https://altruvex.com",
-              logo: `${process.env.NEXT_PUBLIC_APP_URL || "https://altruvex.com"}/brand/altruvex-logo.png`,
-              contactPoint: {
-                "@type": "ContactPoint",
-                email: "altruvex@gmail.com",
-                contactType: "Customer Service",
-                areaServed: ["Worldwide", "Egypt", "UAE", "Saudi Arabia"],
-                availableLanguage: ["en", "ar"],
-              },
-            }),
-          }}
-        />
+        <JsonLd schemas={buildGlobalSchemas(locale)} />
         <NextIntlClientProvider>
           <Providers>
             <LayoutEffects>{children}</LayoutEffects>

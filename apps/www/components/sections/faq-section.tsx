@@ -31,14 +31,14 @@ export const FaqSection = memo(function FaqSection({ namespace, className }: Faq
   const questionKeys = ["01", "02", "03", "04", "05"]
 
   return (
-    <section className={cn("border-t border-border section-padding", className)}>
+    <section className={cn("border-t border-border pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]", className)}>
       <Container>
         <div className="grid gap-12 lg:grid-cols-[1fr_1.5fr] lg:gap-24">
           <div ref={headerRef} className="max-w-md">
-            <p className="meta-eyebrow text-muted-foreground mb-4 block">
+            <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mb-4 block">
               {t("faq.title")}
             </p>
-            <h2 className="display-h2 font-normal text-foreground leading-[1.1] mb-6">
+            <h2 className="text-[clamp(2.125rem,4vw,3.25rem)] tracking-[-0.02em] font-normal text-foreground leading-[1.1] mb-6">
               {t("faq.subtitle")}
             </h2>
           </div>
@@ -47,10 +47,10 @@ export const FaqSection = memo(function FaqSection({ namespace, className }: Faq
             <Accordion type="single" collapsible className="w-full">
               {questionKeys.map((key) => (
                 <AccordionItem key={key} value={key} className="border-border">
-                  <AccordionTrigger className="body-copy font-sans font-light hover:text-foreground transition-colors py-6 text-start">
+                  <AccordionTrigger className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] font-sans font-light hover:text-foreground transition-colors py-6 text-start">
                     {t(`faq.questions.${key}.q`)}
                   </AccordionTrigger>
-                  <AccordionContent className="body-secondary text-muted-foreground leading-relaxed pb-8">
+                  <AccordionContent className="text-[clamp(0.9375rem,0.98vw,1rem)] text-muted-foreground leading-relaxed pb-8">
                     {t(`faq.questions.${key}.a`)}
                   </AccordionContent>
                 </AccordionItem>

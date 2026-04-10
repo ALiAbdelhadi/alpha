@@ -93,7 +93,7 @@ export const ExitIntentModal = () => {
         </button>
         {isSuccess ? (
           <div className="p-8 text-center">
-            <p className="font-mono text-xs uppercase tracking-[0.25em] text-foreground/40 mb-4">
+            <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-foreground/40 mb-4">
               {t("successTitle")}
             </p>
             <p className="text-foreground/70 text-sm leading-relaxed">
@@ -103,7 +103,7 @@ export const ExitIntentModal = () => {
         ) : (
           <div className="p-8">
             <div className="mb-8">
-              <p className="font-mono text-xs uppercase tracking-[0.25em] text-foreground/40 mb-3">
+              <p className="font-mono text-sm leading-normal tracking-wider text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-foreground/40 mb-3">
                 {t("subtitle")}
               </p>
               <h2 className="text-2xl font-medium text-foreground tracking-tight mb-3">

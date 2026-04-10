@@ -221,7 +221,7 @@ export default function ContactDetailPage() {
 
     return (
         <div className="p-6 space-y-6 max-w-7xl mx-auto">
-            {/* Header */}
+            
             <div className="flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold">{contact.name}</h1>
@@ -229,7 +229,7 @@ export default function ContactDetailPage() {
                 </div>
             </div>
 
-            {/* Status and Priority Controls */}
+            
             <div className="flex flex-wrap gap-4">
                 <div className="flex-1 min-w-[200px]">
                     <label className="text-sm font-medium mb-2 block">Status</label>
@@ -278,9 +278,9 @@ export default function ContactDetailPage() {
             </div>
 
             <div className="grid gap-6 md:grid-cols-2">
-                {/* Left Column - Contact Information */}
+                
                 <div className="space-y-6">
-                    {/* Contact Details Card */}
+                    
                     <div className="border rounded-lg p-6 space-y-4">
                         <h2 className="text-xl font-semibold flex items-center gap-2">
                             <User className="h-5 w-5" />
@@ -382,7 +382,7 @@ export default function ContactDetailPage() {
                         </div>
                     </div>
 
-                    {/* Message Card */}
+                    
                     <div className="border rounded-lg p-6">
                         <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
                             <MessageSquare className="h-5 w-5" />
@@ -392,9 +392,9 @@ export default function ContactDetailPage() {
                     </div>
                 </div>
 
-                {/* Right Column - Notes, Tags, Meetings */}
+                
                 <div className="space-y-6">
-                    {/* Tags */}
+                    
                     {contact.tags.length > 0 && (
                         <div className="border rounded-lg p-6">
                             <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
@@ -414,7 +414,7 @@ export default function ContactDetailPage() {
                         </div>
                     )}
 
-                    {/* Notes */}
+                    
                     <div className="border rounded-lg p-6">
                         <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
                             <FileText className="h-5 w-5" />
@@ -440,7 +440,7 @@ export default function ContactDetailPage() {
                         )}
                     </div>
 
-                    {/* Meetings */}
+                    
                     {contact.meetings.length > 0 && (
                         <div className="border rounded-lg p-6">
                             <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
@@ -492,4 +492,3 @@ export default function ContactDetailPage() {
         </div>
     )
 }
-
