@@ -1,7 +1,5 @@
 "use client"
 
-import { gsap } from "@/lib/gsap"
-import { MOTION } from "@/lib/motion"
 import { cn } from "@/lib/utils"
 import { Check, ChevronDown, Globe } from "lucide-react"
 import { useLocale } from "next-intl"
@@ -44,39 +42,6 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
     router.push(newPath)
     setIsOpen(false)
   }
-
-  useEffect(() => {
-    if (!menuRef.current) return
-
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) {
-      menuRef.current.style.opacity = isOpen ? '1' : '0'
-      menuRef.current.style.transform = isOpen ? 'scale(1)' : 'scale(0.95)'
-      menuRef.current.style.pointerEvents = isOpen ? 'auto' : 'none'
-      return
-    }
-
-    if (isOpen) {
-      gsap.set(menuRef.current, { opacity: 0, scale: 0.95, y: -10 })
-      gsap.to(menuRef.current, {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        duration: MOTION.duration.instant,
-        ease: MOTION.ease.ui,
-        pointerEvents: "auto",
-      })
-    } else {
-      gsap.to(menuRef.current, {
-        opacity: 0,
-        scale: 0.95,
-        y: -10,
-        duration: MOTION.duration.micro,
-        ease: MOTION.ease.ui,
-        pointerEvents: "none",
-      })
-    }
-  }, [isOpen])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -191,11 +156,14 @@ export function LanguageSwitcherBase({ variant = "default", className }: Languag
       <div
         ref={menuRef}
         className={cn(
-          "absolute top-full z-50 mt-2 rounded-xl border border-foreground/12 bg-background/92 p-1 shadow-xl backdrop-blur-xl",
+          "absolute top-full z-50 mt-2 rounded-xl border border-foreground/12 bg-background/92 p-1 shadow-xl backdrop-blur-xl transition-all duration-200 ease-out",
           variant === "compact" ? "w-40" : "w-48",
-          isRTL ? "left-0" : "right-0"
+          isRTL ? "left-0" : "right-0",
+          isOpen
+            ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
+            : "pointer-events-none -translate-y-2 scale-95 opacity-0"
         )}
-        style={{ opacity: 0, pointerEvents: 'none' }}
+        aria-hidden={!isOpen}
         role="menu"
         aria-orientation="vertical"
       >

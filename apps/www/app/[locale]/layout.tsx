@@ -102,11 +102,10 @@ export default async function RootLayout({ children, params }: Props) {
         >
           Skip to main content
         </a>
-        <Script
-          id="initial-load-script"
-          strategy="beforeInteractive"
+        <script
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var c=sessionStorage.getItem('Altruvex_initial_load_complete');if(c){document.documentElement.setAttribute('data-initial-load','complete')}}catch(e){}})();`,
+            __html: `document.documentElement.setAttribute('data-js', 'enabled');(function(){try{var c=sessionStorage.getItem('Altruvex_initial_load_complete');if(c){document.documentElement.setAttribute('data-initial-load','complete')}}catch(e){}})();`,
           }}
         />
         {gaId && (

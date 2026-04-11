@@ -20,7 +20,7 @@ export default async function Home({
   return (
     <>
       <HeroSectionServer locale={locale} />
-      <HomeClient locale={locale} />
+      <HomeClient />
     </>
   );
 }

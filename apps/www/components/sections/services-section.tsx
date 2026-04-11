@@ -276,5 +276,3 @@ export const ServicesSection = memo(function ServicesSection() {
     </section>
   )
 })
-
-export default ServicesSection

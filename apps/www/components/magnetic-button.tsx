@@ -1,9 +1,7 @@
 "use client"
 
-import { gsap } from "@/lib/gsap"
-import { MOTION } from "@/lib/motion"
 import { Slot } from "@radix-ui/react-slot"
-import React, { forwardRef, useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react"
+import React, { forwardRef, useCallback, useRef, useState, useSyncExternalStore } from "react"
 
 type ButtonVariant = "primary" | "secondary" | "ghost"
 type ButtonSize = "default" | "lg"
@@ -66,8 +64,6 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
     const internalRef = useRef<HTMLButtonElement>(null)
     const mergedRef = useMergedRef(internalRef, forwardedRef)
 
-    const xTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null)
-    const yTo = useRef<ReturnType<typeof gsap.quickTo> | null>(null)
     const prefersReducedMotion = useSyncExternalStore(
       subscribeToReducedMotion,
       getReducedMotionPreference,
@@ -78,31 +74,19 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
 
     const Comp = asChild ? Slot : "button"
 
-    useEffect(() => {
-      if (!internalRef.current || prefersReducedMotion) return
-      xTo.current = gsap.quickTo(internalRef.current, "x", {
-        duration: MOTION.duration.magnetic,
-        ease: MOTION.ease.smooth,
-      })
-      yTo.current = gsap.quickTo(internalRef.current, "y", {
-        duration: MOTION.duration.magnetic,
-        ease: MOTION.ease.smooth,
-      })
-    }, [prefersReducedMotion])
-
     const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (!internalRef.current || !xTo.current || !yTo.current || prefersReducedMotion) return
+      if (!internalRef.current || prefersReducedMotion) return
       const rect = internalRef.current.getBoundingClientRect()
       const x = e.clientX - rect.left - rect.width / 2
       const y = e.clientY - rect.top - rect.height / 2
-      xTo.current(x * 0.15)
-      yTo.current(y * 0.15)
+      internalRef.current.style.setProperty("--magnetic-x", `${x * 0.15}px`)
+      internalRef.current.style.setProperty("--magnetic-y", `${y * 0.15}px`)
     }
 
     const handleMouseLeave = () => {
-      if (!xTo.current || !yTo.current || prefersReducedMotion) return
-      xTo.current(0)
-      yTo.current(0)
+      if (!internalRef.current || prefersReducedMotion) return
+      internalRef.current.style.setProperty("--magnetic-x", "0px")
+      internalRef.current.style.setProperty("--magnetic-y", "0px")
       setIsPressed(false)
     }
 
@@ -161,14 +145,17 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
         onMouseUp={prefersReducedMotion ? undefined : handleMouseUp}
         className={`
           relative inline-flex items-center justify-center overflow-hidden rounded-full font-medium
-          transition-all duration-300 ease-out will-change-transform
+          transition-[transform,background-color,border-color,color,box-shadow] duration-300 ease-out will-change-transform
           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground/50
           ${variants[variant]}
           ${sizes[size]}
           ${isPressed && !prefersReducedMotion ? "scale-95" : "scale-100"}
           ${className}
         `}
-        style={{ transform: "translate3d(0px, 0px, 0)", contain: "layout style paint" }}
+        style={{
+          transform: "translate3d(var(--magnetic-x, 0px), var(--magnetic-y, 0px), 0)",
+          contain: "layout style paint",
+        }}
         data-cursor-pointer
         {...props}
       >

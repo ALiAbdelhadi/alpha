@@ -2,7 +2,6 @@
 
 import { Nav } from "@/components/nav"
 import { useLoading } from "@/components/providers/loading-provider"
-import { refreshAllTriggers } from "@/lib/animation-utils"
 import { layoutChildren } from "@/types"
 import { useEffect } from "react"
 import { Footer } from "./footer"
@@ -13,8 +12,20 @@ function AnimationController() {
     useEffect(() => {
         if (!isInitialLoadComplete) return
         document.documentElement.setAttribute("data-initial-load", "complete")
-        const raf = requestAnimationFrame(() => { refreshAllTriggers(100) })
-        return () => cancelAnimationFrame(raf)
+        let cancelled = false
+
+        const raf = requestAnimationFrame(async () => {
+            const { refreshAllTriggers } = await import("@/lib/animation-utils")
+
+            if (!cancelled) {
+                refreshAllTriggers(100)
+            }
+        })
+
+        return () => {
+            cancelled = true
+            cancelAnimationFrame(raf)
+        }
     }, [isInitialLoadComplete])
 
     return null

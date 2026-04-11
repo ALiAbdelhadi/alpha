@@ -1,9 +1,9 @@
-export type LocalizedString = {
+type LocalizedString = {
   en: string;
   ar: string;
 };
 
-export type Testimonial = {
+type Testimonial = {
   id: string;
   author: string;
   role: LocalizedString;
@@ -13,7 +13,7 @@ export type Testimonial = {
   caseStudySlug?: string;
 };
 
-export const TESTIMONIALS: Testimonial[] = [];
+const TESTIMONIALS: Testimonial[] = [];
 
 export function getTestimonialsForCaseStudy(slug: string): Testimonial[] {
   return TESTIMONIALS.filter((t) => t.caseStudySlug === slug);

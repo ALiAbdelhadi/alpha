@@ -1,6 +1,6 @@
-export type CommercialLocale = "en" | "ar";
+type CommercialLocale = "en" | "ar";
 
-export type CommercialCtaKey =
+type CommercialCtaKey =
   | "projectRange"
   | "realBuild"
   | "technicalCall"
@@ -17,11 +17,11 @@ type CommercialCtaDefinition = {
   label: Record<CommercialLocale, string>;
 };
 
-export function resolveCommercialLocale(locale: string): CommercialLocale {
+function resolveCommercialLocale(locale: string): CommercialLocale {
   return locale.startsWith("ar") ? "ar" : "en";
 }
 
-export const COMMERCIAL_CTAS: Record<
+const COMMERCIAL_CTAS: Record<
   CommercialCtaKey,
   CommercialCtaDefinition
 > = {

@@ -10,7 +10,7 @@ import type { RouteMetaKey, SupportedLocale } from "@/lib/metadata";
 import type { Article } from "@/types/mdx";
 
 export type JsonLdSchema = Record<string, unknown>;
-export type FaqEntry = { answer: string; question: string };
+type FaqEntry = { answer: string; question: string };
 
 type BreadcrumbItem = {
   name: string;
@@ -377,7 +377,7 @@ function buildStaticBreadcrumbs(
   ];
 }
 
-export const SCHEMAS = {
+const SCHEMAS = {
   aboutPage: buildAboutPageSchema,
   article: buildArticleSchema,
   breadcrumb: buildBreadcrumbSchema,

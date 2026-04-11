@@ -331,33 +331,6 @@
   }
 }
 
-/* 
-  Initial load synchronization:
-  Pre-hide hero elements while the loader is active to prevent FOUC.
-  We hide the specific animated targets so they don't "flash" before GSAP sets them to 0.
-*/
-html:not([data-initial-load="complete"]) [data-hero-root] [data-token],
-html:not([data-initial-load="complete"]) [data-hero-root] [data-hero-badge],
-html:not([data-initial-load="complete"]) [data-hero-root] [data-hero-sub],
-html:not([data-initial-load="complete"]) [data-hero-root] [data-hero-cta],
-html:not([data-initial-load="complete"]) [data-hero-root] [data-hero-stats],
-html:not([data-initial-load="complete"]) [data-hero-root] [data-hero-proof],
-html:not([data-initial-load="complete"]) [data-hero-root] [data-hero-scroll] {
-  opacity: 0;
-  visibility: hidden;
-}
-
-/* Clear visibility once animation is ready to start */
-[data-initial-load="complete"] [data-hero-root] [data-token],
-[data-initial-load="complete"] [data-hero-root] [data-hero-badge],
-[data-initial-load="complete"] [data-hero-root] [data-hero-sub],
-[data-initial-load="complete"] [data-hero-root] [data-hero-cta],
-[data-initial-load="complete"] [data-hero-root] [data-hero-stats],
-[data-initial-load="complete"] [data-hero-root] [data-hero-proof],
-[data-initial-load="complete"] [data-hero-root] [data-hero-scroll] {
-  visibility: visible;
-}
-
 /* Minimal Lenis styles... */
 html.lenis,
 html.lenis body {

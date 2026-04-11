@@ -1,7 +1,7 @@
 import { prisma } from "@repo/database"
 import { NextRequest } from "next/server"
 
-export type RateLimitConfig = {
+type RateLimitConfig = {
   scope: string
   route: string
   limit: number

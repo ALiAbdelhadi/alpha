@@ -412,7 +412,7 @@ const FeatureCard = ({
   );
 };
 
-export function FeaturesSection() {
+function FeaturesSection() {
   const t = useTranslations("serviceDetails.webDesign");
   const tCommon = useTranslations("serviceDetails");
   const sectionRef = useRef<HTMLElement>(null);

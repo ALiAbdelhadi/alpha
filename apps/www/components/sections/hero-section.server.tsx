@@ -1,17 +1,11 @@
 import { Container } from "@/components/container";
 import { SectionWatermark } from "@/components/section-watermark";
+import { Link } from "@/i18n/navigation";
 import { getCommercialCta } from "@/lib/commercial";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { ArrowIcon } from "../directional-link";
 import { HeroMotionClient } from "./hero-motion.client";
-
-function localHref(locale: string, href: string) {
-  const loc = locale.startsWith("ar") ? "ar" : "en";
-  if (!href.startsWith("/")) return href;
-  if (href === "/") return `/${loc}`;
-  return `/${loc}${href}`;
-}
 
 function splitTextTokens(text: string): ReactNode {
   const words = text.split(" ");
@@ -79,7 +73,7 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
           </div>
           <div
             data-hero-badge
-            className="absolute top-20 end-8 hidden md:flex flex-col items-end rtl:items-start gap-2"
+            className="absolute top-20 inset-e-8 hidden md:flex flex-col items-end rtl:items-start gap-2"
           >
             <div className="flex items-center gap-2">
               <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
@@ -115,8 +109,8 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
           </div>
 
           <div data-hero-cta className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <a
-              href={localHref(locale, primaryCta.href)}
+            <Link
+              href={primaryCta.href}
               data-magnetic
               className="group inline-flex items-center justify-center gap-2 rounded-full bg-foreground/95 text-background hover:bg-foreground px-8 py-3.5 text-base font-medium transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground/50 min-h-11 min-w-11"
             >
@@ -124,7 +118,7 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
                 <span>{tCTAs("projectRange")}</span>
                 <ArrowIcon />
               </span>
-            </a>
+            </Link>
           </div>
           <div
             data-hero-stats
@@ -158,7 +152,7 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
       </Container>
       <div
         data-hero-scroll
-        className="pointer-events-none absolute bottom-7 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2 mt-6"
+        className="pointer-events-none absolute bottom-7 inset-s-1/2 -translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2 mt-6"
         aria-hidden
       >
         <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">

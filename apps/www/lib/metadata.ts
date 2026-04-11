@@ -44,7 +44,7 @@ export const SITE_CONFIG = {
   url: process.env.NEXT_PUBLIC_APP_URL,
 } as const;
 
-export const METADATA_DEFAULTS = {
+const METADATA_DEFAULTS = {
   defaultDescription: SITE_CONFIG.description,
   entityKeywords: {
     ar: ["ألتروفيكس", "علي عبد الهادي", "القاهرة", "مصر"],
@@ -624,7 +624,7 @@ export const PAGE_METADATA = {
 
 export type RouteMetaKey = keyof typeof PAGE_METADATA;
 
-export type MetadataOverrides = {
+type MetadataOverrides = {
   canonicalPath?: string;
   description?: string;
   keywords?: string[];
@@ -647,7 +647,7 @@ function normalizePath(pathSuffix: string): string {
   return pathSuffix.startsWith("/") ? pathSuffix : `/${pathSuffix}`;
 }
 
-export function getLocalizedPath(locale: string, pathSuffix: string): string {
+function getLocalizedPath(locale: string, pathSuffix: string): string {
   const loc = normalizeLocale(locale);
   const path = normalizePath(pathSuffix);
 
@@ -662,7 +662,7 @@ export function getLocalizedSeoEntry(locale: string, key: RouteMetaKey) {
   return PAGE_METADATA[key][normalizeLocale(locale)];
 }
 
-export function buildOgImageUrl(locale: string): string {
+function buildOgImageUrl(locale: string): string {
   return getLocalizedUrl(locale, "/opengraph-image");
 }
 

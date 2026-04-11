@@ -22,18 +22,10 @@
     "title": "Build the site buyers trust.",
     "title2": "Then build the system your team can scale.",
     "problem": "Altruvex designs and engineers bilingual websites, portals, and revenue-critical product experiences for teams that have outgrown template work.",
-    "description": "Altruvex works with teams that have outgrown generic solutions. If you need something that performs, scales, and works correctly in Arabic and English, that's our exact domain.",
     "ctaPrimary": "Get Your Project Range",
-    "ctaSecondary": "See a Real Build",
     "scrollHint": "Scroll to explore",
-    "clientsCount": "2",
-    "trust": "On time · Zero templates · Full code ownership",
     "availability": "Taking 2 new projects this month",
     "watermark": "WEB",
-    "stat1": "Load time",
-    "stat2": "Custom — no templates",
-    "stat3": "Bilingual by default",
-    "onTime": "100% on-time",
     "productionCallout": "What you're experiencing right now is a live demonstration of our production standard.",
     "metrics": [
       {
@@ -143,66 +135,6 @@
       "timeline": "Timeline"
     }
   },
-  "socialProof": {
-    "eyebrow": "05 - Client Results",
-    "title": "What changed after launch.",
-    "subtitle": "From the founders and directors who needed more than a website.",
-    "testimonials": {
-      "art-lighting-store-founder": {
-        "quote": "Our old store made it impossible for customers to see why our fixtures were worth the price. The new system changed that - conversion is up and support tickets dropped.",
-        "author": "Founder, Art Lighting Store",
-        "role": "Founder",
-        "company": "Art Lighting Store"
-      },
-      "casescobra-owner": {
-        "quote": "The configurator Altruvex built finally matches how our customers actually shop. Average order value climbed, and the 'this isn't what I expected' messages nearly disappeared.",
-        "author": "Owner, CasesCobra",
-        "role": "Owner",
-        "company": "CasesCobra"
-      },
-      "newlight-commercial-director": {
-        "quote": "For the first time, our Arabic and English presence feels equally considered. The site is fast, stable, and our sales team uses it in front of clients.",
-        "author": "Commercial Director, NewLight",
-        "role": "Commercial Director",
-        "company": "NewLight"
-      }
-    }
-  },
-  "comparisonDemo": {
-    "eyebrow": "The Difference",
-    "title": "Generic systems cost you",
-    "titleAccent": "more than you think.",
-    "subtitle": "Every template site is built for the vendor's convenience — not your conversions. Here's what that actually looks like in numbers.",
-    "statusGeneric": "Generic System",
-    "statusOptimized": "Optimized",
-    "brandName": "YourBrand",
-    "optimized": {
-      "headline": "Custom web systems that",
-      "headlineAccent": "convert traffic into revenue.",
-      "subtext": "Next.js development in Arabic and English. No templates. Measurable results.",
-      "cta": "Scope your project — free 30-min call"
-    },
-    "generic": {
-      "issue1": "Slow load — visitors leave before page renders",
-      "issue2": "No RTL — Arabic audience bounces immediately",
-      "issue3": "Template lock-in — can't grow past the theme"
-    },
-    "footnoteGeneric": "Industry avg — template-based sites",
-    "footnoteOptimized": "Real client results — avg. 90-day period",
-    "metrics": {
-      "loadTime": "Load Time",
-      "bounceRate": "Bounce Rate",
-      "conversion": "Conversion"
-    },
-    "metricsTitle": "System Performance",
-    "metricsFooterGeneric": "Industry average for generic template-based sites.",
-    "metricsFooterOptimized": "Based on real client results — avg. 90-day period.",
-    "contextTitleGeneric": "Template-based system",
-    "contextBodyGeneric": "One-size-fits-all. Built for the vendor, not your users.",
-    "contextTitleOptimized": "Custom-built system",
-    "contextBodyOptimized": "Engineered for your audience, stack, and conversion goals.",
-    "footerNote": "Results vary by project — these are real averages."
-  },
   "problem": {
     "badge": "What We Fix",
     "title": {
@@ -228,9 +160,6 @@
         "title": "Silent Failures",
         "description": "Broken links, janky scroll, and performance bottlenecks that drive customers away before they see your value."
       }
-    },
-    "common": {
-      "creativeDirection": "Creative Direction"
     }
   },
   "work": {
@@ -367,8 +296,6 @@
     "availability": "Taking 2 new projects this month",
     "title": "Stress-test your idea before you build it.",
     "description": "We help founders and teams clarify technical direction, cut build risk, and design systems that scale - before a single line of code is committed.",
-    "primaryAction": "Book a free technical call",
-    "secondaryAction": "See how we work",
     "footnote": "No sales pitch. No pressure. A direct technical conversation."
   },
   "contact": {
@@ -379,8 +306,6 @@
     "emailValue": "altruvex@gmail.com",
     "location": "Location",
     "locationValue": "Cairo, Egypt",
-    "scheduleMeeting": "Book a Meeting",
-    "scheduleDescription": "Pick your date and time",
     "form": {
       "name": "Name",
       "namePlaceholder": "Your name",
@@ -500,7 +425,6 @@
     "hero": {
       "eyebrow": "Approach",
       "title": "We do not design pages first.",
-      "titleItalic": "We design decisions first.",
       "description": "The interface, architecture, copy, and CTA strategy all come from the same question: what does the buyer need to understand and do next?"
     },
     "contrasts": {
@@ -753,8 +677,6 @@
       "consulting": "Technical Audits",
       "maintenance": "Ongoing Support"
     },
-    "gridTitle": "What We Build",
-    "gridSubtitle": "Every engagement scoped precisely. You pay for what your system actually needs.",
     "services": {
       "webDesign": {
         "title": "Website Systems",
@@ -777,25 +699,15 @@
   "commercial": {
     "ctas": {
       "projectRange": "Get Your Project Range",
-      "projectRangeHint": "Opens the full estimator so you can answer a few scoping questions and get a realistic range.",
       "realBuild": "See a Real Build",
-      "realBuildHint": "Opens the flagship case study and shows how the proof was built.",
       "technicalCall": "Book a Technical Call",
-      "technicalCallHint": "Opens the schedule page so you can pick a time for the working call.",
       "technicalAudit": "Start with a Technical Audit",
-      "technicalAuditHint": "Opens contact with the audit path already selected.",
       "architecture": "Talk Through the Architecture",
-      "architectureHint": "Opens contact with the architecture track already selected.",
       "maintenancePlans": "See Maintenance Plans",
-      "maintenancePlansHint": "Jumps straight to the maintenance plans and support pricing.",
       "pricingEssential": "Get Pricing for This Scope",
-      "pricingEssentialHint": "Opens the estimator with the essential tier in mind.",
       "pricingProfessional": "Plan This Build",
-      "pricingProfessionalHint": "Opens the estimator with the professional tier in mind.",
       "pricingFlagship": "Talk Through the Architecture",
-      "pricingFlagshipHint": "Takes you to a technical call for higher-complexity architecture planning.",
-      "flagshipBuild": "Plan a Build Like This",
-      "flagshipBuildHint": "Starts estimator planning from a connected production-grade build."
+      "flagshipBuild": "Plan a Build Like This"
     },
     "offers": {
       "website": {
@@ -965,11 +877,6 @@
     "whatWeOfferSubtitle": "Scoped to what your system needs - nothing more.",
     "whatWeOfferEyebrow": "Included",
     "whatWeOfferItalic": "in every engagement.",
-    "scopeLabel": "Scope",
-    "fitLabel": "Fit",
-    "nextStepEyebrow": "Next Step",
-    "nextStepTitle": "Move from evaluation to a real technical decision.",
-    "nextStepDescription": "If this service matches the problem, the best next move is either a project range or a direct technical call.",
     "ctaPrimary": "Get Your Project Range",
     "ctaSecondary": "See a Real Build",
     "webDesign": {
@@ -1187,8 +1094,8 @@
             "body": "Shared database and missing tracing are the same root: no service owns its data, so none can be independently deployed."
           },
           "finding": {
-            "label": "Finding \u2192 Action",
-            "body": "Instrument first - you cannot safely extract a service whose failure modes you cannot trace. Then Strangler Fig: Auth \u2192 Inventory \u2192 Orders last."
+            "label": "Finding → Action",
+            "body": "Instrument first - you cannot safely extract a service whose failure modes you cannot trace. Then Strangler Fig: Auth → Inventory → Orders last."
           }
         },
         "body": {
@@ -1375,14 +1282,12 @@
       "cta": {
         "eyebrow": "05 - Active Support",
         "statusTitle": "Status",
-        "statusActive": "all systems go",
         "checks": {
           "uptime": "Uptime",
           "security": "Security",
           "backups": "Backups",
           "monitoring": "Monitoring"
         },
-        "eyebrowContent": "Support Engagement",
         "title": "Stability shouldn't be a gamble.",
         "description": "We keep the system stable, secure, and performing so you can focus on scale without being anchored by infrastructure overhead.",
         "back": "Back to Services"
@@ -2007,8 +1912,6 @@
       "title": "The wrong system compounds in cost.",
       "calculation": "A site rebuilt 18 months after launch because it couldn't handle integrations, user accounts, or traffic typically costs 2–3× the original build - plus the revenue lost while you waited.",
       "question": "The real question isn't what this costs to build. It's what the wrong build costs over two years.",
-      "ctaSchedule": "Discuss your scope",
-      "ctaWork": "See relevant projects",
       "stats": {
         "timeline": {
           "label": "Typical Timeline",

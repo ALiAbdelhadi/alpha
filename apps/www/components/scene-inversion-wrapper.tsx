@@ -1,7 +1,6 @@
 "use client"
 
 import { SectionSkeleton } from "@/components/section-skeleton"
-import { gsap, ScrollTrigger } from "@/lib/gsap"
 import { lazy, Suspense, useEffect, useRef, useState, useSyncExternalStore } from "react"
 
 const ServicesSection = lazy(() =>
@@ -50,16 +49,30 @@ export function SceneInversionWrapper() {
         const el = wrapperRef.current
         if (!el || !mounted) return
 
-        const ctx = gsap.context(() => {
-            ScrollTrigger.create({
-                trigger: el,
-                start: "top 65%",
-                once: true,
-                onEnter: () => setEntered(true),
-            })
-        })
+        let cancelled = false
+        let cleanup: (() => void) | null = null
 
-        return () => ctx.revert()
+        void (async () => {
+            const { gsap, ScrollTrigger } = await import("@/lib/gsap")
+
+            if (cancelled || !wrapperRef.current) return
+
+            const ctx = gsap.context(() => {
+                ScrollTrigger.create({
+                    trigger: wrapperRef.current,
+                    start: "top 65%",
+                    once: true,
+                    onEnter: () => setEntered(true),
+                })
+            })
+
+            cleanup = () => ctx.revert()
+        })()
+
+        return () => {
+            cancelled = true
+            cleanup?.()
+        }
     }, [mounted])
 
     useEffect(() => {

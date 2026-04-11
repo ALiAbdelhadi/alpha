@@ -1,11 +1,13 @@
+import dynamic from "next/dynamic";
 import { ErrorBoundary } from "@/components/error-boundary";
-import { SceneInversionWrapper } from "@/components/scene-inversion-wrapper";
-import { CtaSection } from "@/components/sections/cta-section";
-import { EstimatorSection } from "@/components/sections/estimator-section";
-import { ProblemSection } from "@/components/sections/problem-section";
-import { TrustSection } from "@/components/sections/trust-section";
-import { WorkSection } from "@/components/sections/work-section";
-export function HomeClient({ locale }: { locale: string }) {
+const ProblemSection = dynamic(() => import("@/components/sections/problem-section").then(mod => mod.ProblemSection));
+const SceneInversionWrapper = dynamic(() => import("@/components/scene-inversion-wrapper").then(mod => mod.SceneInversionWrapper));
+const CtaSection = dynamic(() => import("@/components/sections/cta-section").then(mod => mod.CtaSection));
+const EstimatorSection = dynamic(() => import("@/components/sections/estimator-section").then(mod => mod.EstimatorSection));
+const TrustSection = dynamic(() => import("@/components/sections/trust-section").then(mod => mod.TrustSection));
+const WorkSection = dynamic(() => import("@/components/sections/work-section").then(mod => mod.WorkSection));
+
+export function HomeClient() {
   return (
     <>
       <ErrorBoundary>
