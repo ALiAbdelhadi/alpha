@@ -39,6 +39,9 @@ export function CtaSection() {
             </h2>
           </div>
           <div ref={contentRef} className="flex min-w-0 flex-col gap-6">
+            <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
+              {locale === "ar" ? "الخطوة التالية" : "Next step"}
+            </p>
             <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground">
               {t("body")}
             </p>

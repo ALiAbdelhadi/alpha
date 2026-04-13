@@ -19,6 +19,7 @@ const PAINS = [
 export const ProblemSection = memo(function ProblemSection() {
   const t = useTranslations()
   const locale = useLocale()
+  const stepLabel = locale === "ar" ? "الخطوة" : "Step"
   const auditCta = getCommercialCta(locale, "technicalAudit")
 
   const sectionRef = useRef<HTMLElement>(null)
@@ -39,11 +40,11 @@ export const ProblemSection = memo(function ProblemSection() {
       <Container>
         <div className="max-w-3xl mb-12 space-y-4">
           <p ref={eyebrowRef} className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
-            01 — {t("problem.badge")}
+            {t("problem.badge")}
           </p>
           <h2 ref={titleRef} className="text-[clamp(2.125rem,4vw,3.25rem)] leading-[1.08] font-normal tracking-tight text-foreground">
             {t("problem.title.pre")}{" "}
-            <span className="text-muted-foreground line-through decoration-border"> {t("problem.title.crossed")} </span>
+            {t("problem.title.crossed")}{" "}
             <br />
             <span className="font-serif italic font-light text-foreground/45 rtl:font-sans rtl:not-italic rtl:font-bold">
               {t("problem.title.gradient")}
@@ -77,6 +78,9 @@ export const ProblemSection = memo(function ProblemSection() {
                 </span>
                 <div className="space-y-3">
                   <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-medium text-foreground">
+                    <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground rtl:tracking-normal">
+                      {stepLabel} {pain.number}
+                    </span>
                     {t(pain.titleKey)}
                   </h3>
                   <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-muted-foreground max-w-sm">

@@ -285,6 +285,7 @@ const FeatureCard = ({
   const cardRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number | null>(null);
+  const rectRef = useRef<DOMRect | null>(null);
 
   const isHero = feature.featured;
   const rgba = useCallback((a: number) => `rgba(${palette.r},${palette.g},${palette.b},${a})`, [palette]);
@@ -300,11 +301,31 @@ const FeatureCard = ({
     card.style.setProperty("--tbg", rgba(0.05));
   }, [index, rgba]);
 
+  const updateRect = useCallback(() => {
+    if (!cardRef.current) return;
+    rectRef.current = cardRef.current.getBoundingClientRect();
+  }, []);
+
+  useEffect(() => {
+    if (!cardRef.current) return;
+    updateRect();
+    const ro = new ResizeObserver(updateRect);
+    ro.observe(cardRef.current);
+    window.addEventListener("resize", updateRect);
+    window.addEventListener("scroll", updateRect, { passive: true });
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", updateRect);
+      window.removeEventListener("scroll", updateRect);
+    };
+  }, [updateRect]);
+
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!cardRef.current) return;
     if (rafRef.current) cancelAnimationFrame(rafRef.current);
     rafRef.current = requestAnimationFrame(() => {
-      const r = cardRef.current!.getBoundingClientRect();
+      const r = rectRef.current ?? cardRef.current!.getBoundingClientRect();
+      rectRef.current = r;
       cardRef.current!.style.setProperty("--gx", `${e.clientX - r.left}px`);
       cardRef.current!.style.setProperty("--gy", `${e.clientY - r.top}px`);
       cardRef.current!.style.setProperty("--go", "1");
@@ -332,6 +353,7 @@ const FeatureCard = ({
   return (
     <div
       ref={cardRef}
+      onMouseEnter={updateRect}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={cn(

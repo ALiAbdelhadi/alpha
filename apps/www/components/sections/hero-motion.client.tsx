@@ -12,7 +12,7 @@ export function HeroMotionClient() {
 
     let cancelled = false;
 
-    const startDelay = window.setTimeout(async () => {
+    const runAnimations = async () => {
       if (cancelled) return;
 
       const root = document.querySelector<HTMLElement>("[data-hero-root]");
@@ -174,6 +174,10 @@ export function HeroMotionClient() {
         const magnetCleanups: Array<() => void> = [];
 
         magneticTargets.forEach((el) => {
+          let rect = el.getBoundingClientRect();
+          const updateRect = () => {
+            rect = el.getBoundingClientRect();
+          };
           const xTo = gsap.quickTo(el, "x", {
             duration: 0.6,
             ease: "power2.out",
@@ -185,23 +189,33 @@ export function HeroMotionClient() {
 
           const handleMouseMove = (e: MouseEvent) => {
             const { clientX, clientY } = e;
-            const { left, top, width, height } = el.getBoundingClientRect();
+            const { left, top, width, height } = rect;
             const x = clientX - (left + width / 2);
             const y = clientY - (top + height / 2);
             xTo(x * 0.15);
             yTo(y * 0.15);
           };
+          const handleMouseEnter = () => updateRect();
 
           const handleMouseLeave = () => {
             xTo(0);
             yTo(0);
           };
 
+          const ro = new ResizeObserver(updateRect);
+          ro.observe(el);
+          el.addEventListener("mouseenter", handleMouseEnter);
           el.addEventListener("mousemove", handleMouseMove);
           el.addEventListener("mouseleave", handleMouseLeave);
+          window.addEventListener("scroll", updateRect, { passive: true });
+          window.addEventListener("resize", updateRect);
           magnetCleanups.push(() => {
+            ro.disconnect();
+            el.removeEventListener("mouseenter", handleMouseEnter);
             el.removeEventListener("mousemove", handleMouseMove);
             el.removeEventListener("mouseleave", handleMouseLeave);
+            window.removeEventListener("scroll", updateRect);
+            window.removeEventListener("resize", updateRect);
           });
         });
 
@@ -252,11 +266,39 @@ export function HeroMotionClient() {
       } catch (err) {
         console.error("Hero animation failed:", err);
       }
-    }, 50);
+    };
+
+    let idleId: number | null = null;
+    let raf1: number | null = null;
+    let raf2: number | null = null;
+    let startDelay: number | null = null;
+    const scheduleAnimations = () => {
+      const begin = () => {
+        startDelay = window.setTimeout(() => {
+          void runAnimations();
+        }, 0);
+      };
+      const afterPaint = () => {
+        raf1 = window.requestAnimationFrame(() => {
+          raf2 = window.requestAnimationFrame(begin);
+        });
+      };
+      if ("requestIdleCallback" in window) {
+        idleId = window.requestIdleCallback(afterPaint, { timeout: 1200 });
+        return;
+      }
+      afterPaint();
+    };
+    scheduleAnimations();
 
     return () => {
       cancelled = true;
-      window.clearTimeout(startDelay);
+      if (idleId !== null && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (raf1 !== null) window.cancelAnimationFrame(raf1);
+      if (raf2 !== null) window.cancelAnimationFrame(raf2);
+      if (startDelay !== null) window.clearTimeout(startDelay);
       cleanupRef.current?.();
       cleanupRef.current = null;
     };

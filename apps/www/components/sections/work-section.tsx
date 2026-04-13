@@ -31,6 +31,7 @@ export const WorkSection = memo(function WorkSection() {
   const tCS = useTranslations("caseStudies");
   const tW = useTranslations("work");
   const tCTAs = useTranslations("commercial.ctas");
+  const stepLabel = locale === "ar" ? "الخطوة" : "Step";
 
   const flagshipCta = getCommercialCta(locale, "flagshipBuild");
   const genericProofCta = getCommercialCta(locale, "realBuild");
@@ -99,13 +100,13 @@ export const WorkSection = memo(function WorkSection() {
             { label: tf("labels.problem"), body: tf("problem") },
             { label: tf("labels.solution"), body: tf("solution") },
             { label: tf("labels.outcome"), body: tf("outcome") },
-          ].map((item) => (
+          ].map((item, i) => (
             <div
               key={item.label}
               className="border-r border-b border-border px-6 py-8 group hover:bg-surface transition-colors duration-300"
             >
               <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mb-4">
-                {item.label}
+                {stepLabel} {String(i + 1).padStart(2, "0")} · {item.label}
               </p>
               <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground">
                 {item.body}

@@ -24,6 +24,7 @@ export const TrustSection = memo(function TrustSection() {
   const locale = useLocale();
   const t = useTranslations("commercial.trust");
   const tW = useTranslations("work");
+  const stepLabel = locale === "ar" ? "الخطوة" : "Step";
 
   const eyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 });
   const titleRef = useText<HTMLHeadingElement>({
@@ -73,7 +74,7 @@ export const TrustSection = memo(function TrustSection() {
               className="trust-card border-r border-b border-border px-6 py-8 group hover:bg-surface transition-colors duration-300"
             >
               <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mb-6">
-                {String(i + 1).padStart(2, "0")}
+                {stepLabel} {String(i + 1).padStart(2, "0")}
               </p>
               <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] font-medium text-foreground mb-3 tracking-tight">
                 {point.title}

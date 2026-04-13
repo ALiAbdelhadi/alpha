@@ -30,21 +30,41 @@ export function DesignCompareSection() {
     const [statsVisible, setStatsVisible] = useState(false)
 
     const containerRef = useRef<HTMLDivElement>(null)
+    const rectRef = useRef<DOMRect | null>(null)
     const headerRef = useRef<HTMLDivElement>(null)
     const stageWrapRef = useRef<HTMLDivElement>(null)
     const statsRef = useRef<HTMLDivElement>(null)
 
     const clamp = (v: number) => Math.max(0, Math.min(100, v))
+    const updateRect = useCallback(() => {
+        if (!containerRef.current) return
+        rectRef.current = containerRef.current.getBoundingClientRect()
+    }, [])
 
     const updateFromX = useCallback((clientX: number) => {
         if (!containerRef.current) return
-        const r = containerRef.current.getBoundingClientRect()
+        const r = rectRef.current ?? containerRef.current.getBoundingClientRect()
+        rectRef.current = r
         setPct(clamp((clientX - r.left) / r.width * 100))
         setInteracted(true)
     }, [])
 
-    const onMouseDown = useCallback((e: React.MouseEvent) => { setDragging(true); updateFromX(e.clientX) }, [updateFromX])
-    const onTouchStart = useCallback((e: React.TouchEvent) => { setDragging(true); updateFromX(e.touches[0].clientX) }, [updateFromX])
+    const onMouseDown = useCallback((e: React.MouseEvent) => { updateRect(); setDragging(true); updateFromX(e.clientX) }, [updateFromX, updateRect])
+    const onTouchStart = useCallback((e: React.TouchEvent) => { updateRect(); setDragging(true); updateFromX(e.touches[0].clientX) }, [updateFromX, updateRect])
+
+    useEffect(() => {
+        updateRect()
+        if (!containerRef.current) return
+        const ro = new ResizeObserver(updateRect)
+        ro.observe(containerRef.current)
+        window.addEventListener("resize", updateRect)
+        window.addEventListener("scroll", updateRect, { passive: true })
+        return () => {
+            ro.disconnect()
+            window.removeEventListener("resize", updateRect)
+            window.removeEventListener("scroll", updateRect)
+        }
+    }, [updateRect])
 
     useEffect(() => {
         const move = (e: MouseEvent) => { if (dragging) updateFromX(e.clientX) }

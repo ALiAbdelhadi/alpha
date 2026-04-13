@@ -1,7 +1,7 @@
 "use client"
 
 import { Slot } from "@radix-ui/react-slot"
-import React, { forwardRef, useCallback, useRef, useState, useSyncExternalStore } from "react"
+import React, { forwardRef, useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react"
 
 type ButtonVariant = "primary" | "secondary" | "ghost"
 type ButtonSize = "default" | "lg"
@@ -62,13 +62,32 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
     forwardedRef
   ) => {
     const internalRef = useRef<HTMLButtonElement>(null)
+    const rectRef = useRef<DOMRect | null>(null)
     const mergedRef = useMergedRef(internalRef, forwardedRef)
+    const updateRect = useCallback(() => {
+      if (!internalRef.current) return
+      rectRef.current = internalRef.current.getBoundingClientRect()
+    }, [])
 
     const prefersReducedMotion = useSyncExternalStore(
       subscribeToReducedMotion,
       getReducedMotionPreference,
       () => false
     )
+    useEffect(() => {
+      if (!internalRef.current || prefersReducedMotion) return
+      updateRect()
+      const el = internalRef.current
+      const ro = new ResizeObserver(updateRect)
+      ro.observe(el)
+      window.addEventListener("scroll", updateRect, { passive: true })
+      window.addEventListener("resize", updateRect)
+      return () => {
+        ro.disconnect()
+        window.removeEventListener("scroll", updateRect)
+        window.removeEventListener("resize", updateRect)
+      }
+    }, [prefersReducedMotion, updateRect])
     const [isPressed, setIsPressed] = useState(false)
     const [ripples, setRipples] = useState<Ripple[]>([])
 
@@ -76,7 +95,8 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
 
     const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (!internalRef.current || prefersReducedMotion) return
-      const rect = internalRef.current.getBoundingClientRect()
+      const rect = rectRef.current ?? internalRef.current.getBoundingClientRect()
+      rectRef.current = rect
       const x = e.clientX - rect.left - rect.width / 2
       const y = e.clientY - rect.top - rect.height / 2
       internalRef.current.style.setProperty("--magnetic-x", `${x * 0.15}px`)
@@ -140,6 +160,7 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
         ref={mergedRef}
         onClick={handleClick}
         onMouseMove={prefersReducedMotion ? undefined : handleMouseMove}
+        onMouseEnter={prefersReducedMotion ? undefined : updateRect}
         onMouseLeave={prefersReducedMotion ? undefined : handleMouseLeave}
         onMouseDown={prefersReducedMotion ? undefined : handleMouseDown}
         onMouseUp={prefersReducedMotion ? undefined : handleMouseUp}

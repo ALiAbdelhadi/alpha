@@ -3,7 +3,7 @@
 import { monoCaps } from "@/lib/mono-caps"
 import { useReveal } from "@/lib/motion"
 import { cn } from "@/lib/utils"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { memo, useEffect, useRef, useState } from "react"
 import { Container } from "../container"
 
@@ -45,6 +45,7 @@ const ServiceCard = memo(function ServiceCard({
   revealDelay: number
 }) {
   const t = useTranslations("services")
+  const locale = useLocale()
   const cardRef = useReveal<HTMLElement>({ delay: revealDelay })
 
   return (
@@ -64,11 +65,11 @@ const ServiceCard = memo(function ServiceCard({
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 z-2 h-0.5 bg-linear-to-r from-transparent via-(--card-accent) to-transparent opacity-0 transition-opacity duration-400 group-hover:opacity-100"
+        className="pointer-events-none absolute inset-x-0 top-0 z-2 h-0.5 bg-linear-to-r from-transparent via-(--card-accent) to-transparent opacity-0 transition-opacity duration-[400ms] group-hover:opacity-100"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-0 bg-(--card-accent) opacity-0 transition-opacity duration-400 group-hover:opacity-100"
+        className="pointer-events-none absolute inset-0 z-0 bg-(--card-accent) opacity-0 transition-opacity duration-[400ms] group-hover:opacity-100"
       />
       <div
         aria-hidden
@@ -76,7 +77,7 @@ const ServiceCard = memo(function ServiceCard({
       />
       <span
         className={cn(
-          "pointer-events-none absolute -top-[0.05em] inset-e-0 z-0 select-none pe-[clamp(12px,2vw,28px)] font-mono font-extrabold leading-[0.85] tracking-[-0.06em] text-transparent opacity-0 transition-[opacity,transform] duration-400 translate-x-2 [-webkit-text-stroke-width:1px] [-webkit-text-stroke-color:var(--s-border)] group-hover:translate-x-0 group-hover:opacity-[0.55]",
+          "pointer-events-none absolute -top-[0.05em] inset-e-0 z-0 select-none pe-[clamp(12px,2vw,28px)] font-mono font-extrabold leading-[0.85] tracking-[-0.06em] text-transparent opacity-0 transition-[opacity,transform] duration-[400ms] translate-x-2 [-webkit-text-stroke-width:1px] [-webkit-text-stroke-color:var(--s-border)] group-hover:translate-x-0 group-hover:opacity-[0.55] rtl:-translate-x-2 rtl:group-hover:translate-x-0",
           isLarge
             ? "text-[clamp(88px,12vw,160px)]"
             : "text-[clamp(64px,8vw,100px)]",
@@ -104,7 +105,7 @@ const ServiceCard = memo(function ServiceCard({
         </span>
         <div className="h-px flex-1 bg-s-border opacity-50" />
         <svg
-          className="translate-x-[-4px] translate-y-1 text-s-mid opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100 rtl:scale-x-[-1]"
+          className="translate-y-1 text-s-mid opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 rtl:scale-x-[-1]"
           width="14"
           height="14"
           viewBox="0 0 14 14"
@@ -121,9 +122,6 @@ const ServiceCard = memo(function ServiceCard({
         </svg>
       </div>
       <div className={cn("relative z-1", isLarge ? "max-w-[560px]" : "max-w-full")}>
-        <p className={cn(monoCaps, "mb-2.5 text-s-muted")}>
-          {service.index}
-        </p>
         <h3
           className={cn(
             "font-serif text-s-high italic font-light rtl:font-sans rtl:not-italic rtl:font-bold",
@@ -132,6 +130,9 @@ const ServiceCard = memo(function ServiceCard({
               : "mb-3 text-[clamp(16px,2vw,22px)]",
           )}
         >
+          <span className="mb-2 block font-mono text-[10px] uppercase tracking-[0.18em] text-s-muted rtl:tracking-normal">
+            {locale === "ar" ? "الخطوة" : "Step"} {service.index}
+          </span>
           {t(`${service.key}.title`)}
         </h3>
         <p
@@ -192,7 +193,7 @@ const ProcessRail = memo(function ProcessRail() {
             <div
               style={{ animationDelay: `${i * 0.2}s` }}
               className={cn(
-                "mt-2 h-px flex-1 origin-left self-end bg-s-border mx-3 animate-services-rail paused rtl:origin-right",
+                "mt-2 h-px flex-1 origin-left self-end bg-s-border mx-3 animate-services-rail [animation-play-state:paused] rtl:origin-right",
                 visible && "running",
               )}
             />

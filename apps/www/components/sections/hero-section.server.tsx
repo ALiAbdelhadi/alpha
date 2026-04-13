@@ -64,7 +64,7 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
         {title1} {title2}
       </h1>
       <Container>
-        <div className="max-w-5xl">
+        <div className="lg:max-w-5xl max-w-2xl">
           <div data-hero-badge className="mb-8 flex items-center gap-2 md:hidden">
             <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
             <span className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">

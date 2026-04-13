@@ -339,6 +339,9 @@ export const EstimatorSection = memo(function EstimatorSection() {
             {step === 1 && (
               <div className="space-y-6">
                 <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-normal text-foreground">
+                  <span className="mb-2 block font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
+                    {locale === "ar" ? "الخطوة ١ من ٣" : "Step 1 of 3"}
+                  </span>
                   {t("step1.question")}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -369,6 +372,9 @@ export const EstimatorSection = memo(function EstimatorSection() {
             {step === 2 && (
               <div className="space-y-6">
                 <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-normal text-foreground">
+                  <span className="mb-2 block font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
+                    {locale === "ar" ? "الخطوة ٢ من ٣" : "Step 2 of 3"}
+                  </span>
                   {t("step2.question")}
                 </h3>
                 <div className="flex flex-col gap-3">
@@ -396,6 +402,9 @@ export const EstimatorSection = memo(function EstimatorSection() {
             {step === 3 && (
               <div className="space-y-6">
                 <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-normal text-foreground">
+                  <span className="mb-2 block font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
+                    {locale === "ar" ? "الخطوة ٣ من ٣" : "Step 3 of 3"}
+                  </span>
                   {t("step3.question")}
                 </h3>
                 <div className="flex flex-col gap-3">

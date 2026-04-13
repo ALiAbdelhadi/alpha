@@ -190,7 +190,7 @@ export const ProcessSection = memo(function ProcessSection() {
                 className={cn(monoCaps, "block transition-colors duration-200")}
                 style={{ color: i === active ? "var(--s-high)" : "var(--s-low)" }}
               >
-                {t(`steps.${step.key}.tag`)}
+                {step.index} · {t(`steps.${step.key}.tag`)}
               </span>
             </button>
           ))}
