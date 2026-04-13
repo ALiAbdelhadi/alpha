@@ -19,7 +19,6 @@ import { useLoading } from "./providers/loading-provider"
 const NAV_ITEMS = [
     { key: "work", href: "/work" },
     { key: "services", href: "/services" },
-    { key: "about", href: "/about" },
     { key: "pricing", href: "/pricing" },
     { key: "contact", href: "/contact" },
 ]

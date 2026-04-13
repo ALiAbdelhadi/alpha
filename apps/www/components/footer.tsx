@@ -16,7 +16,7 @@ export const Footer = memo(function Footer() {
         const year = new Date().getFullYear()
         return locale === "ar" ? localizeNumbers(year.toString(), locale) : year.toString()
     }, [locale])
-
+    
     const servicesLinks = useMemo(() => [
         { href: "/services/interface-design", label: t("webDesign") },
         { href: "/services/development", label: t("development") },
@@ -25,12 +25,11 @@ export const Footer = memo(function Footer() {
     ], [t])
 
     const companyLinks = useMemo(() => [
-        { href: "/about", label: navT("about") },
         { href: "/approach", label: t("approach") },
         { href: "/work", label: t("work") },
         { href: "/process", label: t("process") },
         { href: "/standards", label: t("standards") },
-    ], [navT, t])
+    ], [t])
 
     const resourceLinks = useMemo(() => [
         { href: "/pricing", label: t("pricing") },
@@ -42,7 +41,8 @@ export const Footer = memo(function Footer() {
     const legalLinks = useMemo(() => [
         { href: "/privacy", label: t("privacy") },
         { href: "/terms", label: t("terms") },
-    ], [t])
+        { href: "/about", label: navT("about") }
+    ], [t, navT])
 
     const linkColumns = [
         { title: t("servicesTitle"), links: servicesLinks },
@@ -126,7 +126,7 @@ export const Footer = memo(function Footer() {
                 >
                     <div className="flex items-center gap-2 order-2 sm:order-1">
                         <AltruvexLogo size="sm" variant="icon" />
-                        <span className="font-mono text-sm leading-normal text-[11px] text-primary/70 uppercase tracking-widest">
+                        <span className="font-mono leading-normal text-xs text-primary/70 uppercase tracking-widest">
                             {t("copyright", { year: localizedYear })}
                         </span>
                     </div>
@@ -136,7 +136,7 @@ export const Footer = memo(function Footer() {
                                 <li key={label}>
                                     <Link
                                         href={href}
-                                        className="font-mono text-sm leading-normal tracking-wider text-[11px] uppercase text-primary/70 transition-colors duration-200 hover:text-primary"
+                                        className="font-mono text-xs leading-normal tracking-widest  uppercase text-primary/70 transition-colors duration-200 hover:text-primary"
                                     >
                                         {label}
                                     </Link>

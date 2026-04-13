@@ -52,7 +52,7 @@ const ServiceCard = memo(function ServiceCard({
       ref={cardRef}
       data-service={service.index}
       className={cn(
-        "group relative isolate cursor-pointer overflow-hidden bg-s-surface transition-colors duration-300",
+        "group relative isolate cursor-pointer overflow-hidden transition-colors duration-300",
         "data-[service=01]:[--card-accent:rgba(99,102,241,0.08)]",
         "data-[service=02]:[--card-accent:rgba(20,184,166,0.08)]",
         "data-[service=03]:[--card-accent:rgba(245,158,11,0.07)]",
