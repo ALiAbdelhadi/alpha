@@ -80,7 +80,7 @@ function HeroSection() {
       </div>
       <Container>
         <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end">
-          <div className="max-w-5xl">
+          <div className="sm:max-w-5xl max-w-full">
             <p ref={eyebrowRef} className={cn(monoCaps, "mb-6 text-muted-foreground/70")}>
               {t("eyebrow")}
             </p>
@@ -127,7 +127,7 @@ function HeroSection() {
           <div ref={railRef} className="flex flex-col gap-5">
             <div
               data-about-rail
-              className="rounded-2xl border border-border bg-surface px-6 py-5"
+              className="rounded-xl border border-border bg-surface px-6 py-5"
             >
               <p className={cn(monoCaps, "mb-4 text-muted-foreground/70")}>
                 {t("founder.eyebrow")}
@@ -147,7 +147,7 @@ function HeroSection() {
                 </ExternalDirectionalLink>
               </div>
             </div>
-            <div className="rounded-2xl border border-border bg-surface px-6 py-5">
+            <div className="rounded-xl border border-border bg-surface px-6 py-5">
               <p className={cn(monoCaps, "mb-4 text-muted-foreground/70")}>
                 {heroT("scrollHint")}
               </p>
@@ -228,7 +228,7 @@ function PrinciplesSection() {
                 key={value.label}
                 data-principle-card
                 className={cn(
-                  "rounded-2xl border border-border bg-surface p-6 md:p-7",
+                  "rounded-xl border border-border bg-surface p-6 md:p-7",
                   index === 0 && "md:col-span-2",
                 )}
               >
@@ -245,7 +245,7 @@ function PrinciplesSection() {
             ))}
             <article
               data-principle-card
-              className="rounded-2xl border border-border bg-surface p-6 md:col-span-2 md:p-8"
+              className="rounded-xl border border-border bg-surface p-6 md:col-span-2 md:p-8"
             >
               <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                 <div>
@@ -310,7 +310,7 @@ function OperatingModelSection() {
             <article
               key={step.index}
               data-process-card
-              className="rounded-2xl border border-border bg-surface p-6 md:p-7"
+              className="rounded-xl border border-border bg-surface p-6 md:p-7"
             >
               <div className="flex items-start justify-between gap-4">
                 <p className={cn(monoCaps, "text-muted-foreground/70")}>
@@ -388,7 +388,7 @@ function PathwaysSection({ routeCards }: PageClientProps) {
                 key={card.href}
                 href={card.href}
                 data-route-card
-                className="group rounded-2xl border border-border bg-surface p-6 transition-colors duration-300 hover:bg-background/80"
+                className="group rounded-xl border border-border bg-surface p-6 transition-colors duration-300 hover:bg-background/80"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>

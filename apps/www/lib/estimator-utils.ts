@@ -1,3 +1,5 @@
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 import { localizeNumbers } from "./number";
 
 export type DeliverableTier = "small" | "medium" | "large" | "enterprise";
@@ -810,59 +812,129 @@ export function buildPDFHtml(p: PDFParams): string {
   ${foot("ALTRUVEX · 2 / 2", escapeHtml(p.t("pdfContent.confidential", { name: clientName })))}
 </div>
 
-<script>window.addEventListener('load',()=>setTimeout(()=>window.print(),600))</script>
 </body>
 </html>`;
 }
 
 export async function generateEstimatePdf(html: string, filename: string) {
-  type Html2PdfInstance = {
-    set(options: Record<string, unknown>): Html2PdfInstance;
-    from(element: HTMLElement): Html2PdfInstance;
-    save(): Promise<void>;
-  };
-  type Html2PdfFactory = () => Html2PdfInstance;
-
-  const html2pdf = (await import("html2pdf.js")).default as Html2PdfFactory;
-
   const iframe = document.createElement("iframe");
   iframe.style.cssText =
     "position:fixed;left:-9999px;top:0;width:210mm;height:297mm;border:none;opacity:0;pointer-events:none;";
   document.body.appendChild(iframe);
 
   try {
-    iframe.contentDocument!.open();
-    iframe.contentDocument!.write(html);
-    iframe.contentDocument!.close();
+    const doc = iframe.contentDocument;
+    if (!doc) return;
 
-    const killStyle = iframe.contentDocument!.createElement("style");
+    doc.open();
+    doc.write(html);
+    doc.close();
+
+    const killStyle = doc.createElement("style");
     killStyle.setAttribute("data-pdf-style", "true");
     killStyle.textContent = `*, *::before, *::after { color-scheme: light !important; }`;
-    iframe.contentDocument!.head.appendChild(killStyle);
+    doc.head.appendChild(killStyle);
 
-    await new Promise((resolve) => setTimeout(resolve, 900));
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    if ("fonts" in doc) {
+      await doc.fonts.ready;
+    }
 
-    await html2pdf()
-      .set({
-        margin: 0,
-        filename,
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          logging: false,
-          allowTaint: true,
-          onclone: (_doc: Document, el: HTMLElement) => {
-            el.style.colorScheme = "light";
-            Array.from(
-              _doc.querySelectorAll("link, style:not([data-pdf-style])"),
-            ).forEach((node) => node.remove());
-          },
-        },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        pagebreak: { mode: "css", before: ".page + .page" },
-      })
-      .from(iframe.contentDocument!.body)
-      .save();
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+      compress: true,
+    });
+    const source = doc.body;
+    source.style.colorScheme = "light";
+    source.style.background = "#ffffff";
+
+    const pageNodes = Array.from(doc.querySelectorAll(".page")) as HTMLElement[];
+    const targets = pageNodes.length > 0 ? pageNodes : [source];
+
+    const pageWidthMm = 210;
+    const pageHeightMm = 297;
+    let pageIndex = 0;
+
+    for (const target of targets) {
+      const canvas = await html2canvas(target, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: "#ffffff",
+        windowWidth: Math.max(target.scrollWidth, 794),
+        windowHeight: Math.max(target.scrollHeight, 1123),
+      });
+
+      const pxPerMm = canvas.width / pageWidthMm;
+      const pageHeightPx = Math.max(Math.floor(pageHeightMm * pxPerMm), 1);
+      const hasExplicitPages = pageNodes.length > 0;
+
+      if (hasExplicitPages) {
+        if (pageIndex > 0) {
+          pdf.addPage("a4", "portrait");
+        }
+
+        pdf.addImage(
+          canvas.toDataURL("image/jpeg", 0.94),
+          "JPEG",
+          0,
+          0,
+          pageWidthMm,
+          pageHeightMm,
+          `page-${pageIndex + 1}`,
+          "FAST",
+        );
+
+        pageIndex += 1;
+        continue;
+      }
+
+      for (let offsetY = 0; offsetY < canvas.height; offsetY += pageHeightPx) {
+        const sliceHeightPx = Math.min(pageHeightPx, canvas.height - offsetY);
+        const pageCanvas = document.createElement("canvas");
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = sliceHeightPx;
+
+        const pageCtx = pageCanvas.getContext("2d");
+        if (!pageCtx) continue;
+
+        pageCtx.fillStyle = "#ffffff";
+        pageCtx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+        pageCtx.drawImage(
+          canvas,
+          0,
+          offsetY,
+          canvas.width,
+          sliceHeightPx,
+          0,
+          0,
+          canvas.width,
+          sliceHeightPx,
+        );
+
+        if (pageIndex > 0) {
+          pdf.addPage("a4", "portrait");
+        }
+
+        const renderHeightMm = Math.max(sliceHeightPx / pxPerMm, 1);
+        pdf.addImage(
+          pageCanvas.toDataURL("image/jpeg", 0.94),
+          "JPEG",
+          0,
+          0,
+          pageWidthMm,
+          renderHeightMm,
+          `page-${pageIndex + 1}`,
+          "FAST",
+        );
+
+        pageIndex += 1;
+      }
+    }
+
+    pdf.save(filename);
   } finally {
     document.body.removeChild(iframe);
   }

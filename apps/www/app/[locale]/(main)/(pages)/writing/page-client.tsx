@@ -23,9 +23,9 @@ function OpeningSection() {
   const descRef = useReveal({ ...DEFAULTS.body, delay: 0.15 });
 
   return (
-    <section className="flex min-h-screen items-center pt-(--section-y-top) pb-(--section-y-bottom)">
+    <section className="relative z-10 flex lg:min-h-screen w-full flex-col justify-end overflow-hidden pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
-        <div className="max-w-5xl">
+        <div className="sm:max-w-5xl max-w-full">
           <p
             ref={eyebrowRef}
             className="font-mono text-sm leading-normal tracking-wider  uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-6 block"

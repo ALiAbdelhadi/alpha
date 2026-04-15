@@ -4,6 +4,10 @@
   "workspaces": {
     "": {
       "name": "altruvex-bun",
+      "dependencies": {
+        "html2canvas": "^1.4.1",
+        "jspdf": "^4.2.1",
+      },
       "devDependencies": {
         "prettier": "^3.7.4",
         "turbo": "^2.9.3",

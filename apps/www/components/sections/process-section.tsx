@@ -88,10 +88,9 @@ const ProcessStepItem = memo(function ProcessStepItem({
       >
         <div className="overflow-hidden">
           <div className="p-6">
-            <p className="font-mono text-[13px] leading-[1.85] text-s-low">
+            <p className="font-mono text-sm leading-relaxed text-s-low">
               {t(`steps.${step.key}.description`)}
             </p>
-
             <div className="mt-5 grid max-w-full grid-cols-1 gap-3 ps-0 sm:grid-cols-2 md:ps-[62px] lg:max-w-[620px] lg:ps-[72px]">
               {[
                 { label: t("meta.deliverables"), value: t(`steps.${step.key}.deliverables`), large: false },
@@ -107,7 +106,7 @@ const ProcessStepItem = memo(function ProcessStepItem({
                   <p
                     className={
                       large
-                        ? "text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-medium text-s-high"
+                        ? "text-[clamp(1.35rem,2.4vw,1.85rem)] leading-[1.15] tracking-[-0.018em] font-medium text-s-high"
                         : "text-[clamp(0.9375rem,0.98vw,1rem)] leading-relaxed text-s-low"
                     }
                   >

@@ -64,7 +64,7 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
         {title1} {title2}
       </h1>
       <Container>
-        <div className="max-w-5xl">
+        <div className="sm:max-w-5xl max-w-full">
           <div data-hero-badge className="mb-8 flex items-center gap-2 md:hidden">
             <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
             <span className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
@@ -144,7 +144,7 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
           </div>
           <p
             data-hero-proof
-            className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal mt-6 max-w-2xl text-muted-foreground"
+            className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal mt-6 text-muted-foreground"
           >
             {t("hero.productionCallout")}
           </p>

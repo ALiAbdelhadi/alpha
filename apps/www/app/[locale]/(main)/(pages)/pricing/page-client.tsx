@@ -17,7 +17,7 @@ const TIER_DESTINATION = {
 export default function PricingPage() {
   const t = useTranslations("pricing");
   const tp = useTranslations("commercial.pricing");
-  
+
   const heroEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 });
   const heroTitleRef = useText<HTMLHeadingElement>(DEFAULTS.heading);
   const heroDescRef = useReveal({ ...DEFAULTS.body, delay: 0.15 });
@@ -137,7 +137,7 @@ export default function PricingPage() {
     <section className="pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
         <div className="py-12 md:py-24">
-          <div className="mb-16 max-w-5xl">
+          <div className="mb-16 sm:max-w-5xl max-w-full">
             <p
               ref={heroEyebrowRef}
               className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-4 block"
@@ -241,12 +241,15 @@ export default function PricingPage() {
                   {tier.nextStep}
                 </p>
                 <MagneticButton
-                  asChild
                   size="lg"
                   variant={tier.highlight ? "primary" : "secondary"}
                   className="group w-full justify-center"
                 >
-                  <Link href={TIER_DESTINATION[tier.id]}>
+                  <Link
+                    href={TIER_DESTINATION[tier.id]}
+                    className="w-full justify-center"
+                    aria-label={`${tier.ctaLabel} — ${tier.buyerLabel}`}
+                  >
                     <ArrowLabel>{tier.ctaLabel}</ArrowLabel>
                   </Link>
                 </MagneticButton>

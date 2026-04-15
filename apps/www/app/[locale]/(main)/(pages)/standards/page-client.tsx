@@ -26,7 +26,7 @@ function OpeningSection() {
   return (
     <section className="flex min-h-screen items-center pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
-        <div className="max-w-5xl">
+        <div className="sm:max-w-5xl max-w-full">
           <p
             ref={eyebrowRef}
             className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70 mb-6 block"
