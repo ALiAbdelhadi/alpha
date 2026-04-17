@@ -5,7 +5,6 @@ import { MagneticButton } from "@/components/magnetic-button"
 import { DatePicker } from "@/components/ui/date-picker"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { TimePicker } from "@/components/ui/time-picker"
 import { usePathname, useRouter } from "@/i18n/navigation"
 import { gsap } from "@/lib/gsap"
@@ -26,7 +25,6 @@ export default function SchedulePage() {
     const [formData, setFormData] = useState({
         name: searchParams.get("name") || "",
         phone: searchParams.get("phone") || "",
-        message: searchParams.get("message") || "",
         date: undefined as Date | undefined,
         time: "",
     })
@@ -87,7 +85,7 @@ export default function SchedulePage() {
                 body: JSON.stringify({
                     name: formData.name,
                     phone: formData.phone,
-                    message: formData.message,
+                    message: "",
                     scheduledDate: dt.toISOString(),
                     scheduledTime: formData.time
                 }),
@@ -109,7 +107,7 @@ export default function SchedulePage() {
     return (
         <section className="flex min-h-screen items-center pt-(--section-y-top) pb-(--section-y-bottom)">
             <Container>
-                <div className="mx-auto max-w-2xl">
+                <div className="mx-auto max-w-lg">
                     <div ref={backRef}>
                         <button
                             onClick={() => router.back()}
@@ -165,18 +163,6 @@ export default function SchedulePage() {
                                 />
                             </div>
                             {errors.phone && <FieldError msg={errors.phone} />}
-                        </div>
-                        <div className="form-field">
-                            <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
-                                {t("form.message.label")}
-                            </Label>
-                            <Textarea
-                                value={formData.message}
-                                onChange={(e) => handleInputChange("message", e.target.value)}
-                                rows={4}
-                                placeholder={t("form.message.placeholder")}
-                                className="w-full text-primary placeholder:text-muted-foreground/70 bg-transparent resize-none"
-                            />
                         </div>
                         <div className="grid md:grid-cols-2 gap-7">
                             <div className="form-field">

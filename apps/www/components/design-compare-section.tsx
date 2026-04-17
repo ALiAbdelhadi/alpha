@@ -11,7 +11,6 @@ const STYLES = `
 
   .dcs-header  { transition: opacity 280ms ease-out, transform 280ms ease-out; }
   .dcs-stage-w { transition: opacity 280ms ease-out 80ms, transform 280ms ease-out 80ms; }
-  .dcs-stats   { transition: opacity 280ms ease-out 160ms, transform 280ms ease-out 160ms; }
   .dcs-reveal  { opacity:0; transform:translateY(12px); }
   .dcs-reveal.dcs-in { opacity:1; transform:none; }
 
@@ -27,34 +26,23 @@ export function DesignCompareSection() {
     const [pct, setPct] = useState(50)
     const [dragging, setDragging] = useState(false)
     const [interacted, setInteracted] = useState(false)
-    const [statsVisible, setStatsVisible] = useState(false)
 
     const containerRef = useRef<HTMLDivElement>(null)
-    const rectRef = useRef<DOMRect | null>(null)
     const headerRef = useRef<HTMLDivElement>(null)
     const stageWrapRef = useRef<HTMLDivElement>(null)
-    const statsRef = useRef<HTMLDivElement>(null)
+    const qualityCardsRef = useRef<HTMLDivElement>(null)
 
     const clamp = (v: number) => Math.max(0, Math.min(100, v))
-    const updateRect = useCallback(() => {
-        if (!containerRef.current) return
-        rectRef.current = containerRef.current.getBoundingClientRect()
-    }, [])
 
     const updateFromX = useCallback((clientX: number) => {
         if (!containerRef.current) return
-        const r = rectRef.current ?? containerRef.current.getBoundingClientRect()
-        rectRef.current = r
+        const r = containerRef.current.getBoundingClientRect()
         setPct(clamp((clientX - r.left) / r.width * 100))
         setInteracted(true)
     }, [])
 
-    const onMouseDown = useCallback((e: React.MouseEvent) => { updateRect(); setDragging(true); updateFromX(e.clientX) }, [updateFromX, updateRect])
-    const onTouchStart = useCallback((e: React.TouchEvent) => { updateRect(); setDragging(true); updateFromX(e.touches[0].clientX) }, [updateFromX, updateRect])
-
-    useEffect(() => {
-        updateRect()
-    }, [updateRect])
+    const onMouseDown = useCallback((e: React.MouseEvent) => { setDragging(true); updateFromX(e.clientX) }, [updateFromX])
+    const onTouchStart = useCallback((e: React.TouchEvent) => { setDragging(true); updateFromX(e.touches[0].clientX) }, [updateFromX])
 
     useEffect(() => {
         const move = (e: MouseEvent) => { if (dragging) updateFromX(e.clientX) }
@@ -74,12 +62,11 @@ export function DesignCompareSection() {
     }, [dragging, updateFromX])
 
     useEffect(() => {
-        const els = [headerRef.current, stageWrapRef.current, statsRef.current].filter(Boolean) as HTMLElement[]
+        const els = [headerRef.current, stageWrapRef.current, qualityCardsRef.current].filter(Boolean) as HTMLElement[]
         const io = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (!entry.isIntersecting) return
                 entry.target.classList.add("dcs-in")
-                if (entry.target === statsRef.current) setStatsVisible(true)
                 io.unobserve(entry.target)
             })
         }, { threshold: 0.15 })
@@ -87,6 +74,22 @@ export function DesignCompareSection() {
         els.forEach(el => io.observe(el))
         return () => io.disconnect()
     }, [])
+
+    // Qualitative claims — all defensible without measurement
+    const qualityPoints = [
+        {
+            label: t("qualityPoint1Label"),
+            body: t("qualityPoint1Body"),
+        },
+        {
+            label: t("qualityPoint2Label"),
+            body: t("qualityPoint2Body"),
+        },
+        {
+            label: t("qualityPoint3Label"),
+            body: t("qualityPoint3Body"),
+        },
+    ]
 
     return (
         <>
@@ -244,14 +247,12 @@ export function DesignCompareSection() {
                                 {t("compareDragHint")}
                             </div>
                         </div>
-                        <div ref={statsRef} className="dcs-stats dcs-reveal grid grid-cols-3 gap-3 mt-3">
-                            {([
-                                { key: "1", label: t("compareStat1Label"), value: "12×", sub: t("compareStat1Sub") },
-                                { key: "2", label: t("compareStat2Label"), value: "3×", sub: t("compareStat2Sub") },
-                                { key: "3", label: t("compareStat3Label"), value: "−84%", sub: t("compareStat3Sub") },
-                            ] as const).map(s => (
+
+                        {/* Qualitative claims — no fabricated numbers */}
+                        <div ref={qualityCardsRef} className="dcs-reveal grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
+                            {qualityPoints.map((point) => (
                                 <div
-                                    key={s.key}
+                                    key={point.label}
                                     style={{
                                         border: "1px solid rgba(0,0,0,.08)",
                                         borderRadius: 4,
@@ -259,14 +260,18 @@ export function DesignCompareSection() {
                                         background: "rgba(12,12,11,.018)",
                                     }}
                                 >
-                                    <p style={{ fontFamily: "var(--font-mono, monospace)", fontSize: 9, fontWeight: 500, letterSpacing: ".18em", textTransform: "uppercase" as const, color: "rgba(12,12,11,.28)", marginBottom: 6, fontVariantNumeric: "tabular-nums" as const }}>
-                                        {s.label}
+                                    <p style={{
+                                        fontFamily: "var(--font-mono, monospace)",
+                                        fontSize: 9, fontWeight: 500,
+                                        letterSpacing: ".18em",
+                                        textTransform: "uppercase" as const,
+                                        color: "rgba(12,12,11,.55)",
+                                        marginBottom: 6,
+                                    }}>
+                                        {point.label}
                                     </p>
-                                    <p style={{ fontSize: "clamp(20px,3vw,28px)", fontWeight: 300, letterSpacing: "-.03em", lineHeight: 1, marginBottom: 4, fontVariantNumeric: "tabular-nums" as const }}>
-                                        <AnimatedValue value={s.value} animate={statsVisible} />
-                                    </p>
-                                    <p style={{ fontSize: 10, color: "rgba(12,12,11,.45)", letterSpacing: ".01em" }}>
-                                        {s.sub}
+                                    <p style={{ fontSize: 12, color: "rgba(12,12,11,.60)", letterSpacing: ".01em", lineHeight: 1.6 }}>
+                                        {point.body}
                                     </p>
                                 </div>
                             ))}
@@ -278,32 +283,7 @@ export function DesignCompareSection() {
     )
 }
 
-function AnimatedValue({ value, animate }: { value: string; animate: boolean }) {
-    const [display, setDisplay] = useState("0")
-    const started = useRef(false)
-
-    useEffect(() => {
-        if (!animate || started.current) return
-        started.current = true
-
-        const prefix = value.startsWith("−") ? "−" : ""
-        const suffix = value.endsWith("%") ? "%" : value.endsWith("×") ? "×" : ""
-        const target = parseInt(value.replace(/[^0-9]/g, ""), 10)
-
-        const duration = 800
-        const start = performance.now()
-
-        const tick = (now: number) => {
-            const p = Math.min((now - start) / duration, 1)
-            const ease = 1 - Math.pow(1 - p, 3)
-            setDisplay(prefix + Math.round(ease * target) + suffix)
-            if (p < 1) requestAnimationFrame(tick)
-        }
-        requestAnimationFrame(tick)
-    }, [animate, value])
-    return <>{animate ? display : value}</>
-}
-
+// GenericSide and AltruvexSide components unchanged — they are the visual demonstration itself
 function GenericSide({ t }: { t: TFn }) {
     return (
         <div style={{ width: "100%", height: "100%", overflow: "hidden", background: "#f5f5f5", fontFamily: "Arial, Helvetica, sans-serif" }}>

@@ -14,7 +14,10 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
   const title1 = t("hero.title");
   const title2 = t("hero.title2");
   const watermark = t("hero.watermark");
-  const metrics = t.raw("hero.metrics") as Array<{ value: string; label: string }>;
+  const metrics = t.raw("hero.metrics") as Array<{
+    value: string;
+    label: string;
+  }>;
 
   const primaryCta = getCommercialCta(locale, "projectRange");
 
@@ -37,19 +40,13 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
         {title1} {title2}
       </h1>
       <Container>
-<<<<<<< HEAD
-        <div className="lg:max-w-5xl max-w-2xl">
-          <HeroReveal delay={0.1} className="mb-8 flex items-center gap-2 md:hidden">
-=======
         <div className="sm:max-w-5xl max-w-full">
-          <div data-hero-badge className="mb-8 flex items-center gap-2 md:hidden">
->>>>>>> 7e490bae669a8900493991f48b3dc7afb4083b56
+          <HeroReveal delay={0.1} className="mb-8 flex items-center gap-2 md:hidden">
             <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
             <span className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
               {t("hero.availability")}
             </span>
           </HeroReveal>
-          
           <HeroReveal
             delay={0.1}
             className="absolute top-20 inset-e-8 hidden md:flex flex-col items-end rtl:items-start gap-2"
@@ -64,14 +61,12 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
               {t("hero.badge")}
             </span>
           </HeroReveal>
-
           <HeroHeadline className="text-[clamp(3rem,5vw,4.5rem)] leading-[1.02] tracking-[-0.03em] rtl:tracking-normal mb-8 font-sans font-light text-foreground select-none">
             <span className="block">{title1}</span>
             <span className="block text-foreground/45 font-serif italic font-light tracking-[-0.02em] rtl:tracking-normal rtl:font-sans rtl:not-italic rtl:font-bold">
               {title2}
             </span>
           </HeroHeadline>
-
           <HeroReveal
             delay={0.5}
             className="mb-12 grid gap-6 md:grid-cols-[96px_1fr] md:gap-8 items-start"
@@ -83,8 +78,10 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
               </p>
             </div>
           </HeroReveal>
-
-          <HeroReveal delay={0.65} className="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <HeroReveal
+            delay={0.65}
+            className="flex flex-col gap-4 sm:flex-row sm:items-center"
+          >
             <MagneticButton asChild size="lg" className="min-w-[180px]">
               <Link
                 href={primaryCta.href}
@@ -95,7 +92,6 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
               </Link>
             </MagneticButton>
           </HeroReveal>
-
           <HeroBatch
             delay={0.8}
             className="mt-16 grid gap-6 border-t border-border pt-10 sm:grid-cols-3 sm:gap-0"
@@ -106,7 +102,8 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
                 className="sm:border-e sm:border-border sm:last:border-e-0"
                 style={{
                   paddingInlineStart: i > 0 ? "clamp(16px, 3vw, 36px)" : 0,
-                  paddingInlineEnd: i < arr.length - 1 ? "clamp(16px, 3vw, 36px)" : 0,
+                  paddingInlineEnd:
+                    i < arr.length - 1 ? "clamp(16px, 3vw, 36px)" : 0,
                 }}
               >
                 <span className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] tracking-[-0.018em] font-light tabular-nums text-foreground block">
@@ -117,28 +114,22 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
                 </span>
               </div>
             ))}
-<<<<<<< HEAD
           </HeroBatch>
-          
           <HeroReveal delay={1.0}>
             <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal mt-6 max-w-2xl text-muted-foreground">
               {t("hero.productionCallout")}
             </p>
           </HeroReveal>
-=======
-          </div>
-          <p
-            data-hero-proof
-            className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal mt-6 text-muted-foreground"
-          >
-            {t("hero.productionCallout")}
-          </p>
->>>>>>> 7e490bae669a8900493991f48b3dc7afb4083b56
         </div>
       </Container>
-      
-      <HeroReveal delay={1.1} className="pointer-events-none absolute bottom-7 inset-s-1/2 -translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2 mt-6">
-        <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground" aria-hidden>
+      <HeroReveal
+        delay={1.1}
+        className="pointer-events-none absolute bottom-7 inset-s-1/2 -translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2 mt-6"
+      >
+        <p
+          className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground"
+          aria-hidden
+        >
           {t("hero.scrollHint")}
         </p>
         <div className="relative h-10 w-px overflow-hidden bg-border">

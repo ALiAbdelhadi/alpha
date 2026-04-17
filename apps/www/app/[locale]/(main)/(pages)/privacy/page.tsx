@@ -28,6 +28,8 @@ export default async function PrivacyPolicyPage({
     year: "numeric",
   });
 
+  const CONTACT_EMAIL = "hello@altruvex.com";
+
   return (
     <>
       <JsonLd schemas={buildPageSchemas(locale, "privacy")} />
@@ -118,10 +120,10 @@ export default async function PrivacyPolicyPage({
                 {t("sections.6.description")}
                 <a
                   dir="ltr"
-                  href="mailto:altruvex@gmail.com"
+                  href={`mailto:${CONTACT_EMAIL}`}
                   className="text-brand underline underline-offset-4 hover:text-brand/80 transition-colors inline-block"
                 >
-                  altruvex@gmail.com
+                  {CONTACT_EMAIL}
                 </a>
               </p>
             </section>
