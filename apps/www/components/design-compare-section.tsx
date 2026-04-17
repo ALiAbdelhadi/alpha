@@ -54,16 +54,6 @@ export function DesignCompareSection() {
 
     useEffect(() => {
         updateRect()
-        if (!containerRef.current) return
-        const ro = new ResizeObserver(updateRect)
-        ro.observe(containerRef.current)
-        window.addEventListener("resize", updateRect)
-        window.addEventListener("scroll", updateRect, { passive: true })
-        return () => {
-            ro.disconnect()
-            window.removeEventListener("resize", updateRect)
-            window.removeEventListener("scroll", updateRect)
-        }
     }, [updateRect])
 
     useEffect(() => {

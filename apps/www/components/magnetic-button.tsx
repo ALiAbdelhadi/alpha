@@ -75,18 +75,7 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
       () => false
     )
     useEffect(() => {
-      if (!internalRef.current || prefersReducedMotion) return
-      updateRect()
-      const el = internalRef.current
-      const ro = new ResizeObserver(updateRect)
-      ro.observe(el)
-      window.addEventListener("scroll", updateRect, { passive: true })
-      window.addEventListener("resize", updateRect)
-      return () => {
-        ro.disconnect()
-        window.removeEventListener("scroll", updateRect)
-        window.removeEventListener("resize", updateRect)
-      }
+      // Intentionally left empty. Bounds are only calculated when the user Interacts (onMouseEnter)
     }, [prefersReducedMotion, updateRect])
     const [isPressed, setIsPressed] = useState(false)
     const [ripples, setRipples] = useState<Ripple[]>([])
@@ -166,7 +155,7 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
         onMouseUp={prefersReducedMotion ? undefined : handleMouseUp}
         className={`
           relative inline-flex items-center justify-center overflow-hidden rounded-full font-medium
-          transition-[transform,background-color,border-color,color,box-shadow] duration-300 ease-out will-change-transform
+          transition-[transform,background-color,border-color,color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform
           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground/50
           ${variants[variant]}
           ${sizes[size]}

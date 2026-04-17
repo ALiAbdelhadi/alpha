@@ -18,27 +18,26 @@
     "how-we-work": "How We Work"
   },
   "hero": {
-    "badge": "01 - Bilingual Web Engineering",
+    "badge": "Bilingual Web Engineering · Cairo",
     "title": "Build the system your revenue depends on.",
-    "title2": "Then make sure your team can operate it.",
-    "problem": "Altruvex engineers bilingual web systems, business portals, and revenue-critical product experiences for Egyptian companies that have outgrown template-based agencies.",
-    "ctaPrimary": "Scope Your Project",
+    "title2": "Engineered for performance. Documented to last.",
+    "problem": "Custom bilingual web systems for Egyptian companies that need engineering — not templates.",
+    "availability": "Now accepting projects — direct founder access",
     "scrollHint": "Scroll to explore",
-    "availability": "Taking 2 new projects — Q2 2026",
     "watermark": "WEB",
     "productionCallout": "What you are experiencing right now is a live demonstration of our production standard.",
     "metrics": [
       {
+        "value": "< 1s TTI",
+        "label": "Mobile performance target across all production builds"
+      },
+      {
         "value": "Arabic + English",
-        "label": "Engineered as equal systems — not a CSS flip"
+        "label": "Native RTL architecture — not a mirrored LTR template"
       },
       {
-        "value": "Founder-led",
-        "label": "Strategy, architecture, and build under one line of ownership"
-      },
-      {
-        "value": "Handoff-ready",
-        "label": "Documented codebase, clear scope, zero vendor lock-in"
+        "value": "Zero lock-in",
+        "label": "Full codebase ownership, documented scope, no vendor dependency"
       }
     ]
   },

@@ -51,6 +51,18 @@ const headline = (overrides: Partial<TextConfig> = {}): TextConfig => ({
     ...overrides,
 })
 
+const heroHeadline = (overrides: Partial<TextConfig> = {}): TextConfig => ({
+    splitBy: "word",
+    blur: true,
+    duration: 1.1,
+    stagger: 0.07,
+    distance: MOTION.distance.lg,
+    ease: "power4.out",
+    trigger: "top 95%",
+    scrubExit: false,
+    ...overrides,
+})
+
 const subheading = (overrides: Partial<TextConfig> = {}): TextConfig => ({
     splitBy: "line",
     blur: false,
@@ -95,6 +107,7 @@ export const motion = {
     slideRight,
     scaleIn,
     headline,
+    heroHeadline,
     subheading,
     body,
     cardGrid,

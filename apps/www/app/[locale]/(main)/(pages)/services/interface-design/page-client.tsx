@@ -71,11 +71,7 @@ function HeroSection() {
           </div>
           <h1
             ref={titleRef}
-            className="mb-10 font-sans font-normal text-primary leading-[1.03]"
-            style={{
-              fontSize: "clamp(44px, 7vw, 96px)",
-              letterSpacing: "-0.025em",
-            }}
+            className="text-[clamp(3rem,5vw,4.5rem)] leading-[1.02] tracking-[-0.03em] mb-8 font-sans font-light text-foreground select-none"
           >
             {t("title")}
             <br />

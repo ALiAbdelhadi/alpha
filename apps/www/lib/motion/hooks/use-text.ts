@@ -17,6 +17,7 @@ export interface TextConfig {
     once?: boolean
     splitBy?: "char" | "word" | "line"
     blur?: boolean
+    scrubExit?: boolean
 }
 
 const DEFAULTS: Required<TextConfig> = {
@@ -29,6 +30,7 @@ const DEFAULTS: Required<TextConfig> = {
     once: true,
     splitBy: "word",
     blur: true,
+    scrubExit: false,
 }
 
 const MAX_TOTAL_STAGGER_DURATION = 0.6 // seconds
@@ -49,6 +51,7 @@ export function useText<T extends HTMLElement = HTMLHeadingElement>(
         once = DEFAULTS.once,
         splitBy = DEFAULTS.splitBy,
         blur = DEFAULTS.blur,
+        scrubExit = DEFAULTS.scrubExit,
     } = config
 
     useIsomorphicLayoutEffect(() => {
@@ -105,10 +108,11 @@ export function useText<T extends HTMLElement = HTMLHeadingElement>(
                 const from: gsap.TweenVars = {
                     opacity: 0,
                     y: distance,
+                    scale: 0.96,
                     willChange: "transform, opacity",
                 }
                 if (canBlur) {
-                    from.filter = "blur(6px)"
+                    from.filter = "blur(8px)"
                 }
 
                 gsap.set(targets, from)
@@ -116,10 +120,11 @@ export function useText<T extends HTMLElement = HTMLHeadingElement>(
                 const animProps: gsap.TweenVars = {
                     opacity: 1,
                     y: 0,
+                    scale: 1,
                     duration,
                     stagger: { each: effectiveStagger, from: isRTL ? "end" : "start" },
                     delay,
-                    ease,
+                    ease: ease || "power4.out",
                     scrollTrigger: {
                         trigger: el,
                         start: trigger,
@@ -136,11 +141,27 @@ export function useText<T extends HTMLElement = HTMLHeadingElement>(
                 }
 
                 gsap.to(targets, animProps)
+
+                if (scrubExit) {
+                    const section = el.closest("section") ?? el
+                    gsap.to(targets, {
+                        yPercent: isRTL ? 0 : -20,
+                        opacity: 0,
+                        ease: "power1.in",
+                        overwrite: "auto",
+                        scrollTrigger: {
+                            trigger: section,
+                            start: "center top",
+                            end: "bottom top",
+                            scrub: 1.5,
+                        },
+                    })
+                }
             },
         )
 
         return () => mm.revert()
-    }, [isInitialLoadComplete, delay, duration, stagger, distance, ease, trigger, once, splitBy, blur])
+    }, [isInitialLoadComplete, delay, duration, stagger, distance, ease, trigger, once, splitBy, blur, scrubExit])
 
     return ref
 }

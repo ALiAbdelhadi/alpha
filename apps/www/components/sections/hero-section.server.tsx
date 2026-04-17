@@ -1,34 +1,11 @@
 import { Container } from "@/components/container";
+import { MagneticButton } from "@/components/magnetic-button";
 import { SectionWatermark } from "@/components/section-watermark";
 import { Link } from "@/i18n/navigation";
 import { getCommercialCta } from "@/lib/commercial";
 import { getTranslations } from "next-intl/server";
-import type { ReactNode } from "react";
 import { ArrowIcon } from "../directional-link";
-import { HeroMotionClient } from "./hero-motion.client";
-
-function splitTextTokens(text: string): ReactNode {
-  const words = text.split(" ");
-  return words.map((word, wi) => (
-    <span
-      key={wi}
-      style={{
-        display: "inline-block",
-        overflow: "hidden",
-        paddingBottom: "0.12em",
-        marginBottom: "-0.12em",
-        verticalAlign: "bottom",
-      }}
-    >
-      <span data-token style={{ display: "inline-block" }}>
-        {word}
-      </span>
-      {wi < words.length - 1 ? (
-        <span style={{ display: "inline-block", whiteSpace: "pre" }}> </span>
-      ) : null}
-    </span>
-  ));
-}
+import { HeroHeadline, HeroReveal, HeroBatch } from "./hero-motion-wrappers";
 
 export async function HeroSectionServer({ locale }: { locale: string }) {
   const t = await getTranslations({ locale });
@@ -46,10 +23,7 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
       id="home"
       className="relative z-10 flex lg:min-h-screen w-full flex-col justify-end overflow-hidden pt-(--section-y-top) pb-(--section-y-bottom)"
       aria-label="Hero section"
-      data-hero-root
-      {...(locale.startsWith("ar") ? { "data-hero-rtl": "" } : {})}
     >
-      <HeroMotionClient />
       <SectionWatermark>{watermark}</SectionWatermark>
       <div
         aria-hidden
@@ -59,20 +33,20 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
             "radial-gradient(ellipse 70% 40% at 50% -10%, var(--brand-soft), transparent)",
         }}
       />
-
       <h1 className="sr-only">
         {title1} {title2}
       </h1>
       <Container>
         <div className="lg:max-w-5xl max-w-2xl">
-          <div data-hero-badge className="mb-8 flex items-center gap-2 md:hidden">
+          <HeroReveal delay={0.1} className="mb-8 flex items-center gap-2 md:hidden">
             <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
             <span className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
               {t("hero.availability")}
             </span>
-          </div>
-          <div
-            data-hero-badge
+          </HeroReveal>
+          
+          <HeroReveal
+            delay={0.1}
             className="absolute top-20 inset-e-8 hidden md:flex flex-col items-end rtl:items-start gap-2"
           >
             <div className="flex items-center gap-2">
@@ -84,20 +58,17 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
             <span className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
               {t("hero.badge")}
             </span>
-          </div>
-          <div
-            aria-hidden
-            data-hero-headline
-            className="text-[clamp(3rem,5vw,4.5rem)] leading-[1.02] tracking-[-0.03em] mb-8 font-sans font-light text-foreground select-none"
-          >
-            <span className="block">{splitTextTokens(title1)}</span>
-            <span className="block text-foreground/45 font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold">
-              {splitTextTokens(title2)}
-            </span>
-          </div>
+          </HeroReveal>
 
-          <div
-            data-hero-sub
+          <HeroHeadline className="text-[clamp(3rem,5vw,4.5rem)] leading-[1.02] tracking-[-0.03em] rtl:tracking-normal mb-8 font-sans font-light text-foreground select-none">
+            <span className="block">{title1}</span>
+            <span className="block text-foreground/45 font-serif italic font-light tracking-[-0.02em] rtl:tracking-normal rtl:font-sans rtl:not-italic rtl:font-bold">
+              {title2}
+            </span>
+          </HeroHeadline>
+
+          <HeroReveal
+            delay={0.5}
             className="mb-12 grid gap-6 md:grid-cols-[96px_1fr] md:gap-8 items-start"
           >
             <div className="h-px w-full bg-border mt-3 hidden md:block" />
@@ -106,22 +77,22 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
                 {t("hero.problem")}
               </p>
             </div>
-          </div>
+          </HeroReveal>
 
-          <div data-hero-cta className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <Link
-              href={primaryCta.href}
-              data-magnetic
-              className="group inline-flex items-center justify-center gap-2 rounded-full bg-foreground/95 text-background hover:bg-foreground px-8 py-3.5 text-base font-medium transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground/50 min-h-11 min-w-11"
-            >
-              <span className="inline-flex items-center gap-2">
+          <HeroReveal delay={0.65} className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <MagneticButton asChild size="lg" className="min-w-[180px]">
+              <Link
+                href={primaryCta.href}
+                className="group inline-flex items-center justify-center gap-2 rounded-full"
+              >
                 <span>{tCTAs("projectRange")}</span>
                 <ArrowIcon />
-              </span>
-            </Link>
-          </div>
-          <div
-            data-hero-stats
+              </Link>
+            </MagneticButton>
+          </HeroReveal>
+
+          <HeroBatch
+            delay={0.8}
             className="mt-16 grid gap-6 border-t border-border pt-10 sm:grid-cols-3 sm:gap-0"
           >
             {metrics.map((s, i, arr) => (
@@ -141,27 +112,24 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
                 </span>
               </div>
             ))}
-          </div>
-          <p
-            data-hero-proof
-            className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal mt-6 max-w-2xl text-muted-foreground"
-          >
-            {t("hero.productionCallout")}
-          </p>
+          </HeroBatch>
+          
+          <HeroReveal delay={1.0}>
+            <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal mt-6 max-w-2xl text-muted-foreground">
+              {t("hero.productionCallout")}
+            </p>
+          </HeroReveal>
         </div>
       </Container>
-      <div
-        data-hero-scroll
-        className="pointer-events-none absolute bottom-7 inset-s-1/2 -translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2 mt-6"
-        aria-hidden
-      >
-        <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
+      
+      <HeroReveal delay={1.1} className="pointer-events-none absolute bottom-7 inset-s-1/2 -translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2 mt-6">
+        <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground" aria-hidden>
           {t("hero.scrollHint")}
         </p>
         <div className="relative h-10 w-px overflow-hidden bg-border">
           <div className="absolute top-0 h-1/2 w-full bg-border-mid animate-slide-down" />
         </div>
-      </div>
+      </HeroReveal>
     </section>
   );
 }

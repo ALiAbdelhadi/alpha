@@ -17,7 +17,7 @@ const TIER_DESTINATION = {
 export default function PricingPage() {
   const t = useTranslations("pricing");
   const tp = useTranslations("commercial.pricing");
-  
+
   const heroEyebrowRef = useReveal({ ...DEFAULTS.body, delay: 0 });
   const heroTitleRef = useText<HTMLHeadingElement>(DEFAULTS.heading);
   const heroDescRef = useReveal({ ...DEFAULTS.body, delay: 0.15 });
@@ -134,9 +134,11 @@ export default function PricingPage() {
   ];
 
   return (
-    <section className="pt-(--section-y-top) pb-(--section-y-bottom)">
+    <section className="relative z-10 flex lg:min-h-screen w-full flex-col justify-end overflow-hidden pt-(--section-y-top) pb-(--section-y-bottom)"
+      aria-label="Pricing section"
+    >
       <Container>
-        <div className="py-12 md:py-24">
+        <div>
           <div className="mb-16 max-w-5xl">
             <p
               ref={heroEyebrowRef}
@@ -146,11 +148,7 @@ export default function PricingPage() {
             </p>
             <h1
               ref={heroTitleRef}
-              className="mb-6 font-sans font-normal text-primary leading-[1.03]"
-              style={{
-                fontSize: "clamp(44px, 7vw, 96px)",
-                letterSpacing: "-0.025em",
-              }}
+              className="text-[clamp(3rem,5vw,4.5rem)] leading-[1.02] tracking-[-0.03em] mb-8 font-sans font-light text-foreground select-none"
             >
               {t("title")}
               <br />

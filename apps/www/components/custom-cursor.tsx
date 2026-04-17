@@ -5,8 +5,8 @@ import { useEffect, useRef } from "react"
 
 const CURSOR_SIZE = { outer: 32, inner: 8 }
 const IDLE_TIMEOUT = 2000
-const LERP_FACTOR = 0.12
-const MAGNETIC_STRENGTH = 0.25
+const LERP_FACTOR = 0.05
+const MAGNETIC_STRENGTH = 0.15
 
 function CustomCursor() {
   const outerRef = useRef<HTMLDivElement>(null)
@@ -25,6 +25,8 @@ function CustomCursor() {
     raf: 0,
     lastMove: 0,
     magnetic: null as null | { x: number; y: number },
+    lastMagneticEl: null as HTMLElement | null,
+    lastRect: null as DOMRect | null,
   })
 
   useEffect(() => {
@@ -72,12 +74,18 @@ function CustomCursor() {
       const magneticEl = target.closest("[data-magnetic]") as HTMLElement | null
 
       if (magneticEl) {
-        const rect = magneticEl.getBoundingClientRect()
+        if (s.lastMagneticEl !== magneticEl) {
+          s.lastRect = magneticEl.getBoundingClientRect()
+          s.lastMagneticEl = magneticEl
+        }
+        const rect = s.lastRect!
         s.magnetic = {
           x: rect.left + rect.width / 2,
           y: rect.top + rect.height / 2,
         }
       } else {
+        s.lastMagneticEl = null
+        s.lastRect = null
         s.magnetic = null
       }
 

@@ -331,6 +331,12 @@
   [dir="rtl"] h4 {
     font-family: var(--font-vazirmatn), var(--font-outfit), sans-serif;
     line-height: 1.28;
+    letter-spacing: 0;
+  }
+
+  /* Arabic does not support negative letter-spacing — it breaks connected letters */
+  [dir="rtl"] * {
+    letter-spacing: 0 !important;
   }
 }
 
