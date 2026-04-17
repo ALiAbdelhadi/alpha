@@ -69,12 +69,7 @@ export default async function RootLayout({ children, params }: Props) {
       suppressHydrationWarning
       dir={locale === "ar" ? "rtl" : "ltr"}
     >
-      <head>
-        <meta name="theme-color" content="#4a6ed4" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Altruvex" />
-      </head>
+      <head />
       <body
         suppressHydrationWarning
         className={cn(

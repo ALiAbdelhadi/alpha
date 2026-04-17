@@ -41,7 +41,7 @@ export const SITE_CONFIG = {
   social: {
     linkedin: "https://www.linkedin.com/in/ali-abdelhadi-65094b283/",
   },
-  url: process.env.NEXT_PUBLIC_APP_URL,
+  url: process.env.NEXT_PUBLIC_APP_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "https://altruvex.com"),
 } as const;
 
 const METADATA_DEFAULTS = {

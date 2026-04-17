@@ -61,7 +61,7 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
               {t("hero.badge")}
             </span>
           </HeroReveal>
-          <HeroHeadline className="text-[clamp(3rem,5vw,4.5rem)] leading-[1.02] tracking-[-0.03em] rtl:tracking-normal mb-8 font-sans font-light text-foreground select-none">
+          <HeroHeadline className="text-[clamp(2.5rem,4.5vw,4.5rem)] leading-[1.02] tracking-[-0.03em] rtl:tracking-normal mb-8 font-sans font-light text-foreground select-none">
             <span className="block">{title1}</span>
             <span className="block text-foreground/45 font-serif italic font-light tracking-[-0.02em] rtl:tracking-normal rtl:font-sans rtl:not-italic rtl:font-bold">
               {title2}
@@ -82,7 +82,7 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
             delay={0.65}
             className="flex flex-col gap-4 sm:flex-row sm:items-center"
           >
-            <MagneticButton asChild size="lg" className="min-w-[180px]">
+            <MagneticButton size="lg" className="min-w-[180px]">
               <Link
                 href={primaryCta.href}
                 className="group inline-flex items-center justify-center gap-2 rounded-full"
