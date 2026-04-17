@@ -22,22 +22,26 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
 
                 gsapInstance = { gsap, ScrollTrigger }
 
-                const lenis = new Lenis({
-                    duration: MOTION.lenis.duration,
-                    easing: MOTION.lenis.easing,
-                    smoothWheel: MOTION.lenis.smoothWheel,
-                })
+                const isTouch = typeof window !== "undefined" && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
-                lenisInstance = lenis
+                if (!isTouch) {
+                    const lenis = new Lenis({
+                        duration: MOTION.lenis.duration,
+                        easing: MOTION.lenis.easing,
+                        smoothWheel: MOTION.lenis.smoothWheel,
+                    })
 
-                lenis.on("scroll", () => {
-                    ScrollTrigger.update()
-                })
+                    lenisInstance = lenis
 
-                tickFn = (time: number) => lenis.raf(time * 1000)
+                    lenis.on("scroll", () => {
+                        ScrollTrigger.update()
+                    })
 
-                gsap.ticker.add(tickFn)
-                gsap.ticker.lagSmoothing(0)
+                    tickFn = (time: number) => lenis.raf(time * 1000)
+
+                    gsap.ticker.add(tickFn)
+                    gsap.ticker.lagSmoothing(0)
+                }
             } catch (e) {
                 console.warn("Failed to initialize smooth scroll:", e)
             }

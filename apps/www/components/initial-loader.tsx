@@ -19,7 +19,7 @@ const BOOT_LINES = [
 ] as const
 
 export const InitialLoader = memo(function InitialLoader() {
-    const { setIsLoading } = useLoading()
+    const { isLoading, setIsLoading } = useLoading()
     const containerRef = useRef<HTMLDivElement>(null)
     const hasScheduled = useRef(false)
 
@@ -97,7 +97,7 @@ export const InitialLoader = memo(function InitialLoader() {
         }
     }, [])
 
-    if (!mounted || !shouldRender) return null
+    if (!isLoading || !mounted || !shouldRender) return null
 
     const reduced =
         typeof window !== "undefined" &&

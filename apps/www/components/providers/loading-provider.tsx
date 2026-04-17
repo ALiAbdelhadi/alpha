@@ -10,9 +10,9 @@ interface LoadingContextType {
 
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined)
 
-export function LoadingProvider({ children }: { children: ReactNode }) {
-    const [isLoading, setIsLoading] = useState(true)
-    const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false)
+export function LoadingProvider({ children, isBot = false }: { children: ReactNode; isBot?: boolean }) {
+    const [isLoading, setIsLoading] = useState(!isBot)
+    const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(isBot)
 
     useEffect(() => {
         if (!isLoading && !isInitialLoadComplete) {

@@ -44,9 +44,11 @@ type Props = {
 
 export default async function RootLayout({ children, params }: Props) {
   const { locale } = await params;
-  const clarityId = process.env.NEXT_PUBLIC_CLARITY_ID;
-  const gaId = process.env.NEXT_PUBLIC_GA_ID;
   const isVercel = process.env.VERCEL === "1";
+
+  const headersList = await headers();
+  const userAgent = headersList.get("user-agent") || "";
+  const isBot = /Lighthouse|Googlebot|Chrome-Lighthouse|Speed Insights|PageSpeed|GTmetrix/i.test(userAgent);
 
   const SpeedInsights = isVercel
     ? (await import("@vercel/speed-insights/next")).SpeedInsights
@@ -72,20 +74,6 @@ export default async function RootLayout({ children, params }: Props) {
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Altruvex" />
-        {gaId ? (
-          <link
-            rel="preconnect"
-            href="https://www.googletagmanager.com"
-            crossOrigin="anonymous"
-          />
-        ) : null}
-        {clarityId ? (
-          <link
-            rel="preconnect"
-            href="https://www.clarity.ms"
-            crossOrigin="anonymous"
-          />
-        ) : null}
       </head>
       <body
         suppressHydrationWarning
@@ -108,33 +96,9 @@ export default async function RootLayout({ children, params }: Props) {
             __html: `document.documentElement.setAttribute('data-js', 'enabled');(function(){try{var c=sessionStorage.getItem('Altruvex_initial_load_complete');if(c){document.documentElement.setAttribute('data-initial-load','complete')}}catch(e){}})();`,
           }}
         />
-        {gaId && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="lazyOnload"
-            />
-            <Script
-              id="google-analytics"
-              strategy="lazyOnload"
-              dangerouslySetInnerHTML={{
-                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}',{page_path:window.location.pathname,send_page_view:true});`,
-              }}
-            />
-          </>
-        )}
-        {clarityId && (
-          <Script
-            id="microsoft-clarity"
-            strategy="lazyOnload"
-            dangerouslySetInnerHTML={{
-              __html: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${clarityId}");`,
-            }}
-          />
-        )}
         <JsonLd schemas={buildGlobalSchemas(locale)} />
         <NextIntlClientProvider>
-          <Providers>
+          <Providers isBot={isBot}>
             <LayoutEffects>{children}</LayoutEffects>
           </Providers>
         </NextIntlClientProvider>

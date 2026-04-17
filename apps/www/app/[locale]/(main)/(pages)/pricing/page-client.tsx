@@ -138,7 +138,7 @@ export default function PricingPage() {
       aria-label="Pricing section"
     >
       <Container>
-          <div className="mb-16 max-w-5xl">
+          <div className="mb-16">
             <div className="py-12 md:py-24">
               <div className="mb-16 sm:max-w-5xl max-w-full">
                 <p
