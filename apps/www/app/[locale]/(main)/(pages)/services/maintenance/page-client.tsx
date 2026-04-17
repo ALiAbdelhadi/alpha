@@ -42,29 +42,28 @@ function HeroSection() {
 
   return (
     <section
-      className="relative flex w-full flex-col justify-end overflow-hidden pt-(--section-y-top) pb-(--section-y-bottom)"
-      style={{ minHeight: "100vh" }}
+      className="relative flex min-h-[80vh] lg:min-h-screen w-full flex-col justify-end overflow-hidden pt-[var(--section-y-top)] pb-[var(--section-y-bottom)]"
     >
       <SectionWatermark>04</SectionWatermark>
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden hidden md:block">
         <div className="absolute top-0 ltr:left-1/4 rtl:right-1/4 h-full w-px bg-foreground/6" />
         <div className="absolute top-0 ltr:right-1/4 rtl:left-1/4 h-full w-px bg-foreground/6" />
         <div className="absolute top-1/3 left-0 right-0 h-px bg-foreground/5" />
       </div>
       <div
         ref={eyebrowRef}
-        className="absolute top-24 ltr:right-8 rtl:left-8 hidden md:flex items-center gap-2"
+        className="absolute top-24 ltr:right-8 rtl:left-8 hidden lg:flex items-center gap-2"
       >
         <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-        <span className={cn(monoCaps, "text-foreground/20")}>
+        <span className={cn(monoCaps, "text-foreground/50")}>
           {t("subtitle")}
         </span>
       </div>
       <Container>
-        <div className="max-w-5xl">
-          <div className="mb-8 flex items-center gap-2 md:hidden">
+        <div className="sm:max-w-5xl max-w-full">
+          <div className="mb-8 flex items-center gap-2 lg:hidden">
             <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className={cn(monoCaps, "text-foreground/20")}>
+            <span className={cn(monoCaps, "text-foreground/50")}>
               {t("subtitle")}
             </span>
           </div>
@@ -73,7 +72,7 @@ function HeroSection() {
             className="text-[clamp(3rem,5vw,4.5rem)] leading-[1.02] tracking-[-0.03em] mb-8 font-sans font-light text-foreground select-none"
           >
             {t("title")}
-            <br />
+            <br className="hidden sm:block" />
             <span className="font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold text-foreground/45">
               {t("titleItalic")}
             </span>
@@ -91,11 +90,12 @@ function HeroSection() {
             ref={ctaRef}
             className="flex flex-col sm:flex-row sm:items-center gap-4"
           >
-            <MagneticButton asChild size="lg" variant="primary" className="group">
+            <MagneticButton asChild size="lg" variant="primary" className="group w-full sm:w-auto">
               <Link href={projectRangeCta.href}>
-                <span className="flex items-center gap-2">
+                <span className="flex items-center justify-center gap-2">
                   {projectRangeCta.label}
                   <svg
+                    aria-hidden="true"
                     className="h-4 w-4 transition-transform duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -111,7 +111,7 @@ function HeroSection() {
                 </span>
               </Link>
             </MagneticButton>
-            <MagneticButton asChild size="lg" variant="secondary">
+            <MagneticButton asChild size="lg" variant="secondary" className="w-full sm:w-auto text-center">
               <Link href="#pricing">{maintenancePlansCta.label}</Link>
             </MagneticButton>
           </div>
@@ -119,7 +119,7 @@ function HeroSection() {
       </Container>
       <div
         ref={scrollRef}
-        className="pointer-events-none absolute bottom-7 ltr:left-1/2 rtl:right-1/2 ltr:-translate-x-1/2 rtl:translate-x-1/2 hidden md:flex flex-col items-center gap-2"
+        className="pointer-events-none absolute bottom-7 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
         aria-hidden="true"
       >
         <p className={cn(monoCaps, "text-muted-foreground/70")}>Scroll</p>
@@ -130,6 +130,7 @@ function HeroSection() {
     </section>
   );
 }
+
 
 function StatsSection() {
   const t = useTranslations("serviceDetails.maintenance");

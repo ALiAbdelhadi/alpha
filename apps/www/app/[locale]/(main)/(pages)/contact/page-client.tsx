@@ -111,7 +111,7 @@ export default function ContactPage() {
                     <div className="max-w-4xl">
                         <div
                             ref={badgeRef}
-                            className="mb-8 inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-foreground/10 px-4 py-2 backdrop-blur-sm"
+                            className="mb-8 inline-flex items-center gap-2"
                         >
                             <div className="h-1.5 w-1.5 rounded-full bg-teal-400 animate-pulse" />
                             <p className="font-mono text-sm leading-normal tracking-wider text-primary/90 uppercase">

@@ -704,7 +704,7 @@
       "architecture": "Talk Through the Architecture",
       "maintenancePlans": "See Maintenance Plans",
       "pricingEssential": "Get Pricing for This Scope",
-      "pricingProfessional": "Plan This Build",
+      "pricingProfessional": "Continue in Estimator",
       "pricingFlagship": "Talk Through the Architecture",
       "flagshipBuild": "Plan a Build Like This"
     },
@@ -784,7 +784,7 @@
       "professional": {
         "buyerLabel": "Integrated Platform",
         "internalLabel": "Connected System",
-        "nextStep": "Next step: open the estimator and continue with the integrated build scope."
+        "nextStep": "Next step: open the estimator and scope the right integrated platform range for your business."
       },
       "flagship": {
         "buyerLabel": "Custom Product / Portal",
@@ -1071,7 +1071,13 @@
         "title": "The summary, read it",
         "titleItalic": "carefully.",
         "subtitle": "Every annotation is a decision point. No recommendations before the debt is fully understood.",
+        "hook": "We diagnose why your system is slowing you down — then fix it.",
         "annotationsLabel": "Annotations",
+        "stageNavLabel": "Engagement stages",
+        "stepIndicator": "Step {current} of {total} — {label}",
+        "skipAction": "Skip → show summary",
+        "scrollHintDesktop": "scroll to read through the engagement",
+        "scrollHintMobile": "scroll to explore",
         "docMeta": "Client Summary — Engineering — March 2026",
         "docRef": "Ref: ARCH-2026-04",
         "docTitle": "RE: Monolith-to-Microservices Migration — Logistics Platform",
@@ -1119,6 +1125,10 @@
           "p4": "Latency is",
           "p4_hl": "degrading under peak load",
           "p4_extra": "but we cannot isolate which call chain is responsible. Budget is not the constraint — time is."
+        },
+        "cta": {
+          "body": "Want us to run this analysis on your system?",
+          "action": "Book a call →"
         }
       },
       "sections": {
@@ -1141,7 +1151,7 @@
         "title": "Technical Audit — Fixed Scope, Fixed Price",
         "description": "A clear first engagement before any rebuild or scale-up. We examine the current system, isolate the technical risk, and convert the findings into an execution-ready roadmap.",
         "priceLabel": "Fixed price",
-        "price": "15,000 EGP",
+        "price": "1,500 EGP",
         "durationLabel": "Duration",
         "duration": "5 business days",
         "includedLabel": "What is included",

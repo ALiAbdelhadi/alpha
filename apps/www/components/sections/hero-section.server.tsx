@@ -37,8 +37,13 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
         {title1} {title2}
       </h1>
       <Container>
+<<<<<<< HEAD
         <div className="lg:max-w-5xl max-w-2xl">
           <HeroReveal delay={0.1} className="mb-8 flex items-center gap-2 md:hidden">
+=======
+        <div className="sm:max-w-5xl max-w-full">
+          <div data-hero-badge className="mb-8 flex items-center gap-2 md:hidden">
+>>>>>>> 7e490bae669a8900493991f48b3dc7afb4083b56
             <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
             <span className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">
               {t("hero.availability")}
@@ -112,6 +117,7 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
                 </span>
               </div>
             ))}
+<<<<<<< HEAD
           </HeroBatch>
           
           <HeroReveal delay={1.0}>
@@ -119,6 +125,15 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
               {t("hero.productionCallout")}
             </p>
           </HeroReveal>
+=======
+          </div>
+          <p
+            data-hero-proof
+            className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal mt-6 text-muted-foreground"
+          >
+            {t("hero.productionCallout")}
+          </p>
+>>>>>>> 7e490bae669a8900493991f48b3dc7afb4083b56
         </div>
       </Container>
       
