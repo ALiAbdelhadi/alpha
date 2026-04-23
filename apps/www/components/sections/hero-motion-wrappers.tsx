@@ -4,10 +4,17 @@ import { useReveal } from "@/lib/motion/hooks/use-reveal";
 import { useText } from "@/lib/motion/hooks/use-text";
 import { useBatch } from "@/lib/motion/hooks/use-batch";
 import { motion } from "@/lib/motion/utils/presets";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
-export function HeroHeadline({ children, className }: { children: ReactNode; className?: string }) {
+
+interface HeroHeadlineProps {
+  children: ReactNode;
+  className?: string;
+}
+
+export function HeroHeadline({ children, className }: HeroHeadlineProps) {
   const ref = useText<HTMLDivElement>(motion.heroHeadline());
+
   return (
     <div ref={ref} className={className} aria-hidden>
       {children}
@@ -15,8 +22,21 @@ export function HeroHeadline({ children, className }: { children: ReactNode; cla
   );
 }
 
-export function HeroReveal({ children, className, delay = 0, distance }: { children: ReactNode; className?: string; delay?: number; distance?: number }) {
+interface HeroRevealProps {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+  distance?: number;
+}
+
+export function HeroReveal({
+  children,
+  className,
+  delay = 0,
+  distance,
+}: HeroRevealProps) {
   const ref = useReveal<HTMLDivElement>(motion.fadeUp({ delay, distance }));
+
   return (
     <div ref={ref} className={className}>
       {children}
@@ -24,8 +44,19 @@ export function HeroReveal({ children, className, delay = 0, distance }: { child
   );
 }
 
-export function HeroBatch({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+interface HeroBatchProps {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+}
+
+export function HeroBatch({
+  children,
+  className,
+  delay = 0,
+}: HeroBatchProps) {
   const ref = useBatch<HTMLDivElement>(motion.listItems({ delay }));
+
   return (
     <div ref={ref} className={className}>
       {children}

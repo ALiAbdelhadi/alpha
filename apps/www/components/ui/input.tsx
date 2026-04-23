@@ -1,30 +1,54 @@
-import * as React from "react"
-
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 const normalizeNumbers = (str: string) => {
-  const arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
-  const persianNumbers = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+  const arabicNumbers = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+  const persianNumbers = ["۰","۱","۲","۳","۴","۵","۶","۷","۸","۹"];
+
   if (!str || typeof str !== "string") return str;
+
   return str
     .replace(/[٠-٩]/g, (w) => arabicNumbers.indexOf(w).toString())
     .replace(/[۰-۹]/g, (w) => persianNumbers.indexOf(w).toString());
 };
 
-function Input({ className, type, onChange, ...props }: React.ComponentProps<"input">) {
+type InputProps = React.ComponentProps<"input"> & {
+  normalize?: boolean; // optional behavior
+};
+
+function Input({
+  className,
+  type = "text",
+  onChange,
+  normalize = false,
+  inputMode,
+  ...props
+}: InputProps) {
   const handleChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (type === "number" || type === "tel" || props.inputMode === "numeric") {
-        e.target.value = normalizeNumbers(e.target.value);
+      const value = e.target.value;
+
+      const normalizedValue = normalize ? normalizeNumbers(value) : value;
+
+      if (onChange) {
+        const clonedEvent = {
+          ...e,
+          target: {
+            ...e.target,
+            value: normalizedValue,
+          },
+        } as React.ChangeEvent<HTMLInputElement>;
+
+        onChange(clonedEvent);
       }
-      onChange?.(e);
     },
-    [onChange, type, props.inputMode]
+    [onChange, normalize]
   );
 
   return (
     <input
-      type={type}
+      type={type === "number" ? "text" : type} // نمنع number
+      inputMode={inputMode || (type === "number" ? "numeric" : undefined)}
       data-slot="input"
       onChange={handleChange}
       className={cn(
@@ -37,10 +61,14 @@ function Input({ className, type, onChange, ...props }: React.ComponentProps<"in
         "aria-invalid:border-destructive",
         className
       )}
-      style={{ borderRadius: 0, transitionDuration: "var(--duration-instant)", transitionTimingFunction: "var(--ease-default)" }}
+      style={{
+        borderRadius: 0,
+        transitionDuration: "var(--duration-instant)",
+        transitionTimingFunction: "var(--ease-default)",
+      }}
       {...props}
     />
-  )
+  );
 }
 
-export { Input }
+export { Input };

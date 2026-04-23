@@ -132,8 +132,7 @@ export const InitialLoader = memo(function InitialLoader() {
                     Altruvex / Init
                 </span>
                 <span
-                    className="font-mono text-sm leading-normal tracking-wider"
-                    style={{ fontSize: "9px", letterSpacing: "0.18em", color: "var(--foreground)" }}
+                    className="font-mono text-xs leading-normal tracking-wider text-primary"
                 >
                     v{process.env.NEXT_PUBLIC_APP_VERSION}
                 </span>

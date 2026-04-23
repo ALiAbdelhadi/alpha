@@ -1,7 +1,7 @@
 "use client"
 
 import { Slot } from "@radix-ui/react-slot"
-import React, { forwardRef, useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react"
+import React, { forwardRef, useCallback, useRef, useState, useSyncExternalStore } from "react"
 
 type ButtonVariant = "primary" | "secondary" | "ghost"
 type ButtonSize = "default" | "lg"
@@ -30,6 +30,7 @@ function useMergedRef<T>(...refs: (React.Ref<T> | null | undefined)[]) {
         else if (ref) (ref as React.MutableRefObject<T>).current = node
       })
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     refs
   )
 }
@@ -44,6 +45,25 @@ function subscribeToReducedMotion(onStoreChange: () => void) {
 function getReducedMotionPreference() {
   if (typeof window === "undefined") return false
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches
+}
+
+// Ripple keyframes injected once into the document head
+const RIPPLE_STYLE_ID = "magnetic-button-ripple-keyframes"
+function ensureRippleKeyframes() {
+  if (typeof document === "undefined") return
+  if (document.getElementById(RIPPLE_STYLE_ID)) return
+  const style = document.createElement("style")
+  style.id = RIPPLE_STYLE_ID
+  style.textContent = `
+    @keyframes ripple-expand {
+      0%   { transform: translate(-50%, -50%) scale(1);  opacity: 0.35; }
+      100% { transform: translate(-50%, -50%) scale(28); opacity: 0; }
+    }
+    .magnetic-ripple {
+      animation: ripple-expand 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  `
+  document.head.appendChild(style)
 }
 
 export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>(
@@ -63,7 +83,13 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
   ) => {
     const internalRef = useRef<HTMLButtonElement>(null)
     const rectRef = useRef<DOMRect | null>(null)
+
+    // Magnetic offset stored as state so transform is recalculated on each render
+    const magneticRef = useRef({ x: 0, y: 0 })
+    const [, forceUpdate] = useState(0)
+
     const mergedRef = useMergedRef(internalRef, forwardedRef)
+
     const updateRect = useCallback(() => {
       if (!internalRef.current) return
       rectRef.current = internalRef.current.getBoundingClientRect()
@@ -74,37 +100,43 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
       getReducedMotionPreference,
       () => false
     )
-    useEffect(() => {
-      // Intentionally left empty. Bounds are only calculated when the user Interacts (onMouseEnter)
-    }, [prefersReducedMotion, updateRect])
+
     const [isPressed, setIsPressed] = useState(false)
     const [ripples, setRipples] = useState<Ripple[]>([])
 
     const Comp = asChild ? Slot : "button"
 
+    // FIX 1: Track magnetic offset in a ref and merge into the single `transform`
+    // inline style so it never conflicts with Tailwind scale utilities.
     const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (!internalRef.current || prefersReducedMotion) return
       const rect = rectRef.current ?? internalRef.current.getBoundingClientRect()
       rectRef.current = rect
-      const x = e.clientX - rect.left - rect.width / 2
-      const y = e.clientY - rect.top - rect.height / 2
-      internalRef.current.style.setProperty("--magnetic-x", `${x * 0.15}px`)
-      internalRef.current.style.setProperty("--magnetic-y", `${y * 0.15}px`)
+      magneticRef.current = {
+        x: (e.clientX - rect.left - rect.width / 2) * 0.15,
+        y: (e.clientY - rect.top - rect.height / 2) * 0.15,
+      }
+      forceUpdate((n) => n + 1)
     }
 
     const handleMouseLeave = () => {
-      if (!internalRef.current || prefersReducedMotion) return
-      internalRef.current.style.setProperty("--magnetic-x", "0px")
-      internalRef.current.style.setProperty("--magnetic-y", "0px")
+      if (prefersReducedMotion) return
+      magneticRef.current = { x: 0, y: 0 }
       setIsPressed(false)
+      forceUpdate((n) => n + 1)
     }
 
-    const handleMouseDown = () => { if (!prefersReducedMotion) setIsPressed(true) }
+    const handleMouseDown = () => {
+      if (!prefersReducedMotion) setIsPressed(true)
+    }
     const handleMouseUp = () => setIsPressed(false)
 
     const playClickSound = () => {
       try {
-        const audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)()
+        const audioContext = new (
+          window.AudioContext ||
+          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+        )()
         const oscillator = audioContext.createOscillator()
         const gainNode = audioContext.createGain()
         oscillator.connect(gainNode)
@@ -122,27 +154,50 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (!internalRef.current) return
+
+      // FIX 2: Inject ripple keyframes lazily on first click
+      ensureRippleKeyframes()
+
       const rect = internalRef.current.getBoundingClientRect()
       const rippleId = Date.now()
-      setRipples((prev) => [...prev, { x: e.clientX - rect.left, y: e.clientY - rect.top, id: rippleId }])
-      setTimeout(() => setRipples((prev) => prev.filter((r) => r.id !== rippleId)), 600)
+
+      // FIX 3: Store coordinates relative to button (px values, not raw numbers)
+      setRipples((prev) => [
+        ...prev,
+        { x: e.clientX - rect.left, y: e.clientY - rect.top, id: rippleId },
+      ])
+      setTimeout(
+        () => setRipples((prev) => prev.filter((r) => r.id !== rippleId)),
+        620
+      )
+
       if (hapticEnabled && "vibrate" in navigator) {
-        try { navigator.vibrate(10) } catch (e) { console.warn("Haptic failed:", e) }
+        try {
+          navigator.vibrate(10)
+        } catch (err) {
+          console.warn("Haptic failed:", err)
+        }
       }
       if (soundEnabled) playClickSound()
       onClick?.(e)
     }
 
     const variants: Record<ButtonVariant, string> = {
-      primary: "bg-foreground/95 text-background hover:bg-foreground backdrop-blur-md",
-      secondary: "bg-transparent text-primary/85 border border-foreground/40 hover:bg-foreground/5 hover:border-foreground/60",
-      ghost: "bg-transparent text-primary/75 hover:bg-foreground/5 border border-transparent",
+      primary:
+        "bg-foreground/95 text-background hover:bg-foreground backdrop-blur-md",
+      secondary:
+        "bg-transparent text-primary/85 border border-foreground/40 hover:bg-foreground/5 hover:border-foreground/60",
+      ghost:
+        "bg-transparent text-primary/75 hover:bg-foreground/5 border border-transparent",
     }
 
     const sizes: Record<ButtonSize, string> = {
       default: "min-h-11 min-w-11 px-6 py-2.5 text-sm",
       lg: "min-h-11 min-w-11 px-8 py-3.5 text-base",
     }
+
+    const { x, y } = magneticRef.current
+    const scale = isPressed && !prefersReducedMotion ? 0.95 : 1
 
     return (
       <Comp
@@ -153,30 +208,46 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
         onMouseLeave={prefersReducedMotion ? undefined : handleMouseLeave}
         onMouseDown={prefersReducedMotion ? undefined : handleMouseDown}
         onMouseUp={prefersReducedMotion ? undefined : handleMouseUp}
-        className={`
-          relative inline-flex items-center justify-center overflow-hidden rounded-full font-medium
-          transition-[transform,background-color,border-color,color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform
-          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground/50
-          ${variants[variant]}
-          ${sizes[size]}
-          ${isPressed && !prefersReducedMotion ? "scale-95" : "scale-100"}
-          ${className}
-        `}
+        className={[
+          "relative inline-flex items-center justify-center overflow-hidden rounded-full font-medium",
+          // FIX 4: Removed `contain` — it breaks focus-ring offsets by creating
+          // a new stacking/formatting context that clips the outline.
+          "transition-[background-color,border-color,color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform",
+          "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground/50",
+          variants[variant],
+          sizes[size],
+          className,
+        ]
+          .filter(Boolean)
+          .join(" ")}
         style={{
-          transform: "translate3d(var(--magnetic-x, 0px), var(--magnetic-y, 0px), 0)",
-          contain: "layout style paint",
+          // eslint-disable-next-line react-hooks/refs
+          transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
+          transition: `transform 700ms cubic-bezier(0.16,1,0.3,1), background-color 700ms, border-color 700ms, color 700ms, box-shadow 700ms`,
         }}
         data-cursor-pointer
         {...props}
       >
-        <span className="relative z-10 flex items-center justify-center gap-2">{children}</span>
-        {!prefersReducedMotion && ripples.map((ripple) => (
-          <span
-            key={ripple.id}
-            className="absolute pointer-events-none rounded-full bg-current opacity-30 animate-ripple"
-            style={{ left: ripple.x, top: ripple.y, width: "10px", height: "10px", transform: "translate(-50%, -50%)" }}
-          />
-        ))}
+        <span className="relative z-10 flex items-center justify-center gap-2">
+          {children}
+        </span>
+
+        {/* FIX 6: Use `left`/`top` as px strings and rely on the injected
+            CSS class for the keyframe animation instead of an undefined
+            Tailwind `animate-ripple` utility. */}
+        {!prefersReducedMotion &&
+          ripples.map((ripple) => (
+            <span
+              key={ripple.id}
+              className="magnetic-ripple absolute pointer-events-none rounded-full bg-current opacity-30"
+              style={{
+                left: `${ripple.x}px`,
+                top: `${ripple.y}px`,
+                width: "10px",
+                height: "10px",
+              }}
+            />
+          ))}
       </Comp>
     )
   }
