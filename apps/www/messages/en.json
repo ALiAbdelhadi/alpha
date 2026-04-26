@@ -1834,54 +1834,54 @@
         }
       }
     },
-    "tiers": {
-      "essential": {
-        "name": "Focused Website",
-        "priceRange": "75,000 – 160,000 EGP",
-        "originalPrice": "95,000 – 180,000 EGP",
-        "idealFor": "Custom marketing site with strong messaging, strong performance, and no template debt.",
-        "cta": "Get Pricing for This Scope",
-        "features": [
-          "Custom UI implementation for your core marketing pages",
-          "Responsive build with strong performance and clean deployment",
-          "Lead forms, analytics, and SEO fundamentals",
-          "Arabic-ready structure where the scope calls for it",
-          "Domain, SSL, and base hosting setup for Year 1"
-        ],
-        "notIncluded": "No dashboards, payment flows, or heavy operational integrations — see Connected System for those."
+      "tiers": {
+        "essential": {
+          "name": "Focused Website",
+          "priceRange": "35,000 – 70,000 EGP",
+          "originalPrice": "45,000 – 85,000 EGP",
+          "idealFor": "Custom marketing site with strong messaging, strong performance, and no template debt.",
+          "cta": "Get Pricing for This Scope",
+          "features": [
+            "Custom UI implementation for your core marketing pages",
+            "Responsive build with strong performance and clean deployment",
+            "Lead forms, analytics, and SEO fundamentals",
+            "Arabic-ready structure where the scope calls for it",
+            "Domain, SSL, and base hosting setup for Year 1"
+          ],
+          "notIncluded": "No dashboards, payment flows, or heavy operational integrations — see Connected System for those."
+        },
+        "professional": {
+          "name": "Connected Platform",
+          "priceRange": "70,000 – 140,000 EGP",
+          "originalPrice": "90,000 – 160,000 EGP",
+          "idealFor": "Integrated website or light product flow with content operations, bilingual UX, and one or two key integrations.",
+          "cta": "Plan This Build",
+          "features": [
+            "Everything in Static System",
+            "CMS, blog, landing page system, or editable content workflows",
+            "One key integration such as CRM, booking, auth, or payment",
+            "Full Arabic / English implementation and QA where required",
+            "Structured discovery and architecture before build"
+          ],
+          "notIncluded": "No custom portals, deep automation, or internal operational products — see Full Infrastructure for those."
+        },
+        "flagship": {
+          "name": "Operational Product",
+          "priceRange": "140,000 EGP+",
+          "originalPrice": "180,000 EGP+",
+          "idealFor": "Portal, dashboard, internal workflow, or product system with real architectural complexity.",
+          "cta": "Talk Through the Architecture",
+          "features": [
+            "Everything in Connected System",
+            "Custom dashboards, portals, or operational workflows",
+            "Multiple integrations or data flows",
+            "Role-based logic, automation, or internal tooling where required",
+            "Infrastructure, CI/CD, and launch planning",
+            "Phased roadmap for post-launch growth"
+          ],
+          "notIncluded": null
+        }
       },
-      "professional": {
-        "name": "Connected Platform",
-        "priceRange": "160,000 – 320,000 EGP",
-        "originalPrice": "190,000 – 360,000 EGP",
-        "idealFor": "Integrated website or light product flow with content operations, bilingual UX, and one or two key integrations.",
-        "cta": "Plan This Build",
-        "features": [
-          "Everything in Static System",
-          "CMS, blog, landing page system, or editable content workflows",
-          "One key integration such as CRM, booking, auth, or payment",
-          "Full Arabic / English implementation and QA where required",
-          "Structured discovery and architecture before build"
-        ],
-        "notIncluded": "No custom portals, deep automation, or internal operational products — see Full Infrastructure for those."
-      },
-      "flagship": {
-        "name": "Operational Product",
-        "priceRange": "320,000 EGP+",
-        "originalPrice": "380,000 EGP+",
-        "idealFor": "Portal, dashboard, internal workflow, or product system with real architectural complexity.",
-        "cta": "Talk Through the Architecture",
-        "features": [
-          "Everything in Connected System",
-          "Custom dashboards, portals, or operational workflows",
-          "Multiple integrations or data flows",
-          "Role-based logic, automation, or internal tooling where required",
-          "Infrastructure, CI/CD, and launch planning",
-          "Phased roadmap for post-launch growth"
-        ],
-        "notIncluded": null
-      }
-    },
     "maintenance": [
       {
         "key": "essential",

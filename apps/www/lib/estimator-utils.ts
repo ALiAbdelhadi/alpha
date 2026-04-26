@@ -50,29 +50,29 @@ const SECTION_PRICING: Record<
   DeliverableProject,
   Record<DeliverableTier, [number, number]>
 > = {
-  ecommerce: {
-    small: [130_000, 220_000],
-    medium: [220_000, 340_000],
-    large: [340_000, 520_000],
-    enterprise: [520_000, 850_000],
-  },
   corporate: {
-    small: [75_000, 140_000],
-    medium: [140_000, 220_000],
-    large: [220_000, 380_000],
-    enterprise: [380_000, 650_000],
+    small: [35_000, 70_000],      
+    medium: [70_000, 140_000],    
+    large: [140_000, 220_000],    
+    enterprise: [220_000, 450_000],
+  },
+  ecommerce: {
+    small: [55_000, 95_000],     
+    medium: [95_000, 180_000],
+    large: [180_000, 320_000],   
+    enterprise: [320_000, 600_000],
   },
   custom: {
-    small: [180_000, 280_000],
-    medium: [280_000, 420_000],
-    large: [420_000, 650_000],
-    enterprise: [650_000, 1_100_000],
+    small: [80_000, 150_000],    
+    medium: [150_000, 280_000], 
+    large: [280_000, 450_000],   
+    enterprise: [450_000, 950_000],
   },
   performance: {
-    small: [35_000, 60_000],
-    medium: [60_000, 100_000],
-    large: [100_000, 180_000],
-    enterprise: [180_000, 320_000],
+    small: [15_000, 30_000],    
+    medium: [30_000, 55_000],
+    large: [55_000, 110_000],  
+    enterprise: [110_000, 190_000],
   },
 };
 
@@ -80,29 +80,29 @@ const SECTION_WEEKS: Record<
   DeliverableProject,
   Record<DeliverableTier, [number, number]>
 > = {
-  ecommerce: {
-    small: [5, 8],
-    medium: [8, 14],
-    large: [14, 20],
-    enterprise: [18, 28],
-  },
   corporate: {
-    small: [3, 5],
-    medium: [5, 8],
-    large: [8, 12],
+    small: [2, 4],
+    medium: [4, 7],
+    large: [7, 11],
     enterprise: [10, 16],
   },
+  ecommerce: {
+    small: [4, 6],
+    medium: [6, 10],
+    large: [10, 16],
+    enterprise: [16, 24],
+  },
   custom: {
-    small: [6, 10],
-    medium: [10, 16],
-    large: [16, 24],
+    small: [5, 8],
+    medium: [8, 14],
+    large: [14, 22],
     enterprise: [20, 32],
   },
   performance: {
-    small: [2, 3],
-    medium: [3, 5],
-    large: [5, 8],
-    enterprise: [8, 12],
+    small: [1, 2],
+    medium: [2, 4],
+    large: [4, 7],
+    enterprise: [6, 10],
   },
 };
 
@@ -132,24 +132,24 @@ export function calculateQuickEstimate(
 }
 
 export const HOSTING_RENEWAL: Record<DeliverableTier, number> = {
-  small: 8_700,
-  medium: 11_250,
-  large: 19_050,
-  enterprise: 19_050,
+  small: 4_500,   
+  medium: 8_500, 
+  large: 14_500, 
+  enterprise: 22_000,
 };
 
 const TIER_LABELS: Record<DeliverableTier, string> = {
-  small: "Essential",
-  medium: "Professional",
-  large: "Premium",
-  enterprise: "Enterprise",
+  small: "Focused (Essential)",
+  medium: "Connected (Professional)",
+  large: "Operational (Premium)",
+  enterprise: "Enterprise Ecosystem",
 };
 
 const PROJECT_LABELS: Record<DeliverableProject, string> = {
-  ecommerce: "E-Commerce Platform",
-  corporate: "Corporate Website",
+  corporate: "Corporate Experience",
+  ecommerce: "E-Commerce Solution",
   custom: "Custom Web Application",
-  performance: "Performance Audit & Optimization",
+  performance: "Performance & SEO Overhaul",
 };
 
 const TIMELINE_LABELS: Record<string, string> = {
