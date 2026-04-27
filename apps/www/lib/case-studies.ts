@@ -75,8 +75,8 @@ export const CASE_STUDIES: CaseStudyRecord[] = [
       },
     ],
     name: {
-      ar: "Altruvex.com — كان على الموقع نفسه أن يكون الدليل",
-      en: "Altruvex.com — The Site Itself Had to Be the Proof",
+      ar: "Altruvex.com - كان على الموقع نفسه أن يكون الدليل",
+      en: "Altruvex.com - The Site Itself Had to Be the Proof",
     },
     slug: "altruvex-site",
     summary: {

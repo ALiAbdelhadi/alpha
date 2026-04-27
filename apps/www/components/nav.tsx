@@ -21,6 +21,8 @@ const NAV_ITEMS = [
     { key: "services", href: "/services" },
     { key: "pricing", href: "/pricing" },
     { key: "contact", href: "/contact" },
+    { key: "transparency", href: "/transparency" },
+    
 ]
 
 export function Nav() {

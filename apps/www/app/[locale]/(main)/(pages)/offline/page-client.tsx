@@ -49,7 +49,7 @@ export default function OfflinePage() {
                     {stillOffline && (
                         <div className="mb-6 px-4 py-2.5 rounded-sm border border-destructive/30 bg-destructive/8">
                             <p className="font-mono text-sm leading-normal tracking-wider text-destructive/80 uppercase">
-                                Still offline — please check your connection
+                                Still offline - please check your connection
                             </p>
                         </div>
                     )}

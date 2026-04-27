@@ -22,7 +22,7 @@ export default function NotFoundPage() {
             <Container>
                 <main className="relative z-10 max-w-2xl">
                     <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/60 mb-6 block">
-                        404 — Page not found
+                        404 - Page not found
                     </p>
                     <h1
                         className="mb-8 font-sans font-normal text-primary leading-[1.05]"

@@ -34,7 +34,7 @@ import {
 import { gsap } from "@/lib/gsap";
 import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { Download, Phone } from "lucide-react";
+import { Check, Download, Phone } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { JSX, useEffect, useRef, useState } from "react";
@@ -106,14 +106,16 @@ export default function TransparencyPageClient() {
   });
 
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // ── [IMPROVEMENT #6] X-axis animation instead of Y-axis for real flow feeling ──
   useEffect(() => {
     if (!containerRef.current) return;
     gsap.fromTo(
       containerRef.current,
-      { opacity: 0, y: MOTION.distance.sm },
+      { opacity: 0, x: 40 },
       {
         opacity: 1,
-        y: 0,
+        x: 0,
         duration: MOTION.duration.fast,
         ease: MOTION.ease.smooth,
       },
@@ -236,21 +238,20 @@ export default function TransparencyPageClient() {
               )}
             </div>
 
-            <div
-              ref={progressRef}
-              className="flex items-center justify-center gap-1 mb-12"
-            >
-              {Array.from({ length: TOTAL_STEPS }, (_, i) => i + 1).map((i) => (
+            {/* ── [IMPROVEMENT #2] Progress bar with step counter + percentage ── */}
+            <div ref={progressRef} className="mb-12">
+              <div className="flex justify-between items-center text-[10px] font-mono tracking-[0.18em] uppercase text-primary/40 mb-2.5">
+                <span>
+                  {t("step")} {visibleStep} / {TOTAL_STEPS}
+                </span>
+                <span>{Math.round((visibleStep / TOTAL_STEPS) * 100)}%</span>
+              </div>
+              <div className="h-1.5 w-full bg-foreground/10 rounded-full overflow-hidden">
                 <div
-                  key={i}
-                  className={cn(
-                    "h-1.5 rounded-full transition-all duration-300",
-                    i <= visibleStep
-                      ? "w-8 bg-primary"
-                      : "w-6 bg-foreground/10",
-                  )}
+                  className="h-full bg-primary rounded-full transition-all duration-500 ease-out"
+                  style={{ width: `${(visibleStep / TOTAL_STEPS) * 100}%` }}
                 />
-              ))}
+              </div>
             </div>
 
             <div ref={containerRef} className="mb-12">
@@ -420,11 +421,52 @@ function TransparencyFaqSection({ t }: StepProps) {
   );
 }
 
-const OPTION_BASE = "border transition-all duration-300";
-const OPTION_SELECTED = "border-foreground/50 bg-foreground/10";
-const OPTION_DEFAULT =
-  "border-foreground/25 hover:border-foreground/50 hover:bg-foreground/5";
+// ── [IMPROVEMENT #3 & #4] Premium card styles with elevation, glow, and hierarchy ──
+const OPTION_BASE =
+  "relative border transition-all duration-300 cursor-pointer";
 
+const OPTION_SELECTED =
+  "border-foreground/60 bg-foreground/[0.08] shadow-[0_10px_40px_rgba(0,0,0,0.08)]";
+
+const OPTION_DEFAULT =
+  "border-foreground/20 hover:border-foreground/40 hover:bg-foreground/[0.04] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]";
+
+function SelectionCheck({ visible }: { visible: boolean }) {
+  return (
+    <div
+      className={cn(
+        "absolute -top-2 ltr:-right-1 rtl:-left-1 w-5 h-5 rounded-full bg-primary flex items-center justify-center transition-opacity duration-200 shadow-[0_4px_16px_rgba(0,0,0,0.18)]",
+        visible ? "opacity-100" : "opacity-0 pointer-events-none",
+      )}
+    >
+      <Check className="w-3 h-3 text-background" strokeWidth={2.5} />
+    </div>
+  );
+}
+
+// ── [IMPROVEMENT #3] Step header with title + contextual subtitle ──
+function StepHeader({
+  title,
+  hint,
+}: {
+  title: string;
+  hint?: string;
+}) {
+  return (
+    <div className="text-center mb-10">
+      <h2 className="text-[clamp(1.8rem,2.5vw,2.4rem)] tracking-tight font-normal text-primary mb-4">
+        {title}
+      </h2>
+      {hint && (
+        <p className="text-primary/50 text-[clamp(0.9375rem,0.98vw,1rem)] leading-relaxed max-w-xl mx-auto">
+          {hint}
+        </p>
+      )}
+    </div>
+  );
+}
+
+// ── [IMPROVEMENT #7] Phone capture with trust signals ──
 function StepPhoneCapture({
   phone,
   name,
@@ -444,16 +486,18 @@ function StepPhoneCapture({
   onSubmit: () => void;
 }) {
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-normal text-primary mb-2">
-          {t("phoneCapture.title")}
-        </h2>
-        <p className="text-sm text-primary/70 leading-relaxed">
-          {t("phoneCapture.subtitle")}
-        </p>
-      </div>
-      <div className="space-y-4">
+    <div>
+      <StepHeader
+        title={t("phoneCapture.title")}
+        hint={t("phoneCapture.subtitle")}
+      />
+
+      {/* Trust signal — sits flush under header with no double gap */}
+      <p className="text-primary/45 text-sm text-center mb-8">
+        {t("phoneCapture.trustNote")}
+      </p>
+
+      <div className="space-y-4 mb-6">
         <div>
           <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
             {t("phoneCapture.phoneLabel")}{" "}
@@ -509,6 +553,7 @@ function StepPhoneCapture({
   );
 }
 
+// ── [IMPROVEMENT #9] PDF as a feature highlight, not a secondary button ──
 function PDFDownload({
   onDownload,
   generating,
@@ -519,8 +564,10 @@ function PDFDownload({
   t: StepProps["t"];
 }) {
   return (
-    <div className="mt-8 rounded-sm border border-foreground/20 bg-foreground/5 p-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div className="mt-8 relative overflow-hidden rounded-sm border border-foreground/20 bg-foreground/5 p-6">
+      {/* Subtle gradient accent */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-primary/10 to-transparent opacity-40" />
+      <div className="relative flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <p className="font-mono text-sm leading-normal tracking-wider text-[10px] uppercase text-primary/40 mb-1">
             {t("pdf.label")}
@@ -570,6 +617,7 @@ function PDFDownload({
   );
 }
 
+// ── [IMPROVEMENT #8] Results with strategic positioning copy ──
 function StepResults({
   estimate,
   formatCurrency,
@@ -604,9 +652,15 @@ function StepResults({
 
   return (
     <div>
-      <h2 className="text-2xl font-normal text-primary mb-6 text-center">
+      <h2 className="text-2xl font-normal text-primary mb-2 text-center">
         {t("results.title")}
       </h2>
+
+      {/* Strategic estimate note — tight under h2, then breathes before rangeCopy */}
+      <p className="text-primary/45 text-sm text-center mb-6">
+        {t("results.strategicNote")}
+      </p>
+
       <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-primary/90 mb-8 text-center">
         {t("results.rangeCopy", {
           min: formatCurrency(estimate.minPrice),
@@ -682,26 +736,30 @@ function StepBudget({
   const options: Budget[] = ["small", "medium", "large", "custom"];
   return (
     <div>
-      <h2 className="text-2xl font-normal text-primary text-center mb-8">
-        {t("steps.budget.title")}
-      </h2>
-      <div className="grid sm:grid-cols-2 gap-4">
+      <StepHeader
+        title={t("steps.budget.title")}
+        hint={t("steps.budget.hint")}
+      />
+      <div className="grid sm:grid-cols-2 gap-5">
         {options.map((opt) => (
           <button
             key={opt}
             onClick={() => onSelect(opt)}
             className={cn(
               OPTION_BASE,
-              "p-6 rounded-sm text-start",
+              "rounded-sm text-start flex p-3 gap-4",
               selected === opt ? OPTION_SELECTED : OPTION_DEFAULT,
             )}
           >
-            <h3 className="font-medium text-primary mb-1">
-              {t(`steps.budget.options.${opt}.title`)}
-            </h3>
-            <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/60">
-              {t(`steps.budget.options.${opt}.range`)}
-            </p>
+            <SelectionCheck visible={selected === opt} />
+            <div className="p-4 sm:p-5 ">
+              <h3 className="font-medium text-primary mb-2">
+                {t(`steps.budget.options.${opt}.title`)}
+              </h3>
+              <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/60">
+                {t(`steps.budget.options.${opt}.range`)}
+              </p>
+            </div>
           </button>
         ))}
       </div>
@@ -720,26 +778,30 @@ function StepBrandIdentity({
   const options: BrandIdentity[] = ["complete", "partial", "scratch"];
   return (
     <div>
-      <h2 className="text-2xl font-normal text-primary text-center mb-8">
-        {t("steps.brand.title")}
-      </h2>
-      <div className="grid sm:grid-cols-3 gap-4">
+      <StepHeader
+        title={t("steps.brand.title")}
+        hint={t("steps.brand.hint")}
+      />
+      <div className="grid sm:grid-cols-3 gap-5">
         {options.map((opt) => (
           <button
             key={opt}
             onClick={() => onSelect(opt)}
             className={cn(
               OPTION_BASE,
-              "p-6 rounded-sm text-center",
+              "rounded-sm text-center p-3",
               selected === opt ? OPTION_SELECTED : OPTION_DEFAULT,
             )}
           >
-            <h3 className="font-medium text-primary mb-2">
-              {t(`steps.brand.options.${opt}.title`)}
-            </h3>
-            <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/60">
-              {t(`steps.brand.options.${opt}.description`)}
-            </p>
+            <SelectionCheck visible={selected === opt} />
+            <div className="p-4 sm:p-5">
+              <h3 className="font-medium text-primary mb-3">
+                {t(`steps.brand.options.${opt}.title`)}
+              </h3>
+              <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/60">
+                {t(`steps.brand.options.${opt}.description`)}
+              </p>
+            </div>
           </button>
         ))}
       </div>
@@ -758,26 +820,30 @@ function StepContentReadiness({
   const options: ContentReadiness[] = ["provide", "need-help", "unsure"];
   return (
     <div>
-      <h2 className="text-2xl font-normal text-primary text-center mb-8">
-        {t("steps.content.title")}
-      </h2>
-      <div className="grid sm:grid-cols-3 gap-4">
+      <StepHeader
+        title={t("steps.content.title")}
+        hint={t("steps.content.hint")}
+      />
+      <div className="grid sm:grid-cols-3 gap-5">
         {options.map((opt) => (
           <button
             key={opt}
             onClick={() => onSelect(opt)}
             className={cn(
               OPTION_BASE,
-              "p-6 rounded-sm text-center",
+              "rounded-sm text-center p-3",
               selected === opt ? OPTION_SELECTED : OPTION_DEFAULT,
             )}
           >
-            <h3 className="font-medium text-primary mb-2">
-              {t(`steps.content.options.${opt}.title`)}
-            </h3>
-            <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/60">
-              {t(`steps.content.options.${opt}.description`)}
-            </p>
+            <SelectionCheck visible={selected === opt} />
+            <div className="p-4 sm:p-5">
+              <h3 className="font-medium text-primary mb-3">
+                {t(`steps.content.options.${opt}.title`)}
+              </h3>
+              <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/60">
+                {t(`steps.content.options.${opt}.description`)}
+              </p>
+            </div>
           </button>
         ))}
       </div>
@@ -801,26 +867,30 @@ function StepDeadlineUrgency({
   ];
   return (
     <div>
-      <h2 className="text-2xl font-normal text-primary text-center mb-8">
-        {t("steps.deadline.title")}
-      </h2>
-      <div className="grid sm:grid-cols-2 gap-4">
+      <StepHeader
+        title={t("steps.deadline.title")}
+        hint={t("steps.deadline.hint")}
+      />
+      <div className="grid sm:grid-cols-2 gap-5">
         {options.map((opt) => (
           <button
             key={opt}
             onClick={() => onSelect(opt)}
             className={cn(
               OPTION_BASE,
-              "p-6 rounded-sm text-center",
+              "rounded-sm text-center p-3",
               selected === opt ? OPTION_SELECTED : OPTION_DEFAULT,
             )}
           >
-            <h3 className="font-medium text-primary mb-2">
-              {t(`steps.deadline.options.${opt}.title`)}
-            </h3>
-            <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/60">
-              {t(`steps.deadline.options.${opt}.description`)}
-            </p>
+            <SelectionCheck visible={selected === opt} />
+            <div className="p-4 sm:p-5">
+              <h3 className="font-medium text-primary mb-3">
+                {t(`steps.deadline.options.${opt}.title`)}
+              </h3>
+              <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/60">
+                {t(`steps.deadline.options.${opt}.description`)}
+              </p>
+            </div>
           </button>
         ))}
       </div>
@@ -909,36 +979,40 @@ function StepProjectType({
   ];
   return (
     <div>
-      <h2 className="text-2xl font-normal text-primary text-center mb-8">
-        {t("steps.projectType.title")}
-      </h2>
-      <div className="grid sm:grid-cols-2 gap-4">
+      <StepHeader
+        title={t("steps.projectType.title")}
+        hint={t("steps.projectType.hint")}
+      />
+      <div className="grid sm:grid-cols-2 gap-5">
         {options.map((option) => (
           <button
             key={option.key}
             onClick={() => onSelect(option.key)}
             className={cn(
               OPTION_BASE,
-              "p-6 rounded-sm text-start",
+              "rounded-sm text-start flex p-3 gap-4",
               selected === option.key ? OPTION_SELECTED : OPTION_DEFAULT,
             )}
           >
-            <div
-              className={cn(
-                "w-12 h-12 rounded-sm flex items-center justify-center mb-4 transition-colors",
-                selected === option.key
-                  ? "bg-foreground/20 text-primary"
-                  : "bg-foreground/10 text-primary/70",
-              )}
-            >
-              {option.icon}
+            <SelectionCheck visible={selected === option.key} />
+            <div className="p-4 sm:p-5">
+              <div
+                className={cn(
+                  "w-12 h-12 rounded-sm flex items-center justify-center mb-4 transition-colors",
+                  selected === option.key
+                    ? "bg-foreground/20 text-primary"
+                    : "bg-foreground/10 text-primary/70",
+                )}
+              >
+                {option.icon}
+              </div>
+              <h3 className="font-medium text-primary mb-2">
+                {t(`steps.projectType.options.${option.key}.title`)}
+              </h3>
+              <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/60">
+                {t(`steps.projectType.options.${option.key}.description`)}
+              </p>
             </div>
-            <h3 className="font-medium text-primary mb-1">
-              {t(`steps.projectType.options.${option.key}.title`)}
-            </h3>
-            <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/60">
-              {t(`steps.projectType.options.${option.key}.description`)}
-            </p>
           </button>
         ))}
       </div>
@@ -954,37 +1028,41 @@ function StepComplexity({
   const options: Complexity[] = ["basic", "standard", "premium"];
   return (
     <div>
-      <h2 className="text-2xl font-normal text-primary text-center mb-8">
-        {t("steps.complexity.title")}
-      </h2>
-      <div className="space-y-4">
+      <StepHeader
+        title={t("steps.complexity.title")}
+        hint={t("steps.complexity.hint")}
+      />
+      <div className="space-y-5">
         {options.map((option, i) => (
           <button
             key={option}
             onClick={() => onSelect(option)}
             className={cn(
               OPTION_BASE,
-              "w-full p-6 rounded-sm text-start flex items-center gap-6",
+              "w-full rounded-sm text-start flex p-3 gap-4",
               selected === option ? OPTION_SELECTED : OPTION_DEFAULT,
             )}
           >
-            <div
-              className={cn(
-                "w-10 h-10 rounded-sm flex items-center justify-center shrink-0 font-mono text-sm leading-normal tracking-wider",
-                selected === option
-                  ? "bg-foreground/20 text-primary"
-                  : "bg-foreground/10 text-primary/70",
-              )}
-            >
-              {i + 1}
-            </div>
-            <div>
-              <h3 className="font-medium text-primary mb-1">
-                {t(`steps.complexity.options.${option}.title`)}
-              </h3>
-              <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/60">
-                {t(`steps.complexity.options.${option}.description`)}
-              </p>
+            <SelectionCheck visible={selected === option} />
+            <div className="p-4 sm:p-5 flex items-center gap-4">
+              <div
+                className={cn(
+                  "w-10 h-10 rounded-sm flex items-center justify-center shrink-0 font-mono text-sm leading-normal tracking-wider",
+                  selected === option
+                    ? "bg-foreground/20 text-primary"
+                    : "bg-foreground/10 text-primary/70",
+                )}
+              >
+                {i + 1}
+              </div>
+              <div>
+                <h3 className="font-medium text-primary mb-2">
+                  {t(`steps.complexity.options.${option}.title`)}
+                </h3>
+                <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/60">
+                  {t(`steps.complexity.options.${option}.description`)}
+                </p>
+              </div>
             </div>
           </button>
         ))}
@@ -1001,26 +1079,30 @@ function StepTimeline({
   const options: Timeline[] = ["urgent", "standard", "flexible"];
   return (
     <div>
-      <h2 className="text-2xl font-normal text-primary text-center mb-8">
-        {t("steps.timeline.title")}
-      </h2>
-      <div className="grid sm:grid-cols-3 gap-4">
+      <StepHeader
+        title={t("steps.timeline.title")}
+        hint={t("steps.timeline.hint")}
+      />
+      <div className="grid sm:grid-cols-3 gap-5">
         {options.map((option) => (
           <button
             key={option}
             onClick={() => onSelect(option)}
             className={cn(
               OPTION_BASE,
-              "p-6 rounded-sm text-center",
+              "rounded-sm text-center p-3",
               selected === option ? OPTION_SELECTED : OPTION_DEFAULT,
             )}
           >
-            <h3 className="font-medium text-primary mb-2">
-              {t(`steps.timeline.options.${option}.title`)}
-            </h3>
-            <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/60">
-              {t(`steps.timeline.options.${option}.description`)}
-            </p>
+            <SelectionCheck visible={selected === option} />
+            <div className="p-4 sm:p-5">
+              <h3 className="font-medium text-primary mb-3">
+                {t(`steps.timeline.options.${option}.title`)}
+              </h3>
+              <p className="text-[clamp(0.9375rem,0.98vw,1rem)] leading-[1.7] text-primary/60">
+                {t(`steps.timeline.options.${option}.description`)}
+              </p>
+            </div>
           </button>
         ))}
       </div>

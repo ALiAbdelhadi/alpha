@@ -247,7 +247,7 @@ export default function PricingPage() {
                       <Link
                         href={TIER_DESTINATION[tier.id]}
                         className="w-full justify-center"
-                        aria-label={`${tier.ctaLabel} — ${tier.buyerLabel}`}
+                        aria-label={`${tier.ctaLabel} - ${tier.buyerLabel}`}
                       >
                         <ArrowLabel>{tier.ctaLabel}</ArrowLabel>
                       </Link>

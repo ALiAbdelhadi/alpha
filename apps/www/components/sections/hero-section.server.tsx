@@ -36,16 +36,11 @@ export async function HeroSectionServer({ locale }: { locale: string }) {
             "radial-gradient(ellipse 70% 40% at 50% -10%, var(--brand-soft), transparent)",
         }}
       />
-
-      {/* SR-only heading for accessibility — visual heading is aria-hidden below */}
       <h1 className="sr-only">
         {title1} {title2}
       </h1>
-
       <Container>
-        <div className="max-w-full sm:max-w-5xl">
-
-          {/* Availability badge — mobile variant (inline, below headline area) */}
+        <div className="max-w-full sm:max-w-5xl lg:py-0 py-12">
           <HeroReveal delay={0.1} className="mb-6 flex items-center gap-2 md:hidden">
             <div className="h-1.5 w-1.5 shrink-0 rounded-full bg-success animate-pulse" />
             <span className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground/70">

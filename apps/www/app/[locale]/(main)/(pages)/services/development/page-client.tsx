@@ -151,7 +151,7 @@ function CtaSection() {
               <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
             </div>
             <span className={cn(monoCaps, "text-muted-foreground/70 mx-auto")}>
-              new-project — bash
+              new-project - bash
             </span>
           </div>
           <div className="grid md:grid-cols-2">

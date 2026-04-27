@@ -63,7 +63,6 @@ export const TrustSection = memo(function TrustSection() {
             {t("body")}
           </p>
         </div>
-        <div className="h-px bg-border mb-5" />
         <div
           ref={gridRef}
           className="grid gap-0 border-l border-r border-border md:grid-cols-3"
@@ -79,7 +78,7 @@ export const TrustSection = memo(function TrustSection() {
               <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] font-medium text-foreground mb-3 tracking-tight">
                 {point.title}
               </h3>
-              <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] text-muted-foreground leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 {point.body}
               </p>
             </div>

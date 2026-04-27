@@ -75,7 +75,7 @@ export function DesignCompareSection() {
         return () => io.disconnect()
     }, [])
 
-    // Qualitative claims — all defensible without measurement
+    // Qualitative claims - all defensible without measurement
     const qualityPoints = [
         {
             label: t("qualityPoint1Label"),
@@ -248,7 +248,7 @@ export function DesignCompareSection() {
                             </div>
                         </div>
 
-                        {/* Qualitative claims — no fabricated numbers */}
+                        {/* Qualitative claims - no fabricated numbers */}
                         <div ref={qualityCardsRef} className="dcs-reveal grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
                             {qualityPoints.map((point) => (
                                 <div
@@ -283,7 +283,7 @@ export function DesignCompareSection() {
     )
 }
 
-// GenericSide and AltruvexSide components unchanged — they are the visual demonstration itself
+// GenericSide and AltruvexSide components unchanged - they are the visual demonstration itself
 function GenericSide({ t }: { t: TFn }) {
     return (
         <div style={{ width: "100%", height: "100%", overflow: "hidden", background: "#f5f5f5", fontFamily: "Arial, Helvetica, sans-serif" }}>
