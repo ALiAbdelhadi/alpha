@@ -60,7 +60,7 @@ function ensureRippleKeyframes() {
       100% { transform: translate(-50%, -50%) scale(28); opacity: 0; }
     }
     .magnetic-ripple {
-      animation: ripple-expand 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation: ripple-expand 400ms ease-out forwards;
     }
   `
   document.head.appendChild(style)
@@ -83,8 +83,6 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
   ) => {
     const internalRef = useRef<HTMLButtonElement>(null)
     const rectRef = useRef<DOMRect | null>(null)
-
-    // Magnetic offset stored as state so transform is recalculated on each render
     const magneticRef = useRef({ x: 0, y: 0 })
     const [, forceUpdate] = useState(0)
 
@@ -106,8 +104,8 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
 
     const Comp = asChild ? Slot : "button"
 
-    // FIX 1: Track magnetic offset in a ref and merge into the single `transform`
-    // inline style so it never conflicts with Tailwind scale utilities.
+    // FIX 1: Track magnetic offset in a ref and use requestAnimationFrame
+    // instead of forceUpdate for smooth, optimized animation
     const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (!internalRef.current || prefersReducedMotion) return
       const rect = rectRef.current ?? internalRef.current.getBoundingClientRect()
@@ -116,7 +114,9 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
         x: (e.clientX - rect.left - rect.width / 2) * 0.15,
         y: (e.clientY - rect.top - rect.height / 2) * 0.15,
       }
-      forceUpdate((n) => n + 1)
+      requestAnimationFrame(() => {
+        forceUpdate((n) => n + 1)
+      })
     }
 
     const handleMouseLeave = () => {
@@ -155,20 +155,18 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (!internalRef.current) return
 
-      // FIX 2: Inject ripple keyframes lazily on first click
       ensureRippleKeyframes()
 
       const rect = internalRef.current.getBoundingClientRect()
       const rippleId = Date.now()
 
-      // FIX 3: Store coordinates relative to button (px values, not raw numbers)
       setRipples((prev) => [
         ...prev,
         { x: e.clientX - rect.left, y: e.clientY - rect.top, id: rippleId },
       ])
       setTimeout(
         () => setRipples((prev) => prev.filter((r) => r.id !== rippleId)),
-        620
+        420
       )
 
       if (hapticEnabled && "vibrate" in navigator) {
@@ -210,9 +208,7 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
         onMouseUp={prefersReducedMotion ? undefined : handleMouseUp}
         className={[
           "relative inline-flex items-center justify-center overflow-hidden rounded-full font-medium",
-          // FIX 4: Removed `contain` — it breaks focus-ring offsets by creating
-          // a new stacking/formatting context that clips the outline.
-          "transition-[background-color,border-color,color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform",
+          "transition-[background-color,border-color,color,box-shadow] duration-300 ease-out will-change-transform",
           "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-foreground/50",
           variants[variant],
           sizes[size],
@@ -223,7 +219,7 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
         style={{
           // eslint-disable-next-line react-hooks/refs
           transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
-          transition: `transform 700ms cubic-bezier(0.16,1,0.3,1), background-color 700ms, border-color 700ms, color 700ms, box-shadow 700ms`,
+          transition: `transform 300ms ease-out, background-color 300ms ease-out, border-color 300ms ease-out, color 300ms ease-out, box-shadow 300ms ease-out`,
         }}
         data-cursor-pointer
         {...props}
