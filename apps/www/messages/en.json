@@ -1107,6 +1107,10 @@
           "finding": {
             "label": "Finding → Action",
             "body": "Instrument first — you cannot safely extract a service whose failure modes you cannot trace. Then Strangler Fig: Auth → Inventory → Orders last."
+          },
+          "action": {
+            "label": "Action",
+            "body": "Run the extraction sequence only after tracing coverage and service ownership are in place. Start with low-dependency domains before high-coupling flows."
           }
         },
         "body": {
@@ -1151,7 +1155,7 @@
         "title": "Technical Audit — Fixed Scope, Fixed Price",
         "description": "A clear first engagement before any rebuild or scale-up. We examine the current system, isolate the technical risk, and convert the findings into an execution-ready roadmap.",
         "priceLabel": "Fixed price",
-        "price": "1,500 EGP",
+        "price": "3,500 EGP",
         "durationLabel": "Duration",
         "duration": "5 business days",
         "includedLabel": "What is included",

@@ -92,7 +92,7 @@ function HeroSection() {
                 <span className="flex items-center justify-center gap-2">
                   {projectRangeCta.label}
                   <svg
-                    aria-hidden="true" // لدعم قارئ الشاشة
+                    aria-hidden="true"
                     className="h-4 w-4 transition-transform duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
                     fill="none"
                     viewBox="0 0 24 24"

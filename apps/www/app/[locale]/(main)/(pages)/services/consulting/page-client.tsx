@@ -65,14 +65,9 @@ function HeroSection() {
 
       <Container>
         <div className="sm:max-w-5xl max-w-full">
-          <span
-            ref={titleRef}
-            className="text-[clamp(3rem,5vw,4.5rem)] leading-[1.02] tracking-[-0.03em] mb-8 font-sans font-light text-foreground select-none"
-          >
-            {t("title")}
-            <br />
-            <h1
-              className="mb-10 font-sans font-normal text-primary leading-[1.03] rtl:leading-[1.2]"
+        <h1
+              ref={titleRef}
+              className="mb-10 font-sans font-normal text-primary leading-[1.03] rtl:leading-[1.2] select-none"
               style={{
                 fontSize: "clamp(44px, 7vw, 96px)",
                 letterSpacing: "-0.025em",
@@ -80,19 +75,21 @@ function HeroSection() {
             >
               {t("title")}
               <br className="hidden sm:block" />
-              <span className="font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold text-foreground/45">
+              <span className="font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold text-foreground/45 block mt-2 sm:mt-0">
                 {t("titleItalic")}
               </span>
             </h1>
+
             <div
               ref={descRef}
               className="mb-12 grid md:grid-cols-[80px_1fr] gap-8 items-start"
             >
-              <div className="h-px w-full bg-foreground/8 mt-3 hidden md:block" />
+              <div className="h-px w-full bg-foreground/8 mt-3 hidden md:block" aria-hidden="true" />
               <p className="text-base text-primary/60 leading-relaxed max-w-[52ch]">
                 {t("description")}
               </p>
             </div>
+
             <div
               ref={ctaRef}
               className="flex flex-col sm:flex-row sm:items-center gap-4"
@@ -103,7 +100,7 @@ function HeroSection() {
                     {auditCta.label}
                     <svg
                       aria-hidden="true"
-                      className="h-4 w-4 transition-transform duration-300 ltr:group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
+                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -122,7 +119,6 @@ function HeroSection() {
                 <Link href="#audit-offer">{t("hero.ctaSecondary")}</Link>
               </MagneticButton>
             </div>
-          </span>
         </div>
       </Container>
 
