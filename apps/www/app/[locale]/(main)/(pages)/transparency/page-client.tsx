@@ -3,7 +3,7 @@
 import { Container } from "@/components/container";
 import { ArrowLabel } from "@/components/directional-link";
 import { MagneticButton } from "@/components/magnetic-button";
-import { ProposalNarrativeBlock } from "@/components/sections/estimator-section";
+import { ProposalNarrativeBlock } from "@/components/sections/transparency-section";
 import {
   Accordion,
   AccordionContent,
@@ -20,8 +20,8 @@ import {
   DeadlineUrgency,
   ProjectType,
   Timeline,
-  useEstimator,
-} from "@/hooks/use-estimator";
+  useTransparency,
+} from "@/hooks/use-transparency";
 import { Link } from "@/i18n/navigation";
 import {
   buildPDFHtml,
@@ -30,7 +30,7 @@ import {
   mapProjectType,
   normalisePhone,
   validatePhone,
-} from "@/lib/estimator-utils";
+} from "@/lib/transparency-utils";
 import { gsap } from "@/lib/gsap";
 import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
 import { cn } from "@/lib/utils";
@@ -45,8 +45,8 @@ const TIER_TO_BUDGET: Record<string, Budget> = {
   flagship: "large",
 };
 
-export default function EstimatorPage() {
-  const t = useTranslations("estimator");
+export default function TransparencyPageClient() {
+  const t = useTranslations("transparency");
   const locale = useLocale();
   const searchParams = useSearchParams();
 
@@ -76,7 +76,7 @@ export default function EstimatorPage() {
     reset,
     canProceed,
     getEstimate,
-  } = useEstimator({ initialBudget: preselectedBudget });
+  } = useTransparency({ initialBudget: preselectedBudget });
 
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
@@ -137,7 +137,7 @@ export default function EstimatorPage() {
     setPhoneError(null);
     setPhoneSubmitting(true);
     try {
-      await fetch(`/${locale}/api/estimator`, {
+      await fetch(`/${locale}/api/transparency`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -363,7 +363,7 @@ export default function EstimatorPage() {
           </div>
         </Container>
       </section>
-      <EstimatorFaqSection t={t} />
+      <TransparencyFaqSection t={t} />
     </div>
   );
 }
@@ -372,7 +372,7 @@ interface StepProps {
   t: (key: string, values?: Record<string, string | number>) => string;
 }
 
-function EstimatorFaqSection({ t }: StepProps) {
+function TransparencyFaqSection({ t }: StepProps) {
   const headerRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body, delay: 0 });
   const contentRef = useReveal<HTMLDivElement>({
     ...DEFAULTS.body,

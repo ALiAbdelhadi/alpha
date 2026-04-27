@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const estimatorLeadSchema = z.object({
+export const transparencyLeadSchema = z.object({
     phone: z.string().regex(/^(\+|00)?[1-9]\d{6,14}$|^01[0125]\d{8}$/, "Invalid phone number"),
     name: z.string().max(120).optional(),
     projectType: z.string().min(1, "Project type is required"),

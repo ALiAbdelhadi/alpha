@@ -9,8 +9,8 @@ import { DEFAULTS, useBatch, useReveal, useText } from "@/lib/motion";
 import { useTranslations } from "next-intl";
 
 const TIER_DESTINATION = {
-  essential: "/estimator?tier=essential",
-  professional: "/estimator?tier=professional",
+  essential: "/transparency?tier=essential",
+  professional: "/transparency?tier=professional",
   flagship: "/schedule",
 } as const;
 

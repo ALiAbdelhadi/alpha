@@ -7,14 +7,14 @@ import {
   calculateQuickEstimate,
   DeliverableProject,
   DeliverableTier,
-  EstimatorTranslator,
+  TransparencyTranslator,
   generateEstimatePdf,
   generateProposalNarrative,
   HOSTING_RENEWAL,
   normalisePhone,
   pickLang,
   validatePhone,
-} from "@/lib/estimator-utils";
+} from "@/lib/transparency-utils";
 import { gsap } from "@/lib/gsap";
 import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
 import { localizeNumbers } from "@/lib/number";
@@ -94,9 +94,9 @@ export const ProposalNarrativeBlock = memo(function ProposalNarrativeBlock({
   );
 });
 
-export const EstimatorSection = memo(function EstimatorSection() {
-  const t = useTranslations("estimator");
-  const translate = t as EstimatorTranslator;
+export const TransparencySection = memo(function TransparencySection() {
+  const t = useTranslations("transparency");
+  const translate = t as TransparencyTranslator;
   const locale = useLocale();
 
   const sectionRef = useRef<HTMLElement>(null);
@@ -226,7 +226,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 10_000);
       try {
-        await fetch(`/${locale}/api/estimator`, {
+        await fetch(`/${locale}/api/transparency`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -301,7 +301,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
   return (
     <section
       suppressHydrationWarning
-      id="estimator"
+      id="transparency"
       ref={sectionRef}
       className="flex w-full items-center pt-(--section-y-top) pb-(--section-y-bottom)"
     >
@@ -690,7 +690,7 @@ export const EstimatorSection = memo(function EstimatorSection() {
                 <ArrowLeft className="h-3.5 w-3.5 ltr:group-hover:-translate-x-1 rtl:group-hover:translate-x-1 transition-transform rtl:-rotate-180" />
                 {t("back")}
               </button>
-              <Link href="/estimator">
+              <Link href="/transparency">
                 <button className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2 text-base font-mono leading-normal tracking-wider group">
                   {t("startOver")}
                 </button>

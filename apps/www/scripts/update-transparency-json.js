@@ -7,45 +7,45 @@ const enPath = path.join(__dirname, '../messages/en.json');
 const ar = JSON.parse(fs.readFileSync(arPath, 'utf-8'));
 const en = JSON.parse(fs.readFileSync(enPath, 'utf-8'));
 
-if (!en.estimator.pdfContent) en.estimator.pdfContent = {};
-if (!ar.estimator.pdfContent) ar.estimator.pdfContent = {};
+if (!en.transparency.pdfContent) en.transparency.pdfContent = {};
+if (!ar.transparency.pdfContent) ar.transparency.pdfContent = {};
 
-en.estimator.pdfContent.projectLabels = {
+en.transparency.pdfContent.projectLabels = {
     "ecommerce": "E-Commerce Platform",
     "corporate": "Corporate Website",
     "custom": "Custom Web Application",
     "performance": "Performance Audit & Optimization"
 };
 
-en.estimator.pdfContent.tierLabels = {
+en.transparency.pdfContent.tierLabels = {
     "small": "Essential",
     "medium": "Professional",
     "large": "Premium",
     "enterprise": "Enterprise"
 };
 
-en.estimator.pdfContent.timelineLabels = {
+en.transparency.pdfContent.timelineLabels = {
     "urgent": "Urgent - Sprint delivery",
     "soon": "Standard - 1–3 months",
     "flexible": "Extended - 3+ months",
     "standard": "Standard - balanced pace"
 };
 
-ar.estimator.pdfContent.projectLabels = {
+ar.transparency.pdfContent.projectLabels = {
     "ecommerce": "منصة تجارة إلكترونية",
     "corporate": "موقع شركة",
     "custom": "تطبيق ويب مخصص",
     "performance": "تدقيق الأداء وتحسينه"
 };
 
-ar.estimator.pdfContent.tierLabels = {
+ar.transparency.pdfContent.tierLabels = {
     "small": "أساسي",
     "medium": "احترافي",
     "large": "ممتاز",
     "enterprise": "للمؤسسات"
 };
 
-ar.estimator.pdfContent.timelineLabels = {
+ar.transparency.pdfContent.timelineLabels = {
     "urgent": "عاجل - تسليم سريع",
     "soon": "قياسي - ١–٣ أشهر",
     "flexible": "ممتد - ٣ أشهر أو أكثر",
@@ -430,8 +430,8 @@ const deliverablesAr = {
   }
 };
 
-en.estimator.pdfContent.deliverables = deliverablesEn;
-ar.estimator.pdfContent.deliverables = deliverablesAr;
+en.transparency.pdfContent.deliverables = deliverablesEn;
+ar.transparency.pdfContent.deliverables = deliverablesAr;
 
 fs.writeFileSync(enPath, JSON.stringify(en, null, 4));
 fs.writeFileSync(arPath, JSON.stringify(ar, null, 4));

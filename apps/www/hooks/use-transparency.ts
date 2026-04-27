@@ -13,7 +13,7 @@ export type DeadlineUrgency =
   | null;
 export type Budget = "small" | "medium" | "large" | "custom" | null;
 
-interface EstimatorState {
+interface TransparencyState {
   step: number;
   budget: Budget;
   brandIdentity: BrandIdentity;
@@ -97,15 +97,15 @@ const TIMELINE_WEEK_MULTIPLIERS = {
   flexible: 1.15,
 };
 
-interface UseEstimatorOptions {
+interface UseTransparencyOptions {
   initialBudget?: Budget | null;
 }
 
-export function useEstimator({
+export function useTransparency({
   initialBudget = null,
-}: UseEstimatorOptions = {}) {
+}: UseTransparencyOptions = {}) {
   const skipBudget = initialBudget !== null;
-  const createInitialState = useCallback((): EstimatorState => ({
+  const createInitialState = useCallback((): TransparencyState => ({
     step: 1,
     budget: initialBudget ?? null,
     brandIdentity: null,
@@ -116,7 +116,7 @@ export function useEstimator({
     timeline: null,
   }), [initialBudget]);
 
-  const [state, setState] = useState<EstimatorState>(createInitialState);
+  const [state, setState] = useState<TransparencyState>(createInitialState);
 
   const setBudget = useCallback((v: Budget) => {
     setState((prev) => ({ ...prev, budget: v }));
@@ -220,3 +220,5 @@ export function useEstimator({
     getEstimate,
   };
 }
+
+export const useTransparencyFlow = useTransparency;

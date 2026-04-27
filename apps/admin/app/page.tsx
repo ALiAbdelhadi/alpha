@@ -91,7 +91,7 @@ export default function Home() {
                   Leads
                 </h2>
                 <p className="text-sm leading-6 text-zinc-600 dark:text-zinc-400">
-                  Track and manage potential clients from the estimator tool
+                  Track and manage potential clients from the transparency flow
                 </p>
               </div>
               <div className="flex items-center gap-2 text-sm font-medium text-orange-600 dark:text-orange-400">

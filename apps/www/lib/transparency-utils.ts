@@ -9,10 +9,10 @@ export type DeliverableProject =
   | "custom"
   | "performance";
 
-export type EstimatorTranslationValues = Record<string, string | number>;
+export type TransparencyTranslationValues = Record<string, string | number>;
 
-export type EstimatorTranslator = {
-  (key: string, values?: EstimatorTranslationValues): string;
+export type TransparencyTranslator = {
+  (key: string, values?: TransparencyTranslationValues): string;
   raw?: (key: string) => unknown;
 };
 
@@ -548,7 +548,7 @@ const DELIVERABLES: Record<
 };
 interface PDFParams {
   locale: string;
-  t: EstimatorTranslator;
+  t: TransparencyTranslator;
   projectType: DeliverableProject;
   tier: DeliverableTier;
   timelineKey: string;

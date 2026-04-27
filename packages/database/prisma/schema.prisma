@@ -240,7 +240,7 @@ model Notification {
     @@map("notifications")
 }
 
-model EstimatorLead {
+model TransparencyLead {
     id          String    @id @default(uuid())
     phone       String
     name        String?
@@ -256,7 +256,7 @@ model EstimatorLead {
 
     @@index([phone])
     @@index([createdAt])
-    @@map("estimator_leads")
+    @@map("transparency_leads")
 }
 
 model RateLimitBucket {

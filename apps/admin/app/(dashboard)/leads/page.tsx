@@ -18,12 +18,12 @@ export default async function LeadsPage({
   const skip = (page - 1) * pageSize
 
   const [leads, total] = await Promise.all([
-    prisma.estimatorLead.findMany({
+    prisma.transparencyLead.findMany({
       orderBy: { createdAt: 'desc' },
       skip,
       take: pageSize
     }),
-    prisma.estimatorLead.count()
+    prisma.transparencyLead.count()
   ])
 
   const totalPages = Math.ceil(total / pageSize)
@@ -32,8 +32,8 @@ export default async function LeadsPage({
     <div className="space-y-10">
       <div className="flex justify-between items-end">
         <div>
-          <h1 className="text-3xl font-normal text-primary mb-2">Estimator Leads</h1>
-          <p className="text-sm text-primary/50">Manage and contact all prospective clients who used the estimator.</p>
+          <h1 className="text-3xl font-normal text-primary mb-2">Transparency Leads</h1>
+          <p className="text-sm text-primary/50">Manage and contact all prospective clients who used the transparency flow.</p>
         </div>
         <div className="flex gap-3">
           <ExportCsvButton leads={leads} />
@@ -48,7 +48,7 @@ export default async function LeadsPage({
                 <th className="px-6 py-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/40">Timestamp</th>
                 <th className="px-6 py-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/40">Contact Info</th>
                 <th className="px-6 py-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/40">Project Summary</th>
-                <th className="px-6 py-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/40">Estimation</th>
+                <th className="px-6 py-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/40">Transparency Range</th>
                 <th className="px-6 py-4 font-mono text-[10px] uppercase tracking-[0.2em] text-primary/40 text-right">Actions</th>
               </tr>
             </thead>
@@ -121,7 +121,7 @@ export default async function LeadsPage({
                     <div className="flex flex-col items-center gap-2">
                       <Users className="h-8 w-8 text-primary/10" />
                       <p className="text-primary/30 font-medium">No leads found in the database.</p>
-                      <p className="text-xs text-primary/20">Check back later or test the estimator tool yourself.</p>
+                      <p className="text-xs text-primary/20">Check back later or test the transparency flow yourself.</p>
                     </div>
                   </td>
                 </tr>

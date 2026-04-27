@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { z, ZodError } from "zod"
 import { enforceRateLimit } from "@/lib/rate-limit"
 
-const estimatorLeadSchema = z.object({
+const transparencyLeadSchema = z.object({
     phone: z.string().regex(/^\+?\d{8,15}$/, "Invalid phone number"),
     name: z.string().max(120).optional(),
     projectType: z.enum(["ecommerce", "corporate", "custom", "performance"]),
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     try {
         const rl = await enforceRateLimit(request, {
             scope: "public_api",
-            route: "estimator",
+            route: "transparency",
             limit: 10,
             windowSeconds: 60 * 60,
         })
@@ -34,9 +34,9 @@ export async function POST(request: NextRequest) {
         }
 
         const body = await request.json()
-        const data = estimatorLeadSchema.parse(body)
+        const data = transparencyLeadSchema.parse(body)
 
-        await prisma.estimatorLead.create({
+        await prisma.transparencyLead.create({
             data: {
                 phone: data.phone,       
                 name: data.name,
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
             )
         }
         if (process.env.NODE_ENV !== "production") {
-            console.error("Estimator lead error:", error)
+            console.error("Transparency lead error:", error)
         }
         return NextResponse.json(
             { success: false, message: "An unexpected error occurred" },

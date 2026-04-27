@@ -1,4 +1,4 @@
-import { estimatorLeadSchema } from "@/lib/validations/estimator-lead"
+import { transparencyLeadSchema } from "@/lib/validations/transparency-lead"
 import { prisma } from "@repo/database"
 import { NextRequest, NextResponse } from "next/server"
 import { ZodError } from "zod"
@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     try {
         const rl = await enforceRateLimit(request, {
             scope: "public_api",
-            route: "estimator_lead",
+            route: "transparency_lead",
             limit: 5,
             windowSeconds: 60 * 60,
         })
@@ -24,9 +24,9 @@ export async function POST(request: NextRequest) {
 
         const body = await request.json()
 
-        const validatedData = estimatorLeadSchema.parse(body)
+        const validatedData = transparencyLeadSchema.parse(body)
 
-        await prisma.estimatorLead.create({
+        await prisma.transparencyLead.create({
             data: {
                 phone: validatedData.phone,
                 name: validatedData.name,
@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
             )
         }
         if (process.env.NODE_ENV !== "production") {
-            console.error("Estimator lead error:", error)
+            console.error("Transparency lead error:", error)
         }
         return NextResponse.json(
             { success: false, message: "An unexpected error occurred" },

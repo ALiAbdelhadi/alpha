@@ -7,7 +7,7 @@ export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
 type LocalizedSeoEntry = {
   breadcrumb: string;
   description: string;
-  keywords: string[];
+  keywords: readonly string[];
   title: string;
 };
 
@@ -162,32 +162,32 @@ export const PAGE_METADATA = {
     },
     path: "/contact",
   },
-  estimator: {
+  transparency: {
     ar: {
-      breadcrumb: "مقدّر المشروع",
+      breadcrumb: "الشفافية",
       description:
-        "قدّر نطاق موقع مخصص أو بوابة أو بناء منتج قبل أول مكالمة. استخدم مقدّر Altruvex المبني على التعقيد الهندسي الحقيقي.",
+        "حدّد نطاق موقع مخصص أو بوابة أو بناء منتج قبل أول مكالمة. استخدم تجربة الشفافية من Altruvex المبنية على التعقيد الهندسي الحقيقي.",
       keywords: [
         "تقدير تكلفة تطوير موقع",
         "تسعير تطوير ويب مخصص",
-        "مقدّر مشروع Next.js",
+        "شفافية مشروع Next.js",
         "نطاق بوابة أعمال",
       ],
-      title: "قدّر نطاق بناء ويب مخصص",
+      title: "الشفافية في نطاق وتكلفة البناء",
     },
     en: {
-      breadcrumb: "Estimator",
+      breadcrumb: "Transparency",
       description:
-        "Estimate the range for a custom website, portal, or product build before the first call. Use Altruvex's scope-based web project estimator.",
+        "Scope the range for a custom website, portal, or product build before the first call. Use Altruvex's Transparency experience based on real engineering complexity.",
       keywords: [
-        "web development cost estimator",
+        "transparent web development scoping",
         "custom web project estimate",
         "next.js project pricing",
         "portal build estimate",
       ],
-      title: "Estimate a Custom Web Build",
+      title: "Transparent Custom Web Build Scoping",
     },
-    path: "/estimator",
+    path: "/transparency",
   },
   home: {
     ar: {
@@ -627,7 +627,7 @@ export type RouteMetaKey = keyof typeof PAGE_METADATA;
 type MetadataOverrides = {
   canonicalPath?: string;
   description?: string;
-  keywords?: string[];
+  keywords?: readonly string[];
   modifiedTime?: string;
   openGraphType?: "article" | "website";
   publishedTime?: string;
@@ -709,8 +709,7 @@ export function generateRouteMetadata(
     ...(overrides.keywords ?? []),
   ]);
   const ogImageUrl = buildOgImageUrl(loc);
-  const pageRobots =
-    "robots" in PAGE_METADATA[key] ? PAGE_METADATA[key].robots : undefined;
+  const pageRobots = (PAGE_METADATA[key] as PageMetadataEntry).robots;
   const robots = overrides.robots ?? pageRobots ?? METADATA_DEFAULTS.robots;
   const openGraphType = overrides.openGraphType ?? "website";
 

@@ -4,8 +4,8 @@ import { buildFaqPageSchemas, buildPageSchemas } from "@/lib/schema";
 import { getTranslations } from "next-intl/server";
 import PageClient from "./page-client";
 
-const metaKey: RouteMetaKey = "estimator";
-const pathSuffix = "/estimator";
+const metaKey: RouteMetaKey = "transparency";
+const pathSuffix = "/transparency";
 
 export async function generateMetadata({
   params,
@@ -16,13 +16,13 @@ export async function generateMetadata({
   return generateRouteMetadata(locale, metaKey, pathSuffix);
 }
 
-export default async function EstimatorPage({
+export default async function TransparencyPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "estimator.faq" });
+  const t = await getTranslations({ locale, namespace: "transparency.faq" });
   const faqEntries = ["1", "2", "3", "4"].map((key) => ({
     answer: t(`a${key}`),
     question: t(`q${key}`),

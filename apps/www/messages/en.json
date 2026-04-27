@@ -10,7 +10,7 @@
     "pricing": "Pricing",
     "standards": "Standards",
     "writing": "Writing",
-    "estimator": "Estimator",
+    "transparency": "Transparency",
     "schedule": "Schedule",
     "getStarted": "Start a Project",
     "language": "Language",
@@ -615,7 +615,7 @@
         "title": "Explore",
         "links": {
           "pricing": "Pricing",
-          "estimator": "Estimator",
+          "transparency": "Transparency",
           "writing": "Writing",
           "contact": "Contact"
         }
@@ -704,7 +704,7 @@
       "architecture": "Talk Through the Architecture",
       "maintenancePlans": "See Maintenance Plans",
       "pricingEssential": "Get Pricing for This Scope",
-      "pricingProfessional": "Continue in Estimator",
+      "pricingProfessional": "Continue in Transparency",
       "pricingFlagship": "Talk Through the Architecture",
       "flagshipBuild": "Plan a Build Like This"
     },
@@ -735,7 +735,7 @@
       "title": "Altruvex.com — The Site Itself Had to Be the Proof",
       "summary": "A bilingual proof build designed to qualify leads, demonstrate engineering quality, and show what precision Arabic/English delivery looks like in production.",
       "problem": "In a market where agencies compete on price, Altruvex needed its own site to prove technical quality without borrowing enterprise credibility it had not yet earned.",
-      "solution": "We built a bilingual Arabic/English site on a custom Next.js stack with native RTL architecture, performance-first frontend engineering, and a pricing estimator that qualifies leads before the first conversation.",
+      "solution": "We built a bilingual Arabic/English site on a custom Next.js stack with native RTL architecture, performance-first frontend engineering, and a transparency flow that qualifies leads before the first conversation.",
       "outcome": "Sub-1s mobile TTI, RTL switching under 16ms with zero layout shift, and leads that arrive pre-qualified — reducing discovery-call time by cutting scope mismatches before the first sentence.",
       "labels": {
         "problem": "01 - Problem",
@@ -779,12 +779,12 @@
       "essential": {
         "buyerLabel": "Business Website",
         "internalLabel": "Static System",
-        "nextStep": "Next step: open the estimator and scope the right website range for your business."
+        "nextStep": "Next step: open Transparency and scope the right website range for your business."
       },
       "professional": {
         "buyerLabel": "Integrated Platform",
         "internalLabel": "Connected System",
-        "nextStep": "Next step: open the estimator and scope the right integrated platform range for your business."
+        "nextStep": "Next step: open Transparency and scope the right integrated platform range for your business."
       },
       "flagship": {
         "buyerLabel": "Custom Product / Portal",
@@ -792,10 +792,10 @@
         "nextStep": "Next step: book a technical call to plan the custom architecture."
       }
     },
-    "estimator": {
-      "eyebrow": "Estimator",
+    "transparency": {
+      "eyebrow": "Transparency",
       "title": "Get a realistic project range before the first call.",
-      "body": "The estimator gives teams a calibrated baseline for custom websites, portals, and technical scopes — before anyone has to get on a sales call.",
+      "body": "Transparency gives teams a calibrated baseline for custom websites, portals, and technical scopes — before anyone has to get on a sales call.",
       "checklist": [
         "3-minute qualification flow",
         "Range shaped by real custom-development scope",
@@ -1313,11 +1313,11 @@
       }
     }
   },
-  "estimator": {
-    "badge": "06 - Project Estimator",
+  "transparency": {
+    "badge": "06 - Project Transparency",
     "title": "Scope your project in 3 minutes.",
     "subtitle": "Answer a few questions and receive an investment range calibrated to real custom-development scope — not off-the-shelf templates.",
-    "description": "No forms or sales calls required to get a serious baseline. The estimator is built to help buyers scope custom websites, portals, and operational systems with more clarity before the first conversation.",
+    "description": "No forms or sales calls required to get a serious baseline. Transparency is built to help buyers scope custom websites, portals, and operational systems with more clarity before the first conversation.",
     "preselected": "Preselected Tier",
     "tierNames": {
       "essential": "Static System",
@@ -1791,7 +1791,7 @@
       "q1": "Why custom engineering instead of WordPress or Shopify?",
       "a1": "Custom development gives you complete technical ownership, no platform constraints, and fundamentally better performance. A system built for your business logic loads faster, ranks higher, and converts more visitors than any plugin-dependent platform.",
       "q2": "How accurate is this estimate?",
-      "a2": "The estimator is calibrated against current custom-development pricing and our delivery history. It is directionally accurate for scope planning — final pricing is confirmed after a discovery session.",
+      "a2": "Transparency is calibrated against current custom-development pricing and our delivery history. It is directionally accurate for scope planning — final pricing is confirmed after a discovery session.",
       "q3": "Do you offer ongoing support?",
       "a3": "Yes. All projects include a 30-day post-launch warranty for critical fixes. Structured maintenance retainers are available for teams that need ongoing coverage, monitoring, and a predictable technical partner.",
       "q4": "What happens after I request the PDF?",
@@ -1810,7 +1810,7 @@
     "label": "12 - Investment Logic",
     "title": "Pricing is based on system depth and engineering complexity.",
     "titleItalic": "Nothing more.",
-    "description": "The tiers below help buyers self-qualify quickly before opening the full estimator.",
+    "description": "The tiers below help buyers self-qualify quickly before opening full Transparency.",
     "recommended": "Most common starting point",
     "faq": {
       "title": "Pricing Questions",
@@ -1998,7 +1998,7 @@
     "sections": {
       "1": {
         "title": "1. Information We Collect",
-        "description": "When you use our contact form or project estimator, we collect the following information:",
+        "description": "When you use our contact form or Transparency flow, we collect the following information:",
         "contactLabel": "Contact Information:",
         "contactValue": "Name, email address, phone number",
         "projectLabel": "Project Details:",
@@ -2046,7 +2046,7 @@
       },
       "2": {
         "title": "2. Project Estimates",
-        "description": "Estimates provided through our online estimator tool are preliminary and non-binding. Final pricing and timelines are determined after a detailed requirements session and formalized in a signed project proposal."
+        "description": "Estimates provided through our online Transparency tool are preliminary and non-binding. Final pricing and timelines are determined after a detailed requirements session and formalized in a signed project proposal."
       },
       "3": {
         "title": "3. Intellectual Property",
@@ -2115,7 +2115,7 @@
       "year": "2025",
       "summary": "A bilingual Arabic/English proof build designed to demonstrate technical quality, native RTL execution, and lead qualification before the first call.",
       "problem": "In a market where agencies compete on price, Altruvex needed its own site to prove technical quality without borrowing enterprise credibility it had not yet earned.",
-      "solution": "We built a bilingual Arabic/English site on a custom Next.js stack with native RTL architecture, performance-first frontend engineering, and a pricing estimator that qualifies leads before the first conversation.",
+      "solution": "We built a bilingual Arabic/English site on a custom Next.js stack with native RTL architecture, performance-first frontend engineering, and a transparency flow that qualifies leads before the first conversation.",
       "outcome": "Sub-1s mobile TTI, RTL switching in under 16ms with zero layout shift, and leads that arrive pre-qualified — with scope and budget already mapped before the first call begins.",
       "techStack": [
         "Next.js 15",
@@ -2139,7 +2139,7 @@
         },
         {
           "label": "Pre-qualified leads",
-          "value": "Estimator-first"
+          "value": "Transparency-first"
         }
       ]
     },

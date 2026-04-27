@@ -26,7 +26,7 @@ const COMMERCIAL_CTAS: Record<
   CommercialCtaDefinition
 > = {
   projectRange: {
-    href: "/estimator",
+    href: "/transparency",
     label: {
       ar: "احصل على نطاق مشروعك",
       en: "Get Your Project Range",
@@ -68,14 +68,14 @@ const COMMERCIAL_CTAS: Record<
     },
   },
   pricingEssential: {
-    href: "/estimator?tier=essential",
+    href: "/transparency?tier=essential",
     label: {
       ar: "احصل على تسعير هذا النطاق",
       en: "Get Pricing for This Scope",
     },
   },
   pricingProfessional: {
-    href: "/estimator?tier=professional",
+    href: "/transparency?tier=professional",
     label: {
       ar: "خطط هذا المشروع",
       en: "Plan This Build",
@@ -89,7 +89,7 @@ const COMMERCIAL_CTAS: Record<
     },
   },
   flagshipBuild: {
-    href: "/estimator?tier=professional",
+    href: "/transparency?tier=professional",
     label: {
       ar: "خطط مشروعًا بهذا المستوى",
       en: "Plan a Build Like This",
