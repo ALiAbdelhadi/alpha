@@ -15,15 +15,15 @@ import "../globals.css";
 
 const vazirmatn = Vazirmatn({
   subsets: ["arabic"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600"],
   variable: "--font-vazirmatn",
   display: "swap",
-  preload: true,
+  preload: false,
 });
 
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600"],
   variable: "--font-inter",
   display: "swap",
   preload: true,
@@ -31,10 +31,10 @@ const inter = Inter({
 
 const outfit = Outfit({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "600"],
   variable: "--font-outfit",
   display: "swap",
-  preload: true,
+  preload: false,
 });
 
 type Props = {
@@ -49,6 +49,7 @@ export default async function RootLayout({ children, params }: Props) {
   const headersList = await headers();
   const userAgent = headersList.get("user-agent") || "";
   const isBot = /Lighthouse|Googlebot|Chrome-Lighthouse|Speed Insights|PageSpeed|GTmetrix/i.test(userAgent);
+  const primaryFontVariable = locale === "ar" ? vazirmatn.variable : inter.variable;
 
   const SpeedInsights = isVercel
     ? (await import("@vercel/speed-insights/next")).SpeedInsights
@@ -74,8 +75,7 @@ export default async function RootLayout({ children, params }: Props) {
         suppressHydrationWarning
         className={cn(
           "min-h-screen flex flex-col antialiased overflow-x-auto",
-          vazirmatn.variable,
-          inter.variable,
+          primaryFontVariable,
           outfit.variable,
         )}
       >
@@ -85,12 +85,9 @@ export default async function RootLayout({ children, params }: Props) {
         >
           Skip to main content
         </a>
-        <script
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: `document.documentElement.setAttribute('data-js', 'enabled');(function(){try{var c=sessionStorage.getItem('Altruvex_initial_load_complete');if(c){document.documentElement.setAttribute('data-initial-load','complete')}}catch(e){}})();`,
-          }}
-        />
+        <Script id="boot-flags" strategy="beforeInteractive">
+          {`document.documentElement.setAttribute('data-js','enabled');(function(){try{var c=sessionStorage.getItem('Altruvex_initial_load_complete');if(c){document.documentElement.setAttribute('data-initial-load','complete')}}catch(e){}})();`}
+        </Script>
         <JsonLd schemas={buildGlobalSchemas(locale)} />
         <NextIntlClientProvider>
           <Providers isBot={isBot}>

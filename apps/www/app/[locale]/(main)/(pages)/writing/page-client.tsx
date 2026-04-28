@@ -4,14 +4,20 @@ import { Container } from "@/components/container";
 import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
 import { Link } from "@/i18n/navigation";
 import { gsap } from "@/lib/gsap";
+import type { ArticleListItem } from "@/types/mdx";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
 
-export default function WritingPage() {
+type WritingPageClientProps = {
+  articles: ArticleListItem[];
+  locale: "en" | "ar";
+};
+
+export default function WritingPage({ articles, locale }: WritingPageClientProps) {
   return (
     <div className="relative min-h-screen w-full">
       <OpeningSection />
-      <ListSection />
+      <ListSection articles={articles} locale={locale} />
     </div>
   );
 }
@@ -59,8 +65,7 @@ function OpeningSection() {
   );
 }
 
-function ListSection() {
-  const tArticles = useTranslations("writing.articles");
+function ListSection({ articles, locale }: WritingPageClientProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -78,25 +83,6 @@ function ListSection() {
       });
     });
   }, []);
-
-  const articles = [
-    {
-      slug: "why-not-wordpress",
-      date: "November 2024",
-      readTime: "6 min read",
-    },
-    { slug: "technical-debt", date: "October 2024", readTime: "10 min read" },
-    {
-      slug: "evaluating-developers",
-      date: "September 2024",
-      readTime: "14 min read",
-    },
-    {
-      slug: "multilingual-architecture",
-      date: "August 2024",
-      readTime: "6 min read",
-    },
-  ];
 
   return (
     <section
@@ -135,16 +121,24 @@ function ListSection() {
                       letterSpacing: "-0.015em",
                     }}
                   >
-                    {tArticles(`${article.slug}.title`)}
+                    {article.frontmatter.title}
                   </h2>
                   <p className="text-base text-primary/60 leading-relaxed max-w-[52ch]">
-                    {tArticles(`${article.slug}.excerpt`)}
+                    {article.frontmatter.excerpt}
                   </p>
                 </div>
                 <div className="flex items-center gap-3 font-mono text-sm leading-normal tracking-wider uppercase text-muted-foreground/70 shrink-0 pt-1">
-                  <span>{article.date}</span>
+                  <span>
+                    {new Date(article.frontmatter.date).toLocaleDateString(
+                      locale,
+                      {
+                        year: "numeric",
+                        month: "long",
+                      },
+                    )}
+                  </span>
                   <span>·</span>
-                  <span>{article.readTime}</span>
+                  <span>{article.frontmatter.readTime}</span>
                 </div>
               </div>
             </Link>

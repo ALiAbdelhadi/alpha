@@ -73,6 +73,10 @@ export const mdxComponents: MDXComponents = {
         width={w}
         height={h}
         sizes="(max-width: 768px) 100vw, min(896px, 75vw)"
+        loading="lazy"
+        decoding="async"
+        fetchPriority="low"
+        quality={75}
         className="my-8 h-auto w-full max-w-3xl rounded-lg"
       />
     );

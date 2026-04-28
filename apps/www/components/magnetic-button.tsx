@@ -1,7 +1,7 @@
 "use client"
 
 import { Slot } from "@radix-ui/react-slot"
-import React, { forwardRef, useCallback, useRef, useState, useSyncExternalStore } from "react"
+import React, { forwardRef, useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react"
 
 type ButtonVariant = "primary" | "secondary" | "ghost"
 type ButtonSize = "default" | "lg"
@@ -84,7 +84,8 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
     const internalRef = useRef<HTMLButtonElement>(null)
     const rectRef = useRef<DOMRect | null>(null)
     const magneticRef = useRef({ x: 0, y: 0 })
-    const [, forceUpdate] = useState(0)
+    const isPressedRef = useRef(false)
+    const rafRef = useRef<number | null>(null)
 
     const mergedRef = useMergedRef(internalRef, forwardedRef)
 
@@ -104,8 +105,27 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
 
     const Comp = asChild ? Slot : "button"
 
-    // FIX 1: Track magnetic offset in a ref and use requestAnimationFrame
-    // instead of forceUpdate for smooth, optimized animation
+    useEffect(() => {
+      return () => {
+        if (rafRef.current !== null) {
+          cancelAnimationFrame(rafRef.current)
+        }
+      }
+    }, [])
+
+    const flushTransform = useCallback(() => {
+      rafRef.current = null
+      if (!internalRef.current) return
+      const { x, y } = magneticRef.current
+      const scale = isPressedRef.current && !prefersReducedMotion ? 0.95 : 1
+      internalRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`
+    }, [prefersReducedMotion])
+
+    const scheduleTransform = useCallback(() => {
+      if (rafRef.current !== null) return
+      rafRef.current = requestAnimationFrame(flushTransform)
+    }, [flushTransform])
+
     const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (!internalRef.current || prefersReducedMotion) return
       const rect = rectRef.current ?? internalRef.current.getBoundingClientRect()
@@ -114,22 +134,29 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
         x: (e.clientX - rect.left - rect.width / 2) * 0.15,
         y: (e.clientY - rect.top - rect.height / 2) * 0.15,
       }
-      requestAnimationFrame(() => {
-        forceUpdate((n) => n + 1)
-      })
+      scheduleTransform()
     }
 
     const handleMouseLeave = () => {
       if (prefersReducedMotion) return
       magneticRef.current = { x: 0, y: 0 }
+      isPressedRef.current = false
       setIsPressed(false)
-      forceUpdate((n) => n + 1)
+      scheduleTransform()
     }
 
     const handleMouseDown = () => {
-      if (!prefersReducedMotion) setIsPressed(true)
+      if (!prefersReducedMotion) {
+        isPressedRef.current = true
+        setIsPressed(true)
+        scheduleTransform()
+      }
     }
-    const handleMouseUp = () => setIsPressed(false)
+    const handleMouseUp = () => {
+      isPressedRef.current = false
+      setIsPressed(false)
+      scheduleTransform()
+    }
 
     const playClickSound = () => {
       try {
@@ -194,9 +221,6 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
       lg: "min-h-11 min-w-11 px-8 py-3.5 text-base",
     }
 
-    const { x, y } = magneticRef.current
-    const scale = isPressed && !prefersReducedMotion ? 0.95 : 1
-
     return (
       <Comp
         ref={mergedRef}
@@ -217,8 +241,7 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
           .filter(Boolean)
           .join(" ")}
         style={{
-          // eslint-disable-next-line react-hooks/refs
-          transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
+          transform: `translate3d(0px, 0px, 0) scale(${isPressed && !prefersReducedMotion ? 0.95 : 1})`,
           transition: `transform 300ms ease-out, background-color 300ms ease-out, border-color 300ms ease-out, color 300ms ease-out, box-shadow 300ms ease-out`,
         }}
         data-cursor-pointer
@@ -227,10 +250,6 @@ export const MagneticButton = forwardRef<HTMLButtonElement, MagneticButtonProps>
         <span className="relative z-10 flex items-center justify-center gap-2">
           {children}
         </span>
-
-        {/* FIX 6: Use `left`/`top` as px strings and rely on the injected
-            CSS class for the keyframe animation instead of an undefined
-            Tailwind `animate-ripple` utility. */}
         {!prefersReducedMotion &&
           ripples.map((ripple) => (
             <span

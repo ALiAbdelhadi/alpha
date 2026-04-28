@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/seo/json-ld";
+import { getAllArticles } from "@/lib/mdx";
 import { generateRouteMetadata, type RouteMetaKey } from "@/lib/metadata";
 import { buildPageSchemas } from "@/lib/schema";
 import PageClient from "./page-client";
@@ -21,11 +22,12 @@ export default async function WritingPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const articles = await getAllArticles(locale === "ar" ? "ar" : "en");
 
   return (
     <>
       <JsonLd schemas={buildPageSchemas(locale, metaKey)} />
-      <PageClient />
+      <PageClient articles={articles} locale={locale === "ar" ? "ar" : "en"} />
     </>
   );
 }

@@ -119,6 +119,8 @@ function buildBreadcrumbSchema(
 }
 
 function buildOrganizationSchema(): JsonLdSchema {
+  const socialProfiles = Object.values(SITE_CONFIG.social);
+
   return {
     "@context": "https://schema.org",
     "@id": ORGANIZATION_ID,
@@ -148,7 +150,7 @@ function buildOrganizationSchema(): JsonLdSchema {
     ],
     logo: `${SITE_CONFIG.url}/apple-touch-icon.png`,
     name: SITE_CONFIG.name,
-    sameAs: [SITE_CONFIG.social.linkedin],
+    sameAs: socialProfiles,
     telephone: SITE_CONFIG.phone,
     url: SITE_CONFIG.url,
   };
@@ -192,6 +194,14 @@ function buildWebsiteSchema(locale: SupportedLocale): JsonLdSchema {
     name: SITE_CONFIG.name,
     publisher: {
       "@id": ORGANIZATION_ID,
+    },
+    potentialAction: {
+      "@type": "SearchAction",
+      "query-input": "required name=search_term_string",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${getLocalizedUrl(locale, "/writing")}?q={search_term_string}`,
+      },
     },
     url: getLocalizedUrl(locale, "/"),
   };
@@ -323,6 +333,9 @@ function buildArticleSchema(
     "@type": "Article",
     articleSection: "Web Engineering",
     author: {
+      "@id": ORGANIZATION_ID,
+    },
+    creator: {
       "@type": "Person",
       name: SITE_CONFIG.founder.name,
       sameAs: SITE_CONFIG.founder.linkedin,

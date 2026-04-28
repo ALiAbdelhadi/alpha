@@ -1,5 +1,7 @@
 "use client"
 
+import { useFirstInteraction } from "@/hooks/use-first-interaction"
+import { useIdleMount } from "@/hooks/use-idle-mount"
 import { ThemeProvider } from "@/components/providers/theme-provider"
 import { ThemeScript } from "@/components/theme-script"
 import dynamic from "next/dynamic"
@@ -26,17 +28,24 @@ const SmoothScrollLazy = dynamic(
 )
 
 export function LayoutEffects({ children }: { children: ReactNode }) {
-  return (
-    <SmoothScrollLazy>
-      <InitialLoaderLazy />
+  const idleMounted = useIdleMount({ timeout: 1200 })
+  const hasInteracted = useFirstInteraction()
+  const shouldMountNonCritical = idleMounted || hasInteracted
+  const content = (
+    <>
+      {shouldMountNonCritical ? <InitialLoaderLazy /> : null}
       <ThemeScript />
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
         <Suspense fallback={null}>
-          <CustomCursorLazy />
+          {shouldMountNonCritical ? <CustomCursorLazy /> : null}
         </Suspense>
         {children}
-        <ExitIntentLazy />
+        {shouldMountNonCritical ? <ExitIntentLazy /> : null}
       </ThemeProvider>
-    </SmoothScrollLazy>
+    </>
+  )
+
+  return (
+    shouldMountNonCritical ? <SmoothScrollLazy>{content}</SmoothScrollLazy> : content
   )
 }

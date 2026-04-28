@@ -39,8 +39,15 @@ export const SITE_CONFIG = {
   name: "Altruvex",
   phone: "+20 102 312 5493",
   social: {
-    linkedin: "https://www.linkedin.com/in/ali-abdelhadi-65094b283/",
+    facebook: "https://www.facebook.com/profile.php?id=61580710300593",
+    github: "https://github.com/altruvex/www",
+    instagram: "https://www.instagram.com/altruvex/",
+    linkedin: "https://www.linkedin.com/company/altruvex/",
+    threads: "https://www.threads.com/@altruvex",
+    x: "https://x.com/altruvex",
+    dribbble: "https://dribbble.com/altruvex",
   },
+  twitterHandle: "@altruvex",
   url: process.env.NEXT_PUBLIC_APP_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "https://altruvex.com"),
 } as const;
 
@@ -751,14 +758,22 @@ export function generateRouteMetadata(
     description,
     keywords,
     metadataBase: new URL(SITE_CONFIG.url ?? "https://altruvex.com"),
+    verification: {
+      google: process.env.GOOGLE_SITE_VERIFICATION,
+      other: process.env.BING_SITE_VERIFICATION
+        ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION }
+        : undefined,
+    },
     openGraph,
     publisher: SITE_CONFIG.name,
     robots,
     title,
     twitter: {
       card: "summary_large_image",
+      creator: SITE_CONFIG.twitterHandle,
       description,
       images: [ogImageUrl],
+      site: SITE_CONFIG.twitterHandle,
       title,
     },
   };

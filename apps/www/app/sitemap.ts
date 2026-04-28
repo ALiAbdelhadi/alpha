@@ -39,10 +39,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   } as const;
 
   const sitemapEntries: MetadataRoute.Sitemap = [];
+  const buildAlternates = (path: string) => ({
+    languages: Object.fromEntries(
+      SUPPORTED_LOCALES.map((locale) => [locale, getLocalizedUrl(locale, path)]),
+    ),
+  });
 
   for (const locale of SUPPORTED_LOCALES) {
     for (const route of STATIC_ROUTES) {
       sitemapEntries.push({
+        alternates: buildAlternates(route),
         changeFrequency:
           route === "/" || route === "/writing" ? "weekly" : "monthly",
         lastModified: currentDate,
@@ -52,20 +58,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     for (const caseStudy of caseStudies) {
+      const caseStudyPath = `/work/${caseStudy.slug}`;
       sitemapEntries.push({
+        alternates: buildAlternates(caseStudyPath),
         changeFrequency: "monthly",
         lastModified: new Date(`${caseStudy.year}-01-01`),
         priority: 0.85,
-        url: getLocalizedUrl(locale, `/work/${caseStudy.slug}`),
+        url: getLocalizedUrl(locale, caseStudyPath),
       });
     }
 
     for (const article of articlesByLocale[locale]) {
+      const articlePath = `/writing/${article.slug}`;
       sitemapEntries.push({
+        alternates: buildAlternates(articlePath),
         changeFrequency: "monthly",
         lastModified: new Date(article.frontmatter.date),
         priority: 0.75,
-        url: getLocalizedUrl(locale, `/writing/${article.slug}`),
+        url: getLocalizedUrl(locale, articlePath),
       });
     }
   }
