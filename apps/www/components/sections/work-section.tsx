@@ -73,11 +73,6 @@ export const WorkSection = memo(function WorkSection() {
             {tf("summary")}
           </p>
         </div>
-
-        
-        <div className="h-px bg-border mb-5" />
-
-        
         <div className="grid gap-0 border-t border-border sm:grid-cols-3">
           {flagshipMetrics.map((metric) => (
             <div
@@ -93,8 +88,6 @@ export const WorkSection = memo(function WorkSection() {
             </div>
           ))}
         </div>
-
-        
         <div className="grid gap-0 border-l border-r border-border md:grid-cols-3 mt-0">
           {[
             { label: tf("labels.problem"), body: tf("problem") },
