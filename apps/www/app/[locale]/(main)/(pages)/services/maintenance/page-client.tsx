@@ -54,7 +54,7 @@ function HeroSection() {
         ref={eyebrowRef}
         className="absolute top-24 ltr:right-8 rtl:left-8 hidden lg:flex items-center gap-2"
       >
-        <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+        <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
         <span className={cn(monoCaps, "text-foreground/50")}>
           {t("subtitle")}
         </span>
@@ -62,7 +62,7 @@ function HeroSection() {
       <Container>
         <div className="sm:max-w-5xl max-w-full">
           <div className="mb-8 flex items-center gap-2 lg:hidden">
-            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
             <span className={cn(monoCaps, "text-foreground/50")}>
               {t("subtitle")}
             </span>
@@ -564,7 +564,7 @@ function CtaSection() {
                 {t("cta.statusTitle")}
               </p>
               <div className="flex items-center gap-2">
-                <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
                 <span className={cn(monoCaps, "text-primary/70")}>
                   all systems go
                 </span>
@@ -579,7 +579,7 @@ function CtaSection() {
                   <span className="text-sm text-primary/60">{check.label}</span>
                   <div className="flex items-center gap-2">
                     <svg
-                      className="w-3.5 h-3.5 text-emerald-500/70"
+                      className="w-3.5 h-3.5 text-success/70"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"

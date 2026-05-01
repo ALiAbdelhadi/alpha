@@ -126,7 +126,7 @@ export const Footer = memo(function Footer() {
                 >
                     <div className="flex items-center gap-2 order-2 sm:order-1">
                         <AltruvexLogo size="sm" variant="icon" />
-                        <span className="font-mono leading-normal text-xs text-primary/70 uppercase tracking-widest">
+                        <span className="font-mono leading-normal text-[13px] text-primary/70 uppercase tracking-widest">
                             {t("copyright", { year: localizedYear })}
                         </span>
                     </div>
@@ -136,7 +136,7 @@ export const Footer = memo(function Footer() {
                                 <li key={label}>
                                     <Link
                                         href={href}
-                                        className="font-mono text-xs leading-normal tracking-widest uppercase text-primary/70 transition-colors duration-200 hover:text-primary"
+                                        className="font-mono text-[13px] leading-normal tracking-widest ltr:uppercase text-primary/70 transition-colors duration-200 hover:text-primary"
                                     >
                                         {label}
                                     </Link>

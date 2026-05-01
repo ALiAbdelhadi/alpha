@@ -1,5 +1,9 @@
-import { meetingRequestSchema, standaloneMeetingSchema } from "@/lib/validations/contact"
+import {
+    createMeetingRequestSchema,
+    createStandaloneMeetingSchema,
+} from "@/lib/validations/contact"
 import { prisma } from "@repo/database"
+import { getTranslations } from "next-intl/server"
 import { NextRequest, NextResponse } from "next/server"
 import { ZodError } from "zod"
 import { enforceRateLimit } from "@/lib/rate-limit"
@@ -23,7 +27,13 @@ export async function POST(request: NextRequest) {
         }
 
         const body = await request.json()
-        const locale = typeof body.locale === "string" ? body.locale : "en"
+        const locale =
+            typeof body.locale === "string" && (body.locale === "ar" || body.locale === "en")
+                ? body.locale
+                : "en"
+        const t = await getTranslations({ locale, namespace: "validations" })
+        const standaloneMeetingSchema = createStandaloneMeetingSchema(t)
+        const meetingRequestSchema = createMeetingRequestSchema(t)
 
         if (body.name && body.phone && body.scheduledDate && body.scheduledTime) {
             const validatedData = standaloneMeetingSchema.parse(body)

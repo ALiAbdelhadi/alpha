@@ -4,17 +4,22 @@ import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
 import { Link } from "@/i18n/navigation"
 import { DEFAULTS, useReveal, useText } from "@/lib/motion"
-import { contactFormSchema } from "@/lib/validations/contact"
+import { createContactFormSchema } from "@/lib/validations/contact"
 import { AlertCircle, CheckCircle2, Mail, MapPin, Phone } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 type FormErrors = Record<string, string>
 
 export default function ContactPage() {
     const t = useTranslations("contactPage")
     const tContact = useTranslations("contact")
+    const tValidations = useTranslations("validations")
+    const contactFormSchema = useMemo(
+        () => createContactFormSchema(tValidations),
+        [tValidations]
+    )
     const searchParams = useSearchParams()
 
     const badgeRef = useReveal({ ...DEFAULTS.element, delay: 0 })
@@ -223,20 +228,20 @@ export default function ContactPage() {
                                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                                     <div>
                                         <label className="mb-2 block font-mono text-sm leading-normal tracking-wider text-primary/60 sm:text-sm">
-                                            {t("form.nameLabel")} <span className="text-red-500">*</span>
+                                            {t("form.nameLabel")} <span className="text-destructive">*</span>
                                         </label>
                                         <input
                                             type="text"
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
                                             placeholder={t("form.namePlaceholder")}
-                                            className={`w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all ${formErrors.name ? "border-red-500 focus:border-red-500" : ""}`}
+                                            className={`w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all ${formErrors.name ? "border-destructive focus:border-destructive" : ""}`}
                                             aria-invalid={!!formErrors.name}
                                             aria-describedby={formErrors.name ? "contact-name-error" : undefined}
                                             disabled={isSubmitting}
                                         />
                                         {formErrors.name && (
-                                            <p id="contact-name-error" className="mt-1.5 flex items-center gap-1 font-mono text-sm leading-normal tracking-wider text-red-500">
+                                            <p id="contact-name-error" className="mt-1.5 flex items-center gap-1 font-mono text-sm leading-normal tracking-wider text-destructive">
                                                 <AlertCircle className="h-3 w-3" aria-hidden="true" />
                                                 {formErrors.name}
                                             </p>
@@ -244,21 +249,21 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <label className="mb-2 block font-mono text-sm leading-normal tracking-wider text-primary/60 sm:text-sm">
-                                            {t("form.phoneLabel")} <span className="text-red-500">*</span>
+                                            {t("form.phoneLabel")} <span className="text-destructive">*</span>
                                         </label>
                                         <input
                                             type="tel"
                                             value={phone}
                                             onChange={(e) => setPhone(e.target.value)}
                                             placeholder={t("form.phonePlaceholder")}
-                                            className={`w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all ${formErrors.phone ? "border-red-500 focus:border-red-500" : ""}`}
+                                            className={`w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none border-foreground/25 focus:border-foreground/50 transition-all ${formErrors.phone ? "border-destructive focus:border-destructive" : ""}`}
                                             aria-invalid={!!formErrors.phone}
                                             aria-describedby={formErrors.phone ? "contact-phone-error" : undefined}
                                             autoComplete="tel"
                                             disabled={isSubmitting}
                                         />
                                         {formErrors.phone && (
-                                            <p id="contact-phone-error" className="mt-1.5 flex items-center gap-1 font-mono text-sm leading-normal tracking-wider text-red-500">
+                                            <p id="contact-phone-error" className="mt-1.5 flex items-center gap-1 font-mono text-sm leading-normal tracking-wider text-destructive">
                                                 <AlertCircle className="h-3 w-3" aria-hidden="true" />
                                                 {formErrors.phone}
                                             </p>
@@ -283,20 +288,20 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <label className="mb-2 block font-mono text-sm leading-normal tracking-wider text-primary/60 sm:text-sm">
-                                            {t("form.messageLabel")} <span className="text-red-500">*</span>
+                                            {t("form.messageLabel")} <span className="text-destructive">*</span>
                                         </label>
                                         <textarea
                                             value={message}
                                             onChange={(e) => setMessage(e.target.value)}
                                             placeholder={t("form.messagePlaceholder")}
                                             rows={4}
-                                            className={`w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none resize-none border-foreground/25 focus:border-foreground/50 transition-all ${formErrors.message ? "border-red-500 focus:border-red-500" : ""}`}
+                                            className={`w-full border-b bg-transparent py-2.5 text-sm text-primary placeholder:text-primary/60 focus:outline-none resize-none border-foreground/25 focus:border-foreground/50 transition-all ${formErrors.message ? "border-destructive focus:border-destructive" : ""}`}
                                             aria-invalid={!!formErrors.message}
                                             aria-describedby={formErrors.message ? "contact-message-error" : undefined}
                                             disabled={isSubmitting}
                                         />
                                         {formErrors.message && (
-                                            <p id="contact-message-error" className="mt-1.5 flex items-center gap-1 font-mono text-sm leading-normal tracking-wider text-red-500">
+                                            <p id="contact-message-error" className="mt-1.5 flex items-center gap-1 font-mono text-sm leading-normal tracking-wider text-destructive">
                                                 <AlertCircle className="h-3 w-3" aria-hidden="true" />
                                                 {formErrors.message}
                                             </p>
@@ -322,17 +327,17 @@ export default function ContactPage() {
                                             {t("form.riskReversal")}
                                         </p>
                                         {submitSuccess && (
-                                            <div className="mt-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2.5 text-center">
+                                            <div className="mt-2 rounded-lg border border-success/30 bg-success/10 px-3 py-2.5 text-center">
                                                 <p className="flex items-center justify-center gap-2 font-mono text-sm leading-normal tracking-wider text-primary">
-                                                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />
+                                                    <CheckCircle2 className="h-3.5 w-3.5 text-success" />
                                                     {t("form.success")}
                                                 </p>
                                             </div>
                                         )}
                                         {submitError && (
-                                            <div className="mt-2 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2.5 text-center">
+                                            <div className="mt-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-center">
                                                 <p className="flex items-center justify-center gap-2 font-mono text-sm leading-normal tracking-wider text-primary">
-                                                    <AlertCircle className="h-3.5 w-3.5 text-red-500" />
+                                                    <AlertCircle className="h-3.5 w-3.5 text-destructive" />
                                                     {submitError}
                                                 </p>
                                             </div>

@@ -209,17 +209,17 @@ export default function SchedulePage() {
                                 {t("form.riskReversal")}
                             </p>
                             {submitSuccess && (
-                                <div className="p-4 rounded-sm bg-emerald-500/8 border border-emerald-500/15">
+                                <div className="p-4 rounded-sm bg-success/8 border border-success/15">
                                     <p className="text-center font-mono leading-normal tracking-wider text-sm text-primary flex items-center justify-center gap-2">
-                                        <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                                        <CheckCircle2 className="h-4 w-4 text-success" />
                                         {t("submit.success")}
                                     </p>
                                 </div>
                             )}
                             {submitError && (
-                                <div className="p-4 rounded-sm bg-red-500/8 border border-red-500/15">
+                                <div className="p-4 rounded-sm bg-destructive/8 border border-destructive/15">
                                     <p className="text-center font-mono leading-normal tracking-wider text-sm text-primary flex items-center justify-center gap-2">
-                                        <AlertCircle className="h-4 w-4 text-red-400" />
+                                        <AlertCircle className="h-4 w-4 text-destructive" />
                                         {submitError}
                                     </p>
                                 </div>

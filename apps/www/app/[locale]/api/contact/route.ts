@@ -1,4 +1,4 @@
-import { contactFormSchema } from "@/lib/validations/contact"
+import { createContactFormSchema } from "@/lib/validations/contact"
 import {
     BudgetRange,
     prisma,
@@ -6,6 +6,7 @@ import {
     ServiceType,
     type Prisma,
 } from "@repo/database"
+import { getTranslations } from "next-intl/server"
 import { NextRequest, NextResponse } from "next/server"
 import { ZodError } from "zod"
 import { enforceRateLimit } from "@/lib/rate-limit"
@@ -51,7 +52,12 @@ export async function POST(request: NextRequest) {
         }
 
         const body = await request.json()
-
+        const locale =
+            typeof body.locale === "string" && (body.locale === "ar" || body.locale === "en")
+                ? body.locale
+                : "en"
+        const t = await getTranslations({ locale, namespace: "validations" })
+        const contactFormSchema = createContactFormSchema(t)
         const validatedData = contactFormSchema.parse(body)
 
         if (validatedData.website && validatedData.website.length > 0) {

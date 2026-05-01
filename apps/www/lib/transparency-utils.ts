@@ -1,5 +1,6 @@
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
+import { SITE_CONFIG } from "./metadata";
 import { localizeNumbers } from "./number";
 
 export type DeliverableTier = "small" | "medium" | "large" | "enterprise";
@@ -756,7 +757,7 @@ export function buildPDFHtml(p: PDFParams): string {
       <div style="font-family:monospace;font-size:11px;color:#73726C;">${p.t("pdfContent.bookCall")}</div>
     </div>
     <div style="text-align:${alignRight};">
-      <span style="font-family:monospace;font-size:12px;color:#FAFAF7;display:block;margin-bottom:2px;">altruvex@gmail.com</span>
+      <span style="font-family:monospace;font-size:12px;color:#FAFAF7;display:block;margin-bottom:2px;">${SITE_CONFIG.email}</span>
       <span style="font-family:monospace;font-size:11px;color:#73726C;">altruvex.com</span>
     </div>
   </div>

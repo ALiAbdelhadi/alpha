@@ -1,11 +1,19 @@
-import { transparencyLeadSchema } from "@/lib/validations/transparency-lead"
+import { createTransparencyLeadSchema } from "@/lib/validations/transparency-lead"
 import { prisma } from "@repo/database"
+import { getTranslations } from "next-intl/server"
 import { NextRequest, NextResponse } from "next/server"
 import { ZodError } from "zod"
 import { enforceRateLimit } from "@/lib/rate-limit"
 
-export async function POST(request: NextRequest) {
+export async function POST(
+    request: NextRequest,
+    { params }: { params: Promise<{ locale: string }> }
+) {
     try {
+        const { locale } = await params
+        const t = await getTranslations({ locale, namespace: "validations" })
+        const transparencyLeadSchema = createTransparencyLeadSchema(t)
+
         const rl = await enforceRateLimit(request, {
             scope: "public_api",
             route: "transparency_lead",

@@ -15,7 +15,20 @@
     "getStarted": "Start a Project",
     "language": "Language",
     "theme": "Theme",
-    "how-we-work": "How We Work"
+    "how-we-work": "How We Work",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "a11y": {
+    "skipToContent": "Skip to main content"
+  },
+  "notFound": {
+    "eyebrow": "404 - Page not found",
+    "titleLine1": "This page",
+    "titleLine2": "doesn't exist.",
+    "body": "The URL may have changed or the page was removed. Head back to explore what we're building.",
+    "goHome": "Go home",
+    "contactUs": "Contact us"
   },
   "hero": {
     "badge": "Precision Web Engineering · Cairo",
@@ -578,7 +591,7 @@
   "articles": {},
   "footer": {
     "tagline": "Custom web systems, portals, and product infrastructure engineered for teams that need bilingual precision, performance, and zero vendor lock-in.",
-    "description": "Altruvex is a precision web engineering firm in Cairo. We build React/Next.js systems for businesses that need speed, structural clarity, and direct technical ownership.",
+    "description": "Every line of code is engineered for your specific needs. We reject off-the-shelf shortcuts to ensure a standard of uniqueness that admits no compromise.",
     "servicesTitle": "Services",
     "companyTitle": "Company",
     "resourcesTitle": "Resources",
@@ -771,9 +784,11 @@
     },
     "cta": {
       "eyebrow": "Technical next step",
+      "nextStepEyebrow": "Next step",
       "title": "If the scope is real, the next move is a direct technical conversation.",
       "body": "Use the call to pressure-test the scope, clarify technical risk, and determine the right build path before committing budget.",
-      "footnote": "Founder-direct. No sales script. No pitch deck."
+      "footnote": "Founder-direct. No sales script. No pitch deck.",
+      "sectionAriaLabel": "Call to action"
     },
     "pricing": {
       "essential": {
@@ -2038,9 +2053,11 @@
     }
   },
   "exitIntent": {
+    "closeLabel": "Close dialog",
     "subtitle": "Wait - before you go",
     "title": "Let's pressure-test your scope.",
     "description": "Not sure if we are a fit? A 30-minute technical discovery call is enough to find out - no pitch, no pressure.",
+    "phoneLabel": "Phone (WhatsApp)",
     "stats": {
       "noPitch": "No Sales Pitch",
       "noCommitment": "No Commitment",
@@ -2085,8 +2102,8 @@
       "solution": "We built a bilingual Arabic/English site on a custom Next.js stack with native RTL architecture, performance-first frontend engineering, and a transparency flow that qualifies leads before the first conversation.",
       "outcome": "Sub-1s mobile TTI, RTL switching in under 16ms with zero layout shift, and leads that arrive pre-qualified - with scope and investment already mapped before the first call begins.",
       "techStack": [
-        "Next.js 15",
-        "TypeScript 5",
+        "Next.js 16",
+        "TypeScript 6",
         "Tailwind CSS v4",
         "GSAP",
         "Lenis",
@@ -2194,6 +2211,37 @@
           "value": "-22%"
         }
       ]
+    }
+  },
+  "validations": {
+    "transparency-lead": {
+      "phone": "Invalid phone number.",
+      "name": "Name must not exceed 120 characters.",
+      "projectType": "Project type is required.",
+      "complexity": "Complexity is required.",
+      "timeline": "Timeline is required."
+    },
+    "contact": {
+      "name-min": "Name must be at least 2 characters.",
+      "name-max": "Name must not exceed 100 characters.",
+      "phone-min": "Please enter a valid phone number (at least 10 digits).",
+      "phone-max": "Phone number must not exceed 20 characters.",
+      "phone-regex": "Phone number must contain only digits, spaces, dashes, plus signs, or parentheses.",
+      "message-min": "Message must be at least 10 characters.",
+      "message-max": "Message must not exceed 1000 characters.",
+      "service-interest-invalid": "Please select a valid service.",
+      "budget-invalid": "Please select a valid budget range.",
+      "project-timeline-invalid": "Please select a valid project timeline.",
+      "preferred-date-format": "Date must be in YYYY-MM-DD format.",
+      "preferred-date-future": "Date must be today or in the future.",
+      "preferred-date-within-three-months": "Date must be within the next 3 months.",
+      "preferred-time-invalid": "Please select morning, afternoon, or evening.",
+      "request-meeting-required": "Date and time are required when requesting a meeting.",
+      "submission-id-invalid": "Invalid submission reference.",
+      "notes-max": "Notes must not exceed 500 characters.",
+      "scheduled-datetime-invalid": "Invalid scheduled date and time.",
+      "scheduled-time-format": "Time must be in HH:MM format.",
+      "honeypot-invalid": "Invalid form submission."
     }
   }
 }

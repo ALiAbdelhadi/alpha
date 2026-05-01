@@ -23,6 +23,8 @@ import {
   useTransparency,
 } from "@/hooks/use-transparency";
 import { Link } from "@/i18n/navigation";
+import { gsap } from "@/lib/gsap";
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
 import {
   buildPDFHtml,
   generateEstimatePdf,
@@ -31,8 +33,6 @@ import {
   normalisePhone,
   validatePhone,
 } from "@/lib/transparency-utils";
-import { gsap } from "@/lib/gsap";
-import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import { Check, Download, Phone } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -107,7 +107,6 @@ export default function TransparencyPageClient() {
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // ── [IMPROVEMENT #6] X-axis animation instead of Y-axis for real flow feeling ──
   useEffect(() => {
     if (!containerRef.current) return;
     gsap.fromTo(
@@ -212,7 +211,7 @@ export default function TransparencyPageClient() {
     <div className="relative min-h-screen w-full">
       <section className="min-h-screen flex items-center pt-(--section-y-top) pb-(--section-y-bottom)">
         <Container>
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h1
                 ref={titleRef}
@@ -426,16 +425,16 @@ const OPTION_BASE =
   "relative border transition-all duration-300 cursor-pointer";
 
 const OPTION_SELECTED =
-  "border-foreground/60 bg-foreground/[0.08] shadow-[0_10px_40px_rgba(0,0,0,0.08)]";
+  "border-foreground/60 bg-foreground/[0.08] shadow-lg";
 
 const OPTION_DEFAULT =
-  "border-foreground/20 hover:border-foreground/40 hover:bg-foreground/[0.04] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)]";
+  "border-foreground/20 hover:border-foreground/40 hover:bg-foreground/[0.04] hover:shadow-md";
 
 function SelectionCheck({ visible }: { visible: boolean }) {
   return (
     <div
       className={cn(
-        "absolute -top-2 ltr:-right-1 rtl:-left-1 w-5 h-5 rounded-full bg-primary flex items-center justify-center transition-opacity duration-200 shadow-[0_4px_16px_rgba(0,0,0,0.18)]",
+        "absolute -top-2 ltr:-right-1 rtl:-left-1 w-5 h-5 rounded-full bg-primary flex items-center justify-center transition-opacity duration-200 shadow-md",
         visible ? "opacity-100" : "opacity-0 pointer-events-none",
       )}
     >
@@ -501,7 +500,7 @@ function StepPhoneCapture({
         <div>
           <Label className="mb-2 block text-muted-foreground font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal">
             {t("phoneCapture.phoneLabel")}{" "}
-            <span className="text-red-400">*</span>
+            <span className="text-destructive">*</span>
           </Label>
           <div className="relative">
             <div className="absolute inset-y-0 ltr:left-3 rtl:right-3 flex items-center pointer-events-none">
@@ -553,7 +552,6 @@ function StepPhoneCapture({
   );
 }
 
-// ── [IMPROVEMENT #9] PDF as a feature highlight, not a secondary button ──
 function PDFDownload({
   onDownload,
   generating,
@@ -617,7 +615,6 @@ function PDFDownload({
   );
 }
 
-// ── [IMPROVEMENT #8] Results with strategic positioning copy ──
 function StepResults({
   estimate,
   formatCurrency,
@@ -655,12 +652,9 @@ function StepResults({
       <h2 className="text-2xl font-normal text-primary mb-2 text-center">
         {t("results.title")}
       </h2>
-
-      {/* Strategic estimate note — tight under h2, then breathes before rangeCopy */}
       <p className="text-primary/45 text-sm text-center mb-6">
         {t("results.strategicNote")}
       </p>
-
       <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-primary/90 mb-8 text-center">
         {t("results.rangeCopy", {
           min: formatCurrency(estimate.minPrice),

@@ -24,7 +24,7 @@ export const SITE_CONFIG = {
     ar: "ألتروفيكس تبني أنظمة ويب دقيقة ثنائية اللغة للفرق التي تحتاج أداءً حقيقياً ووضوحاً تقنياً وتجربة عربية/إنجليزية متكافئة.",
     en: "Altruvex builds precision web systems for teams that need bilingual execution, technical clarity, and performance that holds up in production.",
   },
-  email: "altruvex@gmail.com",
+  email: "hello@altruvex.com",
   founder: {
     linkedin: "https://www.linkedin.com/in/ali-abdelhadi-65094b283/",
     name: "Ali Abdelhadi",

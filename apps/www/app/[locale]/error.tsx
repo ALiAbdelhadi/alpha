@@ -90,7 +90,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
             }`}
           >
             <div className="mb-8 flex items-center gap-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-red-500/80 animate-pulse" />
+              <div className="h-1.5 w-1.5 rounded-full bg-destructive/80 animate-pulse" />
               <span className={cn(monoCaps, "text-foreground/20")}>
                 Error Code {errorInfo.code}
               </span>

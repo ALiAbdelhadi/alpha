@@ -51,7 +51,7 @@ function HeroSection() {
         ref={eyebrowRef}
         className="absolute top-24 ltr:right-8 rtl:left-8 hidden lg:flex items-center gap-2"
       >
-        <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+        <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
         <span className={cn(monoCaps, "text-foreground/50")}>
           {t("subtitle")}
         </span>
@@ -59,7 +59,7 @@ function HeroSection() {
       <Container>
         <div className="sm:max-w-5xl max-w-full">
           <div className="mb-8 flex items-center gap-2 lg:hidden">
-            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <div className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" />
             <span className={cn(monoCaps, "text-foreground/50")}>
               {t("subtitle")}
             </span>
@@ -146,7 +146,7 @@ function CtaSection() {
         >
           <div className="flex items-center gap-3 px-5 py-3.5 border-b border-foreground/8 bg-foreground/2">
             <div className="flex gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+              <div className="w-2.5 h-2.5 rounded-full bg-destructive/70" />
               <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
               <div className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
             </div>

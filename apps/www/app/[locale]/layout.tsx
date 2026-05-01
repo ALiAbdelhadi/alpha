@@ -6,7 +6,7 @@ import "@/lib/env";
 import { buildGlobalSchemas } from "@/lib/schema";
 import { cn } from "@/lib/utils";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Inter, Outfit, Vazirmatn } from "next/font/google";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
@@ -64,6 +64,8 @@ export default async function RootLayout({ children, params }: Props) {
 
   setRequestLocale(locale);
 
+  const tA11y = await getTranslations({ locale, namespace: "a11y" });
+
   return (
     <html
       lang={locale}
@@ -81,9 +83,9 @@ export default async function RootLayout({ children, params }: Props) {
       >
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:p-3 focus:px-5 focus:rounded-md focus:shadow-lg focus:border focus:border-border focus:bg-background focus:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:inset-s-4 focus:z-100 focus:p-3 focus:px-5 focus:rounded-md focus:shadow-lg focus:border focus:border-border focus:bg-background focus:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
-          Skip to main content
+          {tA11y("skipToContent")}
         </a>
         <Script id="boot-flags" strategy="beforeInteractive">
           {`document.documentElement.setAttribute('data-js','enabled');(function(){try{var c=sessionStorage.getItem('Altruvex_initial_load_complete');if(c){document.documentElement.setAttribute('data-initial-load','complete')}}catch(e){}})();`}

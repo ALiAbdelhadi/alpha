@@ -6,7 +6,7 @@ import { trackEvent } from "@/lib/analytics"
 import { cn } from "@/lib/utils"
 import { X } from "lucide-react"
 import { useLocale, useTranslations } from "next-intl"
-import { useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 export const ExitIntentModal = () => {
   const t = useTranslations("exitIntent")
@@ -65,10 +65,27 @@ export const ExitIntentModal = () => {
     }
   }
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsVisible(false)
     trackEvent("exit_intent_dismissed")
-  }
+  }, [])
+
+  const panelRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!isVisible) return
+    panelRef.current?.focus()
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") handleClose()
+    }
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    document.addEventListener("keydown", onKey)
+    return () => {
+      document.body.style.overflow = prevOverflow
+      document.removeEventListener("keydown", onKey)
+    }
+  }, [isVisible, handleClose])
 
   if (!isVisible) return null
 
@@ -77,23 +94,33 @@ export const ExitIntentModal = () => {
       <div
         className="absolute inset-0 bg-background/80 backdrop-blur-sm"
         onClick={handleClose}
+        aria-hidden
       />
       <div
+        ref={panelRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={isSuccess ? "exit-intent-success-title" : "exit-intent-heading"}
         className={cn(
-          "relative w-full max-w-md rounded-[1.75rem] border border-border bg-background/96 shadow-2xl backdrop-blur-xl",
+          "relative w-full max-w-md rounded-[1.75rem] border border-border bg-background/96 shadow-2xl backdrop-blur-xl outline-none",
           "animate-in fade-in zoom-in-95 duration-200"
         )}
       >
         <button
+          type="button"
           onClick={handleClose}
-          className="absolute top-4 right-4 p-1 text-foreground/30 hover:text-foreground transition-colors"
-          aria-label="Close"
+          className="absolute top-4 inset-e-4 p-1 text-foreground/30 hover:text-foreground transition-colors"
+          aria-label={t("closeLabel")}
         >
           <X className="w-4 h-4" />
         </button>
         {isSuccess ? (
           <div className="p-8 text-center">
-            <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-foreground/40 mb-4">
+            <p
+              id="exit-intent-success-title"
+              className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-foreground/40 mb-4"
+            >
               {t("successTitle")}
             </p>
             <p className="text-foreground/70 text-sm leading-relaxed">
@@ -106,7 +133,10 @@ export const ExitIntentModal = () => {
               <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-foreground/40 mb-3">
                 {t("subtitle")}
               </p>
-              <h2 className="text-2xl font-medium text-foreground tracking-tight mb-3">
+              <h2
+                id="exit-intent-heading"
+                className="text-2xl font-medium text-foreground tracking-tight mb-3"
+              >
                 {t("title")}
               </h2>
               <p className="text-sm text-foreground/60 leading-relaxed">
@@ -136,7 +166,11 @@ export const ExitIntentModal = () => {
                 >
                   <input
                     type="tel"
+                    id="exit-intent-phone"
                     placeholder={t("phonePlaceholder")}
+                    aria-label={t("phoneLabel")}
+                    aria-describedby="exit-intent-phone-hint"
+                    aria-invalid={error ? true : undefined}
                     value={phone}
                     onChange={(e) => {
                       setPhone(e.target.value)
@@ -152,7 +186,7 @@ export const ExitIntentModal = () => {
                 {error && (
                   <p className="text-xs text-destructive mt-1.5">{error}</p>
                 )}
-                <p className="text-xs text-foreground/30 mt-1.5">
+                <p id="exit-intent-phone-hint" className="text-xs text-foreground/30 mt-1.5">
                   {t("phoneHint")}
                 </p>
               </div>

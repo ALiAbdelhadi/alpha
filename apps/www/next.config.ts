@@ -74,25 +74,33 @@ const nextConfig: NextConfig = {
     },
     allowedDevOrigins: ['192.168.1.15'],
     async headers() {
+        // Avoid custom Cache-Control on Next internals in dev — Next warns and it can break HMR.
+        const prodOnlyNextAssetCache =
+            process.env.NODE_ENV === 'production'
+                ? [
+                    {
+                        source: '/_next/static/:path*',
+                        headers: [
+                            {
+                                key: 'Cache-Control',
+                                value: 'public, max-age=31536000, immutable',
+                            },
+                        ],
+                    },
+                    {
+                        source: '/_next/image/:path*',
+                        headers: [
+                            {
+                                key: 'Cache-Control',
+                                value: 'public, max-age=86400, stale-while-revalidate=604800',
+                            },
+                        ],
+                    },
+                ]
+                : [];
+
         return [
-            {
-                source: '/_next/static/:path*',
-                headers: [
-                    {
-                        key: 'Cache-Control',
-                        value: 'public, max-age=31536000, immutable',
-                    },
-                ],
-            },
-            {
-                source: '/_next/image/:path*',
-                headers: [
-                    {
-                        key: 'Cache-Control',
-                        value: 'public, max-age=86400, stale-while-revalidate=604800',
-                    },
-                ],
-            },
+            ...prodOnlyNextAssetCache,
             {
                 source: '/:path*\\.(svg|jpg|jpeg|png|gif|ico|webp|avif|woff2)',
                 headers: [

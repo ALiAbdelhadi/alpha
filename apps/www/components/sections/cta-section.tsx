@@ -25,7 +25,7 @@ export function CtaSection() {
       ref={sectionRef}
       id="cta"
       className="relative overflow-hidden pt-(--section-y-top) pb-(--section-y-bottom)"
-      aria-label="Call to action"
+      aria-label={t("sectionAriaLabel")}
     >
       <Container>
         <div className="h-px w-full bg-border mb-16" />
@@ -40,7 +40,7 @@ export function CtaSection() {
           </div>
           <div ref={contentRef} className="flex min-w-0 flex-col gap-6">
             <p className="font-mono text-xs leading-normal tracking-[0.22em] uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
-              {locale === "ar" ? "الخطوة التالية" : "Next step"}
+              {t("nextStepEyebrow")}
             </p>
             <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground">
               {t("body")}

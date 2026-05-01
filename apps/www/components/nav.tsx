@@ -164,7 +164,7 @@ export function Nav() {
                                 type="button"
                                 onClick={toggleMobileMenu}
                                 className="relative z-50 flex h-11 w-11 items-center justify-center"
-                                aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                                aria-label={isMobileMenuOpen ? t("closeMenu") : t("openMenu")}
                             >
                                 <span className={cn(
                                     "absolute h-[2px] w-full bg-foreground transition-all duration-300 ease-in-out",
