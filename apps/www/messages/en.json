@@ -46,7 +46,7 @@
       },
       {
         "value": "Native RTL",
-        "label": "Engineered Arabic architecture - not a mirrored LTR template"
+        "label": "Engineered Multilingual architecture - not a mirrored LTR template"
       },
       {
         "value": "Zero lock-in",
@@ -275,14 +275,14 @@
     "stat3": {
       "value": "Native",
       "label": "Architecture-Driven Localization",
-      "sublabel": "Arabic engineered as a first-class citizen"
+      "sublabel": "Multilingual engineered as a first-class citizen"
     },
     "ctaPrimary": "Consult with the Founder",
     "ctaSecondary": "Case Studies",
     "values": {
       "bilingual": {
         "label": "Symmetric Bilingualism",
-        "sublabel": "Arabic & English share the same technical DNA"
+        "sublabel": "Multilingual share the same technical DNA"
       },
       "noTemplate": {
         "label": "The Anti-Template Policy",
@@ -486,7 +486,7 @@
     "bilingual": {
       "eyebrow": "Bilingual by Default",
       "title": "Structure that respects direction.",
-      "paragraphs": "Most sites treat Arabic RTL as an afterthought - flip the layout and hope it holds. We design systems where direction is a first-class architectural decision from day one.\n\nThis is not about translation. It is cultural adaptation. Right-aligned navigation is not mirrored - it is reconsidered.\n\nEvery component, every layout, every interaction - built to perform in both directions without compromise."
+      "paragraphs": "Most sites treat Multilingual RTL as an afterthought - flip the layout and hope it holds. We design systems where direction is a first-class architectural decision from day one.\n\nThis is not about translation. It is cultural adaptation. Right-aligned navigation is not mirrored - it is reconsidered.\n\nEvery component, every layout, every interaction - built to perform in both directions without compromise."
     },
     "boundaries": {
       "eyebrow": "Where We Draw Lines",
@@ -725,7 +725,7 @@
       "website": {
         "title": "Website Systems",
         "audience": "Sharper positioning, faster pages, and a direct conversion path for serious service or product businesses.",
-        "outcome": "A custom Arabic/English website with strong performance, clear messaging, and a conversion-ready structure."
+        "outcome": "A custom Multilingual website with strong performance, clear messaging, and a conversion-ready structure."
       },
       "portal": {
         "title": "Portals & Product Builds",
@@ -746,9 +746,9 @@
     "flagship": {
       "eyebrow": "04 - Flagship Case Study",
       "title": "Altruvex.com - The Site Itself Had to Be the Proof",
-      "summary": "A bilingual proof build designed to qualify leads, demonstrate engineering quality, and show what precision Arabic/English delivery looks like in production.",
+      "summary": "A bilingual proof build designed to qualify leads, demonstrate engineering quality, and show what precision Multilingual delivery looks like in production.",
       "problem": "In a market where agencies compete on price, Altruvex needed its own site to prove technical quality without borrowing credibility it had not yet earned.",
-      "solution": "We built a bilingual Arabic/English site on a custom Next.js stack with native RTL architecture, performance-first frontend engineering, and a transparency flow that qualifies leads before the first conversation.",
+      "solution": "We built a bilingual Multilingual site on a custom Next.js stack with native RTL architecture, performance-first frontend engineering, and a transparency flow that qualifies leads before the first conversation.",
       "outcome": "Sub-1s mobile TTI, RTL switching under 16ms with zero layout shift, and leads that arrive pre-qualified - reducing discovery-call time by cutting scope mismatches before the first sentence.",
       "labels": {
         "problem": "Problem",
@@ -763,7 +763,7 @@
       "points": [
         {
           "title": "01 - Architecture-Driven Localization",
-          "body": "Arabic and English are engineered as equal experiences - not mirrored afterthoughts layered on an LTR base."
+          "body": "Multilingual are engineered as equal experiences - not mirrored afterthoughts layered on an LTR base."
         },
         {
           "title": "02 - No template delivery",
@@ -903,7 +903,7 @@
         "deliverables": [
           "Offer positioning and page hierarchy",
           "Responsive interface system for desktop and mobile",
-          "Arabic and English page logic with true directional parity",
+          "Multilingual page logic with true directional parity",
           "Conversion-led layouts, CTA placement, and proof structure"
         ],
         "fitTitle": "Best fit",
@@ -1511,7 +1511,7 @@
             "Order notifications and a simple order-status flow",
             "Mobile-first storefront implementation",
             "Essential SEO, analytics, and launch tracking",
-            "Arabic-ready structure where the scope requires it",
+            "Multilingual-ready structure where the scope requires it",
             "30-day launch assurance for critical fixes"
           ],
           "medium": [
@@ -1520,7 +1520,7 @@
             "One core operational integration such as payment, shipping, or ERP-lite sync",
             "Promotions, coupon codes, and merchandising controls",
             "CMS support for landing pages, blog, or campaign content",
-            "Arabic / English storefront and QA where required",
+            "Multilingual storefront and QA where required",
             "Analytics, pixels, and search-readiness setup",
             "30-day launch assurance with structured handover"
           ],
@@ -1552,7 +1552,7 @@
             "Contact or lead form with email routing",
             "Responsive build with strong performance fundamentals",
             "Basic SEO setup, analytics, and search console readiness",
-            "Arabic-ready structure where the scope calls for it",
+            "Multilingual-ready structure where the scope calls for it",
             "Deployment and launch checklist",
             "30-day launch assurance for critical fixes"
           ],
@@ -1561,7 +1561,7 @@
             "Expanded page system with reusable sections",
             "CMS or blog setup for ongoing content updates",
             "One lead-flow integration such as CRM, booking, or advanced forms",
-            "Full Arabic / English implementation and QA where required",
+            "Full Multilingual implementation and QA where required",
             "Tracking, SEO, and conversion event setup",
             "Structured handover for internal marketing teams",
             "30-day launch assurance with post-launch review"
@@ -1831,7 +1831,7 @@
           "Custom UI implementation for your core marketing pages",
           "Responsive build with strong performance and clean deployment",
           "Lead forms, analytics, and SEO fundamentals",
-          "Arabic-ready structure where the scope calls for it",
+          "Multilingual-ready structure where the scope calls for it",
           "Domain, SSL, and base hosting setup for Year 1"
         ],
         "notIncluded": "No dashboards, payment flows, or heavy operational integrations - see Connected Platform for those."
@@ -1846,7 +1846,7 @@
           "Everything in Focused Website",
           "CMS, blog, landing page system, or editable content workflows",
           "One key integration such as CRM, booking, auth, or payment",
-          "Full Arabic / English implementation and QA where required",
+          "Full Multilingual implementation and QA where required",
           "Structured discovery and architecture before build"
         ],
         "notIncluded": "No custom portals, deep automation, or internal operational products - see Operational Product for those."
@@ -2095,11 +2095,11 @@
     "altruvex-site": {
       "name": "Altruvex.com - The Site Itself Had to Be the Proof",
       "client": "Internal / Altruvex",
-      "industry": "Web Engineering / Agency",
+      "industry": "Custom Web Development",
       "year": "2025",
-      "summary": "A bilingual Arabic/English proof build designed to demonstrate technical quality, native RTL execution, and lead qualification before the first call.",
+      "summary": "A bilingual Multilingual proof build designed to demonstrate technical quality, native RTL design, and lead qualification before the first call.",
       "problem": "In a market where agencies compete on price, Altruvex needed its own site to prove technical quality without borrowing enterprise credibility it had not yet earned.",
-      "solution": "We built a bilingual Arabic/English site on a custom Next.js stack with native RTL architecture, performance-first frontend engineering, and a transparency flow that qualifies leads before the first conversation.",
+      "solution": "We built a bilingual Multilingual site on a custom Next.js stack with native RTL architecture, performance-first frontend engineering, and a transparency flow that qualifies leads before the first conversation.",
       "outcome": "Sub-1s mobile TTI, RTL switching in under 16ms with zero layout shift, and leads that arrive pre-qualified - with scope and investment already mapped before the first call begins.",
       "techStack": [
         "Next.js 16",

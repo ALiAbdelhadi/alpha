@@ -4,21 +4,10 @@ import { Container } from "@/components/container";
 import { ExternalDirectionalLink } from "@/components/directional-link";
 import { FOUNDER_LINK } from "@/lib/commercial";
 import { DEFAULTS, MOTION, useBatch, useReveal, useText } from "@/lib/motion";
+import { splitHeadline } from "@/lib/utils";
 import { useLocale, useTranslations } from "next-intl";
 import { memo } from "react";
 
-function splitHeadline(value: string) {
-  if (!value.trim()) return { first: "", second: "" }
-  const sentenceMatch = value.match(/^(.+[.!?،])\s+(.+)$/)
-  if (sentenceMatch) return { first: sentenceMatch[1], second: sentenceMatch[2] }
-  const words = value.trim().split(/\s+/)
-  if (words.length < 2) return { first: value, second: "" }
-  const splitAt = Math.ceil(words.length / 2)
-  return {
-    first: words.slice(0, splitAt).join(" "),
-    second: words.slice(splitAt).join(" "),
-  }
-}
 
 export const TrustSection = memo(function TrustSection() {
   const locale = useLocale();
@@ -66,7 +55,7 @@ export const TrustSection = memo(function TrustSection() {
         <div className="h-px bg-border mb-5" />
         <div
           ref={gridRef}
-          className="grid gap-0 border-l border-r border-border md:grid-cols-3"
+          className="grid gap-0 border-t border-l border-r border-border md:grid-cols-3"
         >
           {points.map((point, i) => (
             <div
@@ -74,7 +63,7 @@ export const TrustSection = memo(function TrustSection() {
               className="trust-card border-r border-b border-border px-6 py-8 group hover:bg-surface transition-colors duration-300"
             >
               <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mb-6">
-                {stepLabel}
+                {stepLabel} {String(i + 1).padStart(2, "0")}
               </p>
               <h3 className="text-[clamp(1.5rem,2.4vw,2rem)] leading-[1.15] font-medium text-foreground mb-3 tracking-tight">
                 {point.title}

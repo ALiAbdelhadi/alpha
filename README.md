@@ -1,159 +1,109 @@
-# Turborepo starter
+<p align="center">
+  <img src="./apps/www/public/readme/hero.png" alt="Altruvex — Build the system your revenue depends on." width="100%" />
+</p>
 
-This Turborepo starter is maintained by the Turborepo core team.
+<p align="center">
+  <img src="./apps/www/public/readme/value-map.svg" alt="Altruvex value map — from website presence to commercial system." width="100%" />
+</p>
 
-## Using this example
+# Altruvex
 
-Run the following command:
+## Build the system your revenue depends on.
 
-```sh
-npx create-turbo@latest
-```
+Altruvex builds custom bilingual web systems for companies that need their website to become a business asset — not a digital brochure.
 
-## What's inside?
+Most websites do not fail because they look bad. They fail because the buyer does not understand the offer fast enough. Altruvex fixes the structure underneath: positioning, hierarchy, interface, bilingual behavior, performance, and ownership.
 
-This Turborepo includes the following packages/apps:
+---
 
-### Apps and Packages
+## What We Sell
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+| Service | Business Value |
+| --- | --- |
+| Custom web applications | Turn real business logic into reliable digital systems. |
+| Conversion-focused websites | Make the offer clearer and move buyers toward action. |
+| E-commerce experiences | Improve product discovery, mobile speed, and buying flow. |
+| Bilingual Arabic / English systems | Serve Arabic and English audiences with equal quality. |
+| Technical audits and rescues | Find what is hurting speed, trust, conversion, or maintainability. |
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+---
 
-### Utilities
+## Why Altruvex
 
-This Turborepo has some additional tools already setup for you:
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>Architecture Comes First</h3>
+      <p>Before design or code, we map the offer, audience, content hierarchy, conversion path, and technical constraints.</p>
+    </td>
+    <td width="50%" valign="top">
+      <h3>Performance Is Product Quality</h3>
+      <p>Speed affects trust, search visibility, and conversion. It is part of the build from day one — not a late optimization task.</p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>Arabic Is Not an Afterthought</h3>
+      <p>RTL is treated as a first-class interface direction. Layout, rhythm, spacing, and navigation are reconsidered for Arabic — not mirrored from LTR.</p>
+    </td>
+    <td width="50%" valign="top">
+      <h3>No Lock-In</h3>
+      <p>The client receives a real codebase, clear documentation, and full ownership. No vendor dependency. No plugin fragility.</p>
+    </td>
+  </tr>
+</table>
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+---
 
-### Build
+## Who It Is For
 
-To build all apps and packages, run the following command:
+- Service businesses that need stronger lead generation
+- B2B companies that need clearer positioning
+- E-commerce brands that need speed and conversion
+- Companies serving Arabic and English audiences
+- Founders launching high-quality digital products
+- Teams replacing slow, outdated, or template-based websites
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+---
 
-```sh
-cd my-turborepo
-turbo build
-```
+## How We Work
 
-Without global `turbo`, use your package manager:
+| Phase | Purpose | Outcome |
+| --- | --- | --- |
+| Diagnose | Understand the business, audience, offer, constraints, and friction. | A clear view of what the website must accomplish. |
+| Define | Map the structure, content hierarchy, conversion path, and technical approach. | A scope that can be built without vague middle ground. |
+| Build | Design and develop with bilingual precision, performance discipline, and commercial clarity. | A production-ready web system. |
+| Launch | Ship with deployment, documentation, and ownership transfer. | A live system the business can operate and grow. |
 
-```sh
-cd my-turborepo
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
+---
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+## Brand Principles
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+| Principle | Meaning |
+| --- | --- |
+| Clarity over decoration | Design exists to make the offer easier to understand and easier to trust. |
+| Engineering over assembly | The work is built around the business — not assembled from generic blocks. |
+| Proof over claims | Performance, structure, and case studies demonstrate the standard. |
+| Ownership over dependency | Clients leave with a system they own and understand. |
+| Bilingual by design | Arabic and English users deserve equal quality — by architecture, not by translation. |
 
-```sh
-turbo build --filter=docs
-```
+---
 
-Without global `turbo`:
+## The Standard
 
-```sh
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+Every project is judged against:
 
-### Develop
+- Clear positioning and strong first impression
+- Fast mobile performance — target < 1s TTI
+- Native RTL/LTR — engineered, not mirrored
+- Conversion-focused page structure
+- Reliable forms and lead capture
+- Search-friendly metadata and content structure
+- Clean technical architecture and full maintainability
 
-To develop all apps and packages, run the following command:
+---
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo dev
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+<p align="center">
+  <strong>Altruvex · Precision Web Engineering · Cairo</strong><br/>
+  <a href="https://altruvex.com">altruvex.com</a>
+</p>

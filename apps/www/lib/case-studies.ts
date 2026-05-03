@@ -80,8 +80,8 @@ export const CASE_STUDIES: CaseStudyRecord[] = [
     },
     slug: "altruvex-site",
     summary: {
-      ar: "مشروع إثبات عربي/إنجليزي صُمم لإظهار الجودة التقنية والتنفيذ الأصلي لـ RTL وتأهيل العميل المحتمل قبل أول مكالمة.",
-      en: "A bilingual Arabic/English proof build designed to demonstrate technical quality, native RTL execution, and lead qualification before the first call.",
+      ar: "مشروع موقع ويب متعدد اللغات صُمم لإظهار الجودة التقنية والتنفيذ الأصلي لـ RTL وتأهيل العميل المحتمل قبل أول مكالمة.",
+      en: "A bilingual multilingual proof build designed to demonstrate technical quality, native RTL execution, and lead qualification before the first call.",
     },
     year: "2025",
   },

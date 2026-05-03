@@ -2,7 +2,7 @@
 
 import { monoCaps } from "@/lib/mono-caps"
 import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion"
-import { cn } from "@/lib/utils"
+import { cn, splitHeadline } from "@/lib/utils"
 import { useTranslations } from "next-intl"
 import { memo, useCallback, useState } from "react"
 import { Container } from "../container"
@@ -15,19 +15,6 @@ const steps: ProcessStep[] = [
   { index: "03", key: "step3" },
   { index: "04", key: "step4" },
 ]
-
-function splitHeadline(value: string) {
-  if (!value.trim()) return { first: "", second: "" }
-  const sentenceMatch = value.match(/^(.+[.!?،])\s+(.+)$/)
-  if (sentenceMatch) return { first: sentenceMatch[1], second: sentenceMatch[2] }
-  const words = value.trim().split(/\s+/)
-  if (words.length < 2) return { first: value, second: "" }
-  const splitAt = Math.ceil(words.length / 2)
-  return {
-    first: words.slice(0, splitAt).join(" "),
-    second: words.slice(splitAt).join(" "),
-  }
-}
 
 interface StepItemProps {
   i: number

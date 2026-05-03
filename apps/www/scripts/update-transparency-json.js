@@ -125,7 +125,7 @@ const deliverablesEn = {
       "Lead generation forms with CRM-ready data export",
       "Full SEO setup: technical + on-page + sitemap",
       "Google Analytics 4 + Search Console integration",
-      "Arabic + English (RTL/LTR) bilingual support",
+      "Multilingual (RTL/LTR) bilingual support",
       "Social media feeds & sharing integration",
       "Domain + Hosting - Year 1 included",
       "SSL, CDN & automated backups",

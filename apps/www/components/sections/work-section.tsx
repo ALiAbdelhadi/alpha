@@ -9,21 +9,10 @@ import {
   getCommercialCta,
 } from "@/lib/commercial"
 import { DEFAULTS, MOTION, useBatch, useReveal, useText } from "@/lib/motion"
+import { splitHeadline } from "@/lib/utils"
 import { useLocale, useTranslations } from "next-intl"
 import { memo } from "react"
 
-function splitHeadline(value: string) {
-  if (!value.trim()) return { first: "", second: "" }
-  const sentenceMatch = value.match(/^(.+[.!?،])\s+(.+)$/)
-  if (sentenceMatch) return { first: sentenceMatch[1], second: sentenceMatch[2] }
-  const words = value.trim().split(/\s+/)
-  if (words.length < 2) return { first: value, second: "" }
-  const splitAt = Math.ceil(words.length / 2)
-  return {
-    first: words.slice(0, splitAt).join(" "),
-    second: words.slice(splitAt).join(" "),
-  }
-}
 
 export const WorkSection = memo(function WorkSection() {
   const locale = useLocale();
@@ -73,7 +62,7 @@ export const WorkSection = memo(function WorkSection() {
             {tf("summary")}
           </p>
         </div>
-        <div className="grid gap-0 border-t border-border sm:grid-cols-3">
+        <div className="grid gap-0 border border-border sm:grid-cols-3">
           {flagshipMetrics.map((metric) => (
             <div
               key={metric.label}
@@ -88,7 +77,7 @@ export const WorkSection = memo(function WorkSection() {
             </div>
           ))}
         </div>
-        <div className="grid gap-0 border-l border-r border-border md:grid-cols-3 mt-0">
+        <div className="grid gap-0 border-t border-l border-r border-border md:grid-cols-3 mt-0">
           {[
             { label: tf("labels.problem"), body: tf("problem") },
             { label: tf("labels.solution"), body: tf("solution") },
@@ -143,10 +132,10 @@ export const WorkSection = memo(function WorkSection() {
             </MagneticButton>
           </div>
         </div>
-        <div className="h-px bg-border mt-10 mb-0" />
+        <div className="h-px bg-border mt-10" />
         <div
           ref={gridRef}
-          className="grid gap-0 border-l border-r border-border md:grid-cols-2"
+          className="grid gap-0 border-t border-l border-r border-border md:grid-cols-2"
         >
           {HOMEPAGE_SUPPORTING_CASE_STUDIES.map((slug) => {
             const name = tCS(slug + ".name");

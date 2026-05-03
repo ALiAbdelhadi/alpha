@@ -3,6 +3,7 @@
 import { Container } from "@/components/container"
 import { MagneticButton } from "@/components/magnetic-button"
 import { Link } from "@/i18n/navigation"
+import { SITE_CONFIG } from "@/lib/metadata"
 import { DEFAULTS, useReveal, useText } from "@/lib/motion"
 import { createContactFormSchema } from "@/lib/validations/contact"
 import { AlertCircle, CheckCircle2, Mail, MapPin, Phone } from "lucide-react"
@@ -193,13 +194,13 @@ export default function ContactPage() {
                                     </p>
                                 </div>
                                 <div className="flex flex-wrap gap-3 pt-2 sm:gap-4">
-                                    {["twitter", "instagram", "linkedin", "dribbble"].map((social) => (
+                                    {Object.keys(SITE_CONFIG.social).map((social) => (
                                         <a
                                             key={social}
-                                            href="#"
-                                            className="border-b border-transparent font-mono text-sm leading-normal tracking-wider text-primary/60 transition-all hover:border-foreground/60 hover:text-primary/85 sm:text-sm"
+                                            href={SITE_CONFIG.social[social as keyof typeof SITE_CONFIG.social]}
+                                            className="uppercase border-b border-transparent font-mono text-sm leading-normal tracking-wider text-primary/60 transition-all hover:border-foreground/60 hover:text-primary/85 sm:text-sm"
                                         >
-                                            {t(`social.${social}`)}
+                                            {social}
                                         </a>
                                     ))}
                                 </div>

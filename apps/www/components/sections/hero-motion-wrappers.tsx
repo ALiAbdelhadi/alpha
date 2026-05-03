@@ -1,8 +1,8 @@
 "use client";
 
+import { useBatch } from "@/lib/motion/hooks/use-batch";
 import { useReveal } from "@/lib/motion/hooks/use-reveal";
 import { useText } from "@/lib/motion/hooks/use-text";
-import { useBatch } from "@/lib/motion/hooks/use-batch";
 import { motion } from "@/lib/motion/utils/presets";
 import { type ReactNode } from "react";
 

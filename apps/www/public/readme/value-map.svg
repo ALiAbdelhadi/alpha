@@ -1,0 +1,66 @@
+<svg width="1600" height="620" viewBox="0 0 1600 620" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Altruvex value map</title>
+  <desc id="desc">A light editorial value map inspired by the Altruvex design system, showing how clarity, performance, bilingual architecture, and ownership turn a website into a commercial system.</desc>
+
+  <defs>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(820 -10) rotate(90) scale(260 700)">
+      <stop stop-color="#5D6FD6" stop-opacity="0.13"/>
+      <stop offset="1" stop-color="#5D6FD6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="620" rx="34" fill="#F8FAFC"/>
+  <rect width="1600" height="620" rx="34" fill="url(#glow)"/>
+
+  <text x="104" y="86" fill="#657085" font-family="Geist Mono, SFMono-Regular, Consolas, monospace" font-size="15" font-weight="620" letter-spacing="7">VALUE MAP</text>
+  <text x="104" y="148" fill="#070A12" font-family="Outfit, Inter, Arial, sans-serif" font-size="54" font-weight="360" letter-spacing="-2.4">From website presence</text>
+  <text x="104" y="208" fill="#8F9298" font-family="Georgia, Times New Roman, serif" font-size="56" font-style="italic" font-weight="400" letter-spacing="-1.8">to commercial system.</text>
+
+  <text x="1160" y="90" fill="#657085" font-family="Geist Mono, SFMono-Regular, Consolas, monospace" font-size="13" font-weight="560" letter-spacing="6">POSITIONING · UX · ENGINEERING</text>
+  <circle cx="1138" cy="84" r="4" fill="#059669"/>
+
+  <path d="M104 270H1496" stroke="#070A12" stroke-opacity="0.1"/>
+  <path d="M104 520H1496" stroke="#070A12" stroke-opacity="0.1"/>
+  <path d="M452 270V520" stroke="#070A12" stroke-opacity="0.1"/>
+  <path d="M800 270V520" stroke="#070A12" stroke-opacity="0.1"/>
+  <path d="M1148 270V520" stroke="#070A12" stroke-opacity="0.1"/>
+
+  <g transform="translate(104 300)">
+    <text x="0" y="0" fill="#5D6FD6" font-family="Geist Mono, SFMono-Regular, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="6">01</text>
+    <text x="0" y="64" fill="#070A12" font-family="Outfit, Inter, Arial, sans-serif" font-size="42" font-weight="330" letter-spacing="-1.4">Clarity</text>
+    <text x="0" y="112" fill="#657085" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="450">The buyer understands</text>
+    <text x="0" y="145" fill="#657085" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="450">the offer before doubt</text>
+    <text x="0" y="178" fill="#657085" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="450">takes over.</text>
+  </g>
+
+  <g transform="translate(492 300)">
+    <text x="0" y="0" fill="#5D6FD6" font-family="Geist Mono, SFMono-Regular, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="6">02</text>
+    <text x="0" y="64" fill="#070A12" font-family="Outfit, Inter, Arial, sans-serif" font-size="42" font-weight="330" letter-spacing="-1.4">Performance</text>
+    <text x="0" y="112" fill="#657085" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="450">Speed becomes a trust</text>
+    <text x="0" y="145" fill="#657085" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="450">signal, not a late</text>
+    <text x="0" y="178" fill="#657085" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="450">optimization task.</text>
+  </g>
+
+  <g transform="translate(840 300)">
+    <text x="0" y="0" fill="#5D6FD6" font-family="Geist Mono, SFMono-Regular, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="6">03</text>
+    <text x="0" y="64" fill="#070A12" font-family="Outfit, Inter, Arial, sans-serif" font-size="42" font-weight="330" letter-spacing="-1.4">Bilingual</text>
+    <text x="0" y="112" fill="#657085" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="450">Arabic and English are</text>
+    <text x="0" y="145" fill="#657085" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="450">designed as structural</text>
+    <text x="0" y="178" fill="#657085" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="450">equals.</text>
+  </g>
+
+  <g transform="translate(1188 300)">
+    <text x="0" y="0" fill="#5D6FD6" font-family="Geist Mono, SFMono-Regular, Consolas, monospace" font-size="13" font-weight="700" letter-spacing="6">04</text>
+    <text x="0" y="64" fill="#070A12" font-family="Outfit, Inter, Arial, sans-serif" font-size="42" font-weight="330" letter-spacing="-1.4">Ownership</text>
+    <text x="0" y="112" fill="#657085" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="450">The business receives</text>
+    <text x="0" y="145" fill="#657085" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="450">a maintainable system,</text>
+    <text x="0" y="178" fill="#657085" font-family="Inter, Arial, sans-serif" font-size="19" font-weight="450">not vendor dependency.</text>
+  </g>
+
+  <g transform="translate(104 552)">
+    <path d="M0 0H90" stroke="#070A12" stroke-opacity="0.18"/>
+    <text x="122" y="6" fill="#657085" font-family="Geist Mono, SFMono-Regular, Consolas, monospace" font-size="14" font-weight="560" letter-spacing="6">ALTRUVEX CONNECTS COMMERCIAL CLARITY WITH PRODUCTION-GRADE WEB ENGINEERING.</text>
+  </g>
+
+  <text x="1032" y="598" fill="#070A12" fill-opacity="0.035" font-family="Outfit, Inter, Arial, sans-serif" font-size="210" font-weight="760" letter-spacing="-12">SYSTEM</text>
+</svg>

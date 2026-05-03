@@ -2,22 +2,22 @@
 
 import { Link } from "@/i18n/navigation";
 import { useIsomorphicLayoutEffect } from "@/lib/dom-utils";
+import { gsap } from "@/lib/gsap";
+import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
+import { localizeNumbers } from "@/lib/number";
 import {
-  buildPDFHtml,
-  calculateQuickEstimate,
   DeliverableProject,
   DeliverableTier,
+  HOSTING_RENEWAL,
   TransparencyTranslator,
+  buildPDFHtml,
+  calculateQuickEstimate,
   generateEstimatePdf,
   generateProposalNarrative,
-  HOSTING_RENEWAL,
   normalisePhone,
   pickLang,
   validatePhone,
 } from "@/lib/transparency-utils";
-import { gsap } from "@/lib/gsap";
-import { DEFAULTS, MOTION, useReveal, useText } from "@/lib/motion";
-import { localizeNumbers } from "@/lib/number";
 import { cn } from "@/lib/utils";
 import { ArrowLeft, ArrowRight, Check, Download, Phone } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
