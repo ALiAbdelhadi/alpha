@@ -114,12 +114,12 @@ function HeroSection() {
               </div>
             </div>
             <div ref={ctaRef} className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <MagneticButton asChild size="lg" variant="primary" className="group">
+              <MagneticButton size="lg" variant="primary" className="group">
                 <Link href={projectRangeCta.href}>
                   <ArrowLabel>{projectRangeCta.label}</ArrowLabel>
                 </Link>
               </MagneticButton>
-              <MagneticButton asChild size="lg" variant="secondary">
+              <MagneticButton size="lg" variant="secondary">
                 <Link href="/work">{t("ctaSecondary")}</Link>
               </MagneticButton>
             </div>
@@ -348,10 +348,10 @@ function OperatingModelSection() {
           ))}
         </div>
         <div className="mt-10 flex flex-wrap gap-4">
-          <MagneticButton asChild size="lg" variant="secondary">
+          <MagneticButton size="lg" variant="secondary">
             <Link href="/process">{navT("process")}</Link>
           </MagneticButton>
-          <MagneticButton asChild size="lg" variant="secondary">
+          <MagneticButton size="lg" variant="secondary">
             <Link href="/how-we-work">{navT("how-we-work")}</Link>
           </MagneticButton>
         </div>

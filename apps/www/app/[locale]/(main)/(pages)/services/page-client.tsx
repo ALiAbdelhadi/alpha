@@ -216,12 +216,11 @@ const OfferCard = memo(function OfferCard({
   tc,
 }: OfferCardProps) {
   return (
-    <Link
-      href={offer.detailHref}
+    <div
       className={cn(
         designTokens.cardBase,
         designTokens.cardHover,
-        "p-6 md:p-8",
+        "p-6 md:p-8 group",
         featured ? "md:col-span-2 min-h-[380px]" : "min-h-[320px]",
       )}
     >
@@ -297,18 +296,22 @@ const OfferCard = memo(function OfferCard({
             {featured && (
               <MagneticButton
                 asChild
+                size="lg"
                 variant="primary"
-                className="rounded-full bg-foreground text-background hover:opacity-90 px-8 py-3 text-sm font-semibold transition-all"
+                className="relative z-10 rounded-full bg-foreground text-background hover:opacity-90 px-8 py-3 text-sm font-semibold transition-all"
               >
                 <Link href={cta.href}>{cta.label}</Link>
               </MagneticButton>
             )}
-            <div className="size-12 flex items-center justify-center rounded-full bg-background border border-border transition-all duration-500 group-hover:bg-foreground group-hover:text-background group-hover:border-foreground">
+            <Link
+              href={offer.detailHref}
+              className="relative z-10 size-12 flex items-center justify-center rounded-full bg-background border border-border transition-all duration-500 group-hover:bg-foreground group-hover:text-background group-hover:border-foreground after:absolute after:inset-0"
+            >
               <ArrowIcon className="size-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </div>
+            </Link>
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 });

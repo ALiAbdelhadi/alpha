@@ -41,47 +41,47 @@ function roundEstimate(value: number): number {
 
 const PRICING_TABLE = {
   website: {
-    basic: [75_000, 110_000],
-    standard: [110_000, 150_000],
-    premium: [150_000, 210_000],
+    basic: [35_000, 70_000],
+    standard: [70_000, 140_000],
+    premium: [140_000, 220_000],
   },
   webapp: {
-    basic: [180_000, 260_000],
-    standard: [260_000, 380_000],
-    premium: [380_000, 550_000],
+    basic: [80_000, 150_000],
+    standard: [150_000, 280_000],
+    premium: [280_000, 450_000],
   },
   ecommerce: {
-    basic: [140_000, 210_000],
-    standard: [210_000, 320_000],
-    premium: [320_000, 480_000],
+    basic: [55_000, 95_000],
+    standard: [95_000, 180_000],
+    premium: [180_000, 320_000],
   },
   pwa: {
-    basic: [220_000, 300_000],
-    standard: [300_000, 430_000],
-    premium: [430_000, 620_000],
+    basic: [95_000, 175_000],
+    standard: [175_000, 310_000],
+    premium: [310_000, 495_000],
   },
 };
 
 const TIMELINE_TABLE = {
   website: {
-    basic: [3, 5],
-    standard: [5, 8],
-    premium: [8, 12],
+    basic: [2, 4],
+    standard: [4, 7],
+    premium: [7, 11],
   },
   webapp: {
-    basic: [6, 10],
-    standard: [10, 16],
-    premium: [16, 24],
-  },
-  ecommerce: {
     basic: [5, 8],
     standard: [8, 14],
-    premium: [14, 20],
+    premium: [14, 22],
+  },
+  ecommerce: {
+    basic: [4, 6],
+    standard: [6, 10],
+    premium: [10, 16],
   },
   pwa: {
-    basic: [8, 12],
-    standard: [12, 18],
-    premium: [18, 28],
+    basic: [6, 10],
+    standard: [10, 16],
+    premium: [16, 26],
   },
 };
 
@@ -98,23 +98,32 @@ const TIMELINE_WEEK_MULTIPLIERS = {
 };
 
 interface UseTransparencyOptions {
-  initialBudget?: Budget | null;
+  initialTier?: string | null;
 }
 
 export function useTransparency({
-  initialBudget = null,
+  initialTier = null,
 }: UseTransparencyOptions = {}) {
-  const skipBudget = initialBudget !== null;
+  const isPreselected = initialTier !== null;
+
+  const preselectedBudget = initialTier === "essential" ? "small" :
+    initialTier === "professional" ? "medium" :
+      initialTier === "flagship" ? "large" : null;
+
+  const preselectedComplexity = initialTier === "essential" ? "basic" :
+    initialTier === "professional" ? "standard" :
+      initialTier === "flagship" ? "premium" : null;
+
   const createInitialState = useCallback((): TransparencyState => ({
-    step: 1,
-    budget: initialBudget ?? null,
-    brandIdentity: null,
-    contentReadiness: null,
-    deadlineUrgency: null,
+    step: isPreselected ? 5 : 1,
+    budget: preselectedBudget as Budget,
+    brandIdentity: isPreselected ? "complete" : null,
+    contentReadiness: isPreselected ? "provide" : null,
+    deadlineUrgency: isPreselected ? "flexible" : null,
     projectType: null,
-    complexity: null,
+    complexity: preselectedComplexity as Complexity,
     timeline: null,
-  }), [initialBudget]);
+  }), [isPreselected, preselectedBudget, preselectedComplexity]);
 
   const [state, setState] = useState<TransparencyState>(createInitialState);
 
@@ -143,18 +152,21 @@ export function useTransparency({
   const nextStep = useCallback(() => {
     setState((prev) => {
       let next = prev.step + 1;
-      if (next === 2 && skipBudget) next = 3;
+      if (isPreselected && prev.step === 5) next = 7;
       return { ...prev, step: Math.min(next, TOTAL_STEPS) };
     });
-  }, [skipBudget]);
+  }, [isPreselected]);
 
   const prevStep = useCallback(() => {
     setState((prev) => {
       let back = prev.step - 1;
-      if (back === 2 && skipBudget) back = 1;
+      if (isPreselected) {
+        if (prev.step === 7) back = 5;
+        if (prev.step <= 5) back = 5;
+      }
       return { ...prev, step: Math.max(back, 1) };
     });
-  }, [skipBudget]);
+  }, [isPreselected]);
 
   const reset = useCallback(() => {
     setState(createInitialState());
@@ -165,7 +177,7 @@ export function useTransparency({
       case 1:
         return state.brandIdentity !== null;
       case 2:
-        return skipBudget ? true : state.budget !== null;
+        return state.budget !== null;
       case 3:
         return state.contentReadiness !== null;
       case 4:
@@ -179,7 +191,7 @@ export function useTransparency({
       default:
         return false;
     }
-  }, [state, skipBudget]);
+  }, [state]);
 
   const getEstimate = useCallback((): EstimateResult | null => {
     if (!state.projectType || !state.complexity || !state.timeline) return null;

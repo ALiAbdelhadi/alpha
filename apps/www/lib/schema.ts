@@ -262,6 +262,7 @@ function buildServiceSchema(
 
   return {
     "@context": "https://schema.org",
+    "@id": `${getLocalizedUrl(locale, PAGE_METADATA[key].path)}#service`,
     "@type": "Service",
     areaServed: AREA_SERVED,
     audience: {

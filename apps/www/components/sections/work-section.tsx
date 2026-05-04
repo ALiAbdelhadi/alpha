@@ -40,7 +40,6 @@ export const WorkSection = memo(function WorkSection() {
   return (
     <section id="work" className="pt-(--section-y-top) pb-(--section-y-bottom)">
       <Container>
-        
         <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 md:gap-12 mb-16">
           <div className="space-y-3">
             <p ref={eyebrowRef} className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground">
@@ -88,7 +87,7 @@ export const WorkSection = memo(function WorkSection() {
               className="border-r border-b border-border px-6 py-8 group hover:bg-surface transition-colors duration-300"
             >
               <p className="font-mono text-sm leading-normal tracking-wider uppercase rtl:font-sans rtl:normal-case rtl:tracking-normal text-muted-foreground mb-4">
-                {stepLabel} {String(i + 1).padStart(2, "0")} · {item.label}
+                {stepLabel} · {item.label}
               </p>
               <p className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground">
                 {item.body}
@@ -111,7 +110,6 @@ export const WorkSection = memo(function WorkSection() {
           </div>
           <div className="flex flex-col gap-3">
             <MagneticButton
-              asChild
               size="lg"
               variant="primary"
               className="group"
@@ -121,7 +119,6 @@ export const WorkSection = memo(function WorkSection() {
               </Link>
             </MagneticButton>
             <MagneticButton
-              asChild
               size="lg"
               variant="secondary"
               className="group"

@@ -65,60 +65,60 @@ function HeroSection() {
 
       <Container>
         <div className="sm:max-w-5xl max-w-full">
-        <h1
-              ref={titleRef}
-              className="mb-10 font-sans font-normal text-primary leading-[1.03] rtl:leading-[1.2] select-none"
-              style={{
-                fontSize: "clamp(44px, 7vw, 96px)",
-                letterSpacing: "-0.025em",
-              }}
-            >
-              {t("title")}
-              <br className="hidden sm:block" />
-              <span className="font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold text-foreground/45 block mt-2 sm:mt-0">
-                {t("titleItalic")}
-              </span>
-            </h1>
+          <h1
+            ref={titleRef}
+            className="mb-10 font-sans font-normal text-primary leading-[1.03] rtl:leading-[1.2] select-none"
+            style={{
+              fontSize: "clamp(44px, 7vw, 96px)",
+              letterSpacing: "-0.025em",
+            }}
+          >
+            {t("title")}
+            <br className="hidden sm:block" />
+            <span className="font-serif italic font-light rtl:font-sans rtl:not-italic rtl:font-bold text-foreground/45 block mt-2 sm:mt-0">
+              {t("titleItalic")}
+            </span>
+          </h1>
 
-            <div
-              ref={descRef}
-              className="mb-12 grid md:grid-cols-[80px_1fr] gap-8 items-start"
-            >
-              <div className="h-px w-full bg-foreground/8 mt-3 hidden md:block" aria-hidden="true" />
-              <p className="text-base text-primary/60 leading-relaxed max-w-[52ch]">
-                {t("description")}
-              </p>
-            </div>
+          <div
+            ref={descRef}
+            className="mb-12 grid md:grid-cols-[80px_1fr] gap-8 items-start"
+          >
+            <div className="h-px w-full bg-foreground/8 mt-3 hidden md:block" aria-hidden="true" />
+            <p className="text-base text-primary/60 leading-relaxed max-w-[52ch]">
+              {t("description")}
+            </p>
+          </div>
 
-            <div
-              ref={ctaRef}
-              className="flex flex-col sm:flex-row sm:items-center gap-4"
-            >
-              <MagneticButton asChild size="lg" variant="primary" className="group w-full sm:w-auto">
-                <Link href={auditCta.href}>
-                  <span className="flex items-center justify-center gap-2">
-                    {auditCta.label}
-                    <svg
-                      aria-hidden="true"
-                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
-                  </span>
-                </Link>
-              </MagneticButton>
-              <MagneticButton asChild size="lg" variant="secondary" className="w-full sm:w-auto text-center">
-                <Link href="#audit-offer">{t("hero.ctaSecondary")}</Link>
-              </MagneticButton>
-            </div>
+          <div
+            ref={ctaRef}
+            className="flex flex-col sm:flex-row sm:items-center gap-4"
+          >
+            <MagneticButton size="lg" variant="primary" className="group w-full sm:w-auto">
+              <Link href={auditCta.href}>
+                <span className="flex items-center justify-center gap-2">
+                  {auditCta.label}
+                  <svg
+                    aria-hidden="true"
+                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 rtl:-rotate-180"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </span>
+              </Link>
+            </MagneticButton>
+            <MagneticButton asChild size="lg" variant="secondary" className="w-full sm:w-auto text-center">
+              <Link href="#audit-offer">{t("hero.ctaSecondary")}</Link>
+            </MagneticButton>
+          </div>
         </div>
       </Container>
 
@@ -327,7 +327,7 @@ function CtaSection() {
               {t("cta.description")}
             </p>
             <div ref={ctaRef} className="flex flex-col gap-3">
-              <MagneticButton asChild size="lg" variant="primary" className="group w-full justify-center">
+              <MagneticButton size="lg" variant="primary" className="group w-full justify-center">
                 <Link href="/schedule">
                   <span className="flex items-center gap-2">
                     {t("cta.button")}
@@ -347,7 +347,7 @@ function CtaSection() {
                   </span>
                 </Link>
               </MagneticButton>
-              <MagneticButton asChild size="lg" variant="secondary" className="w-full justify-center">
+              <MagneticButton size="lg" variant="secondary" className="w-full justify-center">
                 <Link href="/services">
                   {t("cta.back")}
                 </Link>

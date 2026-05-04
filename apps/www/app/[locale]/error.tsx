@@ -153,8 +153,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
                   </svg>
                 </span>
               </MagneticButton>
-
-              <MagneticButton asChild size="lg" variant="secondary" className="min-w-[160px] justify-center group">
+              <MagneticButton  size="lg" variant="secondary" className="min-w-[160px] justify-center group">
                 <Link href="/">
                   <span className="flex items-center gap-2">
                     Go Home

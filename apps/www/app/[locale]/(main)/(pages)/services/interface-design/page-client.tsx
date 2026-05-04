@@ -17,8 +17,8 @@ export default function InterfacePage() {
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden">
       <HeroSection />
-      <DesignCompareSection />
-      <ShowcaseSection />
+      {/* <DesignCompareSection /> */}
+      {/* <ShowcaseSection /> */}
       <FeaturesSection />
       <CtaSection />
     </div>
@@ -92,7 +92,7 @@ function HeroSection() {
             ref={ctaRef}
             className="flex flex-col sm:flex-row sm:items-center gap-4"
           >
-            <MagneticButton asChild size="lg" variant="primary" className="group w-full sm:w-auto">
+            <MagneticButton size="lg" variant="primary" className="group w-full sm:w-auto">
               <Link href={projectRangeCta.href}>
                 <span className="flex items-center justify-center gap-2">
                   {projectRangeCta.label}
@@ -113,7 +113,7 @@ function HeroSection() {
                 </span>
               </Link>
             </MagneticButton>
-            <MagneticButton asChild size="lg" variant="secondary" className="w-full sm:w-auto text-center">
+            <MagneticButton size="lg" variant="secondary" className="w-full sm:w-auto text-center">
               <Link href={realBuildCta.href}>{realBuildCta.label}</Link>
             </MagneticButton>
           </div>
@@ -569,7 +569,7 @@ function CtaSection() {
             </p>
           </div>
           <div className="flex flex-col gap-3">
-            <MagneticButton asChild size="lg" variant="primary" className="group">
+            <MagneticButton size="lg" variant="primary" className="group">
               <Link href={projectRangeCta.href}>
                 <span className="flex items-center gap-2">
                   {projectRangeCta.label}
@@ -589,7 +589,7 @@ function CtaSection() {
                 </span>
               </Link>
             </MagneticButton>
-            <MagneticButton asChild size="lg" variant="secondary">
+            <MagneticButton size="lg" variant="secondary">
               <Link href="/services">{t("cta.back")}</Link>
             </MagneticButton>
           </div>

@@ -39,21 +39,13 @@ import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { JSX, useEffect, useRef, useState } from "react";
 
-const TIER_TO_BUDGET: Record<string, Budget> = {
-  essential: "small",
-  professional: "medium",
-  flagship: "large",
-};
-
 export default function TransparencyPageClient() {
   const t = useTranslations("transparency");
   const locale = useLocale();
   const searchParams = useSearchParams();
 
   const incomingTier = searchParams.get("tier") ?? null;
-  const preselectedBudget = (
-    incomingTier ? (TIER_TO_BUDGET[incomingTier] ?? null) : null
-  ) as Budget | null;
+  const isPreselected = incomingTier !== null;
 
   const {
     step,
@@ -76,7 +68,7 @@ export default function TransparencyPageClient() {
     reset,
     canProceed,
     getEstimate,
-  } = useTransparency({ initialBudget: preselectedBudget });
+  } = useTransparency({ initialTier: incomingTier });
 
   const [phone, setPhone] = useState("");
   const [name, setName] = useState("");
@@ -85,10 +77,10 @@ export default function TransparencyPageClient() {
   const [phoneDone, setPhoneDone] = useState(false);
   const [pdfGenerating, setPdfGenerating] = useState(false);
 
-  const DATA_STEPS = preselectedBudget ? 7 : 8;
+  const DATA_STEPS = 8;
   const isPhoneStep = step === DATA_STEPS && !phoneDone;
   const isResultsStep = step === DATA_STEPS && phoneDone;
-  const TOTAL_STEPS = preselectedBudget ? 7 : 8;
+  const TOTAL_STEPS = isPreselected ? 3 : 8;
 
   const estimate = getEstimate();
   const titleRef = useText<HTMLHeadingElement>(DEFAULTS.heading);
@@ -128,7 +120,9 @@ export default function TransparencyPageClient() {
       maximumFractionDigits: 0,
     }).format(n);
 
-  const visibleStep = preselectedBudget ? (step <= 1 ? step : step - 1) : step;
+  const visibleStep = isPreselected
+    ? (step === 5 ? 1 : step === 7 ? 2 : step === 8 ? 3 : 1)
+    : step;
 
   const handlePhoneSubmit = async () => {
     if (!validatePhone(phone)) {
@@ -261,7 +255,7 @@ export default function TransparencyPageClient() {
                   t={t}
                 />
               )}
-              {step === 2 && !preselectedBudget && (
+              {step === 2 && !isPreselected && (
                 <StepBudget selected={budget} onSelect={setBudget} t={t} />
               )}
               {step === 3 && (
@@ -338,7 +332,7 @@ export default function TransparencyPageClient() {
             </div>
 
             <div className="flex items-center justify-between">
-              {step > 1 || isResultsStep ? (
+              {(isPreselected ? step > 5 : step > 1) || isResultsStep ? (
                 <MagneticButton
                   variant="secondary"
                   onClick={isResultsStep ? handleReset : handleBack}
@@ -712,7 +706,7 @@ function StepResults({
         {t("results.consultationGate")}
       </p>
       <div className="flex flex-col gap-4 justify-center items-center mb-6">
-        <MagneticButton asChild variant="primary" size="lg" className="group">
+        <MagneticButton size="lg" variant="primary" className="group">
           <Link href="/schedule">
             <ArrowLabel>{t("results.ctaPrimary")}</ArrowLabel>
           </Link>

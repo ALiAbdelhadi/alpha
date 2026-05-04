@@ -630,7 +630,6 @@ export const TransparencySection = memo(function TransparencySection() {
                         </span>
                       </MagneticButton>
                       <MagneticButton
-                        asChild
                         variant="secondary"
                         size="lg"
                         className="w-full justify-center group"

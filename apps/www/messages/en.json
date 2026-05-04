@@ -751,9 +751,9 @@
       "solution": "We built a bilingual Multilingual site on a custom Next.js stack with native RTL architecture, performance-first frontend engineering, and a transparency flow that qualifies leads before the first conversation.",
       "outcome": "Sub-1s mobile TTI, RTL switching under 16ms with zero layout shift, and leads that arrive pre-qualified - reducing discovery-call time by cutting scope mismatches before the first sentence.",
       "labels": {
-        "problem": "Problem",
-        "solution": "Solution",
-        "outcome": "Outcome"
+        "problem": "01 - Problem",
+        "solution": "02 - Solution",
+        "outcome": "03 - Outcome"
       }
     },
     "trust": {
@@ -832,12 +832,12 @@
     "compareDragHint": "← drag to compare →",
     "compareGenericLabel": "Generic template",
     "compareAltruvexLabel": "Altruvex engineered",
-    "compareStat1Label": "Typography",
-    "compareStat1Sub": "More visual hierarchy",
-    "compareStat2Label": "Whitespace",
-    "compareStat2Sub": "More breathing room",
-    "compareStat3Label": "Visual noise",
-    "compareStat3Sub": "Elements removed",
+    "qualityPoint1Label": "Typography",
+    "qualityPoint1Body": "Precise visual hierarchy ensures the most important message is processed first - not just made larger.",
+    "qualityPoint2Label": "Whitespace",
+    "qualityPoint2Body": "Intentional spacing reduces cognitive load and creates a premium, calm reading experience.",
+    "qualityPoint3Label": "Zero Bloat",
+    "qualityPoint3Body": "We remove every element that doesn't serve a conversion goal, keeping the interface lean and fast.",
     "mockupBrandName": "Meridian",
     "mockupNavServices": "Services",
     "mockupNavPortfolio": "Portfolio",
@@ -1053,6 +1053,18 @@
           }
         }
       },
+      "cta": {
+        "eyebrow": "02 - Product Engineering",
+        "title": "Ready to build the internal tool that scales?",
+        "description": "We take over the engineering layer so you can focus on your actual business outcomes - without the technical debt of a rushed build.",
+        "back": "View All Services"
+      }
+    },
+    "consulting": {
+      "title": "Technical Consulting",
+      "titleItalic": "& Web Audits.",
+      "subtitle": "Evidence-based technical direction for engineering teams.",
+      "description": "A fixed-scope, evidence-based decision layer for teams facing a rebuild, a slow platform, or an unclear technical direction.",
       "brief": {
         "eyebrow": "Consulting Brief",
         "title": "The summary, read it",
@@ -1890,10 +1902,6 @@
     ],
     "commercial": {
       "items": {
-        "vat": {
-          "label": "VAT",
-          "value": "All project pricing shown is before 14% VAT."
-        },
         "yearOne": {
           "label": "Year 1 Setup",
           "value": "Domain, SSL, deployment, and base hosting for Year 1 are included for standard website scopes. Higher-load infrastructure is quoted only when the project requires it."

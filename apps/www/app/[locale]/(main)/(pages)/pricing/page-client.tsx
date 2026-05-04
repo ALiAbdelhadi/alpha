@@ -112,11 +112,6 @@ export default function PricingPage() {
 
   const commercialNotes = [
     {
-      key: "vat",
-      label: t("commercial.items.vat.label"),
-      value: t("commercial.items.vat.value"),
-    },
-    {
       key: "yearOne",
       label: t("commercial.items.yearOne.label"),
       value: t("commercial.items.yearOne.value"),

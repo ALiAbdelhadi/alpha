@@ -90,7 +90,7 @@ function HeroSection() {
             ref={ctaRef}
             className="flex flex-col sm:flex-row sm:items-center gap-4"
           >
-            <MagneticButton asChild size="lg" variant="primary" className="group w-full sm:w-auto">
+            <MagneticButton size="lg" variant="primary" className="group w-full sm:w-auto">
               <Link href={projectRangeCta.href}>
                 <span className="flex items-center justify-center gap-2">
                   {projectRangeCta.label}
@@ -486,6 +486,7 @@ function PricingSection() {
               </ul>
               <MagneticButton
                 asChild
+                size="lg"
                 variant={featured ? "primary" : "secondary"}
                 className="mt-auto w-full justify-center group"
               >

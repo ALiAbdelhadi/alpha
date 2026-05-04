@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { normalizeNumeralsToEnglish } from "../number"
 
 type ValidationTranslator = (key: string) => string
 
@@ -10,12 +11,15 @@ const nameField = (t: ValidationTranslator) =>
         .trim()
 
 const contactPhoneField = (t: ValidationTranslator) =>
-    z
-        .string()
-        .min(10, t("contact.phone-min"))
-        .max(20, t("contact.phone-max"))
-        .regex(/^[\d\s\-\+\(\)]+$/, t("contact.phone-regex"))
-        .trim()
+    z.preprocess(
+        (val) => (typeof val === "string" ? normalizeNumeralsToEnglish(val) : val),
+        z
+            .string()
+            .min(10, t("contact.phone-min"))
+            .max(20, t("contact.phone-max"))
+            .regex(/^[\d\s\-\+\(\)]+$/, t("contact.phone-regex"))
+            .trim()
+    )
 
 const preferredDateCore = (t: ValidationTranslator) =>
     z

@@ -1,7 +1,7 @@
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import { SITE_CONFIG } from "./metadata";
-import { localizeNumbers } from "./number";
+import { localizeNumbers, normalizeNumeralsToEnglish } from "./number";
 
 export type DeliverableTier = "small" | "medium" | "large" | "enterprise";
 export type DeliverableProject =
@@ -33,10 +33,14 @@ export function mapProjectType(raw: string | null): DeliverableProject {
 export function mapBudgetTier(raw: string | null): DeliverableTier {
   const map: Record<string, DeliverableTier> = {
     small: "small",
+    essential: "small",
     medium: "medium",
+    professional: "medium",
     large: "large",
+    premium: "large",
     custom: "enterprise",
     enterprise: "enterprise",
+    flagship: "enterprise",
   };
   return map[raw ?? ""] ?? "medium";
 }
@@ -161,14 +165,16 @@ const TIMELINE_LABELS: Record<string, string> = {
 };
 
 export function validatePhone(phone: string): boolean {
-  const digits = phone.replace(/\D/g, "");
+  const normalized = normalizeNumeralsToEnglish(phone);
+  const digits = normalized.replace(/\D/g, "");
   return digits.length >= 8 && digits.length <= 15;
 }
 
 export function normalisePhone(phone: string): string {
-  const digits = phone.replace(/\D/g, "");
+  const normalized = normalizeNumeralsToEnglish(phone);
+  const digits = normalized.replace(/\D/g, "");
   if (!digits) return "";
-  return phone.trim().startsWith("+") ? `+${digits}` : digits;
+  return normalized.trim().startsWith("+") ? `+${digits}` : digits;
 }
 
 interface NarrativeInsight {

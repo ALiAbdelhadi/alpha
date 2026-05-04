@@ -53,7 +53,7 @@ export const ProblemSection = memo(function ProblemSection() {
           <p ref={descRef} className="text-[clamp(1.0625rem,1.05vw,1.125rem)] leading-[1.75] text-muted-foreground max-w-2xl">
             {t("problem.subtitle")}
           </p>
-          <MagneticButton asChild size="lg" variant="secondary" className="group w-fit">
+          <MagneticButton size="lg" variant="secondary" className="group w-fit">
             <Link href={auditCta.href}>
               <ArrowLabel>{t("commercial.ctas.technicalAudit")}</ArrowLabel>
             </Link>

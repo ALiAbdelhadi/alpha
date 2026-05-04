@@ -12,21 +12,21 @@ import {
 import { MagneticButton } from "./magnetic-button"
 
 const INK = {
-  red:   "rgba(210, 68,  68,  0.82)",
+  red: "rgba(210, 68,  68,  0.82)",
   amber: "rgba(190, 145, 32,  0.78)",
   green: "rgba(42,  168, 100, 0.72)",
-  gray:  "rgba(105, 105, 105, 0.55)",
+  gray: "rgba(105, 105, 105, 0.55)",
 } as const
 
 type InkColor = keyof typeof INK
 
-const CB_EASE         = "cubic-bezier(0.16, 1, 0.3, 1)"
-const STAGGER         = 150
+const CB_EASE = "cubic-bezier(0.16, 1, 0.3, 1)"
+const STAGGER = 150
 const SCROLL_THROTTLE = 80
-const BREAKPOINTS     = { md: 768, lg: 1024 } as const
-const SHORT_VIEWPORT_HEIGHT       = 780
-const VERY_SHORT_VIEWPORT_HEIGHT  = 700
-const SSR_VIEWPORT    = { width: 1280, height: 900 } as const
+const BREAKPOINTS = { md: 768, lg: 1024 } as const
+const SHORT_VIEWPORT_HEIGHT = 780
+const VERY_SHORT_VIEWPORT_HEIGHT = 700
+const SSR_VIEWPORT = { width: 1280, height: 900 } as const
 
 const BRIEF_STYLES = `
   .cb-underline { opacity: 0; }
@@ -128,18 +128,18 @@ interface StageAction {
   delay: number
 }
 interface Stage { key: string; label: string; actions: StageAction[] }
-interface Note  { id: string; label: string; body: string; color: InkColor }
+interface Note { id: string; label: string; body: string; color: InkColor }
 
 const D = (n: number) => `${Math.round(n * 1000)}ms`
 
 function getSectionHeight(width: number, height: number): string {
-  const isNarrow    = width < BREAKPOINTS.md
-  const isMedium    = width >= BREAKPOINTS.md && width < BREAKPOINTS.lg
+  const isNarrow = width < BREAKPOINTS.md
+  const isMedium = width >= BREAKPOINTS.md && width < BREAKPOINTS.lg
   const isVeryShort = height < VERY_SHORT_VIEWPORT_HEIGHT
-  const isShort     = height < SHORT_VIEWPORT_HEIGHT
+  const isShort = height < SHORT_VIEWPORT_HEIGHT
 
-  if (isNarrow)  return isVeryShort ? "420vh" : isShort ? "380vh" : "340vh"
-  if (isMedium)  return isVeryShort ? "390vh" : isShort ? "350vh" : "320vh"
+  if (isNarrow) return isVeryShort ? "420vh" : isShort ? "380vh" : "340vh"
+  if (isMedium) return isVeryShort ? "390vh" : isShort ? "350vh" : "320vh"
   return isVeryShort ? "350vh" : isShort ? "320vh" : "300vh"
 }
 
@@ -221,10 +221,10 @@ function ConnectorsSvg({ conn1Drawn, conn2Drawn, isRtl }: {
 function NoteCard({ note, isRtl, size = "sm" }: {
   note: Note; isRtl: boolean; size?: "sm" | "md"
 }) {
-  const accentPx   = size === "md" ? 3 : 2
+  const accentPx = size === "md" ? 3 : 2
   const borderSide = isRtl
     ? { borderRight: `${accentPx}px solid ${INK[note.color]}`, borderLeft: "none" }
-    : { borderLeft:  `${accentPx}px solid ${INK[note.color]}`, borderRight: "none" }
+    : { borderLeft: `${accentPx}px solid ${INK[note.color]}`, borderRight: "none" }
 
   return (
     <div
@@ -323,9 +323,9 @@ function StageNav({
               const nextKey = isRtl ? "ArrowLeft" : "ArrowRight"
               const prevKey = isRtl ? "ArrowRight" : "ArrowLeft"
               if (e.key === nextKey || e.key === "ArrowDown") { e.preventDefault(); onStage(Math.min(i + 1, stages.length - 1)) }
-              if (e.key === prevKey || e.key === "ArrowUp")   { e.preventDefault(); onStage(Math.max(i - 1, 0)) }
+              if (e.key === prevKey || e.key === "ArrowUp") { e.preventDefault(); onStage(Math.max(i - 1, 0)) }
               if (e.key === "Home") { e.preventDefault(); onStage(0) }
-              if (e.key === "End")  { e.preventDefault(); onStage(stages.length - 1) }
+              if (e.key === "End") { e.preventDefault(); onStage(stages.length - 1) }
             }}
             onClick={() => onStage(i)}
           >
@@ -470,7 +470,7 @@ function BriefDocument({ a, isRtl, t }: {
       className="relative p-3 sm:p-4 md:p-5 lg:p-7"
       style={{
         borderRight: isRtl ? "none" : "0.5px solid color-mix(in srgb, hsl(var(--foreground)) 10%, transparent)",
-        borderLeft:  isRtl ? "0.5px solid color-mix(in srgb, hsl(var(--foreground)) 10%, transparent)" : "none",
+        borderLeft: isRtl ? "0.5px solid color-mix(in srgb, hsl(var(--foreground)) 10%, transparent)" : "none",
       }}
     >
       <ConnectorsSvg conn1Drawn={a.has("conn-1")} conn2Drawn={a.has("conn-2")} isRtl={isRtl} />
@@ -556,57 +556,57 @@ function BriefDocument({ a, isRtl, t }: {
 }
 
 export function ConsultingBriefSection() {
-  const t      = useTranslations("serviceDetails.consulting")
+  const t = useTranslations("serviceDetails.consulting")
   const locale = useLocale()
-  const isRtl  = locale === "ar"
+  const isRtl = locale === "ar"
 
   const STAGES: Stage[] = useMemo(() => [
     {
       key: "discovery", label: t("brief.stages.discovery"),
       actions: [
-        { type: "underline", target: "ul-release",   delay: 0 },
-        { type: "note",      target: "note-symptom", delay: STAGGER * 2 },
-        { type: "underline", target: "ul-monolith",  delay: STAGGER * 4 },
+        { type: "underline", target: "ul-release", delay: 0 },
+        { type: "note", target: "note-symptom", delay: STAGGER * 2 },
+        { type: "underline", target: "ul-monolith", delay: STAGGER * 4 },
       ],
     },
     {
       key: "audit", label: t("brief.stages.audit"),
       actions: [
-        { type: "underline", target: "ul-decompose",  delay: 0 },
-        { type: "strike",    target: "st-decompose",  delay: STAGGER },
-        { type: "note",      target: "note-rflag",    delay: STAGGER * 2 },
-        { type: "connector", target: "conn-1",        delay: STAGGER * 3 },
-        { type: "note",      target: "note-question", delay: STAGGER * 4 },
+        { type: "underline", target: "ul-decompose", delay: 0 },
+        { type: "strike", target: "st-decompose", delay: STAGGER },
+        { type: "note", target: "note-rflag", delay: STAGGER * 2 },
+        { type: "connector", target: "conn-1", delay: STAGGER * 3 },
+        { type: "note", target: "note-question", delay: STAGGER * 4 },
       ],
     },
     {
       key: "roadmap", label: t("brief.stages.roadmap"),
       actions: [
-        { type: "underline", target: "ul-shareddb",   delay: 0 },
-        { type: "highlight", target: "hl-tracing",    delay: STAGGER },
-        { type: "note",      target: "note-connected", delay: STAGGER * 2 },
-        { type: "connector", target: "conn-2",        delay: STAGGER * 3 },
-        { type: "note",      target: "note-finding",  delay: STAGGER * 4 },
+        { type: "underline", target: "ul-shareddb", delay: 0 },
+        { type: "highlight", target: "hl-tracing", delay: STAGGER },
+        { type: "note", target: "note-connected", delay: STAGGER * 2 },
+        { type: "connector", target: "conn-2", delay: STAGGER * 3 },
+        { type: "note", target: "note-finding", delay: STAGGER * 4 },
       ],
     },
     {
       key: "delivery", label: t("brief.stages.delivery"),
       actions: [
-        { type: "underline", target: "ul-load",      delay: 0 },
-        { type: "highlight", target: "hl-release",   delay: STAGGER },
+        { type: "underline", target: "ul-load", delay: 0 },
+        { type: "highlight", target: "hl-release", delay: STAGGER },
         { type: "highlight", target: "hl-decompose", delay: STAGGER * 2 },
-        { type: "note",      target: "note-action",  delay: STAGGER * 3 },
+        { type: "note", target: "note-action", delay: STAGGER * 3 },
       ],
     },
   ], [t])
 
   const NOTES: Note[] = useMemo(() => [
-    { id: "note-symptom",   color: "red",   label: t("brief.notes.symptom.label"),   body: t("brief.notes.symptom.body") },
-    { id: "note-rflag",     color: "red",   label: t("brief.notes.rflag.label"),     body: t("brief.notes.rflag.body") },
-    { id: "note-question",  color: "amber", label: t("brief.notes.question.label"),  body: t("brief.notes.question.body") },
+    { id: "note-symptom", color: "red", label: t("brief.notes.symptom.label"), body: t("brief.notes.symptom.body") },
+    { id: "note-rflag", color: "red", label: t("brief.notes.rflag.label"), body: t("brief.notes.rflag.body") },
+    { id: "note-question", color: "amber", label: t("brief.notes.question.label"), body: t("brief.notes.question.body") },
     { id: "note-connected", color: "amber", label: t("brief.notes.connected.label"), body: t("brief.notes.connected.body") },
-    { id: "note-finding",   color: "green", label: t("brief.notes.finding.label"),   body: t("brief.notes.finding.body") },
-    { id: "note-action",    color: "green", label: t("brief.notes.action.label"),    body: t("brief.notes.action.body") },
+    { id: "note-finding", color: "green", label: t("brief.notes.finding.label"), body: t("brief.notes.finding.body") },
+    { id: "note-action", color: "green", label: t("brief.notes.action.label"), body: t("brief.notes.action.body") },
   ], [t])
 
   const getPrimaryNote = useCallback((stageIndex: number): Note | null => {
@@ -625,23 +625,23 @@ export function ConsultingBriefSection() {
     return targets
   }, [STAGES])
 
-  const wrapperRef     = useRef<HTMLDivElement>(null)
-  const stickyRef      = useRef<HTMLDivElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null)
+  const stickyRef = useRef<HTMLDivElement>(null)
   const progressBarRef = useRef<HTMLDivElement>(null)
-  const chevronRef     = useRef<SVGSVGElement>(null)
-  const chevronAnim    = useRef<gsap.core.Tween | null>(null)
-  const tlRef          = useRef<gsap.core.Timeline | null>(null)
-  const currentStage   = useRef(-1)
+  const chevronRef = useRef<SVGSVGElement>(null)
+  const chevronAnim = useRef<gsap.core.Tween | null>(null)
+  const tlRef = useRef<gsap.core.Timeline | null>(null)
+  const currentStage = useRef(-1)
   const lastScrollTime = useRef(0)
 
   const headerRef = useReveal<HTMLDivElement>({ ...DEFAULTS.body })
-  const headRef   = useText({ ...DEFAULTS.heading, trigger: MOTION.trigger.late, delay: 0.15 })
+  const headRef = useText({ ...DEFAULTS.heading, trigger: MOTION.trigger.late, delay: 0.15 })
 
-  const [activeStage,   setActiveStage]   = useState(-1)
-  const [scrollStage,   setScrollStage]   = useState(-1)
+  const [activeStage, setActiveStage] = useState(-1)
+  const [scrollStage, setScrollStage] = useState(-1)
   const [activeTargets, setActiveTargets] = useState<Set<string>>(new Set())
-  const [hintVisible,   setHintVisible]   = useState(true)
-  const [skipped,       setSkipped]       = useState(false)
+  const [hintVisible, setHintVisible] = useState(true)
+  const [skipped, setSkipped] = useState(false)
 
   const mounted = useSyncExternalStore(
     () => () => undefined,
@@ -649,8 +649,8 @@ export function ConsultingBriefSection() {
     () => false,
   )
 
-  const viewport      = useViewportSize()
-  const showCTA       = activeStage === STAGES.length - 1
+  const viewport = useViewportSize()
+  const showCTA = activeStage === STAGES.length - 1
   const sectionHeight = getSectionHeight(viewport.width, viewport.height)
 
   const pinDistance = useMemo(() => {
@@ -766,8 +766,8 @@ export function ConsultingBriefSection() {
     return () => window.cancelAnimationFrame(id)
   }, [scrollStage, goStage])
 
-  const a              = activeTargets
-  const mobileNote     = getPrimaryNote(activeStage)
+  const a = activeTargets
+  const mobileNote = getPrimaryNote(activeStage)
   const showMobileCard = activeStage >= 0 && !!mobileNote
 
   return (
@@ -868,7 +868,7 @@ export function ConsultingBriefSection() {
               }}
               aria-hidden={!hintVisible}
             >
-              <MagneticButton asChild aria-label={t("cta.button")}>
+              <MagneticButton size="lg" variant="secondary" aria-label={t("cta.button")}>
                 <Link
                   href="/schedule"
                   className="font-mono text-foreground/35 inline-flex items-center gap-1.5 whitespace-nowrap uppercase tracking-[0.2em]"
